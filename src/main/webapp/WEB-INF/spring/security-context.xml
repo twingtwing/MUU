@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.6.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="customLoginSuccessHandler"  class="co.makeu.up.CustomLoginSuccessHandler"/>
+	<bean id="BCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	<security:http>
+		<security:intercept-url pattern="/user/**"
+			access="hasRole('A02') or hasRole('A03')"/>
+		<security:intercept-url pattern="/creator/**"
+			access="hasRole('A03')"/>
+		<security:intercept-url pattern="/admin/**"
+			access="hasRole('A01')"/>
+		<security:intercept-url pattern="/**"
+			access="permitAll"/>
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccessHandler"/>
+		<security:logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
+		<security:access-denied-handler error-page="/accessError"/>	
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT ID AS USERNAME, PW AS PASSWORD, U_ST_CODE AS ENABLED FROM USERS WHERE ID = ?"
+				authorities-by-username-query="SELECT ID AS USERNAME, AUTH_CODE AS AUTHORITY FROM USERS WHERE ID = ?"/>		
+			<security:password-encoder ref="BCryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
