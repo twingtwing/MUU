@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@
                                         <li><a href="./anime-details.html">Anime Details</a></li>
                                         <li><a href="./anime-watching.html">Anime Watching</a></li>
                                         <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./signup.html">Sign Up</a></li>
+                                        <li><a href="/signupForm">Sign Up</a></li>
                                         <li><a href="/customLogin">Login</a></li>
                                     </ul>
                                 </li>
@@ -41,7 +42,15 @@
                 <div class="col-lg-2">
                     <div class="header__right">
                         <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                        <a href="/customLogin"><span class="icon_profile"></span></a>
+                        <security:authorize access="isAnonymous()">
+                        <a href="/customLogin"><span class="icon_profile"></span></a>                      
+                        </security:authorize>
+                        <security:authorize access="isAuthenticated()">
+                        	<form action="/logout" method="post">
+								<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}"> <input type="submit" value="로그아웃">
+							</form>
+                        </security:authorize>
                     </div>
                 </div>
             </div>

@@ -20,11 +20,11 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		authentication.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
-		if(roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/admin");
+		if(roleNames.contains("A01")) {
+			response.sendRedirect("/admin/home"); // /admin/** ~ 형식으로만 넣으면 됨. 알아서
 		}
-		if(roleNames.contains("ROLE_CREATOR")) {
-			response.sendRedirect("/creator");
+		if(roleNames.contains("A03")) {
+			response.sendRedirect("/creator/home"); // /creator/** ~ 형식으로만 넣으면 됨. 알아서
 		}
 		response.sendRedirect("/home");
 	}
