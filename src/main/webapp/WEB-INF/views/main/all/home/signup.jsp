@@ -133,7 +133,7 @@
 								</tr>
 								<tr>
 									<td colspan="2"><input class="border px-10 py-2" spellcheck="false" type="number"
-											placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel"></td>
+											placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel" id="tel"></td>
 								</tr>
 								<tr>
 									<td><input class="border px-10 py-2" spellcheck="false" type="number" placeholder="우편번호"
@@ -192,18 +192,27 @@
 
 	<!-- js -->
 	<script>
-
+		$('#id').keyup((e)=>{
+			/* ajax로 결과 비교 후
+			값이 없으면 $('.idAlert')에 ok클래스 추가 후 
+			$('.idAlert').text('사용할 수 있는 아이디입니다.');
+			(ok클라스 스타일 지정)
+			*/
+		})
+	
 		$('.site-btn').click((e) => {
 			e.preventDefault();
 		})
-		let reg = /^[a-zA-z0-9]{8,16}$/;
+		
 		$('#pw').keyup((e) => {
-			if(!reg.test($('#pw').val())){
-				$('.pwAlert').text('비밀번호의 형식을 지켜주시기 바랍니다.')
+			const pwreg = /^[a-zA-z0-9]{8,16}$/;
+			if(!pwreg.test($('#pw').val())){
+				$('.pwAlert').text('비밀번호 양식을 지켜주시기 바랍니다.')
 			} else {
 				$('.pwAlert').text('')	
 			}					
 		})
+		
 		$('#pw2').keyup((e) => {
 			if ($('#pw').val() != $('#pw2').val()) {
 				$('.pwAlert').text('비밀번호가 맞지 않습니다.')
@@ -214,6 +223,9 @@
 		})
 		
 		$('#sbmt').click((e) => {
+			const telreg = /^[0-9]{11}$/;
+			const idreg = /^[a-zA-z0-9]{25}$/;
+			const birthreg = /^[0-9]{4}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
 				$('#alert').text('개인정보 처리방침에 동의해주세요.');
@@ -227,10 +239,16 @@
 			} else {
 				$('#alert').text('');
 			}
+			if(!telreg.test($('#tel').val()) || !idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
+				$('#alert').text('양식에 맞게 작성해주세요.');	
+				return;
+			} else {
+				$('#alert').text('');
+			}
+			// idAlert 특정 속성 있으면 뭐 .... 넘기고..아니면..막고..
 			$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 			$('#sample4_postcode').val(+$('#sample4_postcode').val());
 			$('form').submit();
-			// 성명, 이메일 합친 뒤 submit하기, 
 		})
 	</script>
 

@@ -22,6 +22,7 @@
     </section>
     <!-- Normal Breadcrumb End -->
     
+    <!-- 아디비번찾기 섹션 시작 -->
     <section class="blog-details spad">
         <div class="container">
             <div class="col-lg-12 d-flex justify-content-center">
@@ -79,20 +80,5 @@
 			</div>
 		</div>
 	</div>
-
-<script>
-    $('.site-btn').click((e)=>{
-        if(e.target.classList.contains('email')){
-            $('.modal-body>div').append(
-                    $('<input>').attr('placeholder','이메일 입력'),
-                    $('<button>').text('전송'),
-                    $('<br>'),
-                    $('<input>').attr('placeholder','인증번호 입력'),
-                    $('<button>').text('전송'),
-            )
-        }
-        $('#modal').modal('show')
-    })
-</script>
 </body>
 </html>
