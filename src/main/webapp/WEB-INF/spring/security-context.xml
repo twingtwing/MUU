@@ -11,14 +11,14 @@
 	<bean id="BCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<security:http>
 		<security:intercept-url pattern="/user/**"
-			access="hasRole('A02') or hasRole('A03')"/>
+			access="hasAuthority('A02') or hasAuthority('A03')"/>
 		<security:intercept-url pattern="/creator/**"
-			access="hasRole('A03')"/>
+			access="hasAuthority('A03')"/>
 		<security:intercept-url pattern="/admin/**"
-			access="hasRole('A01')"/>
+			access="hasAuthority('A01')"/>
 		<security:intercept-url pattern="/**"
 			access="permitAll"/>
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccessHandler"/>
+		<security:form-login login-page="/customLogin" username-parameter="id" password-parameter="pw" authentication-success-handler-ref="customLoginSuccessHandler"/>
 		<security:logout logout-url="/logout" logout-success-url="/home" invalidate-session="true"/>
 		<security:access-denied-handler error-page="/accessError"/>	
 	</security:http>
@@ -26,7 +26,7 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="SELECT ID AS USERNAME, PW AS PASSWORD, ENABLED FROM USERS WHERE ID = ?"
+				users-by-username-query="SELECT ID AS USERNAME, PW AS PASSWORD, U_ST_CODE AS ENABLED FROM USERS WHERE ID = ?"
 				authorities-by-username-query="SELECT ID AS USERNAME, AUTH_CODE AS AUTHORITY FROM USERS WHERE ID = ?"/>		
 			<security:password-encoder ref="BCryptPasswordEncoder"/>
 		</security:authentication-provider>

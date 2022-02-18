@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1 style="background-color: pink">넌 여기 못와 !! 권한이 없어 !! 꺼져 !!</h1>
+<h1 style="background-color: pink">${msg }</h1>
 </body>
 </html>

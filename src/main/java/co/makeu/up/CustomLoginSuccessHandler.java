@@ -26,7 +26,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		if(roleNames.contains("A03")) {
 			response.sendRedirect("/creator/home"); // /creator/** ~ 형식으로만 넣으면 됨. 알아서
 		}
-		response.sendRedirect("/home");
+		response.sendRedirect("/");
 	}
 	
 }
