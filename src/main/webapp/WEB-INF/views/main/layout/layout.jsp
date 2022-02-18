@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
 
+<!-- Vue.js cdn -->
+	<script src="https://unpkg.com/vue@next"></script>
 </head>
 <body>
 
@@ -32,7 +35,6 @@
 
 
 <!-- Js Plugins -->
-<script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/player.js"></script>
 <script src="resources/js/jquery.nice-select.min.js"></script>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.users.service.UsersMapper">
+	<insert id="insertUsers" parameterType="co.makeu.up.users.service.UsersVO" >
+		INSERT INTO
+		USERS(ID,PW,NAME,BIRTH_DATE,TEL,GENDER,ZIP,ADDR,DETA_ADDR,AUTH_CODE,U_GRD_CODE)
+		VALUES (
+		#{id},#{pw},#{name},TO_DATE(#{birthDate},'YYYY'),#{tel},#{gender},#{zip},#{addr},#{detaAddr},'A02','U01'
+		)
+	</insert>
+</mapper>

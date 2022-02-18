@@ -1,18 +1,15 @@
 package co.makeu.up;
 
-import javax.inject.Inject;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import co.makeu.up.users.service.UsersVO;
+
 @Controller
 public class HomeController {	
-	
-	@Inject
-	BCryptPasswordEncoder pwEncoder;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -27,12 +24,19 @@ public class HomeController {
 	
 	@GetMapping("/customLogin")
 	public String customLoginForm(String error, String logout, Model model) {	
+		if(error!=null) {
+			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
+		}
 		return "main/all/home/customLogin";
 	}
 	
-	@PostMapping("/login")
-	public void login() {	
-		
+	
+
+	
+	@GetMapping("/accessError")
+	public String accessDenied(Authentication auth, Model model) {
+		model.addAttribute("msg","잘못된 접근입니다.");
+		return "error/accessError";
 	}
 	
 	@GetMapping("/signupForm")
@@ -40,14 +44,4 @@ public class HomeController {
 		return "main/all/home/signup";
 	}
 	
-	@PostMapping("/signup")
-	public String signup() {
-		String pw = pwEncoder.encode("여기에 usersVO pw 들어가면 암호화됨");
-		return "main/all/home/home";
-	}
-	
-	@GetMapping("/forget")
-	public String forget() {
-		return "main/all/home/forget";
-	}
 }
