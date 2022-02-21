@@ -79,7 +79,7 @@
 										<i class="fa fa-check-circle" aria-hidden="true"></i>
 									</td>
 									<td><select class="custom-select emailAddr">
-											<option value="">주소 선택</option>
+											<option value="" disabled selected>주소 선택</option>
 											<option value="@naver.com">@naver.com</option>
 											<option value="@google.com">@google.com</option>
 											<option value="@nate.com">@nate.com</option>
@@ -121,7 +121,7 @@
 										<i class="fa fa-check-circle" aria-hidden="true"></i>
 									</td>
 									<td class="pilsu"><select class="custom-select px-10 py-2 gender" name="gender">
-											<option value="">성별</option>
+											<option value="" selected disabled>성별</option>
 											<option value="W">여성</option>
 											<option value="M">남성</option>
 										</select>
@@ -192,12 +192,16 @@
 
 	<!-- js -->
 	<script>
+		let timer;
+	
 		$('#id').keyup((e)=>{
-			/* ajax로 결과 비교 후
-			값이 없으면 $('.idAlert')에 ok클래스 추가 후 
-			$('.idAlert').text('사용할 수 있는 아이디입니다.');
-			(ok클라스 스타일 지정)
-			*/
+			if(timer){
+				clearTimeout(timer);
+			}
+			timer = setTimeout((e)=>{
+				// ajax
+				//console.log($('#id').val() + $('.emailAddr option:selected').val())
+			})
 		})
 	
 		$('.site-btn').click((e) => {
@@ -224,7 +228,7 @@
 		
 		$('#sbmt').click((e) => {
 			const telreg = /^[0-9]{11}$/;
-			const idreg = /^[a-zA-z0-9]{25}$/;
+			const idreg = /^[a-zA-Z0-9]{5,12}$/;
 			const birthreg = /^[0-9]{4}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
