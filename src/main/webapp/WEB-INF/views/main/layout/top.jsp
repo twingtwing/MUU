@@ -20,8 +20,8 @@
 <body>
 	<header class="header">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-1">
+			<div class="row align-items-center">
+				<div class="col-lg-1 p-0">
 					<div class="header__logo">
 						<a href="/home"> <img src="resources/img/logo.png" alt="">
 						</a>
@@ -30,8 +30,8 @@
 				<div class="col-lg-6">
 					<div class="header__nav">
 						<nav class="header__menu mobile-menu">
-							<ul class="d-flex justify-content-center">
-								<li class="active"><a href="/home">홈</a></li>
+							<ul class="d-flex justify-content-center align-items-center">
+								<li class="m-0"><a href="/home">홈</a></li>
 								<li><a href="#">카테고리<span class="arrow_carrot-down"></span></a>
 									<ul class="dropdown">
 										<li class="dropdown-submenu"><a href="#"
@@ -161,7 +161,7 @@
 									value="${_csrf.token}">
 								<button type="submit"
 									style="background-color: #070720; color: white; border: none;">
-									<i class="fa fa-sign-out" aria-hidden="true"></i>
+									<i class="fa fa-sign-out" aria-hidden="true" style="font-size:1.5rem"></i>
 								</button>
 							</form>
 						</security:authorize>
