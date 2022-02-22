@@ -74,11 +74,11 @@
 						<!--<h3>로그인</h3>-->
 						<form action="/login" method="post">
 							<div class="info">
-								<input type="text" placeholder="이메일" class="border p-3 px-5 m-1" name="id">
+								<input type="text" placeholder="이메일" class="border p-3 px-5 m-1" name="id" spellcheck="false">
 								<i class="icon_mail"></i>
 							</div>
 							<div class="info">
-								<input type="password" placeholder="비밀번호" class="border p-3 px-5 m-1" name="pw">
+								<input type="password" placeholder="비밀번호" class="border p-3 px-5 m-1" name="pw" spellcheck="false">
 								<i class="icon_lock"></i>
 							</div>
 							<div class="d-flex flex-column">

@@ -31,11 +31,11 @@ public class UsersController {
 		String pw = pwEncoder.encode(vo.getPw());
 		vo.setPw(pw);
 		usersDao.insertUsers(vo);
-		return "main/all/home/home";
+		return "main/all/home";
 	}
 	
 	@GetMapping("/forget")
 	public String forget() {
-		return "main/all/home/forget";
+		return "main/all/forget";
 	}
 }

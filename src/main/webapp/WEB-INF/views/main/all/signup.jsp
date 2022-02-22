@@ -75,7 +75,7 @@
 							<tbody>
 								<tr>
 									<td class="pilsu">
-										<input type="text" class="border px-10 py-2" placeholder="이메일" required name="id" id="id">
+										<input type="text" class="border px-10 py-2" placeholder="이메일" required name="id" id="id" spellcheck="false">
 										<i class="fa fa-check-circle" aria-hidden="true"></i>
 									</td>
 									<td><select class="custom-select emailAddr">
@@ -93,7 +93,7 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="pilsu"><input class="border px-10 py-2" spellcheck="false" type="password"
-											placeholder="비밀번호" required name="pw" id="pw">
+											placeholder="비밀번호" required name="pw" id="pw" spellcheck="false">
 										<i class="fa fa-check-circle" aria-hidden="true"></i>
 										<span class="d-flex"> ※ 영문자와 숫자를 포함한 8~16자로 입력해주세요.</span>
 									</td>
@@ -209,7 +209,7 @@
 		})
 		
 		$('#pw').keyup((e) => {
-			const pwreg = /^[a-zA-z0-9]{8,16}$/;
+			const pwreg = /^[a-zA-z0-9+]{8,16}$/;
 			if(!pwreg.test($('#pw').val())){
 				$('.pwAlert').text('비밀번호 양식을 지켜주시기 바랍니다.')
 			} else {
@@ -243,7 +243,10 @@
 			} else {
 				$('#alert').text('');
 			}
-			if(!telreg.test($('#tel').val()) || !idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
+			if($('#tel').val()){
+				!telreg.test($('#tel').val()) ? $('#alert').text('양식에 맞게 작성해주세요.') : $('#alert').text('')
+			}
+			if(!idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
 				$('#alert').text('양식에 맞게 작성해주세요.');	
 				return;
 			} else {

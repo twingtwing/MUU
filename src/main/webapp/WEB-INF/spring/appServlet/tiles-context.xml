@@ -10,8 +10,8 @@
 	<put-attribute name="body" value="" />
 	<put-attribute name="bottom" value="/WEB-INF/views/main/layout/bottom.jsp" />
 </definition>
-<definition name="main/*/*/*" extends="layout">
-	<put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}/{3}.jsp" />
+<definition name="main/*/*" extends="layout">
+	<put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}.jsp" />
 </definition>
 
 
