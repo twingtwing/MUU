@@ -4,51 +4,51 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<style>
-		input,
-		.custom-select {
-			width: 100%;
-			padding: 1rem 2.5rem;
-		}
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+input, .custom-select {
+	width: 100%;
+	padding: 1rem 2.5rem;
+}
 
-		td>span {
-			font-size: 0.7rem;
-			color: gray;
-		}
+td>span {
+	font-size: 0.7rem;
+	color: gray;
+}
 
-		td {
-			padding: 0.5rem;
-		}
+td {
+	padding: 0.5rem;
+}
 
-		#alert, .pwAlert, .idAlert {
-			color: var(--danger);
-			font-weight: bold;
-			transition: all 0.3s;
-		}
+#alert, .pwAlert, .idAlert {
+	color: var(- -danger);
+	font-weight: bold;
+	transition: all 0.3s;
+}
 
-		.pilsu {
-			position: relative;
-		}
+.pilsu {
+	position: relative;
+}
 
-		.pilsu>i {
-			position: absolute;
-			font-size: 1.3rem;
-			left: 1.2rem;
-			top: 1.2rem;
-			color: var(--danger);
-		}
+.pilsu>i {
+	position: absolute;
+	font-size: 1.3rem;
+	left: 1.2rem;
+	top: 1.2rem;
+	color: var(--danger);
+}
 
-		table {
-			text-align: center;
-		}
-	</style>
+table {
+	text-align: center;
+}
+</style>
 </head>
 
 <body>
 	<!-- Normal Breadcrumb Begin -->
-	<section class="normal-breadcrumb set-bg" data-setbg="resources/img/normal-breadcrumb.jpg">
+	<section class="normal-breadcrumb set-bg"
+		data-setbg="resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
@@ -67,122 +67,128 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="login__form">
-					<h3 style="color:black;">회원가입</h3>
-					<span class="pl-4 text-muted">( <i class="fa fa-check-circle text-danger" aria-hidden="true"></i> 는 필수 입력
-						값입니다. )</span>
-					<form action="/signup" class="d-flex justify-content-center" method="post">
+					<h3 style="color: black;">회원가입</h3>
+					<span class="pl-4 text-muted">( <i
+						class="fa fa-check-circle text-danger" aria-hidden="true"></i> 는
+						필수 입력 값입니다. )
+					</span>
+					<form action="/signup" class="d-flex justify-content-center"
+						method="post">
 						<table style="width: 37vw;">
 							<tbody>
 								<tr>
-									<td class="pilsu">
-										<input type="text" class="border px-10 py-2" placeholder="이메일" required name="id" id="id" spellcheck="false">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</td>
+									<td class="pilsu"><input type="text"
+										class="border px-10 py-2" placeholder="이메일" required name="id"
+										id="id" spellcheck="false"> <i
+										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td><select class="custom-select emailAddr">
 											<option value="" disabled selected>주소 선택</option>
 											<option value="@naver.com">@naver.com</option>
 											<option value="@google.com">@google.com</option>
 											<option value="@nate.com">@nate.com</option>
-										</select>
+									</select></td>
+								</tr>
+								<tr>
+									<td><span class="d-flex idAlert"> <!--아이디 중복 테스트 결과 여기에 메시지--></span>
 									</td>
 								</tr>
 								<tr>
-									<td><span class="d-flex idAlert">
-											<!--아이디 중복 테스트 결과 여기에 메시지--></span>
-									</td>
+									<td colspan="2" class="pilsu"><input
+										class="border px-10 py-2" spellcheck="false" type="password"
+										placeholder="비밀번호" required name="pw" id="pw"
+										spellcheck="false"> <i class="fa fa-check-circle"
+										aria-hidden="true"></i> <span class="d-flex"> ※ 영문자와
+											숫자를 포함한 8~16자로 입력해주세요.</span></td>
 								</tr>
 								<tr>
-									<td colspan="2" class="pilsu"><input class="border px-10 py-2" spellcheck="false" type="password"
-											placeholder="비밀번호" required name="pw" id="pw" spellcheck="false">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-										<span class="d-flex"> ※ 영문자와 숫자를 포함한 8~16자로 입력해주세요.</span>
-									</td>
+									<td colspan="2" class="pilsu"><input
+										class="border px-10 py-2" spellcheck="false" type="password"
+										placeholder="비밀번호 확인" required id="pw2"> <i
+										class="fa fa-check-circle" aria-hidden="true"></i></td>
 								</tr>
 								<tr>
-									<td colspan="2" class="pilsu"><input class="border px-10 py-2" spellcheck="false" type="password"
-											placeholder="비밀번호 확인" required id="pw2">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</td>
+									<td><span class="d-flex pwAlert"> <!--비밀번호 확인 틀리면 여기에 메시지-->
+									</span></td>
 								</tr>
 								<tr>
-									<td><span class="d-flex pwAlert">
-											<!--비밀번호 확인 틀리면 여기에 메시지-->
-										</span></td>
+									<td colspan="2" class="pilsu"><input
+										class="border px-10 py-2" spellcheck="false" type="text"
+										placeholder="성명" required name="name" id="name"> <i
+										class="fa fa-check-circle" aria-hidden="true"></i></td>
 								</tr>
 								<tr>
-									<td colspan="2" class="pilsu"><input class="border px-10 py-2" spellcheck="false" type="text"
-											placeholder="성명" required name="name" id="name">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</td>
-								</tr>
-								<tr>
-									<td class="pilsu"><input class="border px-10 py-2" spellcheck="false" type="text" placeholder="출생년도"
-											name ="birthDate" id ="birthDate"required>
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</td>
-									<td class="pilsu"><select class="custom-select px-10 py-2 gender" name="gender">
+									<td class="pilsu"><input class="border px-10 py-2"
+										spellcheck="false" type="text" placeholder="출생년도"
+										name="birthDate" id="birthDate" required> <i
+										class="fa fa-check-circle" aria-hidden="true"></i></td>
+									<td class="pilsu"><select
+										class="custom-select px-10 py-2 gender" name="gender">
 											<option value="" selected disabled>성별</option>
 											<option value="W">여성</option>
 											<option value="M">남성</option>
-										</select>
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</td>
+									</select> <i class="fa fa-check-circle" aria-hidden="true"></i></td>
 								</tr>
 								<tr>
 									<td><span class="d-flex"> ※ 통계 정보로 사용됩니다.</span></td>
 								</tr>
 								<tr>
-									<td colspan="2"><input class="border px-10 py-2" spellcheck="false" type="number"
-											placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel" id="tel"></td>
+									<td colspan="2"><input class="border px-10 py-2"
+										spellcheck="false" type="number"
+										placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel" id="tel"></td>
 								</tr>
 								<tr>
-									<td><input class="border px-10 py-2" spellcheck="false" type="number" placeholder="우편번호"
-											id="sample4_postcode" readonly onclick="sample4_execDaumPostcode()" name="zip">
+									<td><input class="border px-10 py-2" spellcheck="false"
+										type="number" placeholder="우편번호" id="sample4_postcode"
+										readonly onclick="sample4_execDaumPostcode()" name="zip">
 									</td>
 									<td>
-										<button class="site-btn" style="width: 100%;" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
+										<button class="site-btn" style="width: 100%;"
+											onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2"><input class="border px-10 py-2" spellcheck="false" type="text" placeholder="도로명 주소"
-											id="sample4_roadAddress" readonly name="addr"></td>
+									<td colspan="2"><input class="border px-10 py-2"
+										spellcheck="false" type="text" placeholder="도로명 주소"
+										id="sample4_roadAddress" readonly name="addr"></td>
 								</tr>
 								<tr>
-									<td colspan="2"><input class="border px-10 py-2" spellcheck="false" type="text" placeholder="상세주소"
-											id="sample4_detailAddress" name="deta_addr"> <span id="guide"
-											style="color: #999; display: none"></span> <span class="d-flex"> ※ 배송 정보로 사용됩니다.</span></td>
+									<td colspan="2"><input class="border px-10 py-2"
+										spellcheck="false" type="text" placeholder="상세주소"
+										id="sample4_detailAddress" name="deta_addr"> <span
+										id="guide" style="color: #999; display: none"></span> <span
+										class="d-flex"> ※ 배송 정보로 사용됩니다.</span></td>
+								</tr>
+								<tr>
+									<td colspan="2"><br>
+										<div class="border p-5 text-muted">㈜재준과
+											아이들(http://localhost/ 이하 "회사"이라 함)은 귀하의 개인정보를 중요시하며, 『정보통신망
+											이용촉진 및 정보보호 등에 관한 법률』, 『개인정보 보호법』, 『통신비밀보호법』, 『전기통신사업법』 등
+											정보통신 서비스 제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하고 있습니다. 회사는 본
+											개인정보취급방침을 통하여 귀하가 회사에 제공하는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 회사가
+											개인정보보호를 위해 어떠한 조치룰 취하고 있는지 알려드립니다. 회사의 개인정보취급방침은 정부정책, 관련 법령
+											및 회사 내부 방침 변경 등 사회적 필요와 변화에 따라 수시로 변경될 수 있고, 회사는 이에 따른
+											개인정보취급방침의 지속적인 개선을 위하여 필요한 절차를 정하고 있습니다. 개인정보취급방침을 개정하는 경우
+											회사는 그 개정사항을 홈페이지에 게시하여 귀하가 개정된 사항을 쉽게 확인할 수 있도록 하고 있습니다.</div> <br>
+										<label for="rule"> <input type="checkbox" id="rule">위
+											내용을 확인했으며,<br>개인정보 처리방침 및 이용약관에 동의합니다 (필수)
+									</label> <br> <br></td>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="alert"></span> <input
+										spellcheck="false" type="button" class="site-btn" value="가입하기"
+										id="sbmt" /></td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<br>
-										<div class="border p-5 text-muted">㈜재준과 아이들(http://localhost/
-											이하 "회사"이라 함)은 귀하의 개인정보를 중요시하며, 『정보통신망 이용촉진 및 정보보호 등에 관한 법률』,
-											『개인정보 보호법』, 『통신비밀보호법』, 『전기통신사업법』 등 정보통신 서비스 제공자가 준수하여야 할 관련
-											법령상의 개인정보보호 규정을 준수하고 있습니다. 회사는 본 개인정보취급방침을 통하여 귀하가 회사에 제공하는
-											개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 회사가 개인정보보호를 위해 어떠한 조치룰 취하고 있는지
-											알려드립니다. 회사의 개인정보취급방침은 정부정책, 관련 법령 및 회사 내부 방침 변경 등 사회적 필요와 변화에
-											따라 수시로 변경될 수 있고, 회사는 이에 따른 개인정보취급방침의 지속적인 개선을 위하여 필요한 절차를 정하고
-											있습니다. 개인정보취급방침을 개정하는 경우 회사는 그 개정사항을 홈페이지에 게시하여 귀하가 개정된 사항을 쉽게
-											확인할 수 있도록 하고 있습니다.</div>
-										<br> <label for="rule">
-											<input type="checkbox" id="rule">위 내용을 확인했으며,<br>개인정보 처리방침 및 이용약관에 동의합니다 (필수)</label> <br>
-										<br>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2"><span id="alert"></span> <input spellcheck="false" type="button" class="site-btn"
-											value="가입하기" id="sbmt" /></td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<h5 style="color:black;">
+										<h5 style="color: black;">
 											이미 계정이 있으신가요? <a href="/customLogin"><strong>로그인</strong></a>
 										</h5>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
 					</form>
 				</div>
 			</div>
@@ -192,16 +198,32 @@
 
 	<!-- js -->
 	<script>
-		let timer;
-	
-		$('#id').keyup((e)=>{
+		let timer;	
+		$('#id, .emailAddr').change((e)=>{
 			if(timer){
 				clearTimeout(timer);
 			}
 			timer = setTimeout((e)=>{
 				// ajax
-				//console.log($('#id').val() + $('.emailAddr option:selected').val())
-			})
+				let currid = $('#id').val() + $('.emailAddr option:selected').val();
+				if(!currid.endsWith('.com') || !$('#id').val()){
+					return;
+				}
+					$.ajax({
+					url : 'idchk',
+					data : {
+						id : currid 
+					},
+					success : (result)=>{
+						if(result){
+							$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
+						} else{
+							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
+						}
+					},
+					
+				})
+			},800)
 		})
 	
 		$('.site-btn').click((e) => {
@@ -252,15 +274,18 @@
 			} else {
 				$('#alert').text('');
 			}
-			// idAlert 특정 속성 있으면 뭐 .... 넘기고..아니면..막고..
 			$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 			$('#sample4_postcode').val(+$('#sample4_postcode').val());
 			$('form').submit();
+			
+			// 정규표현식 좀더 다듬고, id 체크여부, 전화번호는 입력이 된경우에만 정규표현식 거치도록.
+			// 그리고 양식에맞게 작성해라고하니깐 뭐가틀렸는지 사용자가 모른다... 어떻게 알려줘야 짧은 코드로 정확히 알려줄수있을지고민
 		})
 	</script>
 
 	<!-- 주소 api -->
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 		function sample4_execDaumPostcode() {
