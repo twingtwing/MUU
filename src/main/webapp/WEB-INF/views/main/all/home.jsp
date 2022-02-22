@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1 style="color:white;"><a href="/admin/home">관리자페이지 (임시)</a></h1>
+<h1 style="color:white;"><a href="admin/home">관리자페이지 (임시)</a></h1>
 <h5> 사용자 아이디 : <security:authentication property="principal" var="principal.username"/>(비로그인시 아무것도안뜸)</h5>
 <h5> 사용자 현재 권한: <security:authentication property="principal"/></h5>
 <h5><security:authorize access="isAnonymous()">

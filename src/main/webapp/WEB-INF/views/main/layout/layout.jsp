@@ -12,6 +12,7 @@
     rel="stylesheet">
 
 <!-- Css Styles -->
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
@@ -20,7 +21,6 @@
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
-	<script src="resources/js/jquery-3.3.1.min.js"></script>
 
 <!-- Vue.js cdn -->
 	<script src="https://unpkg.com/vue@next"></script>
@@ -35,9 +35,9 @@
 
 
 <!-- Js Plugins -->
+<script src="resources/js/jquery.nice-select.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/player.js"></script>
-<script src="resources/js/jquery.nice-select.min.js"></script>
 <script src="resources/js/mixitup.min.js"></script>
 <script src="resources/js/jquery.slicknav.js"></script>
 <script src="resources/js/owl.carousel.min.js"></script>

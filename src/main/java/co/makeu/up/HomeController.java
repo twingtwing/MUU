@@ -13,10 +13,10 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String home() {
-		return "main/all/home/home";
+		return "main/all/home";
 	}
 	
-	@GetMapping("/admin/home")
+	@GetMapping("admin/home")
 	public String adminPage() {
 		return "admin/home/home";
 	}
@@ -27,7 +27,7 @@ public class HomeController {
 		if(error!=null) {
 			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
 		}
-		return "main/all/home/customLogin";
+		return "main/all/customLogin";
 	}
 	
 	
@@ -41,7 +41,7 @@ public class HomeController {
 	
 	@GetMapping("/signupForm")
 	public String signupForm() {
-		return "main/all/home/signup";
+		return "main/all/signup";
 	}
 	
 }

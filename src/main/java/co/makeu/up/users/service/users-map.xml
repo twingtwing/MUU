@@ -3,9 +3,9 @@
 <mapper namespace="co.makeu.up.users.service.UsersMapper">
 	<insert id="insertUsers" parameterType="co.makeu.up.users.service.UsersVO" >
 		INSERT INTO
-		USERS(ID,PW,NAME,BIRTH_DATE,TEL,GENDER,ZIP,ADDR,DETA_ADDR,AUTH_CODE,U_GRD_CODE)
+		USERS(ID,PW,NAME,BIRTH_DATE,TEL,GENDER,ZIP,ADDR,DETA_ADDR,AUTH_CODE,U_GRD_CODE,JOIN_DATE)
 		VALUES (
-		#{id},#{pw},#{name},TO_DATE(#{birthDate},'YYYY'),#{tel},#{gender},#{zip},#{addr},#{detaAddr},'A02','U01'
+		#{id},#{pw},#{name},TO_DATE(#{birthDate},'YYYY'),#{tel},#{gender},#{zip},#{addr},#{detaAddr},'A02','U01',SYSDATE
 		)
 	</insert>
 </mapper>
