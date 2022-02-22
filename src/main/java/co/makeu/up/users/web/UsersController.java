@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
@@ -37,5 +38,16 @@ public class UsersController {
 	@GetMapping("/forget")
 	public String forget() {
 		return "main/all/forget";
+	}
+	
+	@ResponseBody
+	@GetMapping("/idchk")
+	public boolean idchk(UsersVO vo) {
+		String id = usersDao.ajaxChkId(vo.getId());
+		if(id==null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
