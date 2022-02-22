@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.left-sidebar{
+	background-color: black;
+}
+</style>
 </head>
 <body>
 <aside class="left-sidebar" data-sidebarbg="skin5">
