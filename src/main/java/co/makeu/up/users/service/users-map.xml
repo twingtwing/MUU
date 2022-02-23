@@ -8,4 +8,7 @@
 		#{id},#{pw},#{name},TO_DATE(#{birthDate},'YYYY'),#{tel},#{gender},#{zip},#{addr},#{detaAddr},'A02','U01',SYSDATE
 		)
 	</insert>
+	<select id="ajaxChkId" parameterType="co.makeu.up.users.service.UsersVO" resultType="String">
+		SELECT ID FROM USERS WHERE ID = #{id}
+	</select>
 </mapper>
