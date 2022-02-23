@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 .left-sidebar{
-	background-color: black;
+
 }
 </style>
 </head>
