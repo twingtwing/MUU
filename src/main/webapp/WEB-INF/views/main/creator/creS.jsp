@@ -63,7 +63,6 @@
                     <div class="row mr-2" style="width:160px">
                         <ul class="list-group w-100" id="cctgr">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
-
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
                                 <a class="list-link active" href="/creS">크리에이터 정보</a>
                             </li>
@@ -84,10 +83,10 @@
                                 <a class="list-link" href="/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/creSa">매출내역</a>
+                                <a class="list-link" href="/creator/creSaleYear">매출내역</a>
                             </li>
                             <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/creR">환불 요청 내역</a>
+                                <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                             </li>
                         </ul>
                         
