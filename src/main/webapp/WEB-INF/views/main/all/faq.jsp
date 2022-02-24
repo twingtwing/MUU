@@ -12,8 +12,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
-						<h2>페이지명</h2>
-						<p>상세페이지명</p>
+						<h2>자주 묻는 질문</h2>
 					</div>
 				</div>
 			</div>
