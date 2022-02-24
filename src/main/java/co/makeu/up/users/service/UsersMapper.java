@@ -5,4 +5,5 @@ public interface UsersMapper {
 	String ajaxChkId(String id);
 	UsersVO selectUsers(UsersVO vo);
 	int changePw(UsersVO vo);
+	int updateUserInfo(UsersVO vo);
 }

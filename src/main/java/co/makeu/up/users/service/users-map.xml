@@ -12,9 +12,12 @@
 		SELECT ID FROM USERS WHERE ID = #{id}
 	</select>
 	<select id="selectUsers" parameterType="co.makeu.up.users.service.UsersVO" resultType="co.makeu.up.users.service.UsersVO">
-		select * from users where id = #{id}
+		SELECT * FROM USERS WHERE ID = #{id}
 	</select>
 	<update id="changePw" parameterType="co.makeu.up.users.service.UsersVO">
 		UPDATE USERS SET PW = #{pw} WHERE ID = #{id}
+	</update>
+	<update id="updateUserInfo" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS SET TEL = #{tel}, ZIP = #{zip}, ADDR = #{addr}, DETAADDR=#{detaAddr} WHERE ID = #{id}
 	</update>
 </mapper>

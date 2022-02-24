@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/creator-menu.css" type="text/css">
+<style type="text/css">
+th,td {
+      padding: 0.5rem;
+      text-align: center;
+    }
+</style>
 </head>
 <body>
 <!-- 배너 시작-->
