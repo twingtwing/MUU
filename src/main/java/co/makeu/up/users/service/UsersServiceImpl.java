@@ -18,4 +18,9 @@ public class UsersServiceImpl implements UsersMapper {
 		return map.ajaxChkId(id);
 	}
 
+	@Override
+	public int changePw(UsersVO vo) {
+		return map.changePw(vo);
+	}
+
 }

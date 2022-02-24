@@ -23,7 +23,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-1 p-0">
 					<div class="header__logo">
-						<a href="/home"> <img src="resources/img/logo.png" alt="">
+						<a href="/home"> <img src="/resources/img/logo.png" alt="">
 						</a>
 					</div>
 				</div>
@@ -173,14 +173,6 @@
 		</div>
 	</header>
 	<script type="text/javascript">
-		$('#searchForm>input').keyup((e)=>{
-			if(e.key==='Enter'){
-				$('#searchForm').submit();
-			}
-		})
-		$('#search').click(()=>{
-			$('#searchForm').submit();
-		})
 	</script>
 </body>
 </html>
