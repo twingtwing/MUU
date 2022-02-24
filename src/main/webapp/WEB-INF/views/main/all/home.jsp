@@ -10,7 +10,8 @@
 <body>
 <div class="small">(임시메모)<br>
 <h5 style="color:white;"><a href="admin/home">관리자페이지 (임시)</a></h5>
-참고하세여.(참고 하라고)<br>
+<div class="small">(임시메모)<br>
+<h4>참고하세여.(참고 하라고)<br>
 관리자아이디: admin123@naver.com / 비밀번호 : 관리자<br>
 크리에이터아이디: creator123@naver.com / 비밀번호 : 크리에이터입니다<br>
 유저아이디 : user123@naver.com / 비밀번호 : 정혜윤<br>
@@ -27,6 +28,9 @@
 <security:authorize access="isAuthenticated()">
 <security:authentication property="principal.username" var="username"/>
 </security:authorize>
+<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
+
+<h4>${username }</h4>
 <a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
 <h4>${username }</h4>
 <a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
