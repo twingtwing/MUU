@@ -1,5 +1,9 @@
 package co.makeu.up.board.service;
 
-public interface BoardService {
+import java.util.List;
 
+public interface BoardService {
+	List<BoardVO> selectBoardList();
+	List<BoardVO> selectTtlList(BoardVO vo);
+	 
 }

@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<!-- 카테고리 끝-->
-
+ c
 	<!-- body 의 body-->
 	<section id="title_search" class="blog spad">
 		<div class="container">
@@ -75,15 +75,19 @@
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
+				
 					<tr v-for="(title,index) in titles">
-						<td scope="row" class="text-center">{{title.bNO}}</td>
-						<td v-on:click="titleDetail(index)" onclick="location.href='/boardS'">
-							<div class="name">{{title.title}}</div>
+						<td scope="row" class="text-center">{{index}}</td>
+						<!-- 나중에 페이지네이션 들어가면 index 못쓸거임 아마 방법 생각하삼 -->
+						<td v-on:click="titleDetail(index)">
+							<div class="name">{{title.ttl}}</div>
 						</td>
-						<td>관리자</td>
-						<td>2022-02-18</td>
-						<td class="text-center">10</td>
-						<td class="text-center"><i class="fa fa-download text-danger"></i></td>
+						<td ></td>
+						<td>{{title.wrDate}}</td>
+						<td class="text-center">{{title.hits}}</td>
+						<td class="text-center">
+							<i v-if="title.fileNo" class="fa fa-download text-danger"></i>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -101,6 +105,9 @@
 	</section>
 
 	<script>
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		
         const notice = Vue.createApp({
             data(){
                 return {
@@ -120,30 +127,48 @@
             },
             methods: {
                 titleSearch() {
-                    console.log(this.inputTitle);
-                    /*
-                    fetch('검색?ttl='+ttl)
-                    .then(response => response.json())
-                    .then(result => {this.lectures = result;})
-                    */
-                    this.titles = [{bNO :1, title: this.inputTitle}];
+                    $.ajax({
+                		url:'selectTtlList',
+                		type:'get',
+                		datatype:'json',
+                		data : {
+                			ttl :this.inputTitle
+                		},
+                		beforSend: function(xhr){
+                			xhr.setRequestHeader(header, token);
+                		},
+                	})
+                	.done(result => {
+                		for(obj of result){
+                			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
+                		}
+                		this.titles = result;
+                	});
+                   
                 },
                 titleDetail(index) {
-                    console.log(this.titles[index].bNO);
-                    //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
+                	
+                    location.href='boardS?bNo='+this.titles[index].bno;
+                    		
                 },
             },
-            beforeMount: function () {
-                this.titles = [{
-                    bNO: 1,
-                    title: '공dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd지사항'
-                }, {
-                    bNO: 2,
-                    title: '작성되어라'
-                }, {
-                    bNO: 3,
-                    title: '이거 왜안돼?'
-                }]
+            beforeCreate: function () {
+            	
+            	$.ajax({
+            		url : 'selectBoardList',
+            		type : 'post',
+            		datatype : 'json',
+            		beforeSend: function(xhr) {
+            			xhr.setRequestHeader(header, token);
+            		}
+
+            	})
+            	.done(result => {
+            		for(obj of result){
+            			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
+            		}
+            		this.titles = result;
+            	});
             }
         })
         //mount vue

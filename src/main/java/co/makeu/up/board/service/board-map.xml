@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.makeu.up.board.service.boardMapper">
-
+<mapper namespace="co.makeu.up.board.service.BoardMapper">
+	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO">
+		SELECT * FROM board
+		WHERE b_st_code = 'B01'
+		ORDER BY wr_date DESC
+	</select>
+	
+	<select id="selectTtlList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+		SELECT * FROM board
+		WHERE ttl LIKE '%' || #{ttl} || '%'
+		AND b_st_code = 'B01'
+		ORDER BY wr_date DESC
+	</select>
+	
 </mapper>
