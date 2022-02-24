@@ -22,7 +22,7 @@
 <security:authentication property="principal.username" var="username"/>
 </security:authorize>
 <h4>${username }</h4>
-
+<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
 
 <h5> 사용자 현재 권한: <security:authentication property="principal"/></h5>
 <h5><security:authorize access="isAnonymous()">
@@ -80,5 +80,7 @@
         </div>
     </section>
     <!-- Hero Section End -->
+    <script type="text/javascript">
+    </script>
 </body>
 </html>

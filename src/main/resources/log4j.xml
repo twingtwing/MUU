@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="co.makeu.up">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -30,6 +30,9 @@
 
 	<logger name="org.springframework.web">
 		<level value="info" />
+	</logger>
+	<logger name="javax.net.ssl.SSLHandshakeException">
+		<level value="debug"/>
 	</logger>
 
 	<!-- Root Logger -->

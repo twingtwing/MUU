@@ -1,0 +1,37 @@
+@charset "UTF-8";
+ #cctgy>li {
+      cursor: pointer;
+    }
+    .list-link {
+      color: black;
+    }
+    .list-link.active {
+      font-weight: bold;
+      color: #e53637;
+    }
+    .fa-star,.fa-star-o {
+      color: var(--warning);
+    }
+    .report,
+    .rv {
+      cursor: pointer;
+    }
+    .rv {
+      height: 10rem;
+    }
+    #wrmodal {
+      margin-top: 12rem;
+    }
+    #stars .gr {
+      color: gray;
+      cursor: pointer;
+    }
+    .wrbox {
+      height: 20rem;
+    }
+    #span .selected {
+      color: var(--danger)
+    }
+    a {
+      color: var(--secondary);
+    }
