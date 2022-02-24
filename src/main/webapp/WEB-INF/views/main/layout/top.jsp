@@ -128,7 +128,15 @@
 												<li><a href="#">기타</a></li>
 											</ul></li>
 									</ul></li>
-								<li><a href="./blog.html">고객센터</a></li>
+								<li><a href="#">고객센터<span class="arrow_carrot-down"></span></a>
+									<ul class="dropdown">
+										<li><a href="/boardL">공지사항</a></li>
+										<li><a href="/faq">자주묻는질문</a></li>
+										<li><a href="/qna">문의글</a></li>
+										<li><a href="/refundRule">환불정책</a></li>
+									</ul>
+								</li>
+
 								<li><a href="#">크리에이터 등록</a></li>
 								<security:authorize access="hasAuthority('A03')">
 									<li><a href="#">크리에이터 페이지</a></li>
