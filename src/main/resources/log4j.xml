@@ -42,6 +42,7 @@
 		<appender-ref ref="console" />
 	</root>
 	
+<<<<<<< HEAD
 	<!-- SQL Logger -->
 	<logger name="jdbc.connection" additivity="false">
 		<level value="warn" />
@@ -74,3 +75,6 @@
 	</logger>
 	
 </log4j:configuration>
+=======
+</log4j:configuration>
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
