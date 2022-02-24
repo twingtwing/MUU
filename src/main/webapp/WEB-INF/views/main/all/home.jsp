@@ -22,7 +22,19 @@
 </security:authorize>
 <h4>현재 접속자 : ${username}</h4>
 
+<security:authorize access="isAuthenticated()">
+<security:authentication property="principal.username" var="username"/>
+</security:authorize>
+<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
 
+<h4>${username }</h4>
+<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
+<h4>${username }</h4>
+<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
+<h5> 사용자 현재 권한: <security:authentication property="principal"/></h5>
+<h5><security:authorize access="isAnonymous()">
+	넌 비회원이야
+</security:authorize> </h5>
 <h5><security:authorize access="hasAuthority('A01')">관리자만 볼 수 있는 글자</security:authorize></h5>
 <h5><security:authorize access="hasAuthority('A02')">유저만 볼 수 있는 글자</security:authorize></h5>
 <h5><security:authorize access="hasAuthority('A03')">크리에이터만 볼 수 있는 글자</security:authorize></h5>
