@@ -180,14 +180,6 @@
 		</div>
 	</header>
 	<script type="text/javascript">
-		$('#searchForm>input').keyup((e)=>{
-			if(e.key==='Enter'){
-				$('#searchForm').submit();
-			}
-		})
-		$('#search').click(()=>{
-			$('#searchForm').submit();
-		})
 	</script>
 </body>
 </html>
