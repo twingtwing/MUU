@@ -21,6 +21,8 @@ public class UsersServiceImpl implements UsersMapper {
 	@Override
 	public UsersVO selectUsers(UsersVO vo) {
 		return map.selectUsers(vo);
+	}
+	
 	public int changePw(UsersVO vo) {
 		return map.changePw(vo);
 	}
