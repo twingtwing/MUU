@@ -20,7 +20,7 @@ public class CreatorController {
 	private CreatorServiceImpl creatorDao;
 	
 	//크리에이터 정보페이지 / 조회
-	@GetMapping("/creS")
+	@GetMapping("/creator/creS")
 	public String creatorPage(CreatorVO vo, Model model, Principal principal) {
 			vo.setId(principal.getName());
 			vo = creatorDao.creatorSelect(vo);
@@ -33,7 +33,7 @@ public class CreatorController {
 	
 	
 	//크리에이터 정보 수정 페이지
-	@GetMapping("/creUp")
+	@GetMapping("/creator/creUp")
 	public String creatorUpdatePage(CreatorVO vo, Model model, Principal principal) {
 			vo.setId(principal.getName());
 			vo = creatorDao.creatorSelect(vo);
@@ -46,7 +46,7 @@ public class CreatorController {
 	}
 	
 	//크리에이터 정보 수정
-	@PostMapping("/creU")
+	@PostMapping("/creator/creU")
 	@ResponseBody
 	public void creatorUpdate(CreatorVO vo, Model model, HttpServletRequest request) {
 			String id = request.getParameter("id");

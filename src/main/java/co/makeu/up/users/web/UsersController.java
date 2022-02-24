@@ -1,17 +1,13 @@
 package co.makeu.up.users.web;
 
-import java.security.Principal;
 import java.util.Random;
 
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.users.service.UsersServiceImpl;
@@ -118,16 +111,5 @@ public class UsersController {
 		vo.setPw(pwEncoder.encode(vo.getPw()));
 		usersDao.changePw(vo);
 		return "main/all/home";
-	}
-	
-	@ResponseBody
-	@GetMapping("/idchk")
-	public boolean idchk(UsersVO vo) {
-		String id = usersDao.ajaxChkId(vo.getId());
-		if(id==null) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

@@ -25,7 +25,7 @@
 <security:authentication property="principal.username" var="username"/>
 </security:authorize>
 	<!-- 배너 시작-->
-    <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -103,7 +103,7 @@
                             <div class="card-body mb-3 ml-1">
                                 <div class="row mb-3 ml-1">
                                     <div class="d-flex align-items-center">
-                                        <img src="resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                        <img src="/resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                                     </div>
                                     <ul class="list-group list-group-flush ml-3">
                                         <li class="list-group-item font-weight-bold">이름 : ${name }</li>
