@@ -11,7 +11,6 @@
 .dropdown li {
 	padding: 0.5rem 0;
 }
-
 .dropdown-menu {
 	margin-left: 10rem;
 }
@@ -139,7 +138,7 @@
 
 								<li><a href="#">크리에이터 등록</a></li>
 								<security:authorize access="hasAuthority('A03')">
-									<li><a href="#">크리에이터 페이지</a></li>
+									<li><a href="/creator/creS">크리에이터 페이지</a></li>
 								</security:authorize>
 							</ul>
 						</nav>

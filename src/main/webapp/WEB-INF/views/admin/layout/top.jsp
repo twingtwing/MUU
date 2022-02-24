@@ -14,10 +14,25 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    <a class="navbar-brand" href="index.html" style="background-color: #1F262D">
+                        <!-- Logo icon -->
+                        <b class="logo-icon p-l-10">
+                            <!-- Dark Logo icon -->
+                            <img src="/resources/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                           
+=======
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
                     <a class="navbar-brand d-flex justify-content-center" href="index.html" style="background-color: #1F262D">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!-- Dark Logo icon -->                           
+<<<<<<< HEAD
+>>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
                         </b>
                         <!--End Logo icon -->
                          <!-- Logo text -->

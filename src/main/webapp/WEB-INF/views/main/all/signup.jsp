@@ -198,7 +198,14 @@ table {
 
 	<!-- js -->
 	<script>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		let chkState = false;
+>>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
+=======
+		let chkState = false;
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		let timer;	
 		$('#id, .emailAddr').change((e)=>{
 			if(timer){
@@ -218,6 +225,18 @@ table {
 					success : (result)=>{
 						if(result){
 							$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
+<<<<<<< HEAD
+<<<<<<< HEAD
+						} else{
+							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
+						}
+					},
+					
+				})
+			},800)
+=======
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 							chkState = true;
 						} else{
 							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
@@ -226,6 +245,10 @@ table {
 					},	
 				})
 			},500)
+<<<<<<< HEAD
+>>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		})
 	
 		$('.site-btn').click((e) => {
@@ -276,11 +299,26 @@ table {
 			} else {
 				$('#alert').text('');
 			}
+<<<<<<< HEAD
+<<<<<<< HEAD
+			$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
+			$('#sample4_postcode').val(+$('#sample4_postcode').val());
+			$('form').submit();
+			
+			// 정규표현식 좀더 다듬고, id 체크여부, 전화번호는 입력이 된경우에만 정규표현식 거치도록.
+			// 그리고 양식에맞게 작성해라고하니깐 뭐가틀렸는지 사용자가 모른다... 어떻게 알려줘야 짧은 코드로 정확히 알려줄수있을지고민
+=======
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 			if(chkState && $('#alert').text()==''){
 				$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 				$('#sample4_postcode').val(+$('#sample4_postcode').val());
 				$('form').submit();
 			}
+<<<<<<< HEAD
+>>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
+=======
+>>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		})
 	</script>
 
