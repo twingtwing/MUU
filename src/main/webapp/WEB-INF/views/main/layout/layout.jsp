@@ -12,7 +12,6 @@
     rel="stylesheet">
 
 <!-- Css Styles -->
-	<script src="resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
@@ -21,6 +20,7 @@
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <!-- Vue.js cdn -->
 	<script src="https://unpkg.com/vue@next"></script>
@@ -35,6 +35,8 @@
 
 
 <!-- Js Plugins -->
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="resources/js/jquery.nice-select.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/player.js"></script>

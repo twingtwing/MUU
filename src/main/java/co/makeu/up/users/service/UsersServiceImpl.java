@@ -3,7 +3,7 @@ package co.makeu.up.users.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("userDao")
 public class UsersServiceImpl implements UsersMapper {
 	@Autowired
 	UsersMapper map;
@@ -16,6 +16,11 @@ public class UsersServiceImpl implements UsersMapper {
 	@Override
 	public String ajaxChkId(String id) {
 		return map.ajaxChkId(id);
+	}
+
+	@Override
+	public UsersVO selectUsers(UsersVO vo) {
+		return map.selectUsers(vo);
 	}
 
 }
