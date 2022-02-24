@@ -1,12 +1,12 @@
 package co.makeu.up;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import co.makeu.up.users.service.UsersVO;
+import co.makeu.up.users.service.UsersServiceImpl;
 
 @Controller
 public class HomeController {	
@@ -23,7 +23,7 @@ public class HomeController {
 	
 	
 	@GetMapping("/customLogin")
-	public String customLoginForm(String error, String logout, Model model) {	
+	public String customLoginForm(String error, String logout, Model model) {
 		if(error!=null) {
 			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
 		}

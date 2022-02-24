@@ -12,6 +12,8 @@
     rel="stylesheet">
 
 <!-- Css Styles -->
+
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
