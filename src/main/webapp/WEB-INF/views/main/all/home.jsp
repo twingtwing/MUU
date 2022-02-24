@@ -32,6 +32,12 @@
 <h5><security:authorize access="hasAuthority('A02')">유저만 볼 수 있는 글자</security:authorize></h5>
 <h5><security:authorize access="hasAuthority('A03')">크리에이터만 볼 수 있는 글자</security:authorize></h5>
 <section class="hero">
+<a href="/creator/cLecNL">공지사항</a>
+<a href="/creator/cLecNS">상세</a><br>
+<a href="/creator/cLecNI">등록</a>
+<a href="/creator/cLecNU">수정</a>
+<a href="/creator/cLecQ">질답</a>
+
         <div class="container">
             <div class="hero__slider owl-carousel">
                 <div class="hero__items set-bg" data-setbg="resources/img/hero/hero-1.jpg">

@@ -35,7 +35,6 @@
 
 
 <!-- Js Plugins -->
-
 <script src="/resources/js/jquery.nice-select.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/player.js"></script>
