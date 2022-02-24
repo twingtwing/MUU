@@ -14,12 +14,10 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.html" style="background-color: #1F262D">
+                    <a class="navbar-brand d-flex justify-content-center" href="index.html" style="background-color: #1F262D">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
-                            <!-- Dark Logo icon -->
-                            <img src="/resources/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-                           
+                            <!-- Dark Logo icon -->                           
                         </b>
                         <!--End Logo icon -->
                          <!-- Logo text -->
