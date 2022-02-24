@@ -56,4 +56,25 @@ public class CreatorController {
 			creatorDao.creatorUpdate(vo);
 	}
 	
+	@GetMapping("/creator/creLectureReview")
+	public String creLectureReview() {
+		return "main/creator/cLecR";
+	}
+	@GetMapping("/creator/creRefund")
+	public String creRefund() {
+		return "main/creator/creR";
+	}
+	@GetMapping("/creator/creSaleYear")
+	public String creSalesYear() {
+		return "main/creator/creSaYear";
+	}
+	@GetMapping("/creator/creSaleMonth")
+	public String creSalesMonth() {
+		return "main/creator/creSaMonth";
+	}
+	@GetMapping("/creator/creSaleLec")
+	public String creSaleLec() {
+		return "main/creator/creSaLec";
+	}
+	
 }
