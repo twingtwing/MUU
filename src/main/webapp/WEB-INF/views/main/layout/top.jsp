@@ -23,7 +23,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-1 p-0">
 					<div class="header__logo">
-						<a href="/home"> <img src="resources/img/logo.png" alt="">
+						<a href="/home"> <img src="/resources/img/logo.png" alt="">
 						</a>
 					</div>
 				</div>
@@ -42,12 +42,12 @@
 												<li><a href="#">클래식</a></li>
 												<li><a href="#">재즈</a></li>
 												<li><a href="#">락</a></li>
-												<li><a href="#">힙합, 랩</a></li>
+												<li><a href="#">힙합/랩</a></li>
 												<li><a href="#">타악기</a></li>
-												<li><a href="#">기타, 베이스</a></li>
+												<li><a href="#">기타/베이스</a></li>
 												<li><a href="#">동양음악</a></li>
 												<li><a href="#">보컬</a></li>
-												<li><a href="#">작사, 작곡</a></li>
+												<li><a href="#">작사/작곡</a></li>
 											</ul></li>
 										<li class="dropdown-submenu"><a href="#"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -78,7 +78,7 @@
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">아트</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="#">2D, 애니메이션</a></li>
+												<li><a href="#">2D/애니메이션</a></li>
 												<li><a href="#">드로잉</a></li>
 												<li><a href="#">수채화</a></li>
 												<li><a href="#">유화</a></li>
@@ -86,19 +86,20 @@
 												<li><a href="#">판화</a></li>
 												<li><a href="#">공예</a></li>
 												<li><a href="#">사진</a></li>
+												<li><a href="#">메이크업/분장</a></li>
 											</ul></li>
 										<li class="dropdown-submenu"><a href="#"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
-												class="nav-label">IT / 컴퓨터</span></a>
+												class="nav-label">IT/컴퓨터</span></a>
 											<ul class="dropdown-menu">
 												<li><a href="#">Java</a></li>
 												<li><a href="#">Python</a></li>
-												<li><a href="#">C, C++, C#</a></li>
+												<li><a href="#">C/C++/C#</a></li>
 												<li><a href="#">웹 프로그래밍</a></li>
-												<li><a href="#">유니티</a></li>
+												<li><a href="#">Unity</a></li>
 												<li><a href="#">영상편집</a></li>
-												<li><a href="#">Photoshop, Illustrator</a></li>
+												<li><a href="#">Photoshop/Illustrator</a></li>
 												<li><a href="#">3D 모델링</a></li>
 												<li><a href="#">기타</a></li>
 											</ul></li>
@@ -122,12 +123,20 @@
 											<ul class="dropdown-menu">
 												<li><a href="#">부동산</a></li>
 												<li><a href="#">주식</a></li>
-												<li><a href="#">면접, 자소서</a></li>
-												<li><a href="#">SNS, 블로그</a></li>
+												<li><a href="#">면접/자소서</a></li>
+												<li><a href="#">SNS/블로그</a></li>
 												<li><a href="#">기타</a></li>
 											</ul></li>
 									</ul></li>
-								<li><a href="./blog.html">고객센터</a></li>
+								<li><a href="#">고객센터<span class="arrow_carrot-down"></span></a>
+									<ul class="dropdown">
+										<li><a href="/boardL">공지사항</a></li>
+										<li><a href="/faq">자주묻는질문</a></li>
+										<li><a href="/qna">문의글</a></li>
+										<li><a href="/refundRule">환불정책</a></li>
+									</ul>
+								</li>
+
 								<li><a href="#">크리에이터 등록</a></li>
 								<security:authorize access="hasAuthority('A03')">
 									<li><a href="#">크리에이터 페이지</a></li>
@@ -172,14 +181,6 @@
 		</div>
 	</header>
 	<script type="text/javascript">
-		$('#searchForm>input').keyup((e)=>{
-			if(e.key==='Enter'){
-				$('#searchForm').submit();
-			}
-		})
-		$('#search').click(()=>{
-			$('#searchForm').submit();
-		})
 	</script>
 </body>
 </html>
