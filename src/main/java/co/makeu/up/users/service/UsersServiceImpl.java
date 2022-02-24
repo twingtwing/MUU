@@ -26,4 +26,9 @@ public class UsersServiceImpl implements UsersMapper {
 		return map.changePw(vo);
 	}
 
+	@Override
+	public int updateUserInfo(UsersVO vo) {
+		return map.updateUserInfo(vo);
+	}
+
 }

@@ -24,7 +24,6 @@
       color: var(--secondary);
     }
   </style>
-<script src="https://kit.fontawesome.com/8d99e6c8fb.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <!-- 배너 시작-->
