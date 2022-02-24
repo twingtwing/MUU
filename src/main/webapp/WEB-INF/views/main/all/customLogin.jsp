@@ -14,8 +14,8 @@
 
 .naver {
 	background-color: #00BF18;
-}
-
+} 
+ 
 .google, .naver {
 	color: white;
 }
