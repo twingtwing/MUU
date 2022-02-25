@@ -6,4 +6,5 @@ public interface UsersMapper {
 	UsersVO selectUsers(UsersVO vo);
 	int changePw(UsersVO vo);
 	int updateUserInfo(UsersVO vo);
+	int updateUserProfileImg(UsersVO vo);
 }

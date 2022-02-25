@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +56,7 @@ td, th {
 	}
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<!-- 배너 시작-->
@@ -128,16 +131,17 @@ td, th {
 							<div class="card" style="height: 80vh; position: relative;">
 								<div class="card-body d-flex flex-column align-items-center">
 									<div
-										class="d-flex justify-content-center align-items-center justify-content-around my-5">
-										<img src="/resources/img/profile.png" alt="유저의 프로필 사진입니다."
+										class="d-flex justify-content-center align-items-center justify-content-around my-5 position-relative">
+										<img src="${user.pht}" alt="유저의 프로필 사진입니다."
 											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid; cursor: pointer;"
-											class="mr-4" onclick="file.click();"> <input
-											type="file" id="file" style="display: none;">
+											class="mr-4 position-relative" onclick="file.click();" id="profile">
+											<input type="file" id="file" style="display: none;" multiple>
+										<div class="p-3 bg-white position-absolute imgwindow small" style="top:0;left:0; display:none;opacity: 80%">프로필 사진 변경하기</div>
 										<div>
 											<table class="ml-4">
 												<tr>
 													<th>아이디</th>
-													<td>steel@naver.com</td>
+													<td>${user.id}</td>
 												</tr>
 												<tr>
 													<th>SNS 연동</th>
@@ -147,45 +151,60 @@ td, th {
 												</tr>
 												<tr>
 													<th>내 권한/등급</th>
-													<td>사용자 ( 새싹 회원 ) 🌱 🌹 🌳</td>
+													<td>
+													<c:if test="${user.authCode eq 'A02' }">
+														유저 (  회원 ) 🌱 🌹 🌳													
+													</c:if>
+													<c:if test="${user.authCode eq 'A03' }">
+														크리에이터 ( ${user.creGrdCode } )
+													</c:if>
+													</td>
 												</tr>
 												<tr>
 													<th>적립금<br></th>
-													<td>500원</td>
+													<td><fmt:formatNumber>${user.point }</fmt:formatNumber>원</td>
 												</tr>
 											</table>
 											<span class="text-danger ml-4" style="font-size: 0.8rem;">※
 												적립금은 구매 후 7일 뒤, 혹은 구매 확정 시 적립됩니다.</span>
 										</div>
 									</div>
-									<form
+									<form action="/user/userInfoUpdate" method="post"
 										class="d-flex flex-column justify-content-center border info w-75 pt-3">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 										<table class="p-5">
 											<tr>
 												<th>이름</th>
-												<td>우오오</td>
+												<td>${user.name }</td>
 											</tr>
 											<tr>
 												<th>나이<br> / 성별
 												</th>
-												<td>17세 (여성)</td>
+												<td>${user.age }세 ( 
+													<c:if test="${user.gender eq 'M'}">
+													남성
+													</c:if>
+													<c:if test="${user.gender eq 'W' }">
+													여성
+													</c:if> )
+												</td>
 											</tr>
 											<tr>
 												<th>전화번호</th>
-												<td><input type="text" value="01012345678"
-													class="border w-100" placeholder="'-' 없이 입력해주세요" id="tel"></td>
+												<td><input type="text" value="${user.tel }"
+													class="border w-100" placeholder="'-' 없이 입력해주세요" id="tel" name="tel"></td>
 											</tr>
 											<tr>
 												<th>주소</th>
-												<td><input type="text" value="12345"
+												<td><input type="text" value="${user.zip }"
 													class="border w-50" readonly id="sample4_postcode"
-													onclick="sample4_execDaumPostcode()" name="zip">
+													onclick="sample4_execDaumPostcode()" name="zip" readonly>
 													<button type="button"
 														class="border bg-danger round text-white p-2 px-5"
 														onclick="sample4_execDaumPostcode()">우편번호 찾기</button> <input
-													type="text" value="대구광역시 중구 중앙대로 403" class="border w-100"
+													type="text" value="${user.addr }" class="border w-100"
 													readonly id="sample4_roadAddress" name="addr"><br>
-													<input type="text" value="태왕아너스타워 5층 예담직업전문학교"
+													<input type="text" value="${user.detaAddr }"
 													class="border w-100" placeholder="상세주소 입력" id="detaAddr"
 													name="detaAddr"></td>
 											</tr>
@@ -257,18 +276,60 @@ td, th {
           $('.alert').text('');
         }
       })
+      
+      $('#file').change((e)=>{
+    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
+    	  let fileName = e.target.files[0].name;
+    	  if(!imgreg.test(fileName)){
+    		  window.alert('이미지 파일만 올릴 수 있습니다.');
+    		  return;
+    	  }
+		  const formData = new FormData();
+		  formData.append("uploadFile", e.target.files[0]);
+		  $.ajax({
+			  type : 'post',
+			  url :"/user/uploadProfile",
+			  processData : false,
+			  contentType : false,
+			  beforeSend : (xhr) =>{
+			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			  },
+			  data : formData,
+			  success : (result) =>{
+				  $('#profile').attr('src',result);
+			  },
+			  err : (err) => console.log(err)
+		  })
+      })
+      
+      $('#profile').mouseover(()=>{
+    	  $('.imgwindow').css('display','block');
+      })
+      $('#profile').mouseout(()=>{
+    	  $('.imgwindow').css('display','none');
+      })
+      
+      // update
       $('#sbmt').click((e)=>{
-        if($('.alert').text()){
-          return;
-        }
+    	 e.preventDefault();
         if(!$('#detaAddr').val()){
           $('.alert').text('상세 주소를 입력해주세요.');
           return;
         } else{
           $('.alert').text('');
         }
+        if($('.alert').text()){
+          return;
+        }else {
+        	$('form').submit();
+        }
+        // 전화번호 양식 틀려도 submit이 되는거 수정하기.
       })
 
+      
+      
+      
+      
         //mouseover 이벤트 : 사이드바 css변경
         $('.list-group .list-group-item').on('mouseover',function(){
             $(this).css('background-color','#e53637');

@@ -19,16 +19,12 @@ public class UsersPageController {
 	public String userLectureList() {
 		return "main/user/userLL";
 	}
-	@GetMapping("/user/userS")
-	public String userSelect(Principal pri, UsersVO vo, Model model) {
+	
+	@GetMapping("/user/userUpdate")
+	public String userUpdateForm(UsersVO vo,Principal pri,Model model) {
 		vo.setId(pri.getName());
 		vo = usersDao.selectUsers(vo);
-		model.addAttribute("user", vo);
-		return "main/user/userS";
-	}
-	@GetMapping("/user/userU")
-	public String userUpdateForm(UsersVO vo,Model model) {
-		// userS 페이지에서 정보 그대로 넘기기
+		model.addAttribute("user",vo);
 		return "main/user/userU";
 	}
 	

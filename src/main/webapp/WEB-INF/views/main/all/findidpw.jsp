@@ -33,38 +33,24 @@
 		<div class="container">
 			<div class="col-lg-12 d-flex justify-content-center">
 				<div class="row">
-					<div class="card mr-5"
-						style="border: 3px solid black; border-radius: 20px;">
+					<div class="card mr-5 rounded pb-5">
 						<div class="card-body mx-4 my-2"
-							style="height: 40vh; width: 25vh;">
-							<div class="mb-3 mt-3 row d-flex justify-content-center">
-								<h4 class="font-weight-bold">아이디 찾기</h4>
+							style="height: 30vh; width: 25vh;">
+							<div class="mb-3 mt-3 row d-flex justify-content-center align-items-center">
+								<h4 class="font-weight-bold mt-5">아이디 찾기</h4>
+								<button class="site-btn email my-5">이메일<br>본인인증</button>
 							</div>
-							<div class="row my-3" style="height: 30vh; width: 25vh;">
-								<div class="mx-3 mt-5 mb-0">
-									<button class="site-btn email">이메일 본인인증</button>
-								</div>
-								<div class="mx-3" style="margin-top: -40px;">
-									<button class="site-btn phone">핸드폰 본인인증</button>
-								</div>
-							</div>
+							
 						</div>
 					</div>
-					<div class="card mr-5"
-						style="border: 3px solid black; border-radius: 20px;">
+					<div class="card mr-5 rounded pb-5">
 						<div class="card-body mx-4 my-2"
-							style="height: 40vh; width: 25vh;">
-							<div class="mb-3 mt-3 row d-flex justify-content-center">
-								<h4 class="font-weight-bold">비밀번호 찾기</h4>
+							style="height: 30vh; width: 25vh;">
+							<div class="mb-3 mt-3 row d-flex justify-content-center align-items-center">
+								<h4 class="font-weight-bold mt-5">비밀번호 찾기</h4>
+								<button class="site-btn email my-5">이메일<br>본인인증</button>
 							</div>
-							<div class="row my-3" style="height: 30vh; width: 25vh;">
-								<div class="mx-3 mt-5 mb-0">
-									<button class="site-btn email">이메일 본인인증</button>
-								</div>
-								<div class="mx-3" style="margin-top: -40px;">
-									<button class="site-btn phone">핸드폰 본인인증</button>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -88,7 +74,7 @@
 				<div class="modal-body">
 					<div class="d-flex flex-column align-items-center">
 						<div>
-							<input type="text" id="email" class="border m-1 mt-5">
+							<input type="text" id="email" class="border m-1 mt-5" placeholder="이메일 주소 입력">
 							<button id="sendCode" class="border">인증번호 전송</button>
 						</div>
 						<div>
@@ -105,13 +91,13 @@
 			</div>
 		</div>
 	</div>
-<form action="/changePwForm">
+<form action="/changePwForm" id="findForm">
 <input type="hidden" name="email">
 </form>
-
-
 	<script type="text/javascript">
-	$('.email').click(()=>{
+	let what;
+	$('.email').click((e)=>{
+		what = e.currentTarget.previousElementSibling.textContent;
 		$('#modal').modal('show');
 	})
 	let header = "${_csrf.headerName}";
@@ -155,24 +141,29 @@
 	
 	// 인증번호 발급
 	$('#sendCode').click((e)=>{
-		idchk();
-		if($('.alert').val()){
-			return;
-		}
 		if(!$('#email').val()){
 			$('.alert').text('아이디를 입력해주세요.')
+			return;
+		}
+		idchk();
+		if($('.alert').val()){
 			return;
 		} else {
 			$('.alert').text('');
 		}
 		getKey();
 	})
+	
 	// 인증번호 확인 후 form으로 이동
 	$('#submit').click(()=>{		
 		if(+$('#answer').val()===key){
-			$('form>input').val($('#email').val())
-			console.log($('form>input').val())
-			$('form').submit();
+			$('#findForm>input').val($('#email').val())
+			console.log($('form>input').val());
+			if(what==='아이디 찾기'){
+				$('#findForm').attr('action','findId');
+			} else {
+				$('#findForm').submit();			
+			}
 		} else {
 			$('.alert').text('인증번호가 틀렸습니다.');
 			return;
