@@ -164,7 +164,7 @@
 							<a href="/admin/home" class="font-weight-bold">관리자 페이지로</a>
 						</security:authorize>
 						<security:authorize access="isAuthenticated()">
-							<form action="/logout" method="post">
+							<form action="/logout" method="post" id="logout">
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}">
 								<button type="submit"

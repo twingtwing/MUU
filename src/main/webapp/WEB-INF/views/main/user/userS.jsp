@@ -306,7 +306,7 @@
                 </div>
 
 				<h5 class="modal-body text-center text-danger font-weight-bold">⛔<br><br>현재 진행 중인 강의가 존재하여 탈퇴가 불가능합니다.</h5>
-                <div class="mb-5 text-center mt-2">2022-05-04 부터 탈퇴가 가능합니다.</div>
+                <div class="mb-5 text-center mt-2"><span id="exp"></span> 부터 탈퇴가 가능합니다.</div>
 				<div class="d-flex justify-content-center align-items-center">
 					<button class="btn" type="button" data-dismiss="modal">확인</button>
 				</div>
@@ -318,37 +318,77 @@
 	<script>
         $('#getGrade').mouseover((e)=>{
             $('.UserGradeInfo').addClass('show');
-            // 유저가 크리에이터인 경우 추가
             $('.CreGradeInfo').addClass('show');
         })
+        
         $('#getGrade').mouseout((e)=>{
             $('.UserGradeInfo').removeClass('show');
-            // 유저가 크리에이터인 경우 추가
             $('.CreGradeInfo').removeClass('show');
         })
+        
+        
+        
+        //탈퇴 관련
+        let state =true;
+   		// 상태별 모달창
         $('#out').click(()=>{
-            // 일반적인 경우
-            $('#outModal').modal('show');
-
-            // 열린 강의가 있는 크리에이터의 경우
-            //$('#creModal').modal('show');
+            let auth = "${user.authCode}";
+            if(auth==='A02'){
+            	$('#outModal').modal('show'); 
+            	return;
+            } else {
+            	const data = { id : "${user.id}"}
+        		$.ajax({
+        		data : data,
+        		url : '/user/userFarewellChk',
+        		success : (res)=>{
+	            	if(res=='ok'){
+	            		$('#outModal').modal('show');
+	            	}else{
+	            		state = false;
+	            		$('#exp').text(res);
+	            		$('#creModal').modal('show');
+	            	}        			
+        			}
+        		})	
+            }        
         })
+        
+        
+        const farewell = ()=>{
+        	let userpht = "${user.pht}";
+        	if(userpht){        		
+        		userpht = userpht.replace('/upload/','C:/uploadTest/');
+        	}
+        	const data = { id : "${user.id}", pht : userpht};
+        	$.ajax({
+        		method : 'post',
+        		url : '/user/userFarewell',
+        		beforeSend : (xhr) =>{
+  			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+  			  	},
+        		data : data,
+        		success : (res) =>{
+        		},
+        		err : (e)=>{
+        			console.log(e);
+        			window.alert('관리자에게 문의하세요.');
+        		}
+        	})
+        }
+        
+        
         $('#modalY').click(()=>{
-            location.href="/home"
+            // 탈퇴 ajax처리
+            //사용자가 임의로 코드를 만져서 모달창을 띄울 가능성을 생각하여 state 변수로 제어함
+            if(!state){
+            	location.href='/accessError';
+            	return;
+            };
+            farewell();
+            $('#logout').submit();
         })
 
-            //mouseover 이벤트 : 사이드바 css변경
-        $('.list-group .list-group-item').on('mouseover',function(){
-            $(this).css('background-color','#e53637');
-            $(this).find('.list-link').css('color','#ffffff');
-        })
-
-        //mouseover 이벤트 : 사이드바 css변경
-        $('.list-group .list-group-item').on('mouseout',function(){
-            $(this).css('background-color','#ffffff');
-            $(this).find('.list-link').css('color','#000000');
-            $(this).find('.list-link.active').css('color','#e53637');
-        })
     </script>
 </body>
 </html>

@@ -153,7 +153,7 @@ td, th {
 													<th>내 권한/등급</th>
 													<td>
 													<c:if test="${user.authCode eq 'A02' }">
-														유저 (  회원 ) 🌱 🌹 🌳													
+														유저 ( ${user.uGrdCode }회원 ) 🌱 🌹 🌳													
 													</c:if>
 													<c:if test="${user.authCode eq 'A03' }">
 														크리에이터 ( ${user.creGrdCode } )
@@ -170,7 +170,7 @@ td, th {
 										</div>
 									</div>
 									<form action="/user/userInfoUpdate" method="post"
-										class="d-flex flex-column justify-content-center border info w-75 pt-3">
+										class="d-flex flex-column justify-content-center border info w-75 pt-3 infoForm">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 										<table class="p-5">
 											<tr>
@@ -212,7 +212,7 @@ td, th {
 										<div class="alert"></div>
 										<div class="d-flex justify-content-center mb-3">
 											<button class="border px-4 py-2 rounded mx-3" type="button"
-												id="sbmt">완료</button>
+												id="compl">완료</button>
 											<button class="border px-4 py-2 rounded mx-3"
 												onclick="location.href=history.back()">취소</button>
 										</div>
@@ -267,16 +267,20 @@ td, th {
             }).open();
         }
  
-      $('#tel').keyup((e)=>{
-        const telreg = /^[0-9]{11}$/;
-        if(!telreg.test(e.target.value)){
+      const checkTel = ()=>{
+        const telreg = /^\d{11}$/;
+        if(!telreg.test($('#tel').val())){
           $('.alert').text('전화번호 양식을 지켜주세요.')
-          return;
+          return false;
         } else {
           $('.alert').text('');
-        }
-      })
+          return true;
+        }    	  
+      }
       
+      $('#tel').keyup(checkTel);
+      
+      // change profile image
       $('#file').change((e)=>{
     	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
     	  let fileName = e.target.files[0].name;
@@ -286,6 +290,7 @@ td, th {
     	  }
 		  const formData = new FormData();
 		  formData.append("uploadFile", e.target.files[0]);
+		  formData.append("beforeFileName",$('#profile').attr('src'));
 		  $.ajax({
 			  type : 'post',
 			  url :"/user/uploadProfile",
@@ -309,8 +314,8 @@ td, th {
     	  $('.imgwindow').css('display','none');
       })
       
-      // update
-      $('#sbmt').click((e)=>{
+      // user info update
+      $('#compl').click((e)=>{
     	 e.preventDefault();
         if(!$('#detaAddr').val()){
           $('.alert').text('상세 주소를 입력해주세요.');
@@ -318,12 +323,11 @@ td, th {
         } else{
           $('.alert').text('');
         }
-        if($('.alert').text()){
-          return;
-        }else {
-        	$('form').submit();
+        if(!checkTel()){
+        	return;
+        } else{        	
+        	$('.infoForm').submit();
         }
-        // 전화번호 양식 틀려도 submit이 되는거 수정하기.
       })
 
       

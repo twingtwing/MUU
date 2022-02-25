@@ -23,4 +23,28 @@
 	<update id="updateUserProfileImg" parameterType="co.makeu.up.users.service.UsersVO">
 		UPDATE USERS SET PHT = #{pht} WHERE ID = #{id}
 	</update>
+	<select id="chkCreFarewell" parameterType="String" resultType="Date">
+		SELECT EXP_DATE
+		FROM LECTURE 
+		WHERE CRE_ID = 'creator123@naver.com' AND EXP_DATE>SYSDATE
+	</select>
+	<update id="deleteUsers" parameterType="String">
+		UPDATE USERS 
+		SET PW = NULL,
+		NAME = NULL,
+		BIRTH_DATE = NULL,
+		TEL = NULL,
+		GENDER =NULL,
+		ZIP = NULL,
+		ADDR=NULL,
+		DETA_ADDR=NULL,
+		SOCIAL_TOKEN=NULL,
+		PHT=NULL,
+		U_ST_CODE=0,
+		CRE_GRD_CODE=NULL,
+		POINT=NULL,
+		CRE_INTRO=NULL,
+		SOCIAL_CODE=NULL
+		WHERE ID = #{id}
+	</update>
 </mapper>
