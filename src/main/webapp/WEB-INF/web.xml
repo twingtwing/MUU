@@ -46,6 +46,12 @@
 			<param-value>/WEB-INF/spring/appServlet/*-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>c:\\uploadTest</location>
+			<max-file-size>20971520</max-file-size>
+			<max-request-size>104857600</max-request-size>
+			<file-size-threshold>104857600</file-size-threshold>
+		</multipart-config>
 	</servlet>
 	<!-- Spring Security -->
 	<filter>
@@ -67,4 +73,5 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+
 </web-app>

@@ -56,7 +56,8 @@
 <a href="/user/userR">유저-강의환불 </a>
 <a href="/user/userLQ">유저-강의질문 </a>
 <a href="/user/userLR">유저-리뷰 </a>
-<a href="/user/userLW">유저-강의시청</a>
+<a href="/user/userLW">유저-강의시청</a><br>
+<a href="excel">엑셀다운로드</a>
 
 
         <div class="container">

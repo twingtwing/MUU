@@ -154,7 +154,7 @@ table {
 								<tr>
 									<td colspan="2"><input class="border px-10 py-2"
 										spellcheck="false" type="text" placeholder="상세주소"
-										id="sample4_detailAddress" name="deta_addr"> <span
+										id="sample4_detailAddress" name="detaAddr"> <span
 										id="guide" style="color: #999; display: none"></span> <span
 										class="d-flex"> ※ 배송 정보로 사용됩니다.</span></td>
 								</tr>

@@ -1,12 +1,17 @@
 package co.makeu.up.users.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
 import java.util.Random;
 
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,13 +23,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
 
 @Controller
 public class UsersController {
-	Logger logger;
+	private final Logger logger = LoggerFactory.getLogger(UsersController.class.getName());
 	@Autowired
 	JavaMailSender mailSender;
 	@Autowired
@@ -94,7 +100,6 @@ public class UsersController {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-
 		return num;
 	}
 	
@@ -114,5 +119,42 @@ public class UsersController {
 		return "main/all/home";
 	}
 	
-
+	@GetMapping("/user/userSelect")
+	public String userSelect(Model model, Principal pri, UsersVO vo) {
+		vo.setId(pri.getName());
+		vo = usersDao.selectUsers(vo);
+		model.addAttribute("user", vo);
+		return "main/user/userS";
+	}
+	
+	@PostMapping("/user/userInfoUpdate")
+	public String userInfoUpdate(UsersVO vo, HttpServletResponse response, Principal pri) {
+		vo.setId(pri.getName());
+		usersDao.updateUserInfo(vo);
+		return "redirect:/user/userSelect";
+	}
+	
+	@PostMapping("/user/uploadProfile")
+	@ResponseBody
+	public void userUploadProfile(MultipartFile uploadFile, Principal pri, UsersVO vo,HttpServletResponse res) throws IOException {
+		String uploadFolder = "C:\\uploadTest";
+		String uploadFileName = uploadFile.getOriginalFilename();
+		Random r = new Random();
+		int num = r.nextInt(999999);
+		
+		uploadFileName = num+uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+		logger.info("파일명: "+uploadFileName);
+		File saveFile = new File(uploadFolder,uploadFileName);
+		String id = pri.getName();
+		try {
+			uploadFile.transferTo(saveFile);
+			vo.setPht("/upload/"+uploadFileName);
+			vo.setId(id);
+			usersDao.updateUserProfileImg(vo);
+			res.getWriter().append(vo.getPht());
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
 }

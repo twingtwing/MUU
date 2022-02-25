@@ -81,13 +81,14 @@
 								<input type="password" placeholder="비밀번호" class="border p-3 px-5 m-1" name="pw" spellcheck="false">
 								<i class="icon_lock"></i>
 							</div>
+							<!-- 너 값 없는 놈이야-->
+							<div style="text-align: center; font-weight: bold;" class="text-danger d-flex justify-content-center"><c:out value="${error}"/></div>
 							<div class="d-flex flex-column">
 								<button type="submit" class="site-btn px-5">Login</button>
 								<a href="/forget" style="color: black; text-align: center; margin-top:3px; font-weight: bold;">아이디/비밀번호 찾기</a>
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</form>
-						<div style="text-align: center; font-weight: bold;" class="text-danger d-flex justify-content-center"><c:out value="${error}" /></div>
 					</div>
 					<div class="login__social pt-0">
 						<div class="row">

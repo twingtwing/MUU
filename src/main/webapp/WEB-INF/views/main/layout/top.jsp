@@ -157,7 +157,7 @@
 						</security:authorize>
 						<security:authorize
 							access="hasAuthority('A02') or hasAuthority('A03')">
-							<a href="#" class="font-weight-bold">마이페이지 <span
+							<a href="/user/userSelect" class="font-weight-bold">마이페이지 <span
 								class="icon_profile"></span></a>
 						</security:authorize>
 						<security:authorize access="hasAuthority('A01')">

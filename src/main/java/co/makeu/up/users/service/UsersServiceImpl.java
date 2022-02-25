@@ -31,4 +31,9 @@ public class UsersServiceImpl implements UsersMapper {
 		return map.updateUserInfo(vo);
 	}
 
+	@Override
+	public int updateUserProfileImg(UsersVO vo) {
+		return map.updateUserProfileImg(vo);
+	}
+
 }
