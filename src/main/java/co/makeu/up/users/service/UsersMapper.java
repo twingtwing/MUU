@@ -1,5 +1,7 @@
 package co.makeu.up.users.service;
 
+import java.util.Date;
+
 public interface UsersMapper {
 	int insertUsers(UsersVO vo);
 	String ajaxChkId(String id);
@@ -7,4 +9,6 @@ public interface UsersMapper {
 	int changePw(UsersVO vo);
 	int updateUserInfo(UsersVO vo);
 	int updateUserProfileImg(UsersVO vo);
+	Date chkCreFarewell(String creId);
+	int deleteUsers(String id);
 }
