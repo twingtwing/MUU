@@ -34,6 +34,15 @@ public class LectureController {
 		return "main/lecture/lecI";
 	}
 	
+	@GetMapping("/lecS")
+	public String lecS() {
+		return "main/lecture/lecS";
+	}
+	
+	@GetMapping("/lecD")
+	public String lecD() {
+		return "main/lecture/lecD";
+  }
 	@PostMapping("/creator/lectureResister")
 	public String lectureResister(LectureVO vo, @RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
 			@RequestParam(value="lecFile", required = false) String[] lecList) {
