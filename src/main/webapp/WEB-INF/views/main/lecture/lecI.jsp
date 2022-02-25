@@ -85,11 +85,13 @@
             width:500px;
             height:200px;
         }
+        
+	  
     </style>
 </head>
 <body>
 <!-- 배너 시작-->
-    <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -127,31 +129,30 @@
                     <div class="row mr-2" style="width:160px">
                         <ul class="list-group w-100" id="cctgr">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
-
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">크리에이터 정보</a>
+							<li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                                <a class="list-link" href="/creator/creS">크리에이터 정보</a>
                             </li>
                             <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 신청한 강의</a>
+                                <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 열린 강의</a>
+                                <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 종료된 강의</a>
+                                <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 신고된 강의</a>
+                                <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link active" href="#">강의등록</a>
+                                <a class="list-link active" href="/creator/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">매출내역</a>
+                                <a class="list-link" href="/creator/creSaleYear">매출내역</a>
                             </li>
                             <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">환불 요청 내역</a>
+                                <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                             </li>
                         </ul>
                         
@@ -178,12 +179,12 @@
                                 </div>
                                 <select name="" id="ctgr" class="border w-100">
 									<option value="">전체(상위 카테고리)</option>
-									<option value="">요리</option>
-									<option value="">건강</option>
-									<option value="">아트</option>
-									<option value="">IT/컴퓨터</option> 
-									<option value="">외국어</option>
-									<option value="">자기계발</option>
+									<option value="요리">요리</option>
+									<option value="건강">건강</option>
+									<option value="아트">아트</option>
+									<option value="IT/컴퓨터">IT/컴퓨터</option> 
+									<option value="외국어">외국어</option>
+									<option value="자기계발">자기계발</option>
 		                        </select>
                             </div>
                         </div>
@@ -204,14 +205,30 @@
                                 <tbody>
                                     <tr>
                                         <th rowspan="2" style="border-right : 1px rgb(214, 214, 214) solid">
-                                            <div style="width:auto; height: 400px; border-radius: 10px;">사진1</div>
+                                            <div class="image-show" style="width:auto; height: 400px; border-radius: 10px;">
+                                            	<img id="imgShow0"/>
+                                            </div>
                                         </th>
-                                        <td><div style="width: auto; height:200px; border-radius: 10px;">사진2</div></td>
+                                        <td>
+                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
+                                            	<img id="imgShow1"/>
+                                            </div>
+                                        </td>
                                     </tr>
-                                        <td><div style="width: auto; height:200px; border-radius: 10px;">사진3</div></td>
+                                        <td>
+                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
+                                            	<img id="imgShow2"/>
+                                            </div>
+                                        </td>
                                     <tr>
                                         <td colspan="2" style="text-align: center;">
-                                            <button class="btn btn-outline-danger">대표 사진 업로드</button>
+                                        	<div class="button">
+	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
+	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
+                                        	</div>
+                                        	<div>
+                                        		<button onclick="imageUploadtest()">전송</button>
+                                        	</div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -223,12 +240,17 @@
                                 <tbody>
                                     <tr rowspan="2">
                                         <td style="text-align: -webkit-center;">
-                                            <div style="width: 200px; height:200px; border-radius: 10px;">썸넬사진1</div>
+                                            <div class="thimage-show" style="width: 200px; height:200px; border-radius: 10px;">
+                                            	<img id="thImgShow"/>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align:center;">
-                                            <button class="btn btn-outline-danger">썸네일 업로드</button>
+                                        	<div class="button">
+	                                        	<label class="phtLb" for="thPhtUp">썸네일 사진 업로드</label>
+	                                        	<input type="file" id="thPhtUp" name="thPhtUp" accept="image/*">
+                                        	</div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -238,7 +260,7 @@
                     
                     <div class="row col-12">
                         <div class="col-4">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">나가기</button>
+                            <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
                         <div class="col-4 text-center mt-4">
                             1/4
@@ -308,7 +330,7 @@
                             <a href="#" onclick="lecIpage0()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">나가기</button>
+                            <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
                         <div class="col-4 text-center mt-4">
                             2/4
@@ -350,7 +372,7 @@
                             <a href="#" onclick="lecIpage1()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">나가기</button>
+                            <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
                         <div class="col-4 text-center mt-4">
                             3/4
@@ -453,7 +475,7 @@
                             <a href="#" onclick="lecIpage2()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">나가기</button>
+                            <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
                         <div class="col-4 text-center mt-4">
                             4/4
@@ -469,15 +491,8 @@
         </div>
     </section>
 <!-- Js Plugins -->
-<script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-<script src="resources/js/jquery.nice-select.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/player.js"></script>
-<script src="resources/js/mixitup.min.js"></script>
-<script src="resources/js/jquery.slicknav.js"></script>
-<script src="resources/js/owl.carousel.min.js"></script>
-<script src="resources/js/main.js"></script>
+
 </body>
 <script>
 	$(function(){
@@ -486,6 +501,7 @@
 	
     //카테고리
     const 종류 = {
+		//'전체(상위 카테고리)' : ['없음'],
         '음악' : ['클래식','재즈','락','힙합/랩','타악기','기타/베이스','동양음악','보컬','작사/작곡'],
         '요리': ['양식','동양식','간편요리','코스요리','가정식','베이킹'],
         '건강': ['홈트레이닝','필라테스','요가','정신건강','테라피'],
@@ -639,7 +655,117 @@
             + "</div>";
         return contents;
     }
-                            
+     
+    
+    //강의등록 나가기(저장안됨)
+    $('.exit').on('click', function(){
+    	location.href = "/creator/creS"; 									//페이지 어디로 갈지 ??
+    })
+    
+    //이미지 미리보기(사진 1,2,3)
+    var sel_file;
+    $(document).ready(function() {
+        $("#mainPhtUp").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+    	$('.image-show > img').removeAttr('src');
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+        filesArr.forEach(function(f,i) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+            sel_file = f;
+ 			var stImg = "#imgShow" + i;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $(stImg).attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+    
+    //썸네일 이미지 미리보기
+    $(document).ready(function() {
+        $("#thPhtUp").on("change", handleThImgFileSelect);
+    });
+ 
+    function handleThImgFileSelect(e) {
+    	$('.thimage-show > img').removeAttr('src');
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+        filesArr.forEach(function(f,i) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+            sel_file = f;
+ 			
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#thImgShow").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+    
+    
+	//시큐리티 토큰
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+    
+	
+	
+	$('#downctgr').change(()=>{
+		console.log($('#ctgr option:selected').text());
+		console.log($('#downctgr option:selected').text());
+	})
+	
+    //강의 등록 / 이미지 업로드
+    function imageUploadtest(){
+		//lecture-map insert 순으로 data입력, parameter통일
+		let upctgr = $('#ctgr option:selected').text();
+		let downctgr = $('#downctgr option:selected').text();
+		
+        
+        //메인사진 값
+        var form = new FormData();
+        form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
+        form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
+        form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
+        
+        //사진이외 값 
+        form.append("lecFile", upctgr);	// list 0
+        form.append("lecFile", downctgr); // list 1
+        
+        //썸네일 값
+        form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
+        
+        $.ajax({
+            url : "/creator/lectureResister",
+          	method : "post",
+          	processData : false,
+            contentType : false,
+            async : false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+            data : form,
+            success:function(response) {
+              alert("성공하였습니다.");
+              console.log(response);
+            },
+	         error: function (jqXHR) { 
+	           alert(jqXHR.responseText); 
+	         }
+        });
+         
+}
+    
               
 </script>
 </html>

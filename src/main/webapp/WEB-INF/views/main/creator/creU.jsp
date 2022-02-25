@@ -46,31 +46,30 @@
                     <div class="row mr-2" style="width:160px">
                         <ul class="list-group w-100" id="cctgr">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
-
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link active" href="/creS">크리에이터 정보</a>
+                                <a class="list-link active" href="/creator/creS">크리에이터 정보</a>
                             </li>
                             <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                                <a class="list-link" href="/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
+                                <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/oLecL">&nbsp;&nbsp;- 열린 강의</a>
+                                <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+                                <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
+                                <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/lecI">강의등록</a>
+                                <a class="list-link" href="/creator/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/creSa">매출내역</a>
+                                <a class="list-link" href="/creator/creSaleYear">매출내역</a>
                             </li>
                             <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/creR">환불 요청 내역</a>
+                                <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                             </li>
                         </ul>
                     </div>
@@ -89,7 +88,7 @@
                                 <div class="card-body">
                                     <div class="row mb-3 ml-1">
                                         <div class="d-flex align-items-center">
-                                            <img src="resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                            <img src="/resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                                         </div>
                                         <ul class="list-group list-group-flush ml-3 ">
                                             <li class="list-group-item">     
@@ -106,7 +105,7 @@
                             <div class="row justify-content-center">
                                 <button type="button" class="btn btn-outline-danger" onclick="creatorUpdate()">수정</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-outline-danger" onclick="location.href='/creS'">돌아가기</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="location.href='/creator/creS'">돌아가기</button>
                             </div>
                         </div>
                     </div>
@@ -141,7 +140,7 @@
     function creatorUpdate(){
     	let creIntro = $('#creIntro').val();
     	$.ajax({
-    		url:'/creU',
+    		url:'/creator/creU',
     		method:'post',
     		beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
@@ -152,7 +151,7 @@
     		},
     		success:function(){
     			alert('수정되었습니다.')
-    			location.href='/creS';
+    			location.href='/creator/creS';
     		},
     		error: function(e){
     			console.log('실패'+ e);
