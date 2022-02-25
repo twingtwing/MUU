@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style type="text/css">
 .dropdown li {
 	padding: 0.5rem 0;
@@ -14,6 +13,9 @@
 .dropdown-menu {
 	margin-left: 10rem;
 }
+.product__pagination a.current-page {
+    border: 1px solid #ffc3c3;
+ }
 </style>
 </head>
 <body>
