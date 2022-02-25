@@ -54,8 +54,7 @@
 					<div class="row">
 						<form onsubmit="return false">
 							<div class="row mr-2">
-								<input v-model="inputTitle" class="border mb-0"
-									style="height: 35px; width: 170px" type="text"
+								<input v-model="inputTitle" class="border mb-0" style="height: 35px; width: 170px" type="text"
 									placeholder="제목 검색..." spellcheck=false> <a
 									v-on:click="titleSearch" class="btn btn-outline-secondary"
 									style="height: 35px;"> <i class="icon_search"></i>
@@ -75,8 +74,7 @@
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
-				
-					<tr v-for="(title,index) in titles">
+				<tr v-for="(title,index) in titles">
 						<td scope="row" class="text-center">{{index}}</td>
 						<!-- 나중에 페이지네이션 들어가면 index 못쓸거임 아마 방법 생각하삼 -->
 						<td v-on:click="titleDetail(index)">
@@ -93,13 +91,11 @@
 			</table>
 		</div>
 		<div class="product__pagination d-flex justify-content-center">
-			<a href="#"><i class="fa fa-angle-double-left"></i></a> <a href="#"
-				class="current-page">1</a> <a href="#">2</a> <a href="#">3</a> <a
-				href="#">4</a> <a href="#">5</a> <a href="#"><i
-				class="fa fa-angle-double-right"></i></a>
+			<a href="#" v-if="pages.prev"><i class="fa fa-angle-double-left"></i></a>
+			<a href="#" v-for="num in 1 + pages.endpage - pages.startpage" v-bind:class="{'current-page' : pages.boardVo.pageNum == num +  pages.startpage - 1}"/>{{num +  pages.startpage - 1}}</a> 
+			<a href="#" v-if="pages.next"><iclass="fa fa-angle-double-right"></i></a>
 		</div>
-
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center mt-3">
 			<button type="submit" class="site-btn" onclick="history.go(-1);">뒤로가기</button>
 		</div>
 	</section>
@@ -112,7 +108,8 @@
             data(){
                 return {
                     inputTitle: '',
-                    titles: []
+                    titles: [],
+                	pages : {}
                 }
             },
             computed: {
@@ -164,10 +161,11 @@
 
             	})
             	.done(result => {
-            		for(obj of result){
+            		for(obj of result.list){
             			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
             		}
-            		this.titles = result;
+            		this.titles = result.list;
+            		this.pages = result.page;
             	});
             }
         })

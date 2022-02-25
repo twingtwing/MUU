@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.board.service.BoardMapper">
-	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO">
-		SELECT * FROM board
-		WHERE b_st_code = 'B01'
-		ORDER BY wr_date DESC
+	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+		SELECT *
+		FROM(SELECT ROWNUM rn, B.* , count(*) over() as count 
+			 FROM board B
+		     WHERE b_st_code = 'B01')
+		WHERE rn &gt; (#{pageNum} - 1) * #{amount}
+		AND rn &lt;= #{pageNum} * #{amount}
 	</select>
 	
 	<select id="selectTtlList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
 		SELECT * FROM board
 		WHERE ttl LIKE '%' || #{ttl} || '%'
 		AND b_st_code = 'B01'
-		ORDER BY wr_date DESC
 	</select>
 	
+	<select id="selectBoard" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+	SELECT  *
+	FROM (SELECT  b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no,
+	        LAG(b_no,1,-1) OVER(ORDER BY b_no) AS PREBNO,LAG(ttl,1,null) OVER(ORDER BY b_no) AS PREBTTL,
+	        LEAD(b_no,1,-1) OVER(ORDER BY b_no) AS NEXTBNO, LEAD(ttl,1,null) OVER(ORDER BY b_no) AS NEXTBTTl
+	        FROM BOARD )
+	WHERE b_no = #{bNo}
+	</select>
+	
+	
+	<update id="upboard" parameterType="co.makeu.up.board.service.BoardVO">
+	update board set hits = hits +1 
+	where b_no= #{bNo}
+	</update>
 </mapper>

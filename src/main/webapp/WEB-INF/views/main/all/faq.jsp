@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-	.card-body{
-		border: none;
-	}
+.card-body {
+	border: none;
+}
 </style>
 </head>
 <body>
@@ -85,21 +85,27 @@
 								aria-labelledby="lecture-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ03'">
-											<div class="card-header" id="headingOne">
-												<h2 id="colla" class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ03'">
+												<div class="card-header" id="headingOne">
+													<h2 id="colla" class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														<div v-if="faq.length >= 5">출력물이 없었네 ㅋㅋ</div>
+														<div v-else>이거 5개씩 보이게 하게 만들어야 하는데 제가 능력이 모자라서 힘들듯 일단 문의글로 넘어갑니다.</div>
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -110,21 +116,24 @@
 								aria-labelledby="delivery-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ02'">
-											<div class="card-header" id="headingOne">
-												<h2 class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ02'">
+												<div class="card-header" id="headingOne">
+													<h2 class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -135,21 +144,24 @@
 								aria-labelledby="payment-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ01'">
-											<div class="card-header" id="headingOne">
-												<h2 class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ01'">
+												<div class="card-header" id="headingOne">
+													<h2 class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -160,21 +172,24 @@
 								aria-labelledby="infomation-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ04'">
-											<div class="card-header" id="headingOne">
-												<h2 class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ04'">
+												<div class="card-header" id="headingOne">
+													<h2 class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -185,21 +200,24 @@
 								aria-labelledby="bug-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ05'">
-											<div class="card-header" id="headingOne">
-												<h2 class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ05'">
+												<div class="card-header" id="headingOne">
+													<h2 class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -210,21 +228,24 @@
 								aria-labelledby="event-tab">
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqs">
-										<div v-if="faq.ctgr=='CQ06'">
-											<div class="card-header" id="headingOne">
-												<h2 class="mb-0">
-													<button
-														class="btn btn-link btn-block text-left text-danger"
-														type="button" data-toggle="collapse"
-														:data-target="faq.target2" aria-expanded="false"
-														:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-												</h2>
-											</div>
-											<div :id="faq.target" class="collapse"
-												aria-labelledby="headingOne" data-parent="#accordionExample">
-												<div class="card-body">
-													A{{index}}.{{faq.acontent}}
-													<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+										<div v-if="faq.fstcode=='F01'">
+											<div v-if="faq.ctgr=='CQ06'">
+												<div class="card-header" id="headingOne">
+													<h2 class="mb-0">
+														<button
+															class="btn btn-link btn-block text-left text-danger"
+															type="button" data-toggle="collapse"
+															:data-target="faq.target2" aria-expanded="false"
+															:aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
+													</h2>
+												</div>
+												<div :id="faq.target" class="collapse"
+													aria-labelledby="headingOne"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														A{{index}}.{{faq.acontent}}
+														<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
+													</div>
 												</div>
 											</div>
 										</div>

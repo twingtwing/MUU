@@ -151,7 +151,6 @@ public class UsersController {
 		String uploadFileName = uploadFile.getOriginalFilename();
 		uploadFileName = num+uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 		logger.info("실제 저장 파일명: "+uploadFileName);
-
 		File saveFile = new File(uploadFolder,uploadFileName);
 		String id = pri.getName();
 		try {

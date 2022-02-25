@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.detafile.service.DetafileMapper">
+	<select id="detaFileList" resultType="co.makeu.up.detafile.service.DetafileVO" parameterType="int">
+		SELECT * 
+		FROM DETA_FILE 
+		WHERE file_no = #{fileNo}
+	</select>
+</mapper>

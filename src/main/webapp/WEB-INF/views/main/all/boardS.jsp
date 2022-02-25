@@ -56,10 +56,9 @@
 						<strong>공지사항</strong>
 					</h2>
 				</div>
-				<div
-					class="d-flex justify-content-center p-3 border-top border-bottom bg-light">
-					<div class="d-inline p-2 text-black">
-						<h4 class="">공지사항 작성 제목입니다.</h4>
+				<div class="d-flex justify-content-center p-3 border-top border-bottom bg-light">
+					<div class="d-inline p-2 text-black" >
+						<h4 class="">{{board.ttl}}.</h4>
 					</div>
 				</div>
 				<div class="d-flex justify-content-between px-2 py-2 bg-light">
@@ -67,8 +66,8 @@
 						<h5>작성자 : 관리자</h5>
 					</div>
 					<div class="row mr-2">
-						<h5 class="mx-2">작성일자 : ${wrDate }</h5>
-						<h5>조회수 :${hits }</h5>
+						<h5 class="mx-2">작성일자 :{{board.wrDate}} </h5>
+						<h5>조회수 : {{board.hits}}  </h5>
 					</div>
 				</div>
 				<div class="border-bottom"></div>
@@ -77,22 +76,20 @@
 						<i
 							class="fa fa-download text-dark"></i>
 					</div>
-					<p v-on:click="downloadDetail(index)" class="text-muted ml-2">첨부파일 명</p>
+					<p v-on:click="downloadDetail(index)" class="text-muted ml-2">{{board.detaFileList}}</p>
 				</div>
-				<div class="d-flex justify-content-start mt-1 alert" role="alert">
-					<p class="mb-3">${content }</p>
+				<div class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh">
+					<p class="mb-3"></p>{{board.content}}
 				</div>
 				<div class="border-top"></div>
-				<div id="next" class="d-flex justify-content-start ml-5 mt-3">
+				<div v-if ="board.nextbno > -1" id="next" class="d-flex justify-content-start ml-5 mt-3">
 					<i class="fa fa-angle-double-up"></i>
-					<div class="ml-2">다음글 :</div>
-					<div v-on:click="boardNext()"></div>
+					<div v-on:click="boardNext()"> <div class="ml-2">다음글 : {{board.nextbttl}}</div></div>
 				</div>
 				<div class="border-bottom mt-3"></div>
-				<div id="pre" class="d-flex justify-content-start ml-5 mt-3">
+				<div v-if="board.prebno > -1" id="pre" class="d-flex justify-content-start ml-5 mt-3">
 					<i class="fa fa-angle-double-down"></i>
-					<div class="ml-2">이전글 :</div>
-					<div v-on:click="boardPre()" class="rgba-green-slight"></div>
+					<div v-on:click="boardPre()" class="rgba-green-slight"><div class="ml-2">이전글 :{{board.prebttl}} </div></div>
 				</div>
 				<div class="border-bottom mt-3"></div>
 			</div>
@@ -105,6 +102,9 @@
 	<!-- body 의 body 끝 -->
 	<!-- body 끝 -->
 	<script>
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+
         const board = Vue.createApp({
             data(){
                 return {
@@ -125,12 +125,12 @@
             },
             methods: {
                 boardNext() {
-                    console.log(this.board[0].bNo);
-                    //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
+                  //  console.log(this.board[0].bNo);
+                    location.href ="boardS?bNo="+this.board.nextbno;
                 },
                 boardPre() {
-                    console.log(this.board[1].bNo);
-                    //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
+                    //console.log(this.board[1].bNo);
+                	 location.href ="boardS?bNo="+this.board.prebno;
                 },
                 downloadDetail(index) {
                     console.log(this.download[0].bNo);
@@ -139,7 +139,7 @@
             },
             beforeCreate: function () {
             	$.ajax({
-            		url : '이번글 + 저번글/다음글(저번인지 다음인지 알 방법있어야함) + 다운로드',
+            		url : 'selectBoard',
             		type : 'post',
             		datatype : 'json',
             		data : {
@@ -151,22 +151,11 @@
 
             	})
             	.done(result => {
-            		for(obj of result){
-            			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
-            		}
-            		this.board = result;
+            		console.log(result);
+            			result.wrDate = new Date(result.wrDate).toISOString().slice(0,10);
+            			this.board = result;
             	});
-                this.boards = [{
-                    bNo: 1,
-                    title: '다음글'
-                }, {
-                    bNo: 2,
-                    title: '이전글'
-                }];
-                this.download = [{
-                    bNo: 1,
-                    title: '다운로드'
-                }];
+               
             }
         })
         //mount vue

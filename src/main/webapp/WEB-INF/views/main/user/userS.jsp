@@ -388,7 +388,6 @@
             farewell();
             $('#logout').submit();
         })
-
     </script>
 </body>
 </html>
