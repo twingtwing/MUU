@@ -54,7 +54,7 @@ public class UsersController {
 		vo.setPw(pw);
 		usersDao.insertUsers(vo);
 		System.out.println();
-		return "main/all/home";
+		return "redirect:/home";
 	}
 
 	@GetMapping("/forget")
