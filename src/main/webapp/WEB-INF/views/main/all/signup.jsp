@@ -200,6 +200,7 @@ table {
 	<script>
 		let chkState = false;
 		let timer;	
+		const idreg = /^[a-zA-Z0-9]{5,12}$/;
 		$('#id, .emailAddr').change((e)=>{
 			if(timer){
 				clearTimeout(timer);
@@ -208,6 +209,10 @@ table {
 				// ajax
 				let currid = $('#id').val() + $('.emailAddr option:selected').val();
 				if(!currid.endsWith('.com') || !$('#id').val()){
+					return;
+				}
+				if(!idreg.test($('#id').val())){
+					$('.idAlert').text('영문자를 조합해 5~12자로 맞춰주세요.');
 					return;
 				}
 					$.ajax({
@@ -252,7 +257,6 @@ table {
 		
 		$('#sbmt').click((e) => {
 			const telreg = /^[0-9]{11}$/;
-			const idreg = /^[a-zA-Z0-9]{5,12}$/;
 			const birthreg = /^[0-9]{4}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
@@ -268,9 +272,9 @@ table {
 				$('#alert').text('');
 			}
 			if($('#tel').val()){
-				!telreg.test($('#tel').val()) ? $('#alert').text('양식에 맞게 작성해주세요.') : $('#alert').text('')
+				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
 			}
-			if(!idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
+			if(!birthreg.test($('#birthDate').val())){
 				$('#alert').text('양식에 맞게 작성해주세요.');	
 				return;
 			} else {
