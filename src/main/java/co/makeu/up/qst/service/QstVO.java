@@ -10,7 +10,7 @@ public class QstVO {
 	private String ttl;
 	private String content;
 	private Date qRegDate;
-	private String writer;
+	private String wirter;
 	private String aContent;
 	private Date aRegDate;
 	private String email;
