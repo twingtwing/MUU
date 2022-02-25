@@ -64,23 +64,23 @@
                         <ul class="list-group w-100" id="cctgr">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link active" href="/creS">크리에이터 정보</a>
+                                <a class="list-link active" href="/creator/creS">크리에이터 정보</a>
                             </li>
                             <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                                <a class="list-link" href="/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
+                                <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/oLecL">&nbsp;&nbsp;- 열린 강의</a>
+                                <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+                                <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
+                                <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/lecI">강의등록</a>
+                                <a class="list-link" href="/creator/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
                                 <a class="list-link" href="/creator/creSaleYear">매출내역</a>
@@ -112,7 +112,7 @@
                                     </ul>
                                 </div>
                                 <div class="row justify-content-center">
-                                    <button class="btn btn-outline-danger" onclick="location.href='/creUp'">정보 수정</button>
+                                    <button class="btn btn-outline-danger" onclick="location.href='/creator/creUp'">정보 수정</button>
                                 </div>
                             </div>
                         </div>
