@@ -14,4 +14,9 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.lectureInsert(vo);
 	}
 
+	@Override
+	public LectureVO lectureSelect(int ltNo) {
+		return map.lectureSelect(ltNo);
+	}
+
 }

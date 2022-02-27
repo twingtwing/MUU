@@ -51,7 +51,7 @@
 		</security:authorize>
 		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
 		
-		<h5> 사용자 현재 권한: ${username }</h5>
+		<h5> 사용자 아이디: ${username }</h5>
 		<h5><security:authorize access="isAnonymous()">
 			넌 비회원이야
 		</security:authorize> </h5>
@@ -71,7 +71,7 @@
 		<a href="/user/userLL">유저-수강목록 </a>
 		<a href="/user/userLNL">유저-강의공지목록 </a>
 		<a href="/user/userLNS">유저-강의공지조회 </a>
-		<a href="/user/userR">유저-강의환불 </a>
+		<a href="/user/userRefund">유저-강의환불 </a>
 		<a href="/user/userLQ">유저-강의질문 </a>
 		<a href="/user/userLR">유저-리뷰 </a>
 		<a href="/user/userLW">유저-강의시청</a><br>

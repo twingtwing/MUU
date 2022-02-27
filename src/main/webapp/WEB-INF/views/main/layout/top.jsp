@@ -137,10 +137,12 @@
 										<li><a href="/refundRule">환불정책</a></li>
 									</ul>
 								</li>
-
-								<li><a href="#">크리에이터 등록</a></li>
+								<security:authorize access="hasAuthority('A02')">
+									<li><a href="#">크리에이터 등록</a></li>
+									<li><a href="/user/userLectureList" class="text-danger">내 수강목록</a></li>
+								</security:authorize>
 								<security:authorize access="hasAuthority('A03')">
-									<li><a href="/creator/creS">크리에이터 페이지</a></li>
+									<li><a href="/creator/creS" class="text-danger">크리에이터 페이지</a></li>
 								</security:authorize>
 							</ul>
 						</nav>
@@ -181,7 +183,5 @@
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</header>
-	<script type="text/javascript">
-	</script>
 </body>
 </html>

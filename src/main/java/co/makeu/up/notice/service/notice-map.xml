@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.notice.service.NoticeMapper">
-	<select id="NoticeList" resultType="co.makeu.up.notice.service.NoticeVO">
-		SELECT * FROM NOTICE
+	<select id="NoticeList" resultType="co.makeu.up.notice.service.NoticeVO" parameterType="co.makeu.up.notice.service.NoticeVO">	
+		SELECT * FROM(
+			SELECT  ROWNUM RN, NT_NO,WR_DATE,TTL,CONTENT,HITS,LT_NO,FILE_NO,MOD_DATE
+			FROM NOTICE 
+			WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
+			AND LT_NO = #{ltNo}
+			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
+				AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
+			ORDER BY WR_DATE DESC)
+		WHERE RN <![CDATA[>=]]> (10*#{page})+1
 	</select>
-	<select id="NoticeSelect">
-		SELECT * FROM NOTICE WHERE NTNO = #{ntNo}
+	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE LT_NO = #{ltNo}
+	</select>
+	<select id="NoticeSelect" resultType="co.makeu.up.notice.service.NoticeVO">
+		SELECT N.* FROM 
+		NOTICE N LEFT OUTER JOIN FILES F
+		ON N.FILE_NO = F.FILE_NO
+		WHERE NT_NO = #{ntNo}
 	</select>
 </mapper>

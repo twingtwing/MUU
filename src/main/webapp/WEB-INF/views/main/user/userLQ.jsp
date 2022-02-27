@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,10 +34,6 @@
       cursor: pointer;
     }
 
-
-    .reclicked {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -114,31 +111,41 @@
                 <button class="border py-1 px-3" id="qst">질문하기</button>
               </div>
               <table class="border w-100 text-center">
+				<thead>
                 <tr class="bg-light">
                   <th>질문 내용</th>
                   <th>작성일</th>
                   <th>답변여부</th>
                 </tr>
-                <tr>
-                  <td>무슨 말인지 모르겠어요</td>
-                  <td>2022.01.30</td>
-                  <th class="font-weight-bold text-danger">답변 전</th>
+				</thead>
+              <tbody class="qstboard">
+              <c:forEach items="${myList}" var="list">
+                <tr data-qnaNo = "${list.qnaNo}">
+                  <td>${list.qContent }</td>
+                  <td>${list.qRegDate }</td>
+                  <c:if test="${list.qnaStCode eq 'Q01' }">
+                  	<th class="font-weight-bold text-danger">답변 대기 중</th>
+                  </c:if>
+                  <c:if test="${list.qnaStCode eq 'Q02' }">
+                  	<th class="font-weight-bold text-success">답변 완료</th>
+                  </c:if>
                 </tr>
+              </c:forEach>
+              </tbody>
               </table>
-
               <br>
               <div class="d-none justify-content-center flex-column" id="qstbox">
-                <input class="border p-3" spellcheck="false" placeholder="질문 내용을 작성해주세요." style="height: 20rem;">
+                <textarea class="border p-3" spellcheck="false" placeholder="질문 내용을 작성해주세요." style="height: 20rem;" id="myquestion"></textarea>
                 <button class="border px-3 py-2" id="wr">작성</button>
               </div>
               <br>
 
               <div class="d-flex justify-content-end ">
-                <select class="border px-4">
-                  <option value="">내용</option>
-                  <option value="">작성자</option>
+                <select class="border px-4" id="searchOption">
+                  <option value="content">내용</option>
+                  <option value="writer">작성자</option>
                 </select>
-                <input type="text" class="border">
+                <input type="text" class="border" id="lqSearchKey">
                 <button type="button" class="border px-4">검색</button>
               </div>
               <table class="bg-light w-100 mt-3 text-center border">
@@ -150,46 +157,40 @@
                     <th>답변여부</th>
                   </tr>
                 </thead>
-                <tbody class="qstboard">
-                  <tr>
-                    <td>무슨 말인지 모르겠어요</td>
-                    <td>김농땡</td>
-                    <td>2022.01.30</td>
-                    <td class="text-danger font-weight-bold">답변 전</td>
+                <tbody class="qstboard" id="qstList">
+                <c:forEach items="${qnaList}" var="list">
+                  <tr data-qnaNo = ${list.qnaNo}>
+                    <td>${list.qContent }</td>
+                    <td>${list.writer }</td>
+                    <td>${list.qRegDate }</td>
+                    <c:if test="${list.qnaStCode eq 'Q01'}">
+                  		<th class="font-weight-bold text-danger">답변 대기 중</th>
+                    </c:if>
+                    <c:if test="${list.qnaStCode eq 'Q02'}">
+                  		<th class="font-weight-bold text-success">답변 완료</th>
+                  	</c:if>
                   </tr>
-                  <tr>
-                    <td>무슨 말인지 모르겠어요</td>
-                    <td>김농땡</td>
-                    <td>2022.01.30</td>
-                    <td class="text-success font-weight-bold">답변완료</td>
-                  </tr>
-                  <tr>
-                    <td>무슨 말인지 모르겠어요</td>
-                    <td>김농땡</td>
-                    <td>2022.01.30</td>
-                    <td class="text-success font-weight-bold">답변완료</td>
-                  </tr>
-                  <tr>
-                    <td>무슨 말인지 모르겠어요</td>
-                    <td>김농땡</td>
-                    <td>2022.01.30</td>
-                    <td class="text-success font-weight-bold">답변완료</td>
-                  </tr>
-                  <tr>
-                    <td>무슨 말인지 모르겠어요</td>
-                    <td>김농땡</td>
-                    <td>2022.01.30</td>
-                    <td class="text-success font-weight-bold">답변완료</td>
-                  </tr>
+                </c:forEach>
                 </tbody>
               </table>
+              
               <div class="product__pagination d-flex justify-content-center">
-                <a href="#"><i class="fa fa-angle-double-left"></i></a>
-                <a href="#" class="current-page">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
+                <c:if test="${pagination.currRange ne 1}">
+                  <a><i class="fa fa-angle-double-left"></i></a>
+				</c:if>
+				<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
+				<c:choose>
+				<c:when test="${page eq pagination.currPage}">
+                  <a class="current-page paging">${page}</a>				
+				</c:when>
+				<c:otherwise>
+				  <a class="paging">${page}</a>
+				</c:otherwise>
+				</c:choose>
+				</c:forEach>
+                <c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
+                  <a><i class="fa fa-angle-double-right"></i></a>
+				</c:if>
                 <a href="#"><i class="fa fa-angle-double-right"></i></a>
               </div>
 
@@ -202,6 +203,7 @@
     </div>
   </section>
   <script>
+  	// 질문박스
     $('#qst').click((e) => {
       if($('#qst').text()==='질문하기'){
         $('#qst').text('닫기')
@@ -212,32 +214,86 @@
       $('#qstbox').toggleClass('d-flex');
     })
 
+    // 질문 등록
     $('#wr').click((e) => {
-      // ajax로 질문 등록
+      let data = {qContent : $('#myquestion').val(), ltNo : ${ltNo}}
+      console.log(data)
+      $.ajax({
+    	  url : '/user/userInsertLQ',
+    	  data : data,
+    	  method : 'post',
+    	  beforeSend : (xhr) =>{
+		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		  },  
+      })
+      .done((r)=>{
+    	  console.log(r)
+      })
+      // 데이터 다 제대로 넘어가고, sql문도 맞는데 안된다. 왜지 ㅡㅡ;;
     })
 
-
+    
     // 답변 조회
-    const makerow = (no) => {
-      const row = $('<tr>').append(
-        $('<td>').attr('colspan', 4).text('💌　　　'+'이러이러한 답변입니다...ajax로 가져온 답변데이터').addClass('clicked')
-      );
-      return row;
-    }
-    $('.qstboard tr').click((e) => {
-      // 각 tr태그에 dataset 추가해서 ajax로 불러와야할듯
-     if(e.currentTarget.nextElementSibling.childElementCount===1){
-       return;
-     }else{
-       $(e.currentTarget).after(makerow());
-     }
-    })
-    $('tbody').click((e) => {
-      if (e.target.className === 'clicked') {
-        $(e.target).removeClass('clicked').addClass('reclicked')
-      }
-    })
+	const makeRow = (content)=>{
+		let row = $('<tr>').append(
+	 	        $('<td>').attr('colspan', 4).text(content).addClass('clicked'));
+	 	return row;
+	}
+    $('.qstboard').click((e) => {
+    	let qnaNo = e.target.parentNode.dataset.qnano;
+    	if(e.target.parentNode.lastElementChild.textContent==='답변 대기 중'){
+    		return;
+    	}
+    	if(e.target.parentNode.childElementCount===1){
+    		return;
+    	}
+	    if(e.target.parentNode.nextElementSibling.childElementCount===1){
+	    	e.target.parentNode.nextElementSibling.firstElementChild.remove();
+	       return;
+	    }
+	    $.ajax({
+		 	url : '/user/selectQna',
+		 	data : {qnaNo : qnaNo},
+		 	contentType: 'application/text;charset=utf-8'
+			})
+			.done((res)=>{
+			$(e.target.parentNode).after(makeRow(res));
+			})    		
+	    })
 
+	     
+	// 페이지네이션
+	$('.paging').click((e)=>{
+		let pageNum = +e.currentTarget.textContent-1;
+		let key = $('#lqSearchKey').val();
+		const data = { ltNo : ${ltNo}, writerSearchKey: undefined, contentSearchKey : undefined, page : pageNum};
+		if($('#searchOption').val()==='writer'){
+			data.writerSearchKey = key;
+		} else if($('#searchOption').val()==='content'){
+			data.contentSearchKey = key;
+		}
+		pagination(data);
+	})
+	const pagination = (data)=>{
+		$.ajax({
+			url : '/user/userLQpage',
+			data : data,
+		})
+		.done((res)=>{
+			console.log(res);
+			removeAll();
+		})
+	}
+	const removeAll = ()=>{
+		$('#qstList').children().remove();
+	}
+	const makeRow = (list)=>{
+		let row = $('<tr>')
+	}
+	
+	
+	
+	     
       //mouseover 이벤트 : 사이드바 css변경
     $('#cctgr  .list-group-item:not(.mylist)').on('mouseover',function(){
         $(this).css('background-color','#e53637');
