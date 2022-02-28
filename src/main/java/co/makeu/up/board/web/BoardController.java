@@ -53,4 +53,21 @@ public class BoardController {
 	public BoardVO selectBoard(BoardVO vo) {
 		return boardDao.selectBoard(vo);
 	}
+	
+	
+	//관리자 공지사항 리스트
+	@GetMapping("/admin/adBadLi")
+	public String adBadLi(BoardVO vo , Model model) {
+		model.addAttribute("list",boardDao.selectadbad());
+		return "admin/adbad/adBadLi";
+	}
+	
+	
+	@GetMapping("/admin/adBadl")
+	public String adBadl(BoardVO vo ,Model model) {
+		model.addAttribute("list",boardDao.selectadbad());
+		return "admin/adbad/adBadl";
+	}
+
+	
 }

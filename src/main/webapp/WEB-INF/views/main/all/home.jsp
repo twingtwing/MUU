@@ -88,7 +88,7 @@
 		<a href="/user/userLR">유저-리뷰 </a>
 		<a href="/user/userLW">유저-강의시청</a><br>
 		<a href="excel">엑셀다운로드</a>
-	
+		
 	</div>
     <!-- slide benner -->
     <section class="hero">
