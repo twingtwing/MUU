@@ -73,7 +73,7 @@ table {
 						필수 입력 값입니다. )
 					</span>
 					<form action="/signup" class="d-flex justify-content-center"
-						method="post">
+						method="post" id="signupForm">
 						<table style="width: 37vw;">
 							<tbody>
 								<tr>
@@ -198,15 +198,9 @@ table {
 
 	<!-- js -->
 	<script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		let chkState = false;
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
-		let chkState = false;
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		let timer;	
+		const idreg = /^[a-zA-Z0-9]{5,12}$/;
 		$('#id, .emailAddr').change((e)=>{
 			if(timer){
 				clearTimeout(timer);
@@ -217,6 +211,10 @@ table {
 				if(!currid.endsWith('.com') || !$('#id').val()){
 					return;
 				}
+				if(!idreg.test($('#id').val())){
+					$('.idAlert').text('영문자를 조합해 5~12자로 맞춰주세요.');
+					return;
+				}
 					$.ajax({
 					url : 'idchk',
 					data : {
@@ -225,18 +223,6 @@ table {
 					success : (result)=>{
 						if(result){
 							$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
-<<<<<<< HEAD
-<<<<<<< HEAD
-						} else{
-							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
-						}
-					},
-					
-				})
-			},800)
-=======
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 							chkState = true;
 						} else{
 							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
@@ -245,10 +231,6 @@ table {
 					},	
 				})
 			},500)
-<<<<<<< HEAD
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		})
 	
 		$('.site-btn').click((e) => {
@@ -275,7 +257,6 @@ table {
 		
 		$('#sbmt').click((e) => {
 			const telreg = /^[0-9]{11}$/;
-			const idreg = /^[a-zA-Z0-9]{5,12}$/;
 			const birthreg = /^[0-9]{4}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
@@ -291,34 +272,19 @@ table {
 				$('#alert').text('');
 			}
 			if($('#tel').val()){
-				!telreg.test($('#tel').val()) ? $('#alert').text('양식에 맞게 작성해주세요.') : $('#alert').text('')
+				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
 			}
-			if(!idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
+			if(!birthreg.test($('#birthDate').val())){
 				$('#alert').text('양식에 맞게 작성해주세요.');	
 				return;
 			} else {
 				$('#alert').text('');
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-			$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
-			$('#sample4_postcode').val(+$('#sample4_postcode').val());
-			$('form').submit();
-			
-			// 정규표현식 좀더 다듬고, id 체크여부, 전화번호는 입력이 된경우에만 정규표현식 거치도록.
-			// 그리고 양식에맞게 작성해라고하니깐 뭐가틀렸는지 사용자가 모른다... 어떻게 알려줘야 짧은 코드로 정확히 알려줄수있을지고민
-=======
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 			if(chkState && $('#alert').text()==''){
 				$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 				$('#sample4_postcode').val(+$('#sample4_postcode').val());
-				$('form').submit();
+				$('#signupForm').submit();
 			}
-<<<<<<< HEAD
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		})
 	</script>
 

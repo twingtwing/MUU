@@ -3,6 +3,8 @@ package co.makeu.up.users.web;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -52,7 +54,7 @@ public class UsersController {
 		vo.setPw(pw);
 		usersDao.insertUsers(vo);
 		System.out.println();
-		return "main/all/home";
+		return "redirect:/home";
 	}
 
 	@GetMapping("/forget")
@@ -136,14 +138,19 @@ public class UsersController {
 	
 	@PostMapping("/user/uploadProfile")
 	@ResponseBody
-	public void userUploadProfile(MultipartFile uploadFile, Principal pri, UsersVO vo,HttpServletResponse res) throws IOException {
+	public void userUploadProfile(MultipartFile uploadFile, Principal pri, UsersVO vo,HttpServletResponse res, String beforeFileName) throws IOException {
 		String uploadFolder = "C:\\uploadTest";
-		String uploadFileName = uploadFile.getOriginalFilename();
 		Random r = new Random();
 		int num = r.nextInt(999999);
 		
+		// 기존에 있던 프로필사진 삭제
+		File oldimg = new File(uploadFolder+"\\"+beforeFileName.substring(beforeFileName.lastIndexOf("/")+1));
+		oldimg.delete();
+		
+		logger.info("파일 원래이름: "+uploadFile.getOriginalFilename());
+		String uploadFileName = uploadFile.getOriginalFilename();
 		uploadFileName = num+uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-		logger.info("파일명: "+uploadFileName);
+		logger.info("실제 저장 파일명: "+uploadFileName);
 		File saveFile = new File(uploadFolder,uploadFileName);
 		String id = pri.getName();
 		try {
@@ -156,5 +163,31 @@ public class UsersController {
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/user/userFarewellChk")
+	public String userFarewell(String id) {
+		String result;
+		if(usersDao.chkCreFarewell(id)==null) {
+			result = "ok";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			result = dateFormat.format(usersDao.chkCreFarewell(id));
+		}
+		logger.info(result);
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/user/userFarewell")
+	public void userFarewell(String id, String pht) {
+		// 서버에서 프로필사진 삭제
+		if(pht!=null) {
+			File removePht = new File(pht);
+			removePht.delete();			
+		}
+		logger.info(pht);
+		//usersDao.deleteUsers(id);
 	}
 }
