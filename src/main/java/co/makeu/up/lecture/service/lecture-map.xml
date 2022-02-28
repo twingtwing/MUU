@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.lecture.service.LectureMapper">
 	<insert id="lectureInsert" parameterType="co.makeu.up.lecture.service.LectureVO">
-		insert into (lt_no, cre_id, ttl, intro, up_ctgr, down_ctgr, thumb, pht_1, pht_2, pht_3,
-					open_term, tlsn_term, prc, kit_name, kit_intro, kit_prc, tag_1, tag_2, tag_3,
-					req_date, lt_st_code, exp_date, start_date)
-		values((select nvl(max(lt_no),0)+1 as lt_no from lecture), #{creid}, #{ttl}, #{intro}, #{upctgr} #{downctgr}, #{thumb}, #{pht1}, #{pht2}, #{pht3},
-		 		#{openterm}, #{tlsnterm}, #{prc}, #{kitname}, #{kitintro}, #{kitprc}, #{tag1}, #{tag2}, #{tag3},
-		 		sysdate, "L02", #{expdate}, #{startdate})
+		insert into lecture(lt_no, cre_id, ttl, intro, up_ctgr, down_ctgr, thumb, pht_1, pht_2, pht_3, 
+							open_term, tlsn_term, prc, kit_name, kit_intro, kit_prc, tag_1, tag_2, tag_3, 
+							req_date, lt_st_code, exp_date, start_date)
+		values(select nvl(max(lt_no), 0)+1 as ltNo from lecture, #{creId}, #{ttl}, #{intro}, #{upCtgr}, #{downCtgr}, #{thumb}, #{pht1}, #{pht2}, #{pht3}, 
+			   #{openTerm}, #{tlsnTerm}, #{prc}, #{kitName}, #{kitIntro}, #{kitPrc}, #{tag1}, #{tag2}, #{tag3}, 
+			   sysdate, "L02", select add_months(sysdate, #{openTerm}) as expDate from dual, sysdate)
 	</insert>
 </mapper>

@@ -226,9 +226,6 @@
 	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
 	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
                                         	</div>
-                                        	<div>
-                                        		<button onclick="imageUploadtest()">전송</button>
-                                        	</div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -266,7 +263,7 @@
                             1/4
                         </div>
                         <div class="col-4" style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">임시저장</button>        
+                            <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage1();">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -289,10 +286,10 @@
                         <div class="col-6 ml-3 align-self-center" style="border-right:1px solid rgb(218, 218, 218)">
                             <form action="">
                                 <div class="mb-3">
-                                    <input type="text" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요">
+                                    <input type="text" id="lecTitle" maxlength="200" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요">
                                 </div>
                                 <div class="">
-                                    <textarea rows="7" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요"></textarea>
+                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -304,10 +301,10 @@
                             </div>
                             <div class="row mt-3 mb-3">
                                 <select name="" id="lecP" >
-                                    <option value="1" selected>3개월</option>
-                                    <option value="2">6개월</option>   
-                                    <option value="3">9개월</option>
-                                    <option value="4">12개월</option>
+                                    <option value="3" selected>3개월</option>
+                                    <option value="6">6개월</option>   
+                                    <option value="9">9개월</option>
+                                    <option value="12">12개월</option>
                                 </select>
                             </div>
                             <h6 class="periodsub">*강의 게시 기간은 3, 6, 9, 12개월간 가능하며 추가 게시를 원한다면 재등록을 이용하셔야 합니다.</h6>
@@ -315,10 +312,10 @@
                                 <h5 class="mt-3">수강기간 설정</h5>
                             </div>
                             <div class="row mt-3 mb-3">
-                                <select name="" id="coP" disabled>
+                                <select name="" id="coP">
                                     <option value="1" selected>1개월</option>
-                                    <option value="2">3개월</option>   
-                                    <option value="3">6개월</option>
+                                    <option value="3">3개월</option>   
+                                    <option value="6" style="display:none;">6개월</option>
                                 </select>
                             </div>
                             <h6 class="periodsub">*강의 수강 기간은 1,3,6개월 단위로 설정 가능하며 게시기간을 초과하는 수강기간은 설정 불가합니다.</h6>
@@ -336,7 +333,7 @@
                             2/4
                         </div>
                         <div class="col-4" style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">임시저장</button>        
+                            <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage2()"> 
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -378,7 +375,7 @@
                             3/4
                         </div>
                         <div class="col-4" style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">임시저장</button>        
+                            <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage3()">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -391,7 +388,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <input type="text" size="50" id="className" placeholder="강의제목을 입력하세요.">
+                                <input type="text" size="50" id="className" placeholder="수업제목을 입력하세요.">
                             </div>
                             <div class="modal-body">
                                 <div class="row ml-3">
@@ -432,10 +429,10 @@
                         <div class="row col-6 ml-3 justify-content-center align-items-center" style="height:400px; border-right:1px solid rgb(218, 218, 218);">
                             <form action="">
                                 <div class="row mb-3">
-                                    <input type="text" size="35" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요">
+                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요">
                                 </div>
                                 <div class="row">
-                                    <textarea rows="10" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요"></textarea>
+                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -443,10 +440,10 @@
                         <!--수업키트 금액 및 강의금액 입력란 / input type을 바꾸거나 백단에서 제한 둘 것-->
                         <div class="col-5 ml-3 mt-5 mb-5 align-self-center periodselect">
                             <div class="mb-5">
-                                <input type="text" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요">
+                                <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요">
                             </div>
                             <div class="mb-2">
-                                <input type="number" min="10", max="500" style="width:-webkit-fill-available" placeholder="강의 금액을 입력해주세요">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" placeholder="강의 금액을 입력해주세요">
                             </div>
                             <h6 class="periodsub">*만원단위이며 10~500만원 사이 금액만 등록 가능합니다.</h6>
                         </div>
@@ -461,10 +458,11 @@
                                 <div >
                                     <h6 class="mb-2 font-weight-bold">태그 선택</h6>
                                 </div>
-                                <div >
-                                    <label class="mr-2"><input type="checkbox" name="" value="1번태그">&nbsp;1번태그</label>
-                                    <label class="mr-2"><input type="checkbox" name="" value="2번태그">&nbsp;2번태그</label>
-                                    <label class="mr-2"><input type="checkbox" name="" value="3번태그">&nbsp;3번태그</label>
+                                <div id="tagdiv">
+                                    <label class="mr-2"><input type="checkbox" value="1">&nbsp;1번태그</label>
+                                    <label class="mr-2"><input type="checkbox" value="2">&nbsp;2번태그</label>
+                                    <label class="mr-2"><input type="checkbox" value="3">&nbsp;3번태그</label>
+                                    <label class="mr-2"><input type="checkbox" value="4">&nbsp;4번태그</label>
                                 </div>
                             </form>
                         </div>
@@ -481,8 +479,8 @@
                             4/4
                         </div>
                         <div class="col-4" style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">임시저장</button>        
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;">등록</button>        
+                            <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+                            <button class="btn btn-outline-secondary" style="border-radius:100px;" onclick="lectureResisterF()">등록</button>        
                         </div>
                     </div>
                 </div>
@@ -520,14 +518,17 @@
 		})
 	})
    
-    //강의게시기간/수강기간 선택불가
+	
+	
+	
+	//강의게시기간/수강기간 선택불가
     $('#lecP').change(function(){
         let changeLecP = $('#lecP').find('option:selected').val();
-        if($('#lecP').find('option:selected').val() == '1'){
-            $('#coP').attr('disabled', true).niceSelect('update');
+        if($('#lecP').find('option:selected').val() == '3'){
+            $('#coP option[value = 6]').attr('style', 'display:none');
         } 
-        if($('#lecP').find('option:selected').val() != '1'){
-            $('#coP').removeAttr('disabled').niceSelect('update');
+        if($('#lecP').find('option:selected').val() != '3'){
+            $('#coP option[value = 6]').removeAttr('style');
         }
     })
     
@@ -570,7 +571,7 @@
     
     
                  
-    //여기서 부터 수업등록 / 드래그 앤 드롭
+    //수업등록 / 드래그 앤 드롭
     $(function() {  
         $("#sortable").sortable();
         $("#sortable").disableSelection();
@@ -657,7 +658,7 @@
     }
      
     
-    //강의등록 나가기(저장안됨)
+    //강의등록 나가기(저장 안하는 버튼)
     $('.exit').on('click', function(){
     	location.href = "/creator/creS"; 									//페이지 어디로 갈지 ??
     })
@@ -713,27 +714,69 @@
         });
     }
     
+    //4페이지 유효성 검사(키트 null 가능)
+	//강의금액 체크
+     $('#prc').on('keyup', function() {
+		if (/\D/.test(this.value)) {
+			this.value = this.value.replace(/\D/g, '');
+			alert('10~500만 입력가능합니다.');
+		}
+		if (this.value < 10) {
+			this.value = 10;
+			alert('10만원 미만으로 등록할 수 없습니다');
+		}
+		if (this.value > 500) {
+			this.value = 500;
+			alert('500만원을 초과할 수 없습니다');
+		}
+	}); 
+    
+     //태그 체크
+     $('#tagdiv').find('input[type="checkbox"]').on('click', function(e){
+     	let tagcount = $('input:checked[type="checkbox"]').length;
+     	if(tagcount > 3){
+     		alert("태그는 최대 3개까지 선택가능합니다");
+     		$(this).prop("checked", false);
+     	}
+     });
     
 	//시큐리티 토큰
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
     
-	
-	
-	$('#downctgr').change(()=>{
-		console.log($('#ctgr option:selected').text());
-		console.log($('#downctgr option:selected').text());
-	})
-	
     //강의 등록 / 이미지 업로드
-    function imageUploadtest(){
-		//lecture-map insert 순으로 data입력, parameter통일
+    function lectureResisterF(){
+    	let form = new FormData();
+    	
+		//변수 선언, lecture-map insert 순으로 data입력, parameter통일
+		let creid = '${id}';
 		let upctgr = $('#ctgr option:selected').text();
 		let downctgr = $('#downctgr option:selected').text();
+		let ttl = $('#lecTitle').val();
+		let intro = $('#lecIntro').val();
+		let openterm = $('#lecP option:selected').val();
+		let tlsnterm = $('#coP option:selected').val();
+		let kitname = $('#kitname').val();
+		let kitintro = $('#kitintro').val();
+		let kitprc = $('#kitprc').val();
+		let prc = $('#prc').val();
+		let tag1 = null;
+		let tag2 = null;
+		let tag3 = null;
+		$('input:checked[type="checkbox"]').each(function(a,b){
+			if(a == 0){
+				tag1 = $(this).val();
+			}
+			if(a == 1){
+				tag2 = $(this).val();
+			}
+			if(a == 2){
+				tag3 = $(this).val();
+			}
+		})
 		
-        
+		
         //메인사진 값
-        var form = new FormData();
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
@@ -741,9 +784,59 @@
         //사진이외 값 
         form.append("lecFile", upctgr);	// list 0
         form.append("lecFile", downctgr); // list 1
+        form.append("lecFile", ttl); // list 2
+        form.append("lecFile", intro); // list 3
+        form.append("lecFile", openterm); // list 4
+        form.append("lecFile", tlsnterm); // list 5
+        form.append("lecFile", kitname); // list 6
+        form.append("lecFile", kitintro); // list 7
+        form.append("lecFile", kitprc); // list 8
+        form.append("lecFile", prc); // list 9
+        form.append("lecFile", tag1); // list 10
+        form.append("lecFile", tag2); // list 11
+        form.append("lecFile", tag3); // list 12
+        form.append("lecFile", creid); // list 13
         
         //썸네일 값
         form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
+        
+        
+        //여기서부터 유효성검사 !!
+        //카테고리 유효성 검사
+		if(upctgr == null || upctgr == '전체(상위 카테고리)'){
+			alert('상위 카테고리를 선택해주세요');
+			return false;
+		} 
+		if(downctgr == null || downctgr == '전체(하위 카테고리)'){
+			alert('하위 카테고리를 선택해주세요');
+			return false;
+		}
+		
+		//메인사진 유효성 검사
+		if($("#mainPhtUp")[0].files.length < 3){
+			alert('대표 사진은 3장 업로드 해야합니다');
+			return false;
+		}
+		if($("#mainPhtUp")[0].files.length > 3){
+			alert('선택한 사진이 3장이 넘습니다');
+			return false;
+		}
+        
+        //썸네일 유효성 검사
+        if($("#thPhtUp")[0].files.length < 1){
+			alert('썸네일 사진을 등록해주세요');
+			return false;
+		}
+        
+        //2페이지 유효성 검사
+        if(lecTitle == null){
+        	alert('강의 제목을 입력해주세요');
+			return false;	
+        }
+        if(lecIntro == null){
+        	alert('강의 소개를 입력해주세요');
+			return false;	
+        }
         
         $.ajax({
             url : "/creator/lectureResister",
@@ -756,8 +849,10 @@
              },
             data : form,
             success:function(response) {
-              alert("성공하였습니다.");
-              console.log(response);
+              alert("강의 등록 신청되었습니다");
+              //console.log(response);
+              //강의 리스트 페이지로 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!
+              location.href = "/creator/creS";
             },
 	         error: function (jqXHR) { 
 	           alert(jqXHR.responseText); 
