@@ -30,4 +30,9 @@
 	update board set hits = hits +1 
 	where b_no= #{bNo}
 	</update>
+	
+	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+	select * from board
+	order by b_no desc
+	</select>
 </mapper>

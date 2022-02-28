@@ -7,4 +7,5 @@ public interface BoardMapper {
 	List<BoardVO> selectTtlList(BoardVO vo);
 	int upboard(BoardVO vo);
 	BoardVO selectBoard(BoardVO vo);//단건 조회
+	List<BoardVO> selectadbad();
 }
