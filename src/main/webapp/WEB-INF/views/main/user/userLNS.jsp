@@ -104,6 +104,27 @@
             <h3 class="font-weight-bold"><i class="fa fa-table text-danger" aria-hidden="true"></i>&nbsp;수강 중 - 공지사항</h3>
           </div>
           <hr class="font-weight-bold">
+          <div class="col-lg-12 px-0 mb-3">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                    <img class="rounded" src="/img/blog/blog-1.jpg" alt="" style="object-fit: cover; width: 100%; height: 150px;">
+                  </div>
+                  <div class="col-9 d-flex align-items-center">
+                    <div class="w-100">
+                      <h3 class="font-weight-bold pb-3">강의명</h3>
+                      <div class="progress mt-3">
+                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                          70%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row col-lg-12 py-3">
             <div class="row col-12 mr-5 mt-3">
               <div class="row col-12 bg-light py-2" style="border-top: 2px solid lightgray;">

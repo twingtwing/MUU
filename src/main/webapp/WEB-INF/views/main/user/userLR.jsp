@@ -36,7 +36,7 @@
     }
 
     #wrmodal {
-      margin-top: 12rem;
+      margin-top: 8rem;
     }
     #stars .gr{
       color: gray;
@@ -52,7 +52,7 @@
 </head>
 <body>
  <!-- 배너 시작-->
-  <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+  <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -126,6 +126,27 @@
             <h3 class="font-weight-bold"><i class="fa fa-retweet text-danger" aria-hidden="true"></i>&nbsp;수강 중 - 리뷰 & 별점</h3>
           </div>
           <hr class="font-weight-bold"> 
+          <div class="col-lg-12 px-0 mb-3">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                    <img class="rounded" src="/img/blog/blog-1.jpg" alt="" style="object-fit: cover; width: 100%; height: 150px;">
+                  </div>
+                  <div class="col-9 d-flex align-items-center">
+                    <div class="w-100">
+                      <h3 class="font-weight-bold pb-3">강의명</h3>
+                      <div class="progress mt-3">
+                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                          70%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card" style="position: relative;">
             <div class="card-body">
               <div class="row mt-4 col-12 justify-content-center">

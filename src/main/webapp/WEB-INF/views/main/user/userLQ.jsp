@@ -98,7 +98,27 @@
             <h3 class="font-weight-bold"><i class="fa fa-question-circle-o text-danger" aria-hidden="true"></i>&nbsp;수강 중 - 질문 & 답변</h3>
           </div>
           <hr class="font-weight-bold"> 
-
+			<div class="col-lg-12 px-0 mb-3">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                    <img class="rounded" src="/img/blog/blog-1.jpg" alt="" style="object-fit: cover; width: 100%; height: 150px;">
+                  </div>
+                  <div class="col-9 d-flex align-items-center">
+                    <div class="w-100">
+                      <h3 class="font-weight-bold pb-3">강의명</h3>
+                      <div class="progress mt-3">
+                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                          70%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card" style="height: auto; position: relative;">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center m-3">
@@ -120,7 +140,7 @@
 				</thead>
               <tbody class="qstboard">
               <c:forEach items="${myList}" var="list">
-                <tr data-qnaNo = "${list.qnaNo}">
+                <tr data-qnano = "${list.qnaNo}">
                   <td>${list.qContent }</td>
                   <td>${list.qRegDate }</td>
                   <c:if test="${list.qnaStCode eq 'Q01' }">
@@ -146,7 +166,7 @@
                   <option value="writer">작성자</option>
                 </select>
                 <input type="text" class="border" id="lqSearchKey">
-                <button type="button" class="border px-4">검색</button>
+                <button type="button" class="border px-4" id="searchQna">검색</button>
               </div>
               <table class="bg-light w-100 mt-3 text-center border">
                 <thead>
@@ -159,7 +179,7 @@
                 </thead>
                 <tbody class="qstboard" id="qstList">
                 <c:forEach items="${qnaList}" var="list">
-                  <tr data-qnaNo = ${list.qnaNo}>
+                  <tr data-qnano = ${list.qnaNo}>
                     <td>${list.qContent }</td>
                     <td>${list.writer }</td>
                     <td>${list.qRegDate }</td>
@@ -181,7 +201,7 @@
 				<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
 				<c:choose>
 				<c:when test="${page eq pagination.currPage}">
-                  <a class="current-page paging">${page}</a>				
+                  <a class="paging">${page}</a>				
 				</c:when>
 				<c:otherwise>
 				  <a class="paging">${page}</a>
@@ -217,7 +237,6 @@
     // 질문 등록
     $('#wr').click((e) => {
       let data = {qContent : $('#myquestion').val(), ltNo : ${ltNo}}
-      console.log(data)
       $.ajax({
     	  url : '/user/userInsertLQ',
     	  data : data,
@@ -227,9 +246,10 @@
 		  },  
       })
       .done((r)=>{
-    	  console.log(r)
+    	  $('#qstbox').toggleClass('d-none');
+          $('#qstbox').toggleClass('d-flex');
+          window.alert('등록이 완료되었습니다.');
       })
-      // 데이터 다 제대로 넘어가고, sql문도 맞는데 안된다. 왜지 ㅡㅡ;;
     })
 
     
@@ -239,16 +259,22 @@
 	 	        $('<td>').attr('colspan', 4).text(content).addClass('clicked'));
 	 	return row;
 	}
+	
     $('.qstboard').click((e) => {
-    	let qnaNo = e.target.parentNode.dataset.qnano;
+    	let qnaNo = $(e.target).parent().data('qnano');
     	if(e.target.parentNode.lastElementChild.textContent==='답변 대기 중'){
     		return;
     	}
-    	if(e.target.parentNode.childElementCount===1){
-    		return;
-    	}
-	    if(e.target.parentNode.nextElementSibling.childElementCount===1){
+	    console.log('1개인가');
+	    if($(e.target).parent().children().length===1){
 	    	e.target.parentNode.nextElementSibling.firstElementChild.remove();
+	       return;
+	    }
+    	if($(e.target).parent().children().length===1){
+			return;
+		}
+	    if($(e.target).parent().next().children().length===1){
+	    	$(e.target).parent().next().first().remove();
 	       return;
 	    }
 	    $.ajax({
@@ -265,32 +291,72 @@
 	// 페이지네이션
 	$('.paging').click((e)=>{
 		let pageNum = +e.currentTarget.textContent-1;
-		let key = $('#lqSearchKey').val();
-		const data = { ltNo : ${ltNo}, writerSearchKey: undefined, contentSearchKey : undefined, page : pageNum};
+		const data = { ltNo : ${ltNo}, writerSearchKey: '', contentSearchKey : '', page : pageNum};
+		if(!$('#lqSearchKey').val()){
+			pagination(data);			
+		} else {
+			let searchData = makeSearchData(pageNum);
+			pagination(searchData);
+		}	
+	})
+	
+	$('#searchQna').click(()=>{
+		let data = makeSearchData(0);
+		pagination(data);
+	});
+	
+    const makeSearchData = (p)=>{
+    	const data = { ltNo : ${ltNo}, writerSearchKey: '', contentSearchKey : '', page : p};
+    	let key = $('#lqSearchKey').val();
 		if($('#searchOption').val()==='writer'){
 			data.writerSearchKey = key;
+			data.contentSearchKey = '';
 		} else if($('#searchOption').val()==='content'){
 			data.contentSearchKey = key;
+			data.writerSearchKey = '';
 		}
-		pagination(data);
+		return data;
+    }
+	
+	
+	$('#lqSearchKey').keyup((e)=>{
+		if(e.key==='Enter'){
+			$('#searchQna').click();
+		}
 	})
-	const pagination = (data)=>{
+	
+	const pagination = (d)=>{
 		$.ajax({
 			url : '/user/userLQpage',
-			data : data,
+			data : d,
 		})
 		.done((res)=>{
-			console.log(res);
 			removeAll();
+			makeRowPage(res);
 		})
 	}
 	const removeAll = ()=>{
 		$('#qstList').children().remove();
 	}
-	const makeRow = (list)=>{
-		let row = $('<tr>')
-	}
-	
+	const makeRowPage = (list) =>{
+		for(let val of list) {
+			if(val.qnaStCode==='Q01'){
+				val.qnaStCode='답변 대기 중';
+				val.color='text-danger'
+			} else {
+				val.qnaStCode='답변 완료';
+				val.color='text-success';
+			}
+			let tr = $('<tr>').append(
+					$('<td>').text(val.qContent),
+					$('<td>').text(val.writer),
+					$('<td>').text(new Date(val.qRegDate).toISOString().slice(0,10)),
+					$('<th>').text(val.qnaStCode).addClass(val.color),
+					);
+			tr.data('qnano',+val.qnaNo)
+			$('#qstList').append(tr)
+			}
+		}
 	
 	
 	     

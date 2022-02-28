@@ -9,14 +9,14 @@
 	        AND LT_NO = #{ltNo}
 	        AND (Q_CONTENT LIKE '%'||#{contentSearchKey}||'%'
 	        	AND WRITER LIKE '%'||#{writerSearchKey}||'%')
-	        ORDER BY Q_REG_DATE DESC, CODE_NAME)
+	        ORDER BY Q_REG_DATE DESC, QNA_ST_CODE)
         WHERE RN <![CDATA[>=]]> (10*${page})+1
 	</select>
 	<select id="selectMyQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
 		SELECT * FROM LT_QNA
 		WHERE LT_NO = #{ltNo}
 		AND WRITER = #{writer}
-		ORDER BY Q_REG_DATE
+		ORDER BY Q_REG_DATE DESC
 	</select>
 	<select id="qnaListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM LT_QNA
