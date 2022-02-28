@@ -272,6 +272,7 @@
                      faq.target2 = '#' + faq.target;
                      for (i = 0; i < result.length; i += 5) {
                         five.push(result.slice(i, i + 5));
+                       
                      }
                   }
                   console.log(five)
