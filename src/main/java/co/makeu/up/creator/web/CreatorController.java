@@ -77,4 +77,10 @@ public class CreatorController {
 		return "main/creator/creSaLec";
 	}
 	
+	//강의상세-크리에이터정보
+	@GetMapping("/creD")
+	public String creD() {
+		return "main/creator/creD";
+	}
+	
 }

@@ -49,8 +49,7 @@
 		<security:authorize access="isAuthenticated()">
 		<security:authentication property="principal.username" var="username"/>
 		</security:authorize>
-		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>
-		
+		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>	
 		<h5> 사용자 아이디: ${username }</h5>
 		<h5><security:authorize access="isAnonymous()">
 			넌 비회원이야
@@ -62,6 +61,17 @@
 			<a href="/creS">크리에이터 정보 >></a>
 			<a href="/lecI">강의 등록 >></a>
 		
+		<a href="/creS">크리에이터 정보 >></a>
+		<a href="/lecI">강의 등록 >></a>
+		<a href="/creator/cLecNL">공지사항</a>
+		<a href="/creator/cLecNS">상세</a><br>
+		<a href="/creator/cLecNI">등록</a>
+		<a href="/creator/cLecNU">수정</a>
+
+		<a href="/creator/cLecQ">질답</a>
+		<a href="/creator/creLectureReview">크리에이터 리뷰</a>
+		<a href="/creator/creS">크리에이터 정보 >></a>
+		<a href="/creator/lecI">강의 등록 >></a>
 		<a href="/creator/cLecNL">공지사항</a>
 		<a href="/creator/cLecNS">상세</a><br>
 		<a href="/creator/cLecNI">등록</a>
@@ -71,7 +81,9 @@
 		<a href="/user/userLL">유저-수강목록 </a>
 		<a href="/user/userLNL">유저-강의공지목록 </a>
 		<a href="/user/userLNS">유저-강의공지조회 </a>
+
 		<a href="/user/userRefund">유저-강의환불 </a>
+
 		<a href="/user/userLQ">유저-강의질문 </a>
 		<a href="/user/userLR">유저-리뷰 </a>
 		<a href="/user/userLW">유저-강의시청</a><br>

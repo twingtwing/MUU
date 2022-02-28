@@ -48,6 +48,11 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        
+        .creater_data:hover h5{
+        	font-weight: bold;
+        	color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -118,7 +123,7 @@
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <i class="fa fa-plus"></i>
-                                                    <a v-bind:href="`#?${lecDetails.id}`">
+                                                     <a href="/creD">
                                                         <h5 class="mb-0 ml-1">크리에이터 상세 정보</h5>
                                                     </a>
                                                 </div>
@@ -133,7 +138,7 @@
                                                 <li><a href="#lec_review">후기</a></li>
                                                 <li><a href="#lec_kit">키트</a></li>
                                                 <li><a href="#lec_qna">질문&답변</a></li>
-                                                <li><a href="#">공지사항</a></li>
+                                                <li><a href="/lecN">공지사항</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -342,7 +347,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <button class="btn btn-danger w-100">구매</button>
+                                                                <button onclick="location.href='/lecP'" class="btn btn-danger w-100">구매</button>
                                                             </div>
                                                             <div class="row mt-2 d-flex justify-content-end pr-2">
                                                                 <p class="heart"><i v-bind:class="[lecDetails.wash ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> 찜</p>
@@ -629,7 +634,7 @@
                 };
             }
             
-        })
+        });
 
         const mountLecD = lecD.mount('#lecture_detail');
     </script>

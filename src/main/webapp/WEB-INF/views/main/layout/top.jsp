@@ -16,6 +16,14 @@
 .product__pagination a.current-page {
     border: 1px solid #ffc3c3;
  }
+ .dropdown-submenu:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+ .dropdown-menu{
+ 	left: -6%;
+ 	top : -10%;
+ }
 </style>
 </head>
 <body>
@@ -35,10 +43,10 @@
 								<li class="m-0"><a href="/home">홈</a></li>
 								<li><a href="#">카테고리<span class="arrow_carrot-down"></span></a>
 									<ul class="dropdown">
-										<li class="dropdown-submenu"><a href="/lecS"
-											class="dropdown-toggle" data-toggle="dropdown" role="button"
-											aria-haspopup="true" aria-expanded="false"><span
-												class="nav-label">음악</span></a>
+										<li class="dropdown-submenu">
+											<a href="/lecS" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												<span class="nav-label">음악</span>
+											</a>
 											<ul class="dropdown-menu">
 												<li><a href="/lecS">클래식</a></li>
 												<li><a href="/lecS">재즈</a></li>
@@ -183,5 +191,10 @@
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</header>
+	<script type="text/javascript">
+		$('.dropdown-toggle').click(function(){
+			location.href = $(event.target).closest('a').attr('href');
+		})
+	</script>
 </body>
 </html>
