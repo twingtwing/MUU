@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,41 +45,46 @@
 <div id="box" class="d-flex bg-black p-5" style="background-color: black;">
     <div style="width: 70vw;">
       <video controls width="100%" controlsList="nodownload">
-        <source src="#" type="video/mp4" data-poster="/resources/img/normal-breadcrumb.jpg">
-      </video>
-      <h2 style="font-weight: bold; color:white;">오리엔테이션</h2>
+        <source src="${firstLesson.lsnFile}" type="video/mp4" data-poster="" id="vd">
+      </video>    
+      <h2 style="font-weight: bold; color:white;" id="title">${firstLesson.ttl}</h2>
       <div>
-        <div style="text-align: right;">2022-05-23</div>
-        잘 보고 따라하세요...
+        <div style="text-align: right;" id="regdate">${firstLesson.regDate}</div>    
       </div>
-    </div>
-    <div style="margin-left: 10rem;">
-      <h4>커리큘럼</h4>
-      <ol>
-        <li onclick="showLec(0)">오리엔테이션</li>
-        <li>기초 다지기 - 피아노의 기본에 대하여</li>
-        <li>기초 다지기 - 필수 음악이론</li>
-        <li>악보 익히기 - 악보를 제대로 이해하자</li>
-        <li>악보 익히기 - 오른손 연주</li>
-        <li>악보 익히기 - 왼손 연주</li>
-        <li>악보 익히기 - 양손 연주</li>
-        <li>중간 점검</li>
-        <li>리듬 연습 - 레가토와 스타카토</li>
-        <li>리듬 연습 - 템포의 중요성</li>
-        <li>리듬 연습 - 아름다운 선율을 만들어보자</li>
-        <li>리듬 연습 - 박자와 음표의 이해</li>
-        <li>리듬 연습 - 셈여림</li>
-        <li>반주 연습 - 3박자 반주 패턴</li>
-        <li>반주 연습 - 3/8박자와 6/8박자</li>
-        <li>반주 연습 - 알베르티 베이스</li>
-        <li>장조 - 음계</li>
-        <li>장조 - C장조</li>
-        <li>장조 - #이 붙으면 어떻게 되는데?</li>
-        <li>장조 - 셋잇단음표 연주</li>
-        <li>최종 점검 (1)</li>
-        <li>최종 점검 (2)</li>
+      </div>
+    <div style="margin-left: 5rem;">
+      <h4 class="text-white mb-4">커리큘럼</h4>
+      <ol id="curr">
+      <c:forEach items="${lessons}" var="lesson">
+      <!--  for each 돌리되 .. ajax 사용해서 영상 src, 제목, 내용, 날짜만 바꿔주면 될듯함 -->
+        <li class="${lesson.lsnNo}">${lesson.ttl}</li>
+      </c:forEach>
       </ol>
     </div>
-  </div>
+</div>
+<script type="text/javascript">
+const changeVideo = (ttl, regDate, filepath)=>{
+	console.log(ttl,regDate,filepath)
+	$('#title').text(ttl);
+	$('#regdate').text(regDate);
+	$('#vd').attr('src',filepath);
+	$('video')[0].load();
+}
+
+$('#curr>li').click((e)=>{
+	let no = e.currentTarget.className;
+	let data = {lsnNo : no};
+	$.ajax({
+		url : '/user/userLWselect',
+		data : data,
+		contentType : 'application/json; charset=utf-8',
+	})
+	.done((e)=>{
+		changeVideo(e.ttl,new Date(e.regDate).toISOString().slice(0,10),e.lsnFile)
+	})
+})
+
+// 시청시간 기록
+</script>
 </body>
 </html>

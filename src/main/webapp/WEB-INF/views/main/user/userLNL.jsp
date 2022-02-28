@@ -28,6 +28,9 @@
     tbody>tr{
       cursor: pointer;
     }
+    a{
+    	cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -111,12 +114,12 @@
             <div class="card w-100" style="position: relative;">
               <div class="card-body my-3">
                 <div class="col-12 row justify-content-end mb-1">
-                  <select class="border px-4">
-                    <option value="">제목</option>
-                    <option value="">내용</option>
+                  <select class="border px-4" id="searchType">
+                    <option value="ttlSearchKey">제목</option>
+                    <option value="contentSearchKey">내용</option>
                   </select>
-                  <input type="text" class="border">
-                  <button type="button" class="border px-4">검색</button>
+                  <input type="text" class="border" id="noticeSearchKey">
+                  <button type="button" class="border px-4" id="noticeSearch">검색</button>
                 </div>
 
                 <div class="col-12 row mb-3">
@@ -130,37 +133,39 @@
                         <th>조회수</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="noticeList">
                       <c:forEach items="${notices}" var="notice">
                       <tr>
                         <td>${notice.ntNo}</td>
                         <td>${notice.ttl}</td>
                         <td>
-                        	<c:if test="${not empty notice.fileNo}">🗎</c:if>
+                        	<c:if test="${not empty notice.fileNo}">📄</c:if>?
                         </td>
                         <td>${notice.wrDate }</td>
                         <td>${notice.hits }</td>
                       </tr>
                     </c:forEach>
-                    <tr>
-                        <th>1</th>
-                        <th>dd</th>
-                        <th></th>
-                        <th>2022-05-05</th>
-                        <th>5</th>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
-
-                <div class="product__pagination d-flex justify-content-center">
-                  <a href="#"><i class="fa fa-angle-double-left"></i></a>
-                  <a href="#" class="current-page">1</a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#">4</a>
-                  <a href="#">5</a>
-                  <a href="#"><i class="fa fa-angle-double-right"></i></a>
+	
+				<div class="product__pagination d-flex justify-content-center">
+				<c:if test="${pagination.currRange ne 1}">
+                  <a><i class="fa fa-angle-double-left"></i></a>
+				</c:if>
+				<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
+				<c:choose>
+				<c:when test="${page eq pagination.currPage}">
+                  <a class="current-page paging">${page}</a>				
+				</c:when>
+				<c:otherwise>
+				  <a class="paging">${page}</a>
+				</c:otherwise>
+				</c:choose>
+				</c:forEach>
+                  <c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
+                  <a><i class="fa fa-angle-double-right"></i></a>
+				</c:if>
                 </div>            
               </div>
               <!--card body end-->
@@ -173,14 +178,95 @@
   <form action="/user/userLNS" class="userLNS">
   <input type="hidden" name="ntNo">
   </form>
-  <script>
-    document.querySelector('tbody>tr').addEventListener('click',(e)=>{
-      // 글 선택
-      let ntNo = e.currentTarget.firstElementChild.textContent;
+  <script> 
+  // 일반 페이지네이션 함수
+  const normalPageAjax = (data)=>{
+	  $.ajax({
+			url : '/user/userNoticePage',
+			data : data,
+			contentType : 'application/json;charset=utf-8',
+		})
+		.done((res)=>{
+			$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
+			removeAll();
+			changePage(res);
+		})
+  }
+  // 검색시 페이지네이션 함수
+  const searchPageAjax = (searchData) =>{
+	  $.ajax({
+  		url : '/user/userNoticeSearch',
+  		data : searchData,
+  		contentType : 'application/json;charset=utf-8',
+  	})
+  	.done((res)=>{
+  		$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
+  		removeAll();
+  		changePage(res);
+  	})
+  }
+  
+  // 페이지네이션
+	$('.paging').click((e)=>{
+		let pageNum = +e.currentTarget.textContent-1;
+		const data = {ltNo : ${ltno} , page : pageNum};
+		if(!$('#noticeSearchKey').val()){
+			normalPageAjax(data);			
+		} else {
+			const searchData = makeSearchObj();
+			searchData.page = pageNum;
+			searchPageAjax(searchData);
+		}
+		//$(e.currentTarget).addClass('current-page');
+	})
+	
+  // 페이지네이션 DOM 조작 함수
+	const removeAll = ()=>{
+		$('#noticeList').children().remove();
+	}
+	const changePage = (list)=>{
+		list.forEach((val)=>{
+			let tr = $('<tr>').append(
+					$('<td>').text(val.ntNo),
+					$('<td>').text(val.ttl),
+					$('<td>').text(val.fileNo),
+					$('<td>').text(new Date(val.wrDate).toISOString().slice(0,10)),
+					$('<td>').text(val.hits));
+			$('#noticeList').append(tr);
+		})
+	}
+	
+  // 클릭시 공지사항 내용으로
+    $('#noticeList').click((e)=>{
+      console.log(e.target.parentElement.firstElementChild.textContent)
+      let ntNo = e.target.parentElement.firstElementChild.textContent;
       $('.userLNS input').val(ntNo);
       $('.userLNS').submit();
     })
 
+   // 페이징에 필요한 검색 객체 생성
+   const makeSearchObj = ()=>{
+	   let ttl = null; 
+	   let cont = null;
+	   if($('#searchType').val()==='ttlSearchKey'){
+	   		ttl = $('#noticeSearchKey').val()
+	   } else {
+	   		cont = $('#noticeSearchKey').val();
+	   }
+	   const searchData = { ttlSearchKey : ttl , contentSearchKey : cont, ltNo : ${ltno}, page : 0}
+	   return searchData
+   }
+   
+   // 검색
+    $('#noticeSearch').click((e)=>{   	
+    	searchPageAjax(makeSearchObj());
+    })
+    $('#noticeSearchKey').keypress((e)=>{
+    	if(e.key=='Enter'){
+    		$('#noticeSearch').click();
+    	}
+    })
+    
     //mouseover 이벤트 : 사이드바 css변경
     $('#cctgr  .list-group-item:not(.mylist)').on('mouseover',function(){
         $(this).css('background-color','#e53637');

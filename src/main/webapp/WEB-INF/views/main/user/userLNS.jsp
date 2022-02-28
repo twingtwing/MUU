@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
 </head>
 <body>
 <!-- 배너 시작-->
-  <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+  <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -105,27 +106,32 @@
           <hr class="font-weight-bold">
           <div class="row col-lg-12 py-3">
             <div class="row col-12 mr-5 mt-3">
-              <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:1px solid black;">
-                  <h5><strong>제목 : </strong>제목!!!!!</h5>
+              <div class="row col-12 bg-light py-2" style="border-top: 2px solid lightgray;">
+                  <h5><strong> &nbsp;${notice.ttl}</strong></h5>
               </div>
-              <div class="row col-12 justify-content-between bg-light py-2"  style="border-bottom: 2px solid black;">
-                  <p class="mb-0">글번호 : 1213</p>
-                  <div class="row">
-                      <p class="mb-0">조회수 : 8</p>
-                      <p class="mb-0 ml-2">작성날짜 : 2022-05-05</p>
+              <div class="row col-12 justify-content-between bg-light py-2"  style="border-bottom: 2px solid lightgray;">
+                  <p class="mb-0">글번호 : ${notice.ntNo }</p>
+                  <div>
+                      <span class="mb-0">조회수 : ${notice.hits }</span>
+                      <span class="mb-0 ml-2">작성날짜 : ${notice.wrDate}</span>
                       <!-- 수정안했으면 안해도됨 -->
-                      <p class="mb-0 ml-2 mr-2">수정날짜 : 2022-05-09</p>
+                      <c:if test="${not empty notice.modDate}">
+                      <span class="mb-0 ml-2 mr-2">수정날짜 : ${notice.modDate}</span>
+                      </c:if>
                   </div>
               </div>
               <div class="row col-12 my-3" style="height: 45vh;">
-                  <p> ㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅁㄹㄴㅇㅁㄻ</p>
+                  <p class="px-2">${notice.content}</p>
               </div>
-              <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
+              <div class="row col-12 bg-light py-2" style="border-top: 2px solid lightgray; border-bottom:2px solid lightgray;">
                   <div class="d-flex align-items-center">
+                  <c:if test="${not empty notice.fileNo}">
                       <i class="fa fa-download mr-2"></i>
+                  </c:if>
                   </div>
-                  <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
-                  <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
+                  <span class="mb-0 mr-2">
+	                  <a href="" class="text-muted file_download">${notice.fileNo }</a>
+               </span>
               </div>
             </div>
           </div>
@@ -140,7 +146,7 @@
   </section>
   <script>
     $('#back').click(()=>{
-      location.href = history.back();
+      location.href = '/user/userLNL?ltNo=${notice.ltNo}';
     })
 
     

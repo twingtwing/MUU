@@ -14,11 +14,15 @@ public class SugangVO {
 	private String tlsnStCode;
 	private String shipStCode;
 	private String rtnContent;
-	private int shipNum;
+	private String shipNum;
 	private int pay;
 	private int zip;
 	private String addr;
 	private String detaAddr;
 	private String tel;
 	private Date expDate;
+	
+	// for join
+	private String ttl;
+	private String thumb;
 }

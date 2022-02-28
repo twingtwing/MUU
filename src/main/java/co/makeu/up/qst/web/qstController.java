@@ -1,7 +1,5 @@
 package co.makeu.up.qst.web;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +22,7 @@ public class qstController {
 	@PostMapping("/QstInsert")
 	public String QstInsert(QstVO vo) {
 		System.out.println("도착은 한거니?");
+		System.out.println("아니 아직멀었어");
 		System.out.println(vo.toString());
 		qstDao.QstInsert(vo);
 		return "main/all/qna";

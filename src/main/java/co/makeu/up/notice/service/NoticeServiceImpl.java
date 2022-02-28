@@ -10,13 +10,19 @@ public class NoticeServiceImpl implements NoticeMapper{
 	@Autowired NoticeMapper map;
 	
 	@Override
-	public List<NoticeVO> NoticeList() {
-		return map.NoticeList();
+	public List<NoticeVO> NoticeList(NoticeVO vo) {
+		return map.NoticeList(vo);
 	}
 
 	@Override
 	public NoticeVO NoticeSelect(int ntno) {
 		return map.NoticeSelect(ntno);
 	}
+
+	@Override
+	public int NoticeListCnt(int ltNo) {
+		return map.NoticeListCnt(ltNo);
+	}
+
 	
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.lesson.service.LessonMapper">
+	<select id="lessonList" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
+		SELECT * FROM LESSON WHERE LT_NO = #{ltNo} ORDER BY 1
+	</select>
+	<select id="ajaxLessonSelect" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
+		SELECT * FROM LESSON WHERE LSN_NO = #{lsnNo}
+	</select>
+</mapper>

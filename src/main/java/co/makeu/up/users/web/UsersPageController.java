@@ -15,11 +15,6 @@ public class UsersPageController {
 	@Autowired
 	UsersServiceImpl usersDao;
 	
-	@GetMapping("/user/userLL")
-	public String userLectureList() {
-		return "main/user/userLL";
-	}
-	
 	@GetMapping("/user/userUpdate")
 	public String userUpdateForm(UsersVO vo,Principal pri,Model model) {
 		vo.setId(pri.getName());
@@ -28,20 +23,12 @@ public class UsersPageController {
 		return "main/user/userU";
 	}
 	
-	@GetMapping("/user/userLQ")
-	public String userLecQuestion() {
-		return "main/user/userLQ";
-	}
 	@GetMapping("/user/userLR")
 	public String userLecReview() {
 		return "main/user/userLR";
 	}
-	@GetMapping("/user/userR")
+	@GetMapping("/user/userRefund")
 	public String userRefund() {
 		return "main/user/userR";
-	}
-	@GetMapping("/user/userLW")
-	public String userWatch() {
-		return "main/user/userLW";
 	}
 }

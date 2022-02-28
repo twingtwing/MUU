@@ -9,4 +9,7 @@
 			   #{openTerm}, #{tlsnTerm}, #{prc}, #{kitName}, #{kitIntro}, #{kitPrc}, #{tag1}, #{tag2}, #{tag3}, 
 			   sysdate, "L02", select add_months(sysdate, #{openTerm}) as expDate from dual, sysdate)
 	</insert>
+	<select id="lectureSelect" parameterType="Integer" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE WHERE LT_NO = #{ltNo}
+	</select>
 </mapper>

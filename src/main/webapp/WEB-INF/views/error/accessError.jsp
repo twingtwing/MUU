@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1 style="background-color: pink">${msg }</h1>
+<h2>${accessBan }</h2>
 <h2>넌 권한이 없어! 꺼져!</h2>
 <h2>3초 후 메인 페이지로 이동합니다.</h2>
 <script type="text/javascript">

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.sugang.service.SugangMapper">
+	<select id="sugangSelectList" parameterType="String" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT S.*, L.TTL, L.THUMB FROM 
+		SUGANG S JOIN LECTURE L
+		ON S.LT_NO = L.LT_NO 
+		WHERE ID = #{id}
+		ORDER BY S.EXP_DATE
+	</select>
+	<select id="sugangCheckDate" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">		
+		SELECT S.*,L.TTL,L.THUMB FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO = L.LT_NO
+		WHERE S.LT_NO=#{ltNo} AND S.ID = #{id} AND S.EXP_DATE>SYSDATE
+	</select>
+</mapper>
