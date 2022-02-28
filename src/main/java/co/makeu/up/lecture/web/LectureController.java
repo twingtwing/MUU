@@ -32,11 +32,13 @@ public class LectureController {
 		return "main/lecture/lecI";
 	}
 	
+	//강의검색
 	@GetMapping("/lecS")
 	public String lecS() {
 		return "main/lecture/lecS";
 	}
 	
+	//강의상세
 	@GetMapping("/lecD")
 	public String lecD() {
 		return "main/lecture/lecD";
@@ -51,6 +53,18 @@ public class LectureController {
 	}
 	
 	//강의등록
+	//강의상세-공지사항
+	@GetMapping("/lecN")
+	public String lecN() {
+		return "main/lecture/lecN";
+	}
+	
+	//강의 결제
+	@GetMapping("/lecP")
+	public String lecP() {
+		return "main/lecture/lecP";
+	}
+	
 	@PostMapping("/creator/lectureResister")
 	public void lectureResister(LectureVO vo, @RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
 			@RequestParam(value="lecFile", required = false) String[] lecList) {
