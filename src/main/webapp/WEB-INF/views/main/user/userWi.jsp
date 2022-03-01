@@ -126,7 +126,7 @@ keyframes rotate_image { 100% {
 											<table class="table border-bottom">
 												<thead class="text-center">
 													<th style="width: 60px;">체크</th>
-													<th style="width: 300px;">강의사진</th>
+													<th style="width: 300px;">강의사진test</th>
 													<th>강의제목</th>
 													<th>강의설명</th>
 													<th style="width: 120px;">강의비용</th>
