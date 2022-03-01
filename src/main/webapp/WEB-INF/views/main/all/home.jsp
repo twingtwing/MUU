@@ -88,6 +88,7 @@
 		<a href="/user/userLR">유저-리뷰 </a>
 		<a href="/user/userLW">유저-강의시청</a><br>
 		<a href="excel">엑셀다운로드</a>
+		<a href="/user/userWishList">유저-위시리스트</a>
 		
 	</div>
     <!-- slide benner -->
