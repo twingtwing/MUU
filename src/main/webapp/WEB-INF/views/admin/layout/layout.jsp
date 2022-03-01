@@ -21,19 +21,36 @@
 <!-- Custom CSS -->
     <link href="/resources/dist/css/style.min.css" rel="stylesheet">
 	<script src="/resources/js/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+        .page-link{
+            color: #837f7f;
+        }
+        .page-link:hover{
+            color: white;
+        }
+        .page-item.active .page-link{
+            background-color: black;
+            border-color: black;
+        }
+        .breadcrumb-item a{
+            color: black;
+            font-weight: bold;
+        }
+        .breadcrumb-item.active{
+            color: rgb(153, 149, 149);
+        }	
+	</style>
 </head>
 <body>
 
 <div id="mai-wrapper">
-<tiles:insertAttribute name="top"/>
-<tiles:insertAttribute name="side"/>
-<div class="page-wrapper">
-<tiles:insertAttribute name="body"/>
-<tiles:insertAttribute name="bottom"/>
+	<tiles:insertAttribute name="top"/>
+	<tiles:insertAttribute name="side"/>
+	<div class="page-wrapper">
+		<tiles:insertAttribute name="body"/>
+		<tiles:insertAttribute name="bottom"/>
+	</div>
 </div>
-</div>
-
-
 
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>

@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.board.service.BoardMapper">
-	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-		SELECT *
-		FROM(SELECT ROWNUM rn, B.* , count(*) over() as count 
-			 FROM board B
-		     WHERE b_st_code = 'B01')
-		WHERE rn &gt; (#{pageNum} - 1) * #{amount}
-		AND rn &lt;= #{pageNum} * #{amount}
-	</select>
-	
-	<select id="selectTtlList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-		SELECT * FROM board
-		WHERE ttl LIKE '%' || #{ttl} || '%'
-		AND b_st_code = 'B01'
+	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO">
+		SELECT B_NO,TTL,CONTENT,B_ST_CODE,WR_DATE,HITS, NVL(FILE_NO,-1) FILE_NO
+		FROM BOARD
+		WHERE b_st_code = 'B01'
+		ORDER BY b_no DESC
 	</select>
 	
 	<select id="selectBoard" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
@@ -27,8 +19,8 @@
 	
 	
 	<update id="upboard" parameterType="co.makeu.up.board.service.BoardVO">
-	update board set hits = hits +1 
-	where b_no= #{bNo}
+	UPDATE BOARD SET HITS = NVL(HITS,0) +1 
+	WHERE B_NO= #{bNo}
 	</update>
 	
 	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">

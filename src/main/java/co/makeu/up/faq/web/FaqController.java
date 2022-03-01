@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +30,18 @@ public class FaqController {
 	@PostMapping("/faqSelectList")
 	public List<FaqVO> faqSelectList() {
 		return faqDao.faqSelectList();
+	}
+	
+	//admin faq
+	@GetMapping("/admin/adFaqL")
+	public String adFaqL() {
+		return "admin/all/adFaqL";
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/faqList")
+	public List<FaqVO> faqList(){
+		return faqDao.faqList();
 	}
 	
 }

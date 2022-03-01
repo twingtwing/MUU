@@ -58,4 +58,5 @@ public class SugangController {
 			return "main/user/userLS";
 		}
 	}
+	
 }

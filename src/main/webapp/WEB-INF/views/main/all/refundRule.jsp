@@ -29,7 +29,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="#" class="text-dark font-weight-bold"><i
+						<a href="/home" class="text-dark font-weight-bold"><i
 							class="fa fa-home "></i> Home</a> <span>환불규정</span>
 					</div>
 				</div>
