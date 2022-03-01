@@ -109,6 +109,22 @@
     </div>
   </section>
   <!-- 배너끝 -->
+   <!-- 카테고리 시작-->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
+            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
+            <span>내 강의리스트</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 카테고리 끝-->
+  
   
   <section class="blog spad">
     <div class="container">
@@ -116,17 +132,16 @@
         <div class="col-lg-2">
           <div class="row mr-2" style="width:160px">
             <ul class="list-group w-100">
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="#">내 정보</a>
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
+                <a class="list-link" href="/user/userSelect">내 정보</a>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-                <a class="list-link active" href="#">내 강의리스트</a>
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
+                <a class="list-link active" href="/user/userLectureList">내 강의리스트</a>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
                 <a class="list-link" href="./박정욱_위시리스트.html">위시 리스트</a>
               </li>
-              <li class="list-group-item align-items-center d-flex" style="height: 55px;">
+              <li class="list-group-item" style="height: 55px;">
                 <a class="list-link" href="./박정욱_유저결제내역.html">결제내역</a>
               </li>
             </ul>
@@ -160,9 +175,10 @@
                           <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
                               <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.tlsnNo})">
-                              <h5 class="px-3 font-weight-bold font-weight-bold" onclick="selectLecture(${sugang.tlsnNo})">${sugang.ttl}</h5>
-                              <div class="bg-secondary w-100 small position-relative">☺
-                                <div class="w-75 bg-danger position-absolute text-white pl-1" style="top:0px;">진도율 어캐보지?;;${sugang.tlsnNo }</div>
+                              <h5 class="px-3 m-0 font-weight-bold font-weight-bold" onclick="selectLecture(${sugang.tlsnNo})">${sugang.ttl}</h5>
+                              <div class="small text-secondary text-right m-0">진도율 ( ${sugang.progPct}% )</div>
+                              <div class="bg-secondary w-100 small position-relative">　
+                                <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${sugang.progPct}%">　</div>
                               </div>
                             </div>
                           </c:forEach>

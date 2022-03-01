@@ -19,4 +19,9 @@ public class LessonServiceImpl implements LessonMapper {
 		return map.ajaxLessonSelect(lsnNo);
 	}
 
+	@Override
+	public List<LessonVO> lessonWithProgress(LessonVO vo) {
+		return map.lessonWithProgress(vo);
+	}
+
 }

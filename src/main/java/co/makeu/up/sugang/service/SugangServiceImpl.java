@@ -19,4 +19,14 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.sugangCheckDate(vo);
 	}
 
+	@Override
+	public int sugangRefundUpdate(int tlsnNo) {
+		return map.sugangRefundUpdate(tlsnNo);
+	}
+
+	@Override
+	public int sugangBeforeRefund(SugangVO vo) {
+		return map.sugangBeforeRefund(vo);
+	}
+
 }
