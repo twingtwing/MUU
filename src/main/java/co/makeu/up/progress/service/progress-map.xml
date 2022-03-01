@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.progress.service.ProgressMapper">
+	<insert id="insertProgress" parameterType="co.makeu.up.progress.service.ProgressVO">
+		INSERT INTO PROGRESS VALUES(
+		#{progPct}, #{id}, #{lsnNo}
+		)
+	</insert>
+	<select id="selectProgress" parameterType="co.makeu.up.progress.service.ProgressVO" resultType="co.makeu.up.progress.service.ProgressVO">
+		SELECT * FROM PROGRESS
+		WHERE LSN_NO = #{lsnNo}
+		AND ID = #{id}
+	</select>
+	<update id="updateProgress" parameterType="co.makeu.up.progress.service.ProgressVO">
+		UPDATE PROGRESS
+		SET PROG_PCT = #{progPct}
+		WHERE ID = #{id}
+		AND LSN_NO = #{lsnNo}
+	</update>
+	<select id="wholeProgress" parameterType="co.makeu.up.progress.service.ProgressVO" resultType="Integer">
+		SELECT AVG(PROG_PCT) FROM (
+		    SELECT P.*,L.LT_NO FROM PROGRESS P JOIN LESSON L
+			ON P.LSN_NO = L.LSN_NO
+			WHERE ID = #{id}
+			AND LT_NO = #{ltNo}
+		)
+	</select>
+	<select id="countBeforeRefund" parameterType="co.makeu.up.progress.service.ProgressVO" resultType="Integer">
+		SELECT COUNT(*) CNT FROM PROGRESS P JOIN LESSON L
+		ON P.LSN_NO = L.LSN_NO
+		WHERE ID = #{id}
+		AND L.LSN_NO !=(
+		    SELECT MIN(LSN_NO) 
+		    FROM LESSON WHERE LT_NO = #{ltNo})
+	</select>
+</mapper>

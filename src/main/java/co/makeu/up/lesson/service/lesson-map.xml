@@ -7,4 +7,19 @@
 	<select id="ajaxLessonSelect" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
 		SELECT * FROM LESSON WHERE LSN_NO = #{lsnNo}
 	</select>
+
+	<insert id="lessonInsert" parameterType="co.makeu.up.lesson.service.LessonVO">
+		INSERT INTO LESSON VALUES
+		((SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON), #{ttl}, #{lsnFile}, #{ltNo},
+		SYSDATE, SYSDATE,'20')
+	</insert>
+
+	<select id="lessonWithProgress" parameterType="co.makeu.up.lesson.service.LessonVO" resultType="co.makeu.up.lesson.service.LessonVO">
+		SELECT L.LSN_NO,L.TTL, P.PROG_PCT,P.ID FROM LESSON L LEFT OUTER JOIN PROGRESS P
+		ON L.LSN_NO = P.LSN_NO
+		WHERE LT_NO = #{ltNo}
+		AND ID = #{id}
+		ORDER BY L.LSN_NO
+	</select>
+
 </mapper>

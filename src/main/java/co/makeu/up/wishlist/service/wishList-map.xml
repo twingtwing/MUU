@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.wishlist.service.WishListMapper">
 	<select id="WishListSearch" resultType="co.makeu.up.wishlist.service.WishlistVO">
-		SELECT l.LT_NO,l.THUMB,l.TTL,l.INTRO,l.PRC
+		SELECT l.LT_NO,l.THUMB,l.TTL,l.INTRO,l.PRC,l.LT_ST_CODE
 		FROM LECTURE l JOIN WISHLIST w
 		ON l.lt_no = w.lt_no
-		WHERE w.id=#{id}
+		AND w.id=#{id}
+		WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
+		order by l.lt_no
+	</select>
+	
+	<select id="WishListCnt" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM WISHLIST
 	</select>
 </mapper>

@@ -14,19 +14,17 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-
                     <a class="navbar-brand" href="/admin/home" style="background-color: #1F262D">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!-- Dark Logo icon -->
-                            <img src="/resources/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-                           
+                            <img src="/resources/assets/images/logo-icon.png" alt="homepage" class="light-logo" />  
 
                     <a class="navbar-brand d-flex justify-content-center" href="/admin/home" style="background-color: #1F262D">
+
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!-- Dark Logo icon -->                           
-
                         </b>
                         <!--End Logo icon -->
                          <!-- Logo text -->

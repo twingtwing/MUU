@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ReportController {
-	
+	@Autowired ReportServiceImpl reportDao;	
+  
 	//강의 신고 리스트
 	@GetMapping("/admin/adLRepL")
 	public String adLRepL() {
@@ -30,4 +31,11 @@ public class ReportController {
 		return "admin/report/adRRepS";
 	}
 	
+  //신고 모달창
+	@PostMapping("/user/reportReview")
+	@ResponseBody
+	public void reportReview(Principal pri, ReportVO vo) {
+		vo.setReporter(pri.getName());
+	}
+
 }
