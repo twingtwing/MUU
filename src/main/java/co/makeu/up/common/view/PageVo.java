@@ -1,6 +1,5 @@
-package co.makeu.up.page.vo;
+package co.makeu.up.common.view;
 
-import co.makeu.up.board.service.BoardVO;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -34,25 +33,6 @@ public class PageVo {
 		this.next = this.endpage < realEnd;
 	}
 	*/
-	
-	//PageVo
-	private BoardVO boardVo;
-	
-	public PageVo(BoardVO boardVo, int total) {
-		this.boardVo = boardVo;
-		this.total = total;
-		this.endpage = (int) (Math.ceil(boardVo.getPageNum() / 5.0)) *5;
-		
-		this.startpage = this.endpage - 4;
-		
-		int realEnd = (int) (Math.ceil((total * 1.0) / boardVo.getAmount()));
-		
-		if(realEnd < this.endpage) {
-			this.endpage = realEnd;
-		}
-		this.prev = this.startpage > 1;
-		this.next = this.endpage < realEnd;
-	}
 
 	
 }

@@ -37,8 +37,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="#" class="text-dark font-weight-bold"><i
-							class="fa fa-home "></i> Home</a> <span>공지사항</span>
+						<a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home "></i> Home</a> 
+						<span>공지사항</span>
 					</div>
 				</div>
 			</div>
@@ -54,11 +54,8 @@
 					<div class="row">
 						<form onsubmit="return false">
 							<div class="row mr-2">
-								<input v-model="inputTitle" class="border mb-0" style="height: 35px; width: 170px" type="text"
-									placeholder="제목 검색..." spellcheck=false> <a
-									v-on:click="titleSearch" class="btn btn-outline-secondary"
-									style="height: 35px;"> <i class="icon_search"></i>
-								</a>
+								<input v-model="inputTitle" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck=false>
+								<a v-on:click="titleSearch" class="btn btn-outline-secondary" style="height: 35px;"> <i class="icon_search"></i></a>
 							</div>
 						</form>
 					</div>
@@ -74,26 +71,27 @@
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
-				<tr v-for="(title,index) in titles">
-						<td scope="row" class="text-center">{{index}}</td>
+				<tr v-for="(board,index) in boards[pageNum]">
+						<td scope="row" class="text-center">{{board.bno}}</td>
 						<!-- 나중에 페이지네이션 들어가면 index 못쓸거임 아마 방법 생각하삼 -->
-						<td v-on:click="titleDetail(index)">
-							<div class="name">{{title.ttl}}</div>
+						<td v-on:click="titleDetail(board.bno)">
+							<div class="name">{{board.ttl}}</div>
 						</td>
 						<td ></td>
-						<td>{{title.wrDate}}</td>
-						<td class="text-center">{{title.hits}}</td>
+						<td>{{board.wrDate}}</td>
+						<td class="text-center">{{board.hits}}</td>
 						<td class="text-center">
-							<i v-if="title.fileNo" class="fa fa-download text-danger"></i>
+							<i v-if="board.fileNo > -1" class="fa fa-download text-danger"></i>
+							<i v-if="board.fileNo == -1" class="fa fa-minus"></i>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div class="product__pagination d-flex justify-content-center">
-			<a href="#" v-if="pages.prev"><i class="fa fa-angle-double-left"></i></a>
-			<a href="#" v-for="num in 1 + pages.endpage - pages.startpage" v-bind:class="{'current-page' : pages.boardVo.pageNum == num +  pages.startpage - 1}"/>{{num +  pages.startpage - 1}}</a> 
-			<a href="#" v-if="pages.next"><iclass="fa fa-angle-double-right"></i></a>
+			<a href="#" v-if="pageNum+1 > 1" v-on:click="pageMove(-1)"><i class="fa fa-angle-double-left"></i></a>
+			<a href="#" v-for="page in pages" v-on:click="pageMove(page-1)" v-bind:class="{'current-page':pageNum+1 == page}"/>{{page}}</a> 
+			<a href="#" v-if="pageNum+1 < pages" v-on:click="pageMove(-2)" ><i class="fa fa-angle-double-right"></i></a>
 		</div>
 		<div class="d-flex justify-content-center mt-3">
 			<button type="submit" class="site-btn" onclick="history.go(-1);">뒤로가기</button>
@@ -108,8 +106,10 @@
             data(){
                 return {
                     inputTitle: '',
-                    titles: [],
-                	pages : {}
+                    originBoards : [],
+                    boards: [],
+                	pages : 0,
+                    pageNum : 0
                 }
             },
             computed: {
@@ -124,30 +124,36 @@
             },
             methods: {
                 titleSearch() {
-                    $.ajax({
-                		url:'selectTtlList',
-                		type:'get',
-                		datatype:'json',
-                		data : {
-                			ttl :this.inputTitle
-                		},
-                		beforSend: function(xhr){
-                			xhr.setRequestHeader(header, token);
-                		},
-                	})
-                	.done(result => {
-                		for(obj of result){
-                			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
-                		}
-                		this.titles = result;
-                	});
-                   
+                   this.page(this.originBoards.filter(obj => obj.ttl.indexOf(this.inputTitle)!== -1));
                 },
                 titleDetail(index) {
-                	
-                    location.href='boardS?bNo='+this.titles[index].bno;
-                    		
+                	location.href='boardS?bNo='+index;
                 },
+                page(list){
+                	this.pages = Math.ceil(list.length/10);
+                	this.pageNum = 0;
+             		var count = 0;
+             		this.boards[count] = [];
+                	for (var i = 0; i < list.length; i++) {
+                		this.boards[count].push(list[i]);
+						if((i+1)%10 === 0 && i !== 1){
+							count++;
+							this.boards[count] = [];
+						}
+					}
+                	console.log(this.boards);
+                },
+                pageMove(num){
+                	
+                	if(num == -1){
+                		this.pageNum --;
+                	}else if(num == -2){
+                		this.pageNum ++;
+                	}else{
+                		this.pageNum = num;
+                	}
+                	console.log(this.pageNum);
+                }
             },
             beforeCreate: function () {
             	
@@ -161,11 +167,11 @@
 
             	})
             	.done(result => {
-            		for(obj of result.list){
+            		for(obj of result){
             			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
             		}
-            		this.titles = result.list;
-            		this.pages = result.page;
+            		this.originBoards = result;
+            		this.page(this.originBoards);
             	});
             }
         })

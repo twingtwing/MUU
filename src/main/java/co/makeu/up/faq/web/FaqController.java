@@ -32,4 +32,16 @@ public class FaqController {
 		return faqDao.faqSelectList();
 	}
 	
+	//admin faq
+	@GetMapping("/admin/adFaqL")
+	public String adFaqL() {
+		return "admin/all/adFaqL";
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/faqList")
+	public List<FaqVO> faqList(){
+		return faqDao.faqList();
+	}
+	
 }

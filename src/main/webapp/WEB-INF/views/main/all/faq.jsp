@@ -9,6 +9,14 @@
       .card-body {
          border: none;
       }
+      .more_link{
+      	color: black;
+      }
+      .more_link:hover{
+      	text-decoration: underline;
+      	color: red;
+      	cursor: pointer;
+      }
    </style>
 </head>
 
@@ -18,8 +26,8 @@
          <div class="row">
             <div class="col-lg-12 text-center">
                <div class="normal__breadcrumb__text">
-                  <h2>페이지명</h2>
-                  <p>상세페이지명</p>
+                  <h2>고객 센터</h2>
+                  <p>자주 묻는 질문</p>
                </div>
             </div>
          </div>
@@ -33,8 +41,8 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="breadcrumb__links">
-                  <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home "></i> Home</a> <a href="#"
-                     class="text-dark font-weight-bold">Contact</a> <span>자주묻는질문</span>
+                  <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a> 
+                  <span>자주묻는질문</span>
                </div>
             </div>
          </div>
@@ -53,176 +61,140 @@
                <div class="col-lg-12">
                   <!-- Nav tabs 머리시작-->
                   <ul class="nav nav-tabs nav-fill" role="tablist">
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link active text-danger"
-                           id="lecture-tab" data-toggle="tab" href="#lecture" role="tab" aria-controls="lecture"
-                           aria-selected="true">강의</a></li>
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link text-danger"
-                           id="delivery-tab" data-toggle="tab" href="#delivery" role="tab" aria-controls="delivery"
-                           aria-selected="false">배송</a></li>
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link text-danger" id="payment-tab"
-                           data-toggle="tab" href="#payment" role="tab" aria-controls="payment"
-                           aria-selected="false">결제</a></li>
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link text-danger"
-                           id="infomation-tab" data-toggle="tab" href="#infomation" role="tab"
-                           aria-controls="infomation" aria-selected="false">아이디정보/보안</a></li>
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link text-danger" id="bug-tab"
-                           data-toggle="tab" href="#bug" role="tab" aria-controls="bug" aria-selected="false">오류</a>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link active text-danger" id="lecture-tab" data-toggle="tab" href="#lecture" role="tab" aria-controls="lecture" aria-selected="true">강의</a>
                      </li>
-                     <li class="nav-item" role="presentation" id="head"><a class="nav-link text-danger" id="event-tab"
-                           data-toggle="tab" href="#event" role="tab" aria-controls="event"
-                           aria-selected="false">이벤트</a></li>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link text-danger" id="delivery-tab" data-toggle="tab" href="#delivery" role="tab" aria-controls="delivery" aria-selected="false">배송</a>
+                     </li>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link text-danger" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">결제</a>
+                     </li>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link text-danger" id="infomation-tab" data-toggle="tab" href="#infomation" role="tab" aria-controls="infomation" aria-selected="false">회원정보/보안</a>
+                     </li>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link text-danger" id="bug-tab" data-toggle="tab" href="#bug" role="tab" aria-controls="bug" aria-selected="false">오류</a>
+                     </li>
+                     <li class="nav-item" role="presentation" id="head">
+                     	<a class="nav-link text-danger" id="event-tab" data-toggle="tab" href="#event" role="tab" aria-controls="event" aria-selected="false">환불</a>
+                      </li>
                   </ul>
                   <!-- Nav tabs 머리끝-->
                   <!-- Tab 내용 -->
                   <div class="tab-content" id="tabid">
                      <div class="tab-pane active" id="lecture" role="tabpanel" aria-labelledby="lecture-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ03'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 id="colla" class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          <div v-if="faq.length >= 5">출력물이 없었네 ㅋㅋ</div>
-                                          <div v-else>이거 5개씩 보이게 하게 만들어야 하는데 제가 능력이 모자라서 힘들듯
-                                             일단 문의글로 넘어갑니다.</div>
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
-                                    <div>
-                                       <button v-on:click="more">더보기</button>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[0]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[0].length != 0" v-on:click="more(0)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ02'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[1]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                        	<a href="" class="more_link" v-if="faqs[1].length != 0" v-on:click="more(1)">더보기</a>
                         </div>
                      </div>
                      <div class="tab-pane" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ01'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[2]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                        	<div href="" class="more_link" v-if="faqs[2].length != 0" v-on:click="more(2)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="infomation" role="tabpanel" aria-labelledby="infomation-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ04'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[3]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                        	<div href="" class="more_link" v-if="faqs[3].length != 0" v-on:click="more(3)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="bug" role="tabpanel" aria-labelledby="bug-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ05'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[4]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
                         </div>
+                        <div class="row justify-content-center mt-3">
+                        	<div href="" class="more_link" v-if="faqs[4].length != 0" v-on:click="more(4)">더보기</div>
+                        </div>
                      </div>
                      <div class="tab-pane" id="event" role="tabpanel" aria-labelledby="event-tab">
                         <div class="accordion" id="accordionExample">
-                           <div class="card border-0" v-for="(faq,index) in faqs">
-                              <div v-if="faq.fstcode=='F01'">
-                                 <div v-if="faq.ctgr=='CQ06'">
-                                    <div class="card-header" id="headingOne">
-                                       <h2 class="mb-0">
-                                          <button class="btn btn-link btn-block text-left text-danger" type="button"
-                                             data-toggle="collapse" :data-target="faq.target2" aria-expanded="false"
-                                             :aria-controls="faq.target">Q{{index}}.{{faq.qcontent}}</button>
-                                       </h2>
-                                    </div>
-                                    <div :id="faq.target" class="collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordionExample">
-                                       <div class="card-body">
-                                          A{{index}}.{{faq.acontent}}
-                                          <div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-                                       </div>
-                                    </div>
+                           <div class="card border-0" v-for="(faq,index) in faqMore[5]">
+                              <div class="card-header" id="headingOne">
+                                 <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-danger" type="button" data-toggle="collapse" :data-target="faq.target2" aria-expanded="false" :aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+                                 </h2>
+                              </div>
+                              <div :id="faq.target" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    A{{index+1}}.{{faq.acontent}}
                                  </div>
                               </div>
                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                        	<div href="" class="more_link" v-if="faqs[5].length != 0" v-on:click="more(5)">더보기</div>
                         </div>
                      </div>
                   </div>
@@ -244,15 +216,17 @@
          data() {
             return {
                faqs: [],
-               five: [],
-               morePost: 0,
+               faqMore : [],
             }
          },
          computed: {
 
          },
          methods: {
-            more() {}
+            more(num) {
+            	this.faqMore[num] = this.faqMore[num].concat(this.faqs[num][0]);
+            	this.faqs[num].splice(0,1);
+            }
          },
          beforeCreate: function () {
             $.ajax({
@@ -265,17 +239,33 @@
 
                })
                .done(result => {
-                  this.faqs = result;
-                  let five = [];
-                  for (let faq of this.faqs) {
-                     faq.target = 'collapse' + Math.trunc((Math.random() * 100));
+            	  for(var i =0; i< 6; i++){
+            		  this.faqs[i] = [];
+            	  }
+                  for (var faq of result) {
+                     faq.target = 'collapse_' + Math.trunc((Math.random() * 1000));
                      faq.target2 = '#' + faq.target;
-                     for (i = 0; i < result.length; i += 5) {
-                        five.push(result.slice(i, i + 5));
-                       
-                     }
+                     for (var i = 1; i <= 6; i++) {
+						 if(faq.ctgr.indexOf(i) !== -1){
+							this.faqs[i-1].push(faq);
+						 }	                 
+					 }
                   }
-                  console.log(five)
+                  for(var i = 0; i < this.faqs.length; i++){
+                	  let count = 0 ;
+                	  const arys = this.faqs[i];
+                	  this.faqs[i] = [];
+                	  this.faqs[i][count] = [];
+                	  for(var j = 0; j < arys.length; j++){
+                		  this.faqs[i][count].push(arys[j]);
+                		  if((j+1)%5 === 0 && j !==1){
+                			  count ++ ;
+                			  this.faqs[i][count] = [];
+                		  }
+                	  }
+                	  this.faqMore[i] = this.faqs[i][0];
+                	  this.faqs[i].splice(0,1);
+                  }
                });
 
          }

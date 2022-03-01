@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="page-wrapper m-0">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
@@ -26,12 +22,7 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+            
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Sales Cards  -->
@@ -61,46 +52,58 @@
                                     </div>
                                     <div class="col-lg-5">
                                         <div class="row">
-                                            <div class="col-6 my-2">
-                                                <div class="bg-dark p-10 text-white text-center h-100">
-                                                    <i class="fa fa-user m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">2540</h5>
-                                                    <small class="font-light">총 회원 수</small>
+                                            <div class="col-6 mb-2" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-user m-0 font-16"></i>
+                                                        <h5 class="mb-0 ">2540</h5>
+                                                        <small class="font-light">총 회원 수</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-plus m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">120</h5>
-                                                    <small class="font-light">총 수강횟수</small>
+                                            <div class="col-6 mb-2" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-plus m-0 m-b-5 font-16"></i>
+                                                        <h5 class="mb-0">120</h5>
+                                                        <small class="font-light">총 수강횟수</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-cart-plus m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">656</h5>
-                                                    <small class="font-light">크리에이터<br>총 강의 개수</small>
+                                            <div class="col-6 mb-2" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-cart-plus m-0 font-16"></i>
+                                                        <h5 class="mb-0">656</h5>
+                                                        <small class="font-light">크리에이터<br>총 강의 개수</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-tag m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">9540</h5>
-                                                    <small class="font-light">최근 한 달<br>수강횟수</small>
+                                            <div class="col-6 mb-2" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-tag m-0 m-b-5 font-16"></i>
+                                                        <h5 class="mb-0">9540</h5>
+                                                        <small class="font-light">최근 한 달<br>수강횟수</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-table m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">100</h5>
-                                                    <small class="font-light">최근 가입한<br>회원 수</small>
+                                            <div class="col-6" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-table m-0 m-b-5 font-16"></i>
+                                                        <h5 class="mb-0">100</h5>
+                                                        <small class="font-light">최근 가입한<br>회원 수</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-globe m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">8540</h5>
-                                                    <small class="font-light">최근 등록된<br>크리에이터 수</small>
+                                            <div class="col-6" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                        <i class="fa fa-globe m-0 m-b-5 font-16"></i>
+                                                        <h5 class="mb-0">8540</h5>
+                                                        <small class="font-light">최근 등록된<br>크리에이터 수</small>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,16 +120,9 @@
                 <!-- ============================================================== -->
                 <!-- Recent comment and chats -->
                 <!-- ============================================================== -->
+
                 <div class="row">
-                    <!-- 왼쪽 -->
                     <div class="col-lg-6">
-                        <!-- Card -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">올해 매출 한번에 보기</h4>
-                                <canvas id="thisyear" width="10" height="5"></canvas>
-                            </div>
-                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <div class="chat-box scrollable">
@@ -134,7 +130,7 @@
                                     <h5 class="card-subtitle">최근 1년 기준</h5>
                                     <!--크리에이터 프로필-->
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
+                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
                                                 class="rounded-circle"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium">서강중</h6>
@@ -144,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
+                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
                                                 class="rounded-circle"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium">서강중</h6>
@@ -154,7 +150,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
+                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
                                                 class="rounded-circle"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium">서강중</h6>
@@ -166,28 +162,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- card -->
-                        <div class="card flex-row">
-                            <div class="card-body col-lg-6">
-                                <h4 class="card-title">카테고리 점유율</h4>
-                                <canvas id="ctgr"></canvas>
-                            </div>
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h4 class="card-title">카테고리별 연령대 분포</h4>
-                                <canvas id="ctgrByOld"></canvas>
-                            </div>
-                        </div>
                     </div>
-
-					<!-- 오른쪽 -->
                     <div class="col-lg-6">
-                        <!-- card -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">성별 / 연령별 회원 통계</h4>
-                                <canvas id="gender"></canvas>
-                            </div>
-                        </div>
                         <!-- Card -->
                         <div class="card">
                             <div class="card-body">
@@ -196,7 +172,7 @@
                                 <div class="chat-box scrollable">
                                     <!--강의-->
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
+                                        <div class="p-2"><img src="/assets/images/custom-select.png" alt="user" width="70"
                                                 height="50" class="rounded c"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
@@ -204,7 +180,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
+                                        <div class="p-2"><img src="/assets/images/logo-icon.png" alt="user" width="70"
                                                 height="50" class="rounded c"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
@@ -212,7 +188,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
+                                        <div class="p-2"><img src="/assets/images/custom-select.png" alt="user" width="70"
                                                 height="50" class="rounded c"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
@@ -222,17 +198,72 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-lg-6">
+                        <!-- Card -->
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">카테고리별 성별 분포</h4>
-                                <canvas id="ctgrByGender" class="h-100"></canvas>
+                                <h4 class="card-title">올해 매출 한번에 보기</h4>
+                                <canvas id="thisyear" width="10" height="5"></canvas>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <!-- column -->
+
+                    <div class="col-lg-6">
+                        <!-- card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">성별 / 연령별 회원 통계</h4>
+                                <canvas id="gender"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <h4 class="text-center">카테고리 점유율</h4>
+                                        <canvas id="ctgr"></canvas>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="row justify-content-center">
+                                            <h4 class="mb-0">카테고리별 연령대 분포</h4>
+                                        </div>
+                                        <div class="row h-100 align-items-center">
+                                            <canvas id="ctgrByOld" class="w-100 h-75"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                       <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">카테고리별 성별 분포</h4>
+                                <canvas id="ctgrByGender" class="h-100"></canvas>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            <!-- ============================================================== -->
+            <!-- Recent comment and chats -->
+            <!-- ============================================================== -->
+            </div>            
+              
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // 최근 일주일
         const recent7daysId = document.getElementById('recent7days').getContext('2d');

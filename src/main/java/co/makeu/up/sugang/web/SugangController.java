@@ -98,4 +98,5 @@ public class SugangController {
 			return "main/user/userR";			
 		}
 	}
+
 }
