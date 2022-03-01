@@ -57,11 +57,6 @@
 		<security:authorize access="hasAuthority('A02')">유저만 볼 수 있는 글자</security:authorize>
 		<security:authorize access="hasAuthority('A03')">크리에이터만 볼 수 있는 글자</security:authorize>
 		
-			<a href="/creS">크리에이터 정보 >></a>
-			<a href="/lecI">강의 등록 >></a>
-		
-		<a href="/creS">크리에이터 정보 >></a>
-		<a href="/lecI">강의 등록 >></a>
 		<a href="/creator/cLecNL">공지사항</a>
 		<a href="/creator/cLecNS">상세</a><br>
 		<a href="/creator/cLecNI">등록</a>
@@ -69,8 +64,15 @@
 
 		<a href="/creator/cLecQ">질답</a>
 		<a href="/creator/creLectureReview">크리에이터 리뷰</a>
-		<a href="/creator/creS">크리에이터 정보 >></a>
-		<a href="/creator/lecI">강의 등록 >></a>
+		<div style="border: 1px solid grey">
+			<a href="/creator/creS">크리에이터 정보 >></a>
+			<a href="/creator/lecI">강의 등록 >></a>
+			<a href="/creator/rLecL">신청 강의리스트 >></a>
+			<a href="/creator/oLecL">열린 강의리스트 >></a>
+			<a href="/creator/clLecL">닫힌 강의리스트 >></a>
+			<a href="/creator/rpLecL">신고된 강의리스트 >></a>
+			<a href="/creator/aaa">영상 업로드 테스트----</a>
+		</div>
 		<a href="/creator/cLecNL">공지사항</a>
 		<a href="/creator/cLecNS">상세</a><br>
 		<a href="/creator/cLecNI">등록</a>
