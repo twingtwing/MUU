@@ -16,6 +16,12 @@
 </head>
 <body>
   <!-- 페이지명-->
+    <%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
+%>
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
@@ -42,6 +48,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
+                                <form action="/admin/insertBoard" method="get" id="frm">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row">
@@ -52,7 +59,7 @@
                                                 <h5 class="mb-0">제목</h5>
                                             </div>
                                             <div class="col-11 px-0">
-                                                <input class="w-100" type="text" spellcheck="false">
+                                                <input class="w-100" type="text" spellcheck="false" name="ttl" >
                                             </div>
                                         </div>
                                         <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
@@ -63,19 +70,21 @@
                                             <div class="row mr-2">
                                                 <div class="row mr-1">
                                                     <h6 class="mb-0">작성일자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                
+		                                        <h6 class="mb-0 ml-2" style="font-weight: 500;" ><%= sf.format(nowTime) %></h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="row form-group mt-3">
-                                    <textarea class="form-control"  rows="25"></textarea>
+                                    <textarea class="form-control" name="content" rows="25"></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <input type="file" name="" id="" spellcheck="false">
+                                            <input type="file"   spellcheck="false">
                                         </div>
                                     </div>
                                 </div>
@@ -84,9 +93,10 @@
                                         <button type="submit" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn btn-secondary" onclick="location.href='./공지사항 관리자 페이지.html'">공지사항 등록</button>
+                                        <button type="submit" class="btn btn-secondary" >공지사항 등록</button>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -95,4 +105,5 @@
 
                 <!-- 바디 끝 -->
 </body>
+
 </html>

@@ -44,7 +44,7 @@ public class BoardController {
 	}
 	
 	
-	//관리자 공지사항 리스트
+	//愿�由ъ옄 怨듭��궗�빆 由ъ뒪�듃
 	@GetMapping("/admin/adBadLi")
 	public String adBadLi(BoardVO vo , Model model) {
 		model.addAttribute("list",boardDao.selectadbad());
@@ -57,6 +57,22 @@ public class BoardController {
 		model.addAttribute("list",boardDao.selectadbad());
 		return "admin/adbad/adBadl";
 	}
-
 	
+	@GetMapping("/admin/insertBoard")
+	public String insertBoard (BoardVO vo) {
+		System.out.println("dddd");
+		
+		boardDao.insertBoard(vo);
+		return "/admin/adBadLi";
+	}
+	@GetMapping("/admin/adBadS")
+	public String adBadS(BoardVO vo , Model model) {
+		model.addAttribute("list",boardDao.selectadbads());
+		return "admin/adbad/adBads";
+	}
+	@PostMapping("/admin/deladbad")
+	public String adBadU (BoardVO vo ) {
+		boardDao.deladbad(vo);
+	return "/admin/adBadLi";
+	}
 }
