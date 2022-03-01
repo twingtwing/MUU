@@ -1,6 +1,8 @@
 package co.makeu.up.notice.web;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.makeu.up.common.view.Pagination;
 import co.makeu.up.notice.service.NoticeServiceImpl;
 import co.makeu.up.notice.service.NoticeVO;
+import co.makeu.up.progress.service.ProgressServiceImpl;
+import co.makeu.up.progress.service.ProgressVO;
+import co.makeu.up.sugang.service.SugangServiceImpl;
+import co.makeu.up.sugang.service.SugangVO;
 
 @Controller
 public class NoticeController {
 	Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	@Autowired NoticeServiceImpl noticeDao;
+	@Autowired SugangServiceImpl sugangDao;
+	@Autowired ProgressServiceImpl progressDao;
 	
 	@GetMapping("/creator/cLecNL")
 	public String cLecNL() {
@@ -43,7 +51,22 @@ public class NoticeController {
 	
 	// 공지 리스트
 	@GetMapping("/user/userLNL")
-	public String userLecNoticeList(NoticeVO vo, Model model){
+	public String userLecNoticeList(NoticeVO vo, Model model, Principal pri){	
+		ProgressVO prvo = new ProgressVO();
+		prvo.setId(pri.getName());
+		prvo.setLtNo(vo.getLtNo());
+		SugangVO checkvo = new SugangVO();
+		checkvo.setId(pri.getName());
+		checkvo.setLtNo(vo.getLtNo());
+		checkvo = sugangDao.sugangCheckDate(checkvo);
+		if(Objects.isNull(checkvo)) {
+			logger.info("사용자의 잘못된 접근");
+			model.addAttribute("accessBan","잘못된 접근입니다.");
+			return "redirect:/accessError";
+		} else {
+			checkvo.setProgPct(progressDao.wholeProgress(prvo));
+			model.addAttribute("sugang",checkvo);
+		}		
 		vo.setPage(0);
 		int listCnt = noticeDao.NoticeListCnt(vo.getLtNo());
 		Pagination pagination = new Pagination(listCnt,1);
@@ -69,8 +92,18 @@ public class NoticeController {
 	
 	// 공지사항 선택
 	@GetMapping("/user/userLNS")
-	public String userLecNoticeSelect(int ntNo, Model model) {
-		model.addAttribute("notice",noticeDao.NoticeSelect(ntNo));
+	public String userLecNoticeSelect(NoticeVO vo, Model model,Principal pri) {
+		ProgressVO prvo = new ProgressVO();
+		prvo.setId(pri.getName());
+		prvo.setLtNo(vo.getLtNo());
+		SugangVO checkvo = new SugangVO();
+		checkvo.setId(pri.getName());
+		checkvo.setLtNo(vo.getLtNo());
+		checkvo = sugangDao.sugangCheckDate(checkvo);
+		checkvo.setProgPct(progressDao.wholeProgress(prvo));
+		model.addAttribute("sugang",checkvo);
+		logger.info(checkvo.getLtNo()+"ltno가넘어가는지 ㅇㅅㅇ");
+		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
 		return "main/user/userLNS";
 	}
 }

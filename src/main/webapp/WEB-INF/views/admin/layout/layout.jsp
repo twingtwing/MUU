@@ -7,35 +7,21 @@
 <meta charset="UTF-8">
 <title>MUU 관리자 페이지</title>
 <!-- Favicon icon -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/resources/assets/images/favicon.png">
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <!-- Custom CSS -->
 <link href="/resources/assets/libs/flot/css/float-chart.css"
 	rel="stylesheet">
-=======
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/assets/images/favicon.png">
-    
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/assets/images/favicon.png">
-    
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 <!-- Custom CSS -->
     <link href="/resources/dist/css/style.min.css" rel="stylesheet">
 	<script src="/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<tiles:insertAttribute name="top" />
 	<tiles:insertAttribute name="side" />
 	<tiles:insertAttribute name="body" />
 	<tiles:insertAttribute name="bottom" />
-=======
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 <div id="mai-wrapper">
 <tiles:insertAttribute name="top"/>
 <tiles:insertAttribute name="side"/>
@@ -44,12 +30,6 @@
 <tiles:insertAttribute name="bottom"/>
 </div>
 </div>
-
-<<<<<<< HEAD
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
-
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>

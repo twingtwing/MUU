@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <!-- Css Styles -->
 	<script src="https://kit.fontawesome.com/8d99e6c8fb.js" crossorigin="anonymous"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />

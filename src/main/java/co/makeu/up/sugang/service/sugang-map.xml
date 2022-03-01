@@ -6,11 +6,26 @@
 		SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO 
 		WHERE ID = #{id}
+		AND TLSN_ST_CODE NOT IN ('SU03')
 		ORDER BY S.EXP_DATE
 	</select>
 	<select id="sugangCheckDate" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">		
 		SELECT S.*,L.TTL,L.THUMB FROM SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO
-		WHERE S.LT_NO=#{ltNo} AND S.ID = #{id} AND S.EXP_DATE>SYSDATE
+		WHERE S.LT_NO=#{ltNo} 
+		AND S.ID = #{id} 
+		AND S.EXP_DATE>SYSDATE
+		AND TLSN_ST_CODE='SU01'
+	</select>
+	<update id="sugangRefundUpdate" parameterType="Integer">
+		UPDATE SUGANG 
+		SET TLSN_ST_CODE = 'SU03'
+		WHERE TLSN_NO = #{tlsnNo}
+	</update>
+	<select id="sugangBeforeRefund" resultType="Integer" parameterType="co.makeu.up.sugang.service.SugangVO">
+		SELECT COUNT(*) CNT FROM SUGANG
+        WHERE ID = #{id}
+        AND REG_DATE > SYSDATE-7
+        AND TLSN_NO= #{tlsnNo}
 	</select>
 </mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.review.service.ReviewMapper">
+	<select id="reviewSelectList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
+		SELECT * FROM REVIEW
+		WHERE LT_NO = #{ltNo}
+		AND CONTENT LIKE '%'||#{content}||'%'
+        AND WRITER LIKE '%'||#{writer}||'%'
+		ORDER BY WR_DATE DESC
+	</select>
+	<insert id="reviewInsert" parameterType="co.makeu.up.review.service.ReviewVO">
+		INSERT INTO REVIEW
+		VALUES(
+		(SELECT NVL(MAX(RV_NO),1) FROM REVIEW)+1,SYSDATE,'RE01',#{content},#{star},#{ltNo},#{writer}
+		)
+	</insert>
+</mapper>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import co.makeu.up.sugang.service.SugangVO;
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
 
@@ -23,12 +24,4 @@ public class UsersPageController {
 		return "main/user/userU";
 	}
 	
-	@GetMapping("/user/userLR")
-	public String userLecReview() {
-		return "main/user/userLR";
-	}
-	@GetMapping("/user/userRefund")
-	public String userRefund() {
-		return "main/user/userR";
-	}
 }

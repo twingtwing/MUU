@@ -37,15 +37,15 @@
   </style>
 </head>
 <body>
-<!-- 카테고리 시작-->
+  <!-- 카테고리 시작-->
   <div class="breadcrumb-option">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb__links">
-            <a href="#"><i class="fa fa-home"></i> 홈</a>
-            <a href="#">마이페이지</a>
-            <a href="#">내 강의리스트</a>
+            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
+            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
+            <a href="/user/userLectureList" class="text-secondary">내 강의리스트</a>
             <span>질문 & 답변</span>
           </div>
         </div>
@@ -61,33 +61,32 @@
         <div class="col-lg-2">
           <div class="row mr-2" style="width:160px">
             <ul class="list-group w-100" id="cctgr">
-              <li class="list-group-item border-bottom-0 align-items-center d-flex justify-content-center" style="height: 75px;">
-                <a class="list-link" href="#">
+              <li class="list-group-item border-bottom-0 align-items-center d-flex justify-content-center" style="height: 75px;"onclick="location.href='/user/userLectureList'">
+                <div class="list-link">
                   <div class="row">
                     <div class="col-lg-4 justify-content-center align-items-center d-flex">
-                      <imo style="font-size:25px;">🚀</imo>
+                      <span style="font-size:25px;">🚀</span>
                     </div>
                     <div class="col-lg-8 pr-0 pl-0 align-items-center d-flex">
                       <p class="font-weight-bold mb-0">&nbsp;&nbsp;&nbsp;&nbsp;GO TO<br>강의 리스트</p>
                     </div>
                   </div>
-                </a>
+                </div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-                <a class="list-link" href="#">수업 목록</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/user/userLectureSelect" style="height: 55px;">
+                <div class="list-link">수업 목록</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">공지사항</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLNL" style="height: 55px;">
+                <div class="list-link">공지사항</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link active" href="./박정욱_위시리스트.html">질문 & 답변</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLQ" style="height: 55px;">
+                <div class="list-link  active" data-url="/user/userLQ">질문 & 답변</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">리뷰 & 별점</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLR"style="height: 55px;">
+                <div class="list-link" >리뷰 & 별점</div>
               </li>
-              <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_유저결제내역.html">환불</a>
+              <li class="list-group-item align-items-center d-flex listmenu"  data-url="/user/userRefund" style="height: 55px;">
+                <div class="list-link">환불</div>
               </li>
             </ul>
           </div>
@@ -101,18 +100,19 @@
 			<div class="col-lg-12 px-0 mb-3">
             <div class="card w-100">
               <div class="card-body">
-                <div class="row">
+                                 <div class="row">
                   <div class="col-3">
-                    <img class="rounded" src="/img/blog/blog-1.jpg" alt="" style="object-fit: cover; width: 100%; height: 150px;">
+                    <img class="rounded" src="${sugang.thumb }" alt="" style="object-fit: cover; width: 100%; height: 150px;">
                   </div>
                   <div class="col-9 d-flex align-items-center">
                     <div class="w-100">
-                      <h3 class="font-weight-bold pb-3">강의명</h3>
+                      <h3 class="font-weight-bold pb-3">${sugang.ttl }</h3>
                       <div class="progress mt-3">
-                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                          70%
+                        <div class="progress-bar bg-danger text-left" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:${sugang.progPct}%">
+							　${sugang.progPct}%
                         </div>
                       </div>
+                     <div class="text-right font-weight-bold mt-2 text-secondary">수강기간:　${sugang.regDate }　-　${sugang.expDate }　</div>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,7 @@
                   <th>답변여부</th>
                 </tr>
 				</thead>
-              <tbody class="qstboard">
+              <tbody class="qstboard" style="font-size: 0.9rem;">
               <c:forEach items="${myList}" var="list">
                 <tr data-qnano = "${list.qnaNo}">
                   <td>${list.qContent }</td>
@@ -177,7 +177,7 @@
                     <th>답변여부</th>
                   </tr>
                 </thead>
-                <tbody class="qstboard" id="qstList">
+                <tbody class="qstboard" id="qstList" style="font-size: 0.9rem;">
                 <c:forEach items="${qnaList}" var="list">
                   <tr data-qnano = ${list.qnaNo}>
                     <td>${list.qContent }</td>
@@ -222,7 +222,22 @@
       </div>
     </div>
   </section>
+    <form action="" id="move" method="get">
+  	<input type="hidden" name="ltNo" value="${sugang.ltNo}">
+  	<input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">
+  </form>
   <script>
+  $('.listmenu').click((e)=>{
+	  let url = e.currentTarget.dataset.url;
+	  $('#move').attr('action',url);
+	  if(url ==='/user/userLectureSelect'){
+		  $('#move').attr('method','post');
+		  $('#move').append(
+			$('<input>').attr('type','hidden').attr('name','${_csrf.parameterName}').val('${_csrf.token}')
+		  )
+	  }
+	  $('#move').submit();
+  })
   	// 질문박스
     $('#qst').click((e) => {
       if($('#qst').text()==='질문하기'){
@@ -265,7 +280,6 @@
     	if(e.target.parentNode.lastElementChild.textContent==='답변 대기 중'){
     		return;
     	}
-	    console.log('1개인가');
 	    if($(e.target).parent().children().length===1){
 	    	e.target.parentNode.nextElementSibling.firstElementChild.remove();
 	       return;
