@@ -77,7 +77,7 @@
 		<a href="/creator/cLecNU">수정</a>
 		<a href="/creator/cLecQ">질답</a><br>
 		<a href="excel">엑셀다운로드</a>
-	
+		
 	</div>
     <!-- slide benner -->
     <section class="hero">

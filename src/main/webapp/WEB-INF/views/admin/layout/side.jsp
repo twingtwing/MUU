@@ -31,7 +31,7 @@ i{
                                 <li class="sidebar-item ml-5"><a href="form-wizard.html" class="sidebar-link"><span class="hide-menu"> - 각종 통계</span></a></li>
                             </ul>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="charts.html" aria-expanded="false"><i class="mdi mdi-pencil"></i><span class="hide-menu">공지사항</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/adBadLi" aria-expanded="false"><i class="mdi mdi-pencil"></i><span class="hide-menu">공지사항</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="widgets.html" aria-expanded="false"><i class="fa fa-question" aria-hidden="true"></i><span class="hide-menu">F A Q</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="tables.html" aria-expanded="false"><i class="fa fa-comments" aria-hidden="true"></i><span class="hide-menu">문의글 관리</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">유저 관리</span></a></li>

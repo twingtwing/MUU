@@ -34,6 +34,12 @@ public class BoardServiceImpl implements BoardService {
 		
 		return vo;
 	}
+
+	@Override
+	public List<BoardVO> selectadbad() {
+		// TODO Auto-generated method stub
+		return map.selectadbad();
+	}
 	
 	
 }

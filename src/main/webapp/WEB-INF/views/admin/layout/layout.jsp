@@ -7,21 +7,19 @@
 <meta charset="UTF-8">
 <title>MUU 관리자 페이지</title>
 <!-- Favicon icon -->
+
 <link rel="shortcut icon" href="/resources/img/favicon.ico">
-<!-- Custom CSS -->
-<link href="/resources/assets/libs/flot/css/float-chart.css"
-	rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/assets/images/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/assets/images/favicon.png">
 <!-- Custom CSS -->
     <link href="/resources/dist/css/style.min.css" rel="stylesheet">
 	<script src="/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+
 	<tiles:insertAttribute name="top" />
 	<tiles:insertAttribute name="side" />
 	<tiles:insertAttribute name="body" />
 	<tiles:insertAttribute name="bottom" />
+
 <div id="mai-wrapper">
 <tiles:insertAttribute name="top"/>
 <tiles:insertAttribute name="side"/>
@@ -30,6 +28,8 @@
 <tiles:insertAttribute name="bottom"/>
 </div>
 </div>
+
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
