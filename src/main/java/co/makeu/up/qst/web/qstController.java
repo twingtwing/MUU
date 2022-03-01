@@ -28,5 +28,15 @@ public class qstController {
 		return "main/all/qna";
 	}
 	
+	//admin list
+	@GetMapping("/admin/adQstL")
+	public String adQstL() {
+		return "admin/all/adQstL";
+	}
 	
+	//admin select
+	@GetMapping("/admin/adQstS")
+	public String adQstS() {
+		return "admin/all/adQstS";
+	}
 }

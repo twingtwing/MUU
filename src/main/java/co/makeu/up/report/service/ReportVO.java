@@ -10,6 +10,6 @@ public class ReportVO {
 	private String ctgr;
 	private String content;
 	private String rpStCode;
-	private int num;
+	private int num; // 리뷰번호
 	private String type;
 }

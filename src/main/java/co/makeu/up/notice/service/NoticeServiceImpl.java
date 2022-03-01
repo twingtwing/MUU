@@ -15,8 +15,8 @@ public class NoticeServiceImpl implements NoticeMapper{
 	}
 
 	@Override
-	public NoticeVO NoticeSelect(int ntno) {
-		return map.NoticeSelect(ntno);
+	public NoticeVO NoticeSelect(NoticeVO vo) {
+		return map.NoticeSelect(vo);
 	}
 
 	@Override

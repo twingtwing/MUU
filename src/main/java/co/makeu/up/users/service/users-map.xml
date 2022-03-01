@@ -26,7 +26,7 @@
 	<select id="chkCreFarewell" parameterType="String" resultType="Date">
 		SELECT EXP_DATE
 		FROM LECTURE 
-		WHERE CRE_ID = 'creator123@naver.com' AND EXP_DATE>SYSDATE
+		WHERE CRE_ID = #{id} AND EXP_DATE>SYSDATE
 	</select>
 	<update id="deleteUsers" parameterType="String">
 		UPDATE USERS 

@@ -13,4 +13,8 @@ public class LessonVO {
 	private Date regDate;
 	private Date modDate;
 	private String lsnTime;
+	
+	// for join with progress
+	private int progPct;
+	private String id;
 }

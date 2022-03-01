@@ -44,8 +44,8 @@
 <body class="bg-black;">
 <div id="box" class="d-flex bg-black p-5" style="background-color: black;">
     <div style="width: 70vw;">
-      <video controls width="100%" controlsList="nodownload">
-        <source src="${firstLesson.lsnFile}" type="video/mp4" data-poster="" id="vd">
+      <video controls width="100%" controlsList="nodownload" id="player">
+        <source src="${firstLesson.lsnFile}" type="video/mp4" id="vd">
       </video>    
       <h2 style="font-weight: bold; color:white;" id="title">${firstLesson.ttl}</h2>
       <div>
@@ -85,6 +85,26 @@ $('#curr>li').click((e)=>{
 })
 
 // 시청시간 기록
+let record;
+document.querySelector('#player').addEventListener('timeupdate',(e)=>{
+	let duration = document.querySelector('#player').duration;
+	let currTime = document.querySelector('#player').currentTime;
+	record = currTime/duration;
+})
+const recordUpdate = ()=>{
+	$.ajax({
+		url : '/user/progressUpdate',
+		type : 'post',
+		beforeSend : (xhr) =>{
+		  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
+		data : {id:'',lsnNo : ${firstLesson.lsnNo}, progPct : Math.floor(record*100)}
+	})
+	.done((e)=>{
+		console.log(e)
+	})
+}
+setInterval(recordUpdate,4000);
 </script>
 </body>
 </html>

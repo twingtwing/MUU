@@ -6,88 +6,86 @@
 <meta charset="UTF-8">
 
 <style>
-        #cctgr > li{
-            cursor: pointer;
-        }
+ #cctgr > li{
+     cursor: pointer;
+ }
 
-        .list-link {
-            color: black;
-        }
-        
-        .list-link.active{
-            font-weight: bold;
-            color: #e53637;
-        }
-        .lec_ph div{
-            border : 1px solid rgb(202, 202, 202);
-        }
-        .next-button{
-            width: 0px;
-            height: 0px;
-            border-left: 36px solid #e53637;
-            border-top: 18px solid transparent;
-            border-bottom: 18px solid transparent;
-        }
-        .arrow_right,.arrow_left{
-            color: red;
-        }
+ .list-link {
+     color: black;
+ }
+ 
+ .list-link.active{
+     font-weight: bold;
+     color: #e53637;
+ }
+ .lec_ph div{
+     border : 1px solid rgb(202, 202, 202);
+ }
+ .next-button{
+     width: 0px;
+     height: 0px;
+     border-left: 36px solid #e53637;
+     border-top: 18px solid transparent;
+     border-bottom: 18px solid transparent;
+ }
+ .arrow_right,.arrow_left{
+     color: red;
+ }
 
-        .arrow_right:hover,.arrow_left:hover{
-            color: white;
-        }
+ .arrow_right:hover,.arrow_left:hover{
+     color: white;
+ }
 
-        .periodsub{
-            font-size: 10px;
-        }
+ .periodsub{
+     font-size: 10px;
+ }
 
-        .itemBox {
-            border:solid 1px rgb(200, 200, 200);
-            width:600px;
-            height:50px;
-            padding:10px;
-            margin-bottom:10px;
-        }
+ .itemBox {
+     border:solid 1px rgb(200, 200, 200);
+     width:600px;
+     height:50px;
+     padding:10px;
+     margin-bottom:10px;
+ }
 
-        .itemBoxHighlight {
-            border:solid 1px black;
-            width:600px;
-            height:50px;
-            padding:10px;
-            margin-bottom:10px;
-            background-color:rgb(255, 193, 193);
-        }
+ .itemBoxHighlight {
+     border:solid 1px black;
+     width:600px;
+     height:50px;
+     padding:10px;
+     margin-bottom:10px;
+     background-color:rgb(255, 193, 193);
+ }
 
-        .deleteBox {
-            float:right;
-            display:none;
-            cursor:pointer;
-        }
+ .deleteBox {
+     float:right;
+     display:none;
+     cursor:pointer;
+ }
 
-        .modal {
-            text-align: center;
-        }
-        
-        @media screen and (min-width: 768px) { 
-            .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-            }
-        }
-        
-        .modal-dialog {
-            display: inline-block;
-            text-align: left;
-            vertical-align: middle;
-        }
-        .modal-body{
-            width:500px;
-            height:200px;
-        }
-        
-	  
-    </style>
+ .modal {
+     text-align: center;
+ }
+ 
+ @media screen and (min-width: 768px) { 
+     .modal:before {
+         display: inline-block;
+         vertical-align: middle;
+         content: " ";
+         height: 100%;
+     }
+ }
+ 
+ .modal-dialog {
+     display: inline-block;
+     text-align: left;
+     vertical-align: middle;
+ }
+ .modal-body{
+     width:500px;
+     height:200px;
+ }
+</style>
 </head>
 <body>
 <!-- 배너 시작-->
@@ -353,14 +351,14 @@
 
                     <div class="col-12" style="height:auto;">
                         <div class="text-right mb-3">
-                            <button class="btn btn-outline-secondary" id="addItem" data-toggle="modal" data-target="#insertClass">수업추가</button>
+                            <button class="btn btn-outline-secondary" onclick="createItem()">수업추가</button>
                         </div>
                         
                         <!-- 수업 드래그 앤 드롭  -->
+                        <div id="plzInsert">
+                            수업을 추가해주세요(OT영상은 필수입니다.)
+                        </div>
                         <div class="" id="itemBoxWrap">
-                            <div id="plzInsert">
-                                수업을 추가해주세요(OT영상은 필수입니다.)
-                            </div>
                         </div>
                     </div>
                     
@@ -645,16 +643,25 @@
     // 아이템을 구성할 태그를 반환합니다.
     // itemBox 내에 번호를 표시할 itemNum 과 입력필드가 있습니다.
     function createBox() {
-        var className = $("#className").val();
-        var contents 
-            = "<div class='itemBox'>"
-            + "<div style='float:left;'>"
-            + "<span class='itemNum'></span> "
-            + "<span class='itemClassName'>" + className + "</span>"
-            // + "<input type='text' name='item' style='width:300px;'/>"
-            + "</div>"
-            + "</div>";
-        return contents;
+        //var className = $("#className").val();
+        var lastCtitle = $('#itemBoxWrap').find('input[type=text]:last').val();
+    	var lastInput = $('#itemBoxWrap').find('input[type=file]:last').val();
+        if(lastInput == '' || lastCtitle == ''){
+        	alert('이전 수업추가를 완료해주세요');
+    		return false;
+        } else {
+    	    var contents 
+    	        = "<div class='itemBox'>"
+    	        + "<div style='float:left;'>"
+    	        + "<span class='itemNum'></span> "
+    	        + "<span class='itemClassName'><input type='text' class='classTtl' style='width:300px;'/></span>"
+    	        + "<span>"
+    	        + "<input type='file' class='classUp' accept='video/*'>"
+    	        + "</span>"
+    	        + "</div>"
+    	        + "</div>";
+    	    return contents;
+        }
     }
      
     
@@ -715,6 +722,14 @@
     }
     
     //4페이지 유효성 검사(키트 null 가능)
+    ////키트금액 체크
+     $('#kitprc').on('keyup', function() {
+		if (/\D/.test(this.value)) {
+			this.value = this.value.replace(/\D/g, '');
+			alert('숫자만 입력가능합니다.');
+		}		
+	}); 
+    
 	//강의금액 체크
      $('#prc').on('keyup', function() {
 		if (/\D/.test(this.value)) {
@@ -774,6 +789,11 @@
 				tag3 = $(this).val();
 			}
 		})
+		for(var i = 0; i < $('.classUp').length; i++){
+			form.append("classTtl", $('.classTtl').eq(i).val());
+			form.append("class", $('.classUp')[i].files[0]);
+		}
+			
 		
 		
         //메인사진 값
@@ -848,7 +868,7 @@
                 xhr.setRequestHeader(header, token);
              },
             data : form,
-            success:function(response) {
+            success:function() {
               alert("강의 등록 신청되었습니다");
               //console.log(response);
               //강의 리스트 페이지로 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!
@@ -858,6 +878,7 @@
 	           alert(jqXHR.responseText); 
 	         }
         });
+        
          
 }
     

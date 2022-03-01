@@ -23,19 +23,4 @@ public class BoardVO {
 	
 	private List<DetafileVO> detaFileList;
 	
-	//pageVo
-	private int rn;
-	private int count;
-	private int pageNum;
-	private int amount;
-	
-	public BoardVO() {
-		this(1,10);
-	}
-	
-	public BoardVO(int pageNum, int amount) {
-		this.pageNum = pageNum;
-		this.amount = amount;
-	}
-	
 }
