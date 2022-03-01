@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 		if(vo.getFileNo() != -1) {
 			vo.setDetaFileList(fileMap.detaFileList(vo.getFileNo()));
 		}
-		//조회수 올라가는 update를 넣어야함
+	
 		map.upboard(vo);
 		
 		return vo;
@@ -39,6 +39,24 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> selectadbad() {
 		// TODO Auto-generated method stub
 		return map.selectadbad();
+	}
+
+	@Override
+	public BoardVO insertBoard(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return map.insertBoard(vo);
+	}
+
+	@Override
+	public List<BoardVO> selectadbads() {
+		// TODO Auto-generated method stub
+		return map.selectadbads();
+	}
+
+	@Override
+	public String deladbad(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return map.deladbad(vo);
 	}
 	
 	

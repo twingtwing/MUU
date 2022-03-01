@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="mr-4">
                                         <button type="button" class="btn btn-secondary" onclick="location.href='./공지사항 수정 페이지.html'";>수정</button>
-                                        <button type="button" class="btn btn-secondary" onclick="javascript:btn();">삭제</button>
+                                        <button type="button" class="btn btn-secondary" id="delete_btn" onclick="javascript:btn();">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +107,13 @@
                     location.href = "공지사항 관리자 페이지.html"
                 }
         }
+            
+            
+            $("#delete_btn").on("click", function(e){
+                form.attr("action", "/admin/deladbad");
+                form.attr("method", "post");
+                form.submit();
+            });
         </script>
 
 </html>

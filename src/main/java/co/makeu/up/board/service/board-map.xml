@@ -35,4 +35,22 @@
 	select * from board
 	order by b_no desc
 	</select>
+	
+	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">
+	
+		insert into board (b_no,ttl,content)
+		values ((select NVL (max(b_no),0)+1 from board),#{ttl},#{content})
+
+	</insert>
+	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+	select b_no , ttl,content
+	from board
+	where b_no = #{bNo}
+	</select>
+	
+	<update id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
+		update board set b_st_code = 'B02'
+		where b_no = #{bNo}
+	
+	</update>
 </mapper>
