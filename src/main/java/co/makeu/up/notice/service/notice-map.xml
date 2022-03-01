@@ -16,7 +16,7 @@
 		SELECT COUNT(*) FROM NOTICE
 		WHERE LT_NO = #{ltNo}
 	</select>
-	<select id="NoticeSelect" resultType="co.makeu.up.notice.service.NoticeVO">
+	<select id="NoticeSelect" resultType="co.makeu.up.notice.service.NoticeVO" parameterType="co.makeu.up.notice.service.NoticeVO">
 		SELECT N.* FROM 
 		NOTICE N LEFT OUTER JOIN FILES F
 		ON N.FILE_NO = F.FILE_NO

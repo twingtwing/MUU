@@ -79,21 +79,22 @@
     </section>
     <!-- 배너끝 -->
 
-    <!-- 카테고리 시작-->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="#"><i class="fa fa-home"></i> HOME</a>
-                        <a href="#">마이페이지</a>
-                        <span>내 정보</span>
-                    </div>
-                </div>
-            </div>
+ <!-- 카테고리 시작-->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
+            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
+            <span>내 정보</span>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- 카테고리 끝-->
+  </div>
+  <!-- 카테고리 끝-->
+    
 
     <!-- body 의 body-->
     <section class="blog spad" >
@@ -105,7 +106,7 @@
                       <ul class="list-group w-100">
                         <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-                          <a class="list-link active" href="#">내 정보</a>
+                          <a class="list-link active" href="/user/userSelect">내 정보</a>
                         </li>
                         <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
                           <a class="list-link" href="/user/userLectureList">내 강의리스트</a>
@@ -114,7 +115,7 @@
                           <a class="list-link" href="./userWishList">위시 리스트</a>
                         </li>
                         <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                          <a class="list-link" href="./박정욱_유저결제내역.html">결제내역</a>
+                          <a class="list-link" href="/user/">결제내역</a>
                         </li>
                       </ul>
                     </div>
@@ -130,17 +131,19 @@
                             <div class="card" style="height: 80vh; position: relative;">
                                 <div class="card-body d-flex flex-column align-items-center">
                                     <div
-                                        class="d-flex justify-content-center align-items-center justify-content-around my-5">
+                                        class="d-flex justify-content-center align-items-center justify-content-around my-5 position-relative">
                                         <c:if test="${empty user.pht}">
                                         <img src="/resources/img/profile.png" alt="유저의 프로필 사진입니다."
-                                            style="width: 150px; height:150px; border-radius: 100%; border:lightgray 1px solid;"
-                                            class="mr-4">
+                                            style="width: 150px; height:150px; border-radius: 100%; border:lightgray 1px solid;cursor: pointer;"
+                                            class="mr-4 position-relative" onclick="file.click();" id="profile">
                                         </c:if>
                                         <c:if test="${not empty user.pht}">
                                         <img src="${user.pht }" alt="유저의 프로필 사진입니다."
-                                            style="width: 150px; height:150px; border-radius: 100%; border:lightgray 1px solid;"
-                                            class="mr-4">
+                                            style="width: 150px; height:150px; border-radius: 100%; border:lightgray 1px solid;cursor: pointer;"
+                                            class="mr-4" onclick="$('#file').click();" id="profile">
                                         </c:if>
+                                        <input type="file" id="file" style="display: none;" multiple>
+                                        <div class="p-3 bg-white position-absolute imgwindow small text-center" onclick="$('#file').click();"style="top:0;left:0;width: 150px; height:165px; display:none;opacity: 80%"><br>프로필 사진<br>변경하기</div>
                                         <div>
                                             <table class="ml-4">
                                                 <tr>
@@ -208,7 +211,7 @@
                                         </table>
                                     </div>
                                     <div class="d-flex justify-content-center mx-5 mb-5 mt-4">
-                                        <button class="border px-4 py-2 rounded" onclick="location.href='/user/userUpdate'">수정</button>
+                                        <button class="border px-4 py-2 rounded" onclick="location.href='/user/userUpdate'">회원정보수정</button>
                                         <button class="border px-4 py-2 rounded" id="out">탈퇴</button>
                                     </div>
                                 </div>
@@ -388,6 +391,84 @@
             farewell();
             $('#logout').submit();
         })
+        
+       
+        
+        // change profile image
+      $('#file').change((e)=>{
+    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
+    	  let fileName = e.target.files[0].name;
+    	  if(!imgreg.test(fileName)){
+    		  window.alert('이미지 파일만 올릴 수 있습니다.');
+    		  return;
+    	  }
+		  const formData = new FormData();
+		  formData.append("uploadFile", e.target.files[0]);
+		  formData.append("beforeFileName",$('#profile').attr('src'));
+		  $.ajax({
+			  type : 'post',
+			  url :"/user/uploadProfile",
+			  processData : false,
+			  contentType : false,
+			  beforeSend : (xhr) =>{
+			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			  },
+			  data : formData,
+			  success : (result) =>{
+				  $('#profile').attr('src',result);
+			  },
+			  err : (err) => console.log(err)
+		  })
+      })
+      
+      
+      // profile img change
+      $('#file').change((e)=>{
+    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
+    	  let fileName = e.target.files[0].name;
+    	  if(!imgreg.test(fileName)){
+    		  window.alert('이미지 파일만 올릴 수 있습니다.');
+    		  return;
+    	  }
+		  const formData = new FormData();
+		  formData.append("uploadFile", e.target.files[0]);
+		  $.ajax({
+			  type : 'post',
+			  url :"/user/uploadProfile",
+			  processData : false,
+			  contentType : false,
+			  beforeSend : (xhr) =>{
+			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			  },
+			  data : formData,
+			  success : (result) =>{
+				  $('#profile').attr('src',result);
+			  },
+			  err : (err) => console.log(err)
+		  })
+      })
+      $('#profile').mouseover(()=>{
+    	  $('.imgwindow').css('display','block');
+      })
+      $('#profile').mouseout(()=>{
+    	  $('.imgwindow').css('display','none');
+      })
+        
+        
+        
+        
+    //mouseover 이벤트 : 사이드바 css변경
+    $('.list-group .list-group-item').on('mouseover',function(){
+      $(this).css('background-color','#e53637');
+      $(this).find('.list-link').css('color','#ffffff');
+    })
+
+      //mouseover 이벤트 : 사이드바 css변경
+    $('.list-group .list-group-item').on('mouseout',function(){
+      $(this).css('background-color','#ffffff');
+      $(this).find('.list-link').css('color','#000000');
+      $(this).find('.list-link.active').css('color','#e53637');
+    })
     </script>
 </body>
 </html>

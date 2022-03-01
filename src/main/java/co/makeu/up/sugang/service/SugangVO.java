@@ -25,4 +25,8 @@ public class SugangVO {
 	// for join
 	private String ttl;
 	private String thumb;
+	private int cnt;
+	
+	// progress
+	private int progPct;
 }

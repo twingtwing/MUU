@@ -75,20 +75,21 @@ td, th {
 	</section>
 	<!-- 배너끝 -->
 
-	<!-- 카테고리 시작-->
-	<div class="breadcrumb-option">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="breadcrumb__links">
-						<a href="#"><i class="fa fa-home"></i> HOME</a> <a href="#">마이페이지</a>
-						<span>내 정보</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 카테고리 끝-->
+ <!-- 카테고리 시작-->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
+            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
+            <span>내 정보</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 카테고리 끝-->
 
 	<section class="blog spad">
 		<div class="container">
@@ -105,7 +106,7 @@ td, th {
 							</li>
 							<li
 								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;"><a class="list-link" href="#">내
+								style="height: 55px;"><a class="list-link" href="/user/userLectureList">내
 									강의리스트</a></li>
 							<li
 								class="list-group-item border-bottom-0 align-items-center d-flex"
@@ -133,10 +134,8 @@ td, th {
 									<div
 										class="d-flex justify-content-center align-items-center justify-content-around my-5 position-relative">
 										<img src="${user.pht}" alt="유저의 프로필 사진입니다."
-											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid; cursor: pointer;"
-											class="mr-4 position-relative" onclick="file.click();" id="profile">
-											<input type="file" id="file" style="display: none;" multiple>
-										<div class="p-3 bg-white position-absolute imgwindow small" style="top:0;left:0; display:none;opacity: 80%">프로필 사진 변경하기</div>
+											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid;"
+											class="mr-4">
 										<div>
 											<table class="ml-4">
 												<tr>
@@ -280,64 +279,7 @@ td, th {
       
       $('#tel').keyup(checkTel);
       
-      // change profile image
-      $('#file').change((e)=>{
-    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
-    	  let fileName = e.target.files[0].name;
-    	  if(!imgreg.test(fileName)){
-    		  window.alert('이미지 파일만 올릴 수 있습니다.');
-    		  return;
-    	  }
-		  const formData = new FormData();
-		  formData.append("uploadFile", e.target.files[0]);
-		  formData.append("beforeFileName",$('#profile').attr('src'));
-		  $.ajax({
-			  type : 'post',
-			  url :"/user/uploadProfile",
-			  processData : false,
-			  contentType : false,
-			  beforeSend : (xhr) =>{
-			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-			  },
-			  data : formData,
-			  success : (result) =>{
-				  $('#profile').attr('src',result);
-			  },
-			  err : (err) => console.log(err)
-		  })
-      })
-      
-      $('#file').change((e)=>{
-    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
-    	  let fileName = e.target.files[0].name;
-    	  if(!imgreg.test(fileName)){
-    		  window.alert('이미지 파일만 올릴 수 있습니다.');
-    		  return;
-    	  }
-		  const formData = new FormData();
-		  formData.append("uploadFile", e.target.files[0]);
-		  $.ajax({
-			  type : 'post',
-			  url :"/user/uploadProfile",
-			  processData : false,
-			  contentType : false,
-			  beforeSend : (xhr) =>{
-			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-			  },
-			  data : formData,
-			  success : (result) =>{
-				  $('#profile').attr('src',result);
-			  },
-			  err : (err) => console.log(err)
-		  })
-      })
-      
-      $('#profile').mouseover(()=>{
-    	  $('.imgwindow').css('display','block');
-      })
-      $('#profile').mouseout(()=>{
-    	  $('.imgwindow').css('display','none');
-      })
+   
       
       // user info update
       $('#compl').click((e)=>{
@@ -370,11 +312,7 @@ td, th {
             $(this).css('background-color','#ffffff');
             $(this).find('.list-link').css('color','#000000');
             $(this).find('.list-link.active').css('color','#e53637');
-        })
-        
-        
-        // 유저정보 업데이트 (사진이랑 같이해야될듯.)
-        
+        })      
     </script>
 </body>
 </html>
