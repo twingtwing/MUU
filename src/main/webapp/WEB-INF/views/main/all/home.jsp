@@ -77,6 +77,7 @@
 		<a href="/creator/cLecNU">수정</a>
 		<a href="/creator/cLecQ">질답</a><br>
 		<a href="excel">엑셀다운로드</a>
+		<a href="/user/userWishList">유저-위시리스트</a>
 		
 	</div>
     <!-- slide benner -->
