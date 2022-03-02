@@ -18,7 +18,7 @@
 		AND LSN_NO = #{lsnNo}
 	</update>
 	<select id="wholeProgress" parameterType="co.makeu.up.progress.service.ProgressVO" resultType="Integer">
-		SELECT AVG(PROG_PCT) FROM (
+		SELECT NVL(ROUND(AVG(PROG_PCT)),0) CNT FROM (
 		    SELECT P.*,L.LT_NO FROM PROGRESS P JOIN LESSON L
 			ON P.LSN_NO = L.LSN_NO
 			WHERE ID = #{id}

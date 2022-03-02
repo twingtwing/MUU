@@ -44,6 +44,7 @@ public class ReportController {
 	@ResponseBody
 	public void reportReview(Principal pri, ReportVO vo) {
 		vo.setReporter(pri.getName());
+		reportDao.insertReviewReport(vo);
 	}
 
 }

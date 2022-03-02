@@ -26,6 +26,8 @@ public class LectureVO {
 	private String ltStCode;
 	private Date expDate;
 	private Date startDate;
+	private float avgStar;
+	private int studentCount;
 	public int getLtNo() {
 		return ltNo;
 	}
@@ -163,6 +165,18 @@ public class LectureVO {
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	public float getAvgStar() {
+		return avgStar;
+	}
+	public void setAvgStar(float avgStar) {
+		this.avgStar = avgStar;
+	}
+	public int getStudentCount() {
+		return studentCount;
+	}
+	public void setStudentCount(int studentCount) {
+		this.studentCount = studentCount;
 	}
 	
 	

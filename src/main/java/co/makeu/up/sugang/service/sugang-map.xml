@@ -28,4 +28,20 @@
         AND REG_DATE > SYSDATE-7
         AND TLSN_NO= #{tlsnNo}
 	</select>
+	<select id="sugangPay" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT S.*,L.TTL,L.INTRO,L.THUMB,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC
+		FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO = L.LT_NO
+		WHERE ID = #{id}
+	<if test="regDateSearch != null and expDateSearch != null">
+		AND S.REG_DATE <![CDATA[>]]> #{regDateSearch}
+        AND S.EXP_DATE <![CDATA[<]]> #{expDateSearch}
+	</if>
+		ORDER BY S.REG_DATE
+	</select>
+	<update id="updateSugangConfirm" parameterType="co.makeu.up.sugang.service.SugangVO">
+		UPDATE SUGANG 
+		SET SHIP_ST_CODE = #{shipStCode}
+		WHERE TLSN_NO = #{tlsnNo}
+	</update>
 </mapper>

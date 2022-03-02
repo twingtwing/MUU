@@ -90,7 +90,9 @@ document.querySelector('#player').addEventListener('timeupdate',(e)=>{
 	let duration = document.querySelector('#player').duration;
 	let currTime = document.querySelector('#player').currentTime;
 	record = currTime/duration;
+	console.log(duration)
 })
+
 const recordUpdate = ()=>{
 	$.ajax({
 		url : '/user/progressUpdate',

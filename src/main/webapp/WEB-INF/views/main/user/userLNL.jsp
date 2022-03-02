@@ -160,7 +160,7 @@
                         <td>${notice.ntNo}</td>
                         <td>${notice.ttl}</td>
                         <td>
-                        	<c:if test="${not empty notice.fileNo}">📄</c:if>
+                        	<c:if test="${notice.fileNo ne 0}"><i class="fa fa-file" aria-hidden="true"></i></c:if>
                         </td>
                         <td>${notice.wrDate }</td>
                         <td>${notice.hits }</td>
@@ -255,7 +255,7 @@
 			searchData.page = pageNum;
 			searchPageAjax(searchData);
 		}
-		$(e.currentTarget).addClass('current-page');
+		e.currentTarget.classList.add('current-page'); // 이거 왜 안먹음?
 	})
 	
   // 페이지네이션 DOM 조작 함수
@@ -264,10 +264,15 @@
 	}
 	const changePage = (list)=>{
 		list.forEach((val)=>{
+			let fileicon = '';
+			if(val.fileNo!=0){
+				fileicon = '<i class="fa fa-file" aria-hidden="true"></i>';
+			}
+			console.log(fileicon)
 			let tr = $('<tr>').append(
 					$('<td>').text(val.ntNo),
 					$('<td>').text(val.ttl),
-					$('<td>').text(val.fileNo),
+					$('<td>').html(fileicon),
 					$('<td>').text(new Date(val.wrDate).toISOString().slice(0,10)),
 					$('<td>').text(val.hits));
 			$('#noticeList').append(tr);

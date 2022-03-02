@@ -38,7 +38,7 @@ public class ReviewController {
 		checkvo = sugangDao.sugangCheckDate(checkvo);
 		if(Objects.isNull(checkvo)) {
 			logger.info("사용자의 잘못된 접근");
-			model.addAttribute("accessBan","사용자가 잘못된 방식으로 만료된 강의에 접근하려고 합니다.");
+			model.addAttribute("accessBan","잘못된 접근입니다.");
 			return "redirect:/accessError";
 		} else {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
@@ -49,11 +49,10 @@ public class ReviewController {
 		sugangvo = sugangDao.sugangCheckDate(sugangvo);
 		if(Objects.isNull(sugangvo)) {
 			logger.info("사용자의 잘못된 접근");
-			model.addAttribute("accessBan","사용자가 잘못된 강의에 접근하려고 합니다.");
+			model.addAttribute("accessBan","잘못된 접근입니다.");
 			return "redirect:/accessError";
 		}
 		
-		logger.info(vo.getContent()+vo.getWriter()+"검색어 왜 안넘어오냐;");
 		List<ReviewVO> list = reviewDao.reviewSelectList(vo);
 		double avg = 0;
 		for(ReviewVO rv : list) {

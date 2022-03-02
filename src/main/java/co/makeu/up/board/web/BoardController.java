@@ -44,7 +44,7 @@ public class BoardController {
 	}
 	
 	
-	//愿�由ъ옄 怨듭��궗�빆 由ъ뒪�듃
+	//공지사항 list - admin
 	@GetMapping("/admin/adBadLi")
 	public String adBadLi(BoardVO vo , Model model) {
 		model.addAttribute("list",boardDao.selectadbad());
@@ -58,21 +58,37 @@ public class BoardController {
 		return "admin/adbad/adBadl";
 	}
 	
-	@GetMapping("/admin/insertBoard")
+	@PostMapping("/admin/insertBoard")
 	public String insertBoard (BoardVO vo) {
-		System.out.println("dddd");
-		
 		boardDao.insertBoard(vo);
-		return "/admin/adBadLi";
+		return "redirect:/admin/adBadLi";
 	}
 	@GetMapping("/admin/adBadS")
 	public String adBadS(BoardVO vo , Model model) {
-		model.addAttribute("list",boardDao.selectadbads());
-		return "admin/adbad/adBads";
+		model.addAttribute("board",boardDao.selectadbads(vo));
+		return "admin/adbad/adBadS";
 	}
 	@PostMapping("/admin/deladbad")
-	public String adBadU (BoardVO vo ) {
-		boardDao.deladbad(vo);
-	return "/admin/adBadLi";
+	@ResponseBody
+	public int deladbad (BoardVO vo ) {
+		System.out.println("dddddd");
+		int r = boardDao.deladbad(vo);
+		System.out.println("");
+		return r;
+	}
+	
+	@GetMapping("/admin/adBadU")
+	public String adBadU(BoardVO vo , Model model) {
+		model.addAttribute("board",boardDao.selectadbads(vo));
+		return "admin/adbad/adBadU";
+	}
+	
+	@PostMapping("/admin/upadbad")
+	@ResponseBody
+	public int upadbad(BoardVO vo) {
+		System.out.println("제발");
+		int dd =boardDao.upadbad(vo);
+		return dd;
+		
 	}
 }

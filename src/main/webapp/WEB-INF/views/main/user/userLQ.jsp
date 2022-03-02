@@ -261,9 +261,15 @@
 		  },  
       })
       .done((r)=>{
+    	  let today = new Date().toISOString().slice(0,10)
     	  $('#qstbox').toggleClass('d-none');
           $('#qstbox').toggleClass('d-flex');
           window.alert('등록이 완료되었습니다.');
+          $('.qstboard').first().before(
+      		    $('<tr>').append($('<td>').text(r.qContent),
+                                  $('<td>').text(today),
+                                  $('<td>').text('답변 대기 중').addClass('font-weight-bold text-danger'))
+      		)
       })
     })
 
@@ -349,6 +355,7 @@
 			makeRowPage(res);
 		})
 	}
+	
 	const removeAll = ()=>{
 		$('#qstList').children().remove();
 	}

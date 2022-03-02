@@ -29,4 +29,14 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.sugangBeforeRefund(vo);
 	}
 
+	@Override
+	public List<SugangVO> sugangPay(SugangVO vo) {
+		return map.sugangPay(vo);
+	}
+
+	@Override
+	public int updateSugangConfirm(SugangVO vo) {
+		return map.updateSugangConfirm(vo);
+	}
+
 }

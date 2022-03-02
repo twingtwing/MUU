@@ -177,12 +177,13 @@
                                 </div>
                                 <select name="" id="ctgr" class="border w-100">
 									<option value="">전체(상위 카테고리)</option>
-									<option value="요리">요리</option>
-									<option value="건강">건강</option>
-									<option value="아트">아트</option>
-									<option value="IT/컴퓨터">IT/컴퓨터</option> 
-									<option value="외국어">외국어</option>
-									<option value="자기계발">자기계발</option>
+									<option value="HC01">음악</option>
+									<option value="HC02">요리</option>
+									<option value="HC03">건강</option>
+									<option value="HC04">아트</option>
+									<option value="HC05">IT/컴퓨터</option> 
+									<option value="HC06">외국어</option>
+									<option value="HC07">자기계발</option>
 		                        </select>
                             </div>
                         </div>
@@ -496,22 +497,23 @@
 	})
 	
     //카테고리
-    const 종류 = {
+    const Tcategory = {
 		//'전체(상위 카테고리)' : ['없음'],
-        '음악' : ['클래식','재즈','락','힙합/랩','타악기','기타/베이스','동양음악','보컬','작사/작곡'],
-        '요리': ['양식','동양식','간편요리','코스요리','가정식','베이킹'],
-        '건강': ['홈트레이닝','필라테스','요가','정신건강','테라피'],
-        '아트': ['2D/애니메이션','드로잉','수채화','유화','동양화','판화','공예','사진','메이크업/분장'],
-        'IT/컴퓨터': ['Java','Python','C/C++/C#','웹프로그래밍','Unity','영상편집','Photoshop/Illustrator','3D모델링','기타'],
-        '외국어': ['영어','일본어','중국어','스페인어','포르투갈어','아랍어','러시아어'],
-        '자기계발': ['부동산','주식','면접/자소서','SNS/블로그','기타'],
+       	'음악' : [{'클래식':'LC01'},{'재즈/락':'LC02'},{'힙합/랩':'LC03'},{'기타/베이스':'LC04'},{'동양':'LC05'},{'보컬':'LC06'},{'작사/작곡':'LC07'}],
+        '요리': [{'한식':'LC08'},{'양식':'LC09'},{'일식':'LC10'},{'중식':'LC11'},{'베이킹':'LC12'},{'가정식':'LC13'},{'기타':'LC14'}],
+        '건강': [{'홈트레이닝':'LC15'},{'필라테스':'LC16'},{'요가':'LC17'},{'헬스':'LC18'},{'정신건강':'LC19'},{'기타':'LC20'}],
+        '아트': [{'2D/애니메이션':'LC21'},{'드로잉':'LC22'},{'수채화/유화':'LC23'},{'동양화':'LC24'},{'사진':'LC25'},{'메이크업/분장':'LC26'},{'기타':'LC27'}],
+        'IT/컴퓨터': [{'Java':'LC28'},{'Python':'LC29'},{'C언어':'LC30'},{'웹프로그래밍':'LC31'},{'Unity':'LC32'},{'Photoshop/Illustrator':'LC33'},{'기타':'LC34'}],
+        '외국어': [{'영어':'LC35'},{'일본어':'LC36'},{'중국어':'LC37'},{'스페인어':'LC38'},{'아랍어':'LC39'},{'러시아어':'LC40'},{'기타':'LC41'}],
+        '자기계발': [{'부동산':'LC42'},{'주식':'LC43'},{'면접/자소서':'LC44'},{'SNS/블로그':'LC45'},{'기타':'LC46'}]
+        
       }
 	$('#ctgr').change(()=>{
 		$('#downctgr>option').remove();
 			let upper = $('#ctgr option:selected').text();
-			종류[upper].forEach((v)=>{
+			Tcategory[upper].forEach((a)=>{
 				$('#downctgr').append(
-				$('<option>').val(v).text(v)
+				$('<option>').val(a[Object.keys(a)[0]]).text(Object.keys(a)[0])
 			)
 		})
 	})
@@ -765,8 +767,8 @@
     	
 		//변수 선언, lecture-map insert 순으로 data입력, parameter통일
 		let creid = '${id}';
-		let upctgr = $('#ctgr option:selected').text();
-		let downctgr = $('#downctgr option:selected').text();
+		let upctgr = $('#ctgr option:selected').val();
+		let downctgr = $('#downctgr option:selected').val();
 		let ttl = $('#lecTitle').val();
 		let intro = $('#lecIntro').val();
 		let openterm = $('#lecP option:selected').val();

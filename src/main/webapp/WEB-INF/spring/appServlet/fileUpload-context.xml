@@ -9,7 +9,7 @@
 	</bean>
 
 	<bean class="java.lang.String" id="saveDir">
-		<constructor-arg value="c://uploadTest//"/>
+		<constructor-arg value="C://uploadTest//"/>
 	</bean>
 	
 </beans>
