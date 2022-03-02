@@ -34,4 +34,5 @@
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
 		ORDER BY l.LT_NO
 	</select>
+	
 </mapper>
