@@ -3,11 +3,17 @@
 <mapper namespace="co.makeu.up.extendedLecture.service.ExtendedLetureMapper">
 	
 	<select id="lectureList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
-		SELECT * FROM LECTURE 
-		WHERE LT_ST_CODE = 'L01'
-		<if test="upCtgr != ''">AND UP_CTGR = #{upCtgr}</if>
-		<if test="downCtgr != ''">AND DOWN_CTGR = #{downCtgr}</if>
-		ORDER BY lt_No
+		SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,TRUNC(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
+		ON J.LT_NO = R.LT_NO
+		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
+		ON J.LT_NO = W.LT_NO
+		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
+		ON J.LT_NO = L.LT_NO
+		WHERE J.LT_ST_CODE = 'L01'
+		<if test="upCtgr != ''">AND J.UP_CTGR = #{upCtgr}</if>
+		<if test="downCtgr != ''">AND J.DOWN_CTGR = #{downCtgr}</if>
+		ORDER BY J.LT_NO
 	</select>
 	
 	<select id="ctgrList" resultType="co.makeu.up.ctgr.service.CtgrVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
@@ -16,6 +22,5 @@
 		ON C.UP_CTGR = U.CTGR_ID
 		WHERE C.UP_CTGR = #{upCtgr} 
 		ORDER BY C.CTGR_ID
-		
 	</select>
 </mapper>

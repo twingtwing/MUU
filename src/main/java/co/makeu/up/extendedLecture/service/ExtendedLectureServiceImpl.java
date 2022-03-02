@@ -14,5 +14,4 @@ public class ExtendedLectureServiceImpl implements ExtendedLetureService{
 		vo.setCtgrList(map.ctgrList(vo));
 		return vo;
 	}
-
 }

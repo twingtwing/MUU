@@ -1,7 +1,5 @@
 package co.makeu.up.wishlist.service;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data

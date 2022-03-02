@@ -117,11 +117,11 @@
                                             <tr style="background-color: #eeeeee;">
                                                 <th style="width: 100px;">번호</th>
                                                 <th style="width: 150px;">신고유형</th>
-                                                <th >강의제목</th>
                                                 <th style="width: 130px;">크리에이터</th>
+                                                <th >강의명</th>
                                                 <th style="width: 130px;">신고자</th>
                                                 <th style="width: 120px;">신고날짜</th>
-                                                
+                                                <th style="width: 100px;">상태</th>
                                                 
                                             </tr>
                                         </thead>
@@ -129,20 +129,11 @@
                                         <tr>
                                             <td>1</td>
                                             <td>부적절한 콘텐츠</td>
-                                            <td>너도 할수있다 첼린저</td>
                                             <td>짭이커</td>
+                                            <td>너도 할수있다 첼린저</td>
                                             <td>박ㅇㅇ</td>
                                             <td>2022-02-23</td>
-                                        </tr>
-                                        <tr>
-                                            <td>d22</td>
-                                            <td>d22</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            
-                                            
+                                            <td>처리</td>
                                         </tr>
                                     </tbody>
                                     </table>

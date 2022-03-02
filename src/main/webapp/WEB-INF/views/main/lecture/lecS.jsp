@@ -176,9 +176,8 @@
                                 <div class="row my-2">
                                     <!-- 카드 시작 -->
                                     <div v-for="(lecture,index) in lectures" class="card mx-2 mb-3 relative">
-                                        <!-- 이미 워시리스트이면 heart에 is-active클래스가 추가되어 있어야함 -->
                                         <div class="stage">
-                                            <div v-on:click="heartClick(index)" class="heart"></div>
+                                            <div v-on:click="heartClick(index)" v-bind:class="{'is-active' : lecture.wash == 'Y'}" class="heart"></div>
                                         </div>
                                         <!-- 사진 나중에 넣어야함 -->
                                         <img v-on:click="lecDetail(index)" class="card-img-top" style="width: 250px; height: 300px;" src="/resources/img/trending/trend-1.jpg" alt="강의 이미지">
@@ -187,15 +186,13 @@
                                             <h5 v-on:click="lecDetail(index)" class="card-title mb-1 text-dark font-weight-bold">{{lecture.ttl}}</h5>
                                             <div class="row">
                                                 <div class="col-lg-5">
-                                                    <p class="card-text text-muted mb-1"><i class="icon_heart_alt" style="color: pink;"></i> 100</p>
+                                                    <p class="card-text text-muted mb-1"><i class="icon_heart_alt" style="color: pink;"></i> {{lecture.wCount}}</p>
                                                 </div>
                                                 <div class="col-lg-7 d-flex justify-content-end">
                                                     <p class="card-text text-muted mb-1">
-                                                        <i class="icon_star" style="color: #ebeb00;"></i>
-                                                        <i class="icon_star" style="color: #ebeb00;"></i>
-                                                        <i class="icon_star" style="color: #ebeb00;"></i>
-                                                        <i class="icon_star_alt" style="color: #ebeb00;"></i>
-                                                        <i class="icon_star_alt" style="color: #ebeb00;"></i>
+                                                        <i v-for="index in lecture.star" class="icon_star" style="color: #ebeb00;"></i>
+                                                        <i v-for="index in 5 - lecture.star" class="icon_star_alt" style="color: #ebeb00;"></i>
+                                                        ({{lecture.rCount}})
                                                     </p>
                                                 </div>
                                             </div>
@@ -249,6 +246,7 @@
     <!-- body 끝 -->
 
     <script>
+
         //Vue
         //db에서 가져와야하는건 다 vue로 해야함
         const lec = Vue.createApp({
@@ -296,12 +294,10 @@
             },
             methods : {
                lecSearch(){
-                   console.log(this.searchTTL);
                    this.lectures = this.originLectures.filter(obj => obj.ttl.indexOf(this.searchTTL)!== -1)
                 },
                 lecDetail(index){
-                	location.href ="/lecD"
-                    //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
+                	location.href ="/lecD?ltNo="+this.lectures[index].ltNo;
                 },
                 tagSelected(){
                     if(event.target.nodeName ==='SPAN'){
@@ -353,16 +349,42 @@
                     }
                 },
                 heartClick(index){
-                    event.target.classList.toggle('is-active');
+            		let header = "${_csrf.headerName}";
+            		let token = "${_csrf.token}";
                     let ltNo = this.lectures[index].ltNo;
-                    console.log(ltNo);
-                    if(event.target.classList.contains('is-active')){
-                        console.log('추가');
-                        //ajax
+                    let sum = 0;
+                    let wash = '';
+                    let heartPath = '';
+                    let heart = event.target;
+                  	if(heart.classList.contains('is-active')){
+                        sum = -1;
+                        wash ='N';
+                        heartPath = '/user/heartDelete';
                     }else{
-                        console.log('삭제');
-                        //ajax
+                    	sum = 1;
+                    	wash ='Y';
+                        heartPath = '/user/heartInsert';
                     }
+                    $.ajax({
+                    	url : heartPath,
+                    	type : "POST",
+                    	data :{
+                    		ltNo: ltNo,
+                    	},
+                    	beforeSend: function(xhr) {
+                			xhr.setRequestHeader(header, token);
+                		}
+                    })
+                    .done((result)=> {
+                    	if(result == 'Y'){
+                    		heart.classList.toggle('is-active');
+                        	this.lectures[index].wCount +=sum;
+                        	this.lectures[index].wash = wash;
+                    	}else{
+                    		alert("찜하기 위해 로그인해주세요");
+                    		location.href="/customLogin";
+                    	}
+                    });  
                 }
             },
             beforeCreate : function(){
@@ -375,7 +397,6 @@
                 	this.ctgr = result.ctgrList;
                 	this.upCtgr = result.upCtgr;
                 	this.downCtgr = result.downCtgr;
-                	
                 });
             }
 

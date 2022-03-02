@@ -3,7 +3,6 @@ package co.makeu.up.wishlist.web;
 import java.security.Principal;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.makeu.up.common.view.Pagination;
 import co.makeu.up.common.view.PaginationFive;
-import co.makeu.up.notice.service.NoticeVO;
 import co.makeu.up.notice.web.NoticeController;
 import co.makeu.up.wishlist.service.WishListServiceImpl;
 import co.makeu.up.wishlist.service.WishlistVO;
@@ -59,5 +55,28 @@ public class WishListController {
 		return "redirect:/user/userWi";
 	}
 	
+	//하트 추가
+	@ResponseBody
+	@PostMapping("/user/heartInsert")
+	public String heartInsert(WishlistVO vo, Principal pri) {
+		String result = "N";
+		vo.setId(pri.getName());
+		if(wishListDao.heartInsert(vo) != 0) {
+			result = "Y";
+		}
+		return result;
+	}
+	
+	//하트 삭제
+	@ResponseBody
+	@PostMapping("/user/heartDelete")
+	public String heartDelete(WishlistVO vo, Principal pri) {
+		String result = "N";
+		vo.setId(pri.getName());
+		if(wishListDao.heartDelete(vo) != 0) {
+			result = "Y";
+		}
+		return result;
+	}
 
 }

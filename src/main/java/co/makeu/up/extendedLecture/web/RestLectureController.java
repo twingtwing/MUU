@@ -1,4 +1,6 @@
-package co.makeu.up.lecture.web;
+package co.makeu.up.extendedLecture.web;
+
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,10 @@ public class RestLectureController {
 	
 	//강의 검색 
 	@RequestMapping(value = "/lectureList", method=RequestMethod.GET)
-	public ExtendedLectureVO lectureList(ExtendedLectureVO vo){
+	public ExtendedLectureVO lectureList(ExtendedLectureVO vo,Principal pri){
+		if(pri != null) {
+			vo.setId(pri.getName());
+		}
 		return extendedDao.extendedList(vo);
 	}
 	

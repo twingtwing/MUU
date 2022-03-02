@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.makeu.up.ctgr.service.CtgrVO;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.wishlist.service.WishlistVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +12,11 @@ import lombok.Setter;
 @Setter
 public class ExtendedLectureVO {
 
+	private String id;
 	private String upCtgr;
 	private String downCtgr;
 	
 	List<LectureVO> lectureList;
 	List<CtgrVO> ctgrList;
+	List<WishlistVO> wishCount;
 }

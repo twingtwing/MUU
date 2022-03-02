@@ -47,23 +47,61 @@
                                         <div class="row justify-content-between p-2"
                                             style="background-color: #eeeeee; border-bottom: 1px solid black; border-top:2px solid black;">
                                             <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">신고</h6>
-
-                                                <h6 class="mb-0 ml-2 pl-1">신고유형</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">도박</h6>
+                                                <h6 class="mb-0 ml-2 pl-1">신고 대상</h6>
                                             </div>
                                             <div class="row">
-
                                                 <div class="row mx-2">
                                                     <div class="row">
-                                                        <h6 class="mb-0 ml-2 pl-1">신고자</h6>
+                                                        <h6 class="mb-0 ml-2 pl-1">신고 대상자</h6>
                                                         <h6 class="mb-0 ml-2" style="font-weight: 500;">익명으</h6>
-                                                        <div class="row mx-2">
-
-                                                            <h6 class="mb-0 ml-2 pl-1">상태</h6>
-                                                            <h6 class="mb-0 ml-2" style="font-weight: 500;">미처리</h6>
-                                                        </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between p-2"
+                                            style="background-color: #eeeeee; border-bottom: 2px solid black;">
+                                            <div class="row">
+                                            <!-- 수업 있으면 -->
+                                                <h6 class="mb-0 ml-2 pl-1">수업 번호</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2 pl-1">수업 제목</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄹㅇㄹ</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row mx-2">
+                                                    <h6 class="mb-0">강의 제목</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄹㅇㄹㅇ</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="form-group col-lg-12"  >
+	                                    <div class="card d-felx justify-content-center">
+		                                    <div class="card-body">
+		                                    	<iframe id="youtube" src="https://www.youtube.com/embed/9d9Zdhpu0yc" frameborder="0" style="display:block; width:100%; height: 80vh"></iframe>
+		                                    </div>
+		                                    <div class="card-footer row justify-content-end" style="background-color: white;">
+			                                	<div>강의 상세 정보 가기</div>
+		                                	</div>
+	                                    </div>
+	                                </div>
+	                            </div>
+
+                                <!-- 여기서부터 작성 -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
+                                            <div class="row">
+                                                <h6 class="mb-0 ml-2 pl-1">신고</h6>
+                                                <h6 class="mb-0 ml-2 pl-1">신고유형</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">??</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row mx-2">
+                                                    <h6 class="mb-0 ml-2 pl-1">신고자</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,58 +112,27 @@
                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
                                             </div>
                                             <div class="row">
-
                                                 <div class="row mx-2">
-                                                    <h6 class="mb-0">신고일자</h6>
+                                                    <h6 class="mb-0">신고 일자</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="row form-group">
                                     <div class="card">
                                         <div class="card-body" style="height: 25vh;">
-                                            신고당한사유
+                                        ㅇㄹㅇㄹ
+                                        </div>
+                                        <div class="card-footer row justify-content-end" style="background-color: white;">
+	                                         <div>
+	                                            처리 상태 : <span class="text-danger font-weight-bold">처리</span>
+	                                         </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- 여기서부터 작성 -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="row justify-content-between p-2"
-                                            style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">신고당한 영상</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">254강-2</h6>
-
-                                            </div>
-                                            <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">강의제목</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">111</h6>
-                                                <div class="row mx-2">
-
-                                                    <h6 class="mb-0 ml-2 pl-1">크리에이터</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                
-                                <div class="row" >
-                                    <div class="form-group"  >
-                                    <div class="card" style="left: 160%;" >
-                                        <div id="car">
-                                        <div class="card-body" style="height: 30vh;">
-                                           <iframe id="youtube" src="https://www.youtube.com/embed/9d9Zdhpu0yc" frameborder="0" height="100%" width="100%"></iframe>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
                                 <div class="row mb-2">
                                     <div class="col-lg-12 border-bottom">
 
