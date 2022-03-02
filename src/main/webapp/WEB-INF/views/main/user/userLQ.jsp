@@ -201,7 +201,7 @@
 				<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
 				<c:choose>
 				<c:when test="${page eq pagination.currPage}">
-                  <a class="paging">${page}</a>				
+                  <a class="paging current-page">${page}</a>				
 				</c:when>
 				<c:otherwise>
 				  <a class="paging">${page}</a>
@@ -317,7 +317,9 @@
 		} else {
 			let searchData = makeSearchData(pageNum);
 			pagination(searchData);
-		}	
+		}
+		$('.paging').removeClass('current-page');
+		$(e.currentTarget).addClass('current-page');
 	})
 	
 	$('#searchQna').click(()=>{

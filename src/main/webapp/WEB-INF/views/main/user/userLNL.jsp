@@ -255,7 +255,8 @@
 			searchData.page = pageNum;
 			searchPageAjax(searchData);
 		}
-		e.currentTarget.classList.add('current-page'); // 이거 왜 안먹음?
+		$('.paging').removeClass('current-page');
+		$(e.currentTarget).addClass('current-page'); 
 	})
 	
   // 페이지네이션 DOM 조작 함수

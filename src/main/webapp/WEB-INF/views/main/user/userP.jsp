@@ -271,8 +271,12 @@
 
     // 더보기
     $('.more').click(()=>{
+    	let cards = document.querySelectorAll('.hided');
     	for(let i=0; i<6; i++){
-    		$($('.hided')[i]).removeClass('hided');
+    		if(cards[i]){
+    		cards[i].classList.remove('hided');    			
+    		}
+    		console.log(cards[i])
     	}
     })
     
@@ -334,6 +338,7 @@
     	$('tbody').children().remove();
     }
     const makeRow = (list)=>{
+    	let ktPrc = '( 키트 가격 : '+list.kitPrc+'원, 강의 가격에 포함 )';
     	let tr = $('<tr>');
     	tr.append(
     		$('<td>').append(
@@ -341,8 +346,8 @@
     				.addClass('p-0'),
     		$('<td>').text(list.ttl),
     		$('<td>').text(list.intro),
-    		$('<td>').text(list.pay).append(
-    				$('<span>').text(`( 키트 가격 : ${list.kitPrc}원, 강의 가격에 포함 )`).addClass('small')),
+    		$('<td>').text(list.pay).append($('<br>'),
+    				$('<span>').text(ktPrc).addClass('small')),
     		$('<td>').text(dateformat(list.regDate))
     	)
     	return tr;

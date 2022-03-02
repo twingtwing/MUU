@@ -121,11 +121,13 @@ keyframes rotate_image { 100% {
 										<div class="form-check">
 											<table class="table border-bottom">
 												<thead class="text-center">
+												<tr>
 													<th style="width: 60px;">체크</th>
 													<th style="width: 300px;">강의사진test</th>
 													<th>강의제목</th>
 													<th style="width: 120px;">강의비용</th>
 													<th>강의상태</th>
+												</tr>
 												</thead>
 												<tbody id="WishList">
 													<c:forEach items="${wishlists}" var="wishlist">
@@ -150,11 +152,13 @@ keyframes rotate_image { 100% {
 										</div>
 										<table style="display: none">
 											<thead class="text-center">
+											<tr>
 												<th style="width: 60px;">체크</th>
 												<th style="width: 300px;">강의사진test</th>
 												<th>강의제목</th>
 												<th style="width: 120px;">강의비용</th>
 												<th>강의상태</th>
+											</tr>
 											</thead>
 											<tbody id="sampleTr">
 												<tr>
