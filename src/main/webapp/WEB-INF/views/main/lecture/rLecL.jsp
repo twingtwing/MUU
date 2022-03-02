@@ -271,10 +271,7 @@ $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
     $(this).find('.list-link.active').css('color','#e53637');
 })
 
-//시큐리티 토큰
-	let header = "${_csrf.headerName}";
-	let token = "${_csrf.token}";
-	
+//상세 페이지 이동
 function lectureInfo(e){
 	$('.sendltno').val(e);
 	$('#frm').submit();
