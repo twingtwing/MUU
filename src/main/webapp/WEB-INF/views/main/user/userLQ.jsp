@@ -349,6 +349,7 @@
 			makeRowPage(res);
 		})
 	}
+	
 	const removeAll = ()=>{
 		$('#qstList').children().remove();
 	}

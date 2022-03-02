@@ -142,7 +142,7 @@
                 <a class="list-link" href="./박정욱_위시리스트.html">위시 리스트</a>
               </li>
               <li class="list-group-item" style="height: 55px;">
-                <a class="list-link" href="./박정욱_유저결제내역.html">결제내역</a>
+                <a class="list-link" href="/user/userPay">결제내역</a>
               </li>
             </ul>
           </div>
@@ -174,8 +174,8 @@
                           <div class="d-flex w-100 col-lg-12">
                           <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
-                              <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.tlsnNo})">
-                              <h5 class="px-3 m-0 font-weight-bold font-weight-bold" onclick="selectLecture(${sugang.tlsnNo})">${sugang.ttl}</h5>
+                              <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo})">
+                              <h5 class="px-3 m-0 font-weight-bold font-weight-bold" onclick="selectLecture(${sugang.ltNo})">${sugang.ttl}</h5>
                               <div class="small text-secondary text-right m-0">진도율 ( ${sugang.progPct}% )</div>
                               <div class="bg-secondary w-100 small position-relative">　
                                 <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${sugang.progPct}%">　</div>
@@ -193,10 +193,11 @@
 		                    <div class="d-flex w-100 col-lg-12">
  							<c:forEach items="${sugangList}" var="innersugang" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
 		                         <div class="thumbnail col-lg-4">
-		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.tlsnNo})"/>
-		                          <h5 class="px-3 font-weight-bold" onclick="selectLecture(${innersugang.tlsnNo})">${innersugang.ttl}</h5>
-		                          <div class="bg-secondary w-100 small position-relative">${innersugang.tlsnNo }
-		                           <div class="w-75 bg-danger position-absolute text-white pl-1" style="top:0px;">75%</div>
+		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.ltNo})"/>
+		                          <h5 class="px-3 font-weight-bold" onclick="selectLecture(${innersugang.ltNo})">${innersugang.ttl}</h5>
+		                          <div class="small text-secondary text-right m-0">진도율 ( ${innersugang.progPct}% )</div>
+		                          <div class="bg-secondary w-100 small position-relative">
+		                           <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${innersugang.progPct}%">　</div>
 		                          </div>
 		                          </div>
 	 						</c:forEach>

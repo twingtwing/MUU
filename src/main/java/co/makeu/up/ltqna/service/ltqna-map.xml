@@ -9,7 +9,7 @@
 	        AND LT_NO = #{ltNo}
 	        AND (Q_CONTENT LIKE '%'||#{contentSearchKey}||'%'
 	        	AND WRITER LIKE '%'||#{writerSearchKey}||'%')
-	        ORDER BY Q_REG_DATE DESC, QNA_ST_CODE)
+	        ORDER BY QNA_NO DESC, QNA_ST_CODE)
         WHERE RN <![CDATA[>=]]> (10*${page})+1
 	</select>
 	<select id="selectMyQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lesson.service.LessonServiceImpl;
@@ -98,5 +99,36 @@ public class SugangController {
 			return "main/user/userR";			
 		}
 	}
-
+	@GetMapping("/user/userPay")
+	public String userPay(Principal pri, Model model, SugangVO vo){
+		vo.setId(pri.getName());
+		List<SugangVO> listDelivery = new ArrayList<SugangVO>();
+		List<SugangVO> listAll = sugangDao.sugangPay(vo);
+		for(SugangVO list : listAll) {
+			if(!list.getShipStCode().equals("D03")) {
+				listDelivery.add(list);
+			}
+		}
+		model.addAttribute("payInfo",listAll);
+		model.addAttribute("delInfo",listDelivery);
+		return "main/user/userP";
+	}
+	
+	@ResponseBody
+	@GetMapping("/user/userPaySearch")
+	public List<SugangVO> userPaySearch(Principal pri, SugangVO vo) {
+		vo.setId(pri.getName());	
+		System.out.println(vo.getRegDate());
+		System.out.println(vo.getExpDate());
+		return sugangDao.sugangPay(vo);
+	}
+	
+	
+	
+	// 구매확정
+	@ResponseBody
+	@PostMapping("/user/userSugangConfirm")
+	public void userSugangConfirm(SugangVO vo) {
+		sugangDao.updateSugangConfirm(vo);
+	}
 }

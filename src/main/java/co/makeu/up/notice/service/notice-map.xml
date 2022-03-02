@@ -9,7 +9,7 @@
 			AND LT_NO = #{ltNo}
 			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
 				AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
-			ORDER BY WR_DATE DESC)
+			ORDER BY NT_NO DESC)
 		WHERE RN <![CDATA[>=]]> (10*#{page})+1
 	</select>
 	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">

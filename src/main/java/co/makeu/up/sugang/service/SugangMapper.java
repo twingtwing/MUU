@@ -7,4 +7,6 @@ public interface SugangMapper {
 	SugangVO sugangCheckDate(SugangVO vo);
 	int sugangRefundUpdate(int tlsnNo);
 	int sugangBeforeRefund(SugangVO vo);
+	List<SugangVO> sugangPay(SugangVO vo);
+	int updateSugangConfirm(SugangVO vo);
 }
