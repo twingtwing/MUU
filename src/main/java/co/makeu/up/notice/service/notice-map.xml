@@ -8,10 +8,11 @@
 			WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
 			AND LT_NO = #{ltNo}
 			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
-				AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
+			AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
 			ORDER BY NT_NO DESC)
 		WHERE RN <![CDATA[>=]]> (10*#{page})+1
 	</select>
+  
 	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM NOTICE
 		WHERE LT_NO = #{ltNo}

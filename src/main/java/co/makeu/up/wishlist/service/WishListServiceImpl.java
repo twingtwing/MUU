@@ -22,4 +22,12 @@ public class WishListServiceImpl implements WishListService {
 		return map.WishListCnt();
 	}
 
+	@Override
+	public int deleteWishList(List<Integer> ltNoArr, String id) {
+		for(int value : ltNoArr) {
+			map.deleteWishList(value, id);
+		}
+		return 0;
+	}
+
 }
