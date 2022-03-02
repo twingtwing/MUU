@@ -33,21 +33,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO insertBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
+	public int insertBoard(BoardVO vo) {
 		return map.insertBoard(vo);
 	}
 
 	@Override
-	public List<BoardVO> selectadbads() {
-		// TODO Auto-generated method stub
-		return map.selectadbads();
+	public BoardVO selectadbads(BoardVO vo) {
+		return map.selectadbads(vo);
 	}
 
 	@Override
-	public String deladbad(BoardVO vo) {
-		// TODO Auto-generated method stub
+	public int deladbad(BoardVO vo) {
 		return map.deladbad(vo);
+	}
+
+	@Override
+	public int upadbad(BoardVO vo) {
+		return map.upadbad(vo);
 	}
 	
 	

@@ -103,12 +103,19 @@
 	                                        <tr>
 	                                            <td>${board.getBNo() }</td>
 	                                            <td>
-	                                          <a href="${path }/admin/adBadS?bno=${board.getBNo() }">
+	                                          <a href="/admin/adBadS?bNo=${board.getBNo() }">
 	                                          ${board.ttl}
 	                                          </a></td>
 	                                            <td>관리자</td>
 	                                            <td>${board.wrDate }</td>
-	                                            <td><i class="fa fa-download"></i></td>
+	                                            <td>
+	                                            	<c:if test="${board.fileNo eq -1}">
+	                                            		<i class="fas fa-minus mr-0"></i>
+	                                            	</c:if>
+	                                            	<c:if test="${board.fileNo ne -1}">
+	                                            		<i class="fas fa-minus mr-0"></i>
+	                                            	</c:if>
+	                                            </td>
 	                                        </tr>
 	                                            </c:forEach>
                                         </tbody>

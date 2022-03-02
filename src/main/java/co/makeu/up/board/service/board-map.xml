@@ -24,18 +24,18 @@
 	</update>
 	
 	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-	select * from board
+	select b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no
+	from board
 	order by b_no desc
 	</select>
 	
 	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">
-	
-		insert into board (b_no,ttl,content)
-		values ((select NVL (max(b_no),0)+1 from board),#{ttl},#{content})
-
+		insert into board (b_no,ttl,content,wr_date,B_ST_CODE)
+		values ((select NVL (max(b_no),0)+1 from board),#{ttl},#{content},SYSDATE,'B01')
 	</insert>
+	
 	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-	select b_no , ttl,content
+	select b_no , ttl,content ,wr_date,hits,b_st_code
 	from board
 	where b_no = #{bNo}
 	</select>
@@ -44,5 +44,11 @@
 		update board set b_st_code = 'B02'
 		where b_no = #{bNo}
 	
+	</update>
+	
+	<update id="upadbad" parameterType="co.makeu.up.board.service.BoardVO">
+	 update board
+    set ttl = #{ttl} , content = #{content}
+    where b_no = #{bNo}
 	</update>
 </mapper>
