@@ -21,6 +21,9 @@
             font-weight: bold;
             color: #e53637;
         }
+        a{
+        	cursor : pointer;
+        }
     </style>
 </head>
 <body>
@@ -116,8 +119,8 @@
                                 <div class="card-body ml-1">
                                     <div class="row ml-1">
                                         <div class="col-3 d-flex align-items-center">
-                                            <a href="#">
-                                                <img src="${list.thumb }" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                            <a>
+                                                <img src="${list.thumb }" onclick="lectureInfo(${list.ltNo })" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                                             </a>
                                         </div>
                                         <div class="col-8 d-flex align-items-center ml-3">
@@ -181,8 +184,8 @@
                                 <div class="card-body ml-1">
                                     <div class="row ml-1">
                                         <div class="col-3 d-flex align-items-center">
-                                            <a href="#">
-                                                <img src="${list.thumb }" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                            <a>
+                                                <img src="${list.thumb }" onclick="lectureInfo(${list.ltNo })" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                                             </a>
                                         </div>
                                         <div class="col-8 d-flex align-items-center ml-3">
@@ -244,6 +247,9 @@
             </div>
         </div>
     </section>
+    <form id="frm" action="/creator/rpLecS">
+    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    </form>
 
 </body>
 <script>
@@ -270,5 +276,11 @@ $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
     $(this).find('.list-link').css('color','#000000');
     $(this).find('.list-link.active').css('color','#e53637');
 })
+
+//상세 페이지 이동
+function lectureInfo(e){
+	$('.sendltno').val(e);
+	$('#frm').submit();
+}
 </script>
 </html>

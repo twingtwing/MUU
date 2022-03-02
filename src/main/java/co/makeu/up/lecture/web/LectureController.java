@@ -224,9 +224,30 @@ public class LectureController {
 	
 	//신청 강의 상세 페이지
 	@RequestMapping("/creator/rLecS")
-	public String requestLecSelect(int sendltno) {
-			lectureDao.lectureSelect(sendltno);
+	public String requestLecSelect(int sendltno, Model model) {
+			model.addAttribute("rlists", lectureDao.lectureSelect(sendltno));
 		return "main/lecture/rLecS";
+	}
+	
+	//열린 강의 상세 페이지
+	@RequestMapping("/creator/oLecS")
+	public String openLecSelect(int sendltno, Model model) {
+			model.addAttribute("olists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/oLecS";
+	}
+	
+	//닫힌 강의 상세 페이지
+	@RequestMapping("/creator/clLecS")
+	public String closeLecSelect(int sendltno, Model model) {
+			model.addAttribute("cllists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/clLecS";
+	}
+		
+	//신고된 강의 상세 페이지
+	@RequestMapping("/creator/rpLecS")
+	public String reportLecSelect(int sendltno, Model model) {
+			model.addAttribute("rplists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/rpLecS";
 	}
 
 }

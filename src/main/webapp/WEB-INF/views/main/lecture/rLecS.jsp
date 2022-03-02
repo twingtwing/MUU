@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,29 +91,29 @@
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
 
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">크리에이터 정보</a>
+                                <a class="list-link" href="/creator/creS">크리에이터 정보</a>
                             </li>
                             <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                                <a class="list-link active" href="#">&nbsp;&nbsp;- 신청한 강의</a>
+                                <a class="list-link active" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 열린 강의</a>
+                                <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 종료된 강의</a>
+                                <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 신고된 강의</a>
+                                <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">강의등록</a>
+                                <a class="list-link" href="/creator/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">매출내역</a>
+                                <a class="list-link" href="/creator/creSaleYear">매출내역</a>
                             </li>
                             <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">환불 요청 내역</a>
+                                <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                             </li>
                         </ul>
                     </div>
@@ -130,8 +131,11 @@
                     <!-- 강의 하나에 대한 상세정보페이지-->
                     <div class="col-12 ml-3">
                         <!-- 제목 입력 / 제목 가져오기-->
-                        <h5 class="mx-4 my-4 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
-                        <h5 class="mx-4 my-3 font-weight-bold">신청상태 : <strong class="text-danger">미처리</strong></h5>
+                        <h5 class="mx-4 my-4 font-weight-bold">강의제목 : <strong class="text-danger">${rlists.ttl }</strong></h5>
+                        <h5 class="mx-4 my-3 font-weight-bold">신청상태 : 
+                        <c:if test="${rlists.ltStCode eq 'L02' }"><strong class="text-success">미처리</strong></c:if>
+                        <c:if test="${rlists.ltStCode eq 'L07' }"><strong class="text-danger">반려</strong></c:if>
+                        </h5>
                         
                         <!-- 신청 상태 / 상태, 반려사유 가져오기(색처리)-->
                         <div class="row col-12">
@@ -150,13 +154,12 @@
                         </div>
                         <div class="row col-12 mt-3 mb-5">
                             <div class="col-4 text-center" style="border-right: 5px solid grey">
-                                <img src="img/live/live-1.jpg" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                <img src="${rlists.thumb }" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                             </div>
                             <div class="col-8">
                                 <div class="col-12 mt-2">
                                     <p>
-                                        강의소개---
-                                        집에서도 쉽게 배울수 있는..
+                                       ${rlists.intro }
                                     </p>
                                 </div>         
                             </div>
@@ -169,11 +172,11 @@
                         <div class="row col-12 justify-content-center border">
                             <div class="row mr-0 my-4">
                                 <div class="col-lg-8 pr-2">
-                                    <img src="img/blog/blog-1.jpg" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
+                                    <img src="${rlists.pht1 }" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
                                 </div>
                                 <div class="col-lg-4 p-0">
-                                    <img src="img/blog/blog-2.jpg" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2`">
-                                    <img src="img/blog/blog-3.jpg" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
+                                    <img src="${rlists.pht2 }" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2">
+                                    <img src="${rlists.pht3 }" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
                                 </div>
                             </div>
                         </div>
@@ -187,21 +190,21 @@
                                     <tbody>
                                         <tr>
                                             <th>카테고리</th>
-                                            <td>---</td>
+                                            <td>${rlists.upCtgr }/${rlists.downCtgr }</td>
                                             <th>강의게시기간</th>
-                                            <td>---</td>
+                                            <td>${rlists.openTerm }개월</td>
                                         </tr>
                                         <tr>
                                             <th>강의수강기간</th>
-                                            <td>---</td>
+                                            <td>${rlists.tlsnTerm }개월</td>
                                             <th>강의만료날짜</th>
-                                            <td>---</td>
+                                            <td>${rlists.expDate }</td>
                                         </tr>
                                         <tr>
                                             <th>강의가격</th>
-                                            <td>---</td>
+                                            <td>${rlists.prc }만원</td>
                                             <th>키트가격</th>
-                                            <td>---</td>
+                                            <td>${rlists.kitPrc }원</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -210,9 +213,9 @@
                                 <h5 class="font-weight-bold mb-2">태그</h5>
                                 <!-- 태그 반복문 등록-->
                                 <div>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">태그1</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">태그2</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">태그3</span>
+                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag1 }</span>
+                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag2 }</span>
+                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag3 }</span>
                                 </div>
                             </div>
                         </div>
@@ -224,17 +227,17 @@
                         <div class="row col-12 align-items-end">
                             <div class="col-10">
                                 <div class="row">
-                                    <h6 class="font-weight-bold">키트 명</h6>
+                                    <h6 class="font-weight-bold">${rlists.kitName }</h6>
                                 </div>
                                 <div class="row mt-3" style="border-left: 4px solid grey">
                                     <p class="mb-0 ml-3 my-1">
-                                        해당 키트는 본 수업에 필요하오니 꼭 구매하세요
+                                        ${rlists.kitIntro }
                                     </p>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="row align-self-end">
-                                    <p class="mb-0">키트 가격 : 200000</p>
+                                    <p class="mb-0">키트 가격 : ${rlists.kitPrc }원</p>
                                 </div>
                             </div>
                         </div>
