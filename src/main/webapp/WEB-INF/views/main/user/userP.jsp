@@ -28,6 +28,7 @@
       font-weight: bold;
       color: #e53637;
     }
+
     .hided{
     	display: none;
     }
@@ -66,8 +67,6 @@
     </div>
   </div>
   <!-- 카테고리 끝-->
-    
-
     <!-- body 의 body-->
     <section class="blog spad" >
         <div class="container">
@@ -110,6 +109,7 @@
                           <div class="align-items-bottom">
                             <p class="mb-0 text-danger mr-3" style="font-size: 10px;">*배송과 관련된 문제는 사이트에서 책임지지 않습니다.</p>
                             <p class="mb-0 text-danger mr-3" style="font-size: 10px;">*구매 확정 시 적립금이 지급되며, 환불이나 교환은 일체 불가능합니다.</p>
+
                           </div>
                         </div>
                       </div>
@@ -174,8 +174,6 @@
                         </div>
                         </c:forEach>
                         <!-- 카드 반복 끝 -->
-                        
-                        
                       </div>
                     </div>
                   </div>
@@ -255,7 +253,6 @@
   <!-- body 의 body 끝 -->
   <!-- body 끝 -->
   <script type="text/javascript">
-  
     $(function () {
       $('#datetimepicker1').datetimepicker({
         format: 'L'
@@ -355,8 +352,6 @@
     const dateformat = (num)=>{
     	return new Date(1646167577000).toISOString().slice(0,10);
     }
-    
-    
     //mouseover 이벤트 : 사이드바 css변경
     $('.list-group .list-group-item').on('mouseover',function(){
       $(this).css('background-color','#e53637');

@@ -102,7 +102,10 @@
                                         <c:forEach items ="${list }" var="board">
 	                                        <tr>
 	                                            <td>${board.getBNo() }</td>
-	                                            <td>${board.ttl }</td>
+	                                            <td>
+	                                          <a href="${path }/admin/adBadS?bno=${board.getBNo() }">
+	                                          ${board.ttl}
+	                                          </a></td>
 	                                            <td>관리자</td>
 	                                            <td>${board.wrDate }</td>
 	                                            <td><i class="fa fa-download"></i></td>

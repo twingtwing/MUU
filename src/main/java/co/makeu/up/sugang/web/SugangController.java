@@ -99,8 +99,6 @@ public class SugangController {
 			return "main/user/userR";			
 		}
 	}
-	
-	
 	@GetMapping("/user/userPay")
 	public String userPay(Principal pri, Model model, SugangVO vo){
 		vo.setId(pri.getName());

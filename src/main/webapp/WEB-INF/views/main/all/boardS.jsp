@@ -32,73 +32,78 @@
 	<!-- 배너끝 -->
 
 	<!-- 카테고리 시작-->
-	<div class="breadcrumb-option">
-		<div class="container">
-			<div class="row">
+	<div id="board_search">
+		
+		<div class="breadcrumb-option">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumb__links">
+							<a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home "></i> Home</a> 
+							<a href="/boardL" class="text-dark font-weight-bold">공지사항</a> 
+							<span>{{board.ttl}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 카테고리 끝-->
+	
+		<!-- body 의 body-->
+		<section class="blog spad">
+			<div class="container">
 				<div class="col-lg-12">
-					<div class="breadcrumb__links">
-						<a href="#" class="text-dark font-weight-bold"><i
-							class="fa fa-home "></i> Home</a> <a href="#"
-							class="text-dark font-weight-bold">공지사항</a> <span>공지사항상세보기</span>
+					<div class="d-flex justify-content-center mt-3 mb-5">
+						<h2>
+							<strong>공지사항</strong>
+						</h2>
 					</div>
+					<div class="d-flex justify-content-center p-3 border-top border-bottom bg-light">
+						<div class="d-inline p-2 text-black" >
+							<h4 class="">{{board.ttl}}</h4>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between px-2 py-2 bg-light">
+						<div>
+							<h5>작성자 : 관리자</h5>
+						</div>
+						<div class="row mr-2">
+							<h5 class="mx-2">작성일자 :{{board.wrDate}} </h5>
+							<h5>조회수 : {{board.hits}}  </h5>
+						</div>
+					</div>
+					<div class="border-bottom"></div>
+					<div class="d-flex justify-content-end mt-3 mr-2">
+						<div>
+							<i
+								class="fa fa-download text-dark"></i>
+						</div>
+						<p v-on:click="downloadDetail(index)" class="text-muted ml-2">{{board.detaFileList}}</p>
+					</div>
+					<div class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh">
+						<p class="mb-3"></p>{{board.content}}
+					</div>
+					<div class="border-top"></div>
+					<div v-if ="board.nextbno > -1" id="next" class="d-flex justify-content-start ml-5 mt-3">
+						<i class="fa fa-angle-double-up"></i>
+						<div v-on:click="boardNext()"> <div class="ml-2">다음글 : {{board.nextbttl}}</div></div>
+					</div>
+					<div class="border-bottom mt-3"></div>
+					<div v-if="board.prebno > -1" id="pre" class="d-flex justify-content-start ml-5 mt-3">
+						<i class="fa fa-angle-double-down"></i>
+						<div v-on:click="boardPre()" class="rgba-green-slight"><div class="ml-2">이전글 :{{board.prebttl}} </div></div>
+					</div>
+					<div class="border-bottom mt-3"></div>
+				</div>
+				<div class="d-flex justify-content-center m-3">
+					<button type="submit" class="btn btn-danger"
+						onclick="location.href='/boardL'">목록으로</button>
 				</div>
 			</div>
-		</div>
+		</section>
+		
 	</div>
-	<!-- 카테고리 끝-->
-
-	<!-- body 의 body-->
-	<section class="blog spad" id="board_search">
-		<div class="container">
-			<div class="col-lg-12">
-				<div class="d-flex justify-content-center mt-3 mb-5">
-					<h2>
-						<strong>공지사항</strong>
-					</h2>
-				</div>
-				<div class="d-flex justify-content-center p-3 border-top border-bottom bg-light">
-					<div class="d-inline p-2 text-black" >
-						<h4 class="">{{board.ttl}}.</h4>
-					</div>
-				</div>
-				<div class="d-flex justify-content-between px-2 py-2 bg-light">
-					<div>
-						<h5>작성자 : 관리자</h5>
-					</div>
-					<div class="row mr-2">
-						<h5 class="mx-2">작성일자 :{{board.wrDate}} </h5>
-						<h5>조회수 : {{board.hits}}  </h5>
-					</div>
-				</div>
-				<div class="border-bottom"></div>
-				<div class="d-flex justify-content-end mt-3 mr-2">
-					<div>
-						<i
-							class="fa fa-download text-dark"></i>
-					</div>
-					<p v-on:click="downloadDetail(index)" class="text-muted ml-2">{{board.detaFileList}}</p>
-				</div>
-				<div class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh">
-					<p class="mb-3"></p>{{board.content}}
-				</div>
-				<div class="border-top"></div>
-				<div v-if ="board.nextbno > -1" id="next" class="d-flex justify-content-start ml-5 mt-3">
-					<i class="fa fa-angle-double-up"></i>
-					<div v-on:click="boardNext()"> <div class="ml-2">다음글 : {{board.nextbttl}}</div></div>
-				</div>
-				<div class="border-bottom mt-3"></div>
-				<div v-if="board.prebno > -1" id="pre" class="d-flex justify-content-start ml-5 mt-3">
-					<i class="fa fa-angle-double-down"></i>
-					<div v-on:click="boardPre()" class="rgba-green-slight"><div class="ml-2">이전글 :{{board.prebttl}} </div></div>
-				</div>
-				<div class="border-bottom mt-3"></div>
-			</div>
-			<div class="d-flex justify-content-center m-3">
-				<button type="submit" class="btn btn-danger"
-					onclick="location.href='Notice.html'">목록으로</button>
-			</div>
-		</div>
-	</section>
+	
 	<!-- body 의 body 끝 -->
 	<!-- body 끝 -->
 	<script>
@@ -152,8 +157,8 @@
             	})
             	.done(result => {
             		console.log(result);
-            			result.wrDate = new Date(result.wrDate).toISOString().slice(0,10);
-            			this.board = result;
+            		result.wrDate = new Date(result.wrDate).toISOString().slice(0,10);
+            		this.board = result;
             	});
                
             }

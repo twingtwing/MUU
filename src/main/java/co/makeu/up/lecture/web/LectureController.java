@@ -11,17 +11,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.lesson.service.LessonServiceImpl;
+import co.makeu.up.lesson.service.LessonVO;
 
 @Controller
 public class LectureController {
 	@Autowired
 	private LectureServiceImpl lectureDao;
+	
+	@Autowired
+	private LessonServiceImpl lessonDao;
 	
 	@Autowired
 	private String saveDir;
@@ -52,7 +59,6 @@ public class LectureController {
 		return null;
 	}
 	
-	//강의등록
 	//강의상세-공지사항
 	@GetMapping("/lecN")
 	public String lecN() {
@@ -65,17 +71,44 @@ public class LectureController {
 		return "main/lecture/lecP";
 	}
 	
+	//영상 업로드 테스트 >>>>> 강의 등록 종속 시키기
+	@RequestMapping("/creator/aaa")
+	public String testPage(Model model, Principal principal) {
+		model.addAttribute("id", principal.getName());
+		return "main/lecture/classTest";
+	}
+	@PostMapping("/creator/classUpload")
+	@ResponseBody
+	public String classUploadTest(LectureVO vo, @RequestParam(value="class", required = false) MultipartFile classfile, MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("class");
+		System.out.println(fileList);
+		for (int i = 0; i < fileList.size(); i++) {
+			String oriFileName = fileList.get(i).getOriginalFilename();
+			System.out.println(oriFileName);
+			String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+			
+
+			try {
+				fileList.get(i).transferTo(new File(safeFile));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	
+	//강의등록
 	@PostMapping("/creator/lectureResister")
-	public void lectureResister(LectureVO vo, @RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
-			@RequestParam(value="lecFile", required = false) String[] lecList) {
-			// 데이터 넘어오는지 확인하고 지울것 !!!!!!!!!!!!!!!!!!!!
-			System.out.println(lecList[0]+" : "+lecList[1]);
-			System.out.println(lecList[2]+" : "+lecList[3]);
-			System.out.println(lecList[4]+" : "+lecList[5]);
-			System.out.println(lecList[6]+" : "+lecList[7]+" : "+lecList[8]);
-			System.out.println(lecList[9]);
-			System.out.println(lecList[10]+" : "+lecList[11]+" : "+lecList[12]);
-			System.out.println(lecList[13]);
+	@ResponseBody
+	public void lectureResister(LectureVO vo, LessonVO lvo,
+			@RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
+			@RequestParam(value="lecFile", required = false) String[] lecList, @RequestParam(value="class", required = false) MultipartFile classfile,
+			@RequestParam(value="classTtl", required = false) String[] classTitle) {
 			
 			vo.setCreId(lecList[13]);
 			vo.setUpCtgr(lecList[0]);
@@ -92,7 +125,7 @@ public class LectureController {
 			vo.setTag2(lecList[11]);
 			vo.setTag3(lecList[12]);
 			//임시 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			vo.setStartDate(null);
+			//vo.setStartDate(null);
 	
 			// 대표사진, 썸네일 등록
 			List<MultipartFile> fileList = multi.getFiles("mainPhtUp");
@@ -121,9 +154,70 @@ public class LectureController {
 					e.printStackTrace();
 				}
 			}
+			
 			lectureDao.lectureInsert(vo);
-		//강의리스트로 돌아가게 바꿔야함 !!!!!!!!!!!!!!!! 
-		//return "main/creator/creS";
+			int ltno = vo.getLtNo();
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			
+			// 수업 등록
+			List<MultipartFile> classList = multi.getFiles("class");
+			
+			for(int i = 0; i < classList.size(); i++) {
+				String oriFileName = classList.get(i).getOriginalFilename();
+				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				
+				lvo.setLtNo(ltno);
+				lvo.setTtl(classTitle[i]);
+				lvo.setLsnFile(safeFile);
+				
+				try {
+					classList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				lessonDao.lessonInsert(lvo);
+			}
+			
+	}
+	
+	//신청 강의 리스트 페이지
+	@RequestMapping("/creator/rLecL")
+	public String requestLecList(LectureVO vo, Model model, Principal principal) {
+		vo.setCreId(principal.getName());
+		model.addAttribute("rlists", lectureDao.requestLecture(vo));
+		return "main/lecture/rLecL";
+	}
+	
+	//열린 강의 리스트 페이지
+	@RequestMapping("/creator/oLecL")
+	public String openLecList(LectureVO vo, Model model, Principal principal) {
+		vo.setCreId(principal.getName());
+		model.addAttribute("olists", lectureDao.openLecture(vo));
+		return "main/lecture/oLecL";
+	}
+	
+	//닫힌 강의 리스트 페이지
+	@RequestMapping("/creator/clLecL")
+	public String closeLecList(LectureVO vo, Model model, Principal principal) {
+		vo.setCreId(principal.getName());
+		model.addAttribute("cllists", lectureDao.closeLecture(vo));
+		return "main/lecture/clLecL";
+	}
+	
+	//신고된 강의 리스트 페이지
+	@RequestMapping("/creator/rpLecL")
+	public String reportLecList(LectureVO vo, Model model, Principal principal) {
+		vo.setCreId(principal.getName());
+		model.addAttribute("rplists", lectureDao.reportLecture(vo));
+		return "main/lecture/rpLecL";
 	}
 
 }
