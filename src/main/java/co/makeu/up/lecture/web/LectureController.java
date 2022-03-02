@@ -1,5 +1,7 @@
 package co.makeu.up.lecture.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
@@ -134,16 +136,16 @@ public class LectureController {
 				String oriFileName = fileList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
-					vo.setPht1(safeFile);
+					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 				}
 				if(i == 1) {
-					vo.setPht2(safeFile);
+					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
 				}
 				if(i == 2) {
-					vo.setPht3(safeFile);
+					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
 				}
 			    if(i == 3) {
-	                vo.setThumb(safeFile);
+	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
 	            }
 
 				try {
@@ -156,7 +158,6 @@ public class LectureController {
 			}
 			
 			lectureDao.lectureInsert(vo);
-			int ltno = vo.getLtNo();
 			
 			try {
 				Thread.sleep(3000);
@@ -171,9 +172,8 @@ public class LectureController {
 				String oriFileName = classList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				
-				lvo.setLtNo(ltno);
 				lvo.setTtl(classTitle[i]);
-				lvo.setLsnFile(safeFile);
+				lvo.setLsnFile("/upload/" + safeFile.substring(saveDir.length()));
 				
 				try {
 					classList.get(i).transferTo(new File(safeFile));
@@ -218,6 +218,13 @@ public class LectureController {
 		vo.setCreId(principal.getName());
 		model.addAttribute("rplists", lectureDao.reportLecture(vo));
 		return "main/lecture/rpLecL";
+	}
+	
+	//신청 강의 상세 페이지
+	@RequestMapping("/creator/rLecS")
+	public String requestLecSelect(int sendltno) {
+			lectureDao.lectureSelect(sendltno);
+		return "main/lecture/rLecS";
 	}
 
 }
