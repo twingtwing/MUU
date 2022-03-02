@@ -106,7 +106,7 @@ const recordUpdate = ()=>{
 		console.log(e)
 	})
 }
-setInterval(recordUpdate,4000);
+setInterval(recordUpdate,3000);
 </script>
 </body>
 </html>
