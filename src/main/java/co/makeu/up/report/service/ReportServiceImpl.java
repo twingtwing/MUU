@@ -10,7 +10,7 @@ public class ReportServiceImpl implements ReportMapper{
 	@Autowired ReportMapper map;
 	
 	@Override
-	public int insertReviewReport(ReviewVO vo) {
+	public int insertReviewReport(ReportVO vo) {
 		return map.insertReviewReport(vo);
 	}
 

@@ -59,21 +59,20 @@ td, th {
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
-	<!-- 배너 시작-->
-	<section class="normal-breadcrumb set-bg"
-		data-setbg="/resources/img/normal-breadcrumb.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="normal__breadcrumb__text">
-						<h2>마이페이지</h2>
-						<p>내 정보</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- 배너끝 -->
+<!-- 배너 시작-->
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>마이페이지</h2>
+                        <p>내 정보 수정</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 배너끝 -->
 
  <!-- 카테고리 시작-->
   <div class="breadcrumb-option">
@@ -83,41 +82,39 @@ td, th {
           <div class="breadcrumb__links">
             <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
             <a href="/user/userSelect" class="text-secondary">마이페이지</a>
-            <span>내 정보</span>
+            <span>내 정보 수정</span>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- 카테고리 끝-->
+    
 
-	<section class="blog spad">
-		<div class="container">
-			<div class="row">
-				<!-- 사이드 시작 -->
-				<div class="col-lg-2">
-					<div class="row mr-2" style="width: 160px">
-						<ul class="list-group w-100">
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;">
-								<!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-								<a class="list-link active" href="#">내 정보</a>
-							</li>
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;"><a class="list-link" href="/user/userLectureList">내
-									강의리스트</a></li>
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;"><a class="list-link"
-								href="./박정욱_위시리스트.html">위시 리스트</a></li>
-							<li class="list-group-item align-items-center d-flex"
-								style="height: 55px;"><a class="list-link"
-								href="./박정욱_유저결제내역.html">결제내역</a></li>
-						</ul>
-					</div>
-				</div>
+    <!-- body 의 body-->
+    <section class="blog spad" >
+        <div class="container">
+            <div class="row">
+                <!-- 사이드 시작 -->
+                <div class="col-lg-2">
+                    <div class="row mr-2" style="width:160px">
+                      <ul class="list-group w-100">
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                            <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
+                          <a class="list-link active" href="/user/userSelect">내 정보</a>
+                        </li>
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="/user/userLectureList">내 강의리스트</a>
+                        </li>
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="./userWishList">위시 리스트</a>
+                        </li>
+                        <li class="list-group-item align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="/user/userPay">결제내역</a>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
 				<!-- 사이드 끝 -->
 				<div class="col-lg-10">
 					<div class="row ml-2">

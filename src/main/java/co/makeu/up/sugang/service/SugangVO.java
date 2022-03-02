@@ -26,7 +26,15 @@ public class SugangVO {
 	private String ttl;
 	private String thumb;
 	private int cnt;
+	private String kitName;
+	private String kitIntro;
+	private int kitPrc;
+	private String intro;
 	
 	// progress
 	private int progPct;
+	
+	// for search
+	private Date regDateSearch;
+	private Date expDateSearch;
 }

@@ -19,7 +19,7 @@ public class ProgressServiceImpl implements ProgressMapper {
 		return map.updateProgress(vo);
 	}
 	@Override
-	public int wholeProgress(ProgressVO vo) {
+	public Integer wholeProgress(ProgressVO vo) {
 		return map.wholeProgress(vo);
 	}
 	@Override

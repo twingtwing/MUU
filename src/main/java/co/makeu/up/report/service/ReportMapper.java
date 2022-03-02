@@ -1,5 +1,5 @@
-package co.makeu.up.report.service;import co.makeu.up.review.service.ReviewVO;
+package co.makeu.up.report.service;
 
 public interface ReportMapper {
-	int insertReviewReport(ReviewVO vo);
+	int insertReviewReport(ReportVO vo);
 }
