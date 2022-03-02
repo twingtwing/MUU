@@ -182,6 +182,9 @@
                                 수업을 추가해주세요(OT영상은 필수입니다.)
                             </div>
                         <div class="" id="itemBoxWrap">
+                        <video controls height="240">
+                            <source id="videotest" src="/resources/img/bear.mp4" type="video/mp4" preload="metadata">
+                        </video>
                         </div>
                     </div>
                     
@@ -353,15 +356,15 @@ let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
 
 function classResister(){
-	
+	console.log($("#videotest"));
 	//let form = new FormData();
-	//console.log($('.classUp')[0].files[0]);
+	
 	//console.log($('.classUp')[1].files[0]);
 	//form.append("class",$('#class')[0].files[0]);
 	//console.log('---')
 for(var i = 0; i < $('.classUp').length; i++){
 	var titlee = $('.classTtl').eq(i).val();
-	console.log(titlee);
+	//console.log(titlee);
 	
 	//form.append("class", $('.classUp')[i].files[0]);
 }

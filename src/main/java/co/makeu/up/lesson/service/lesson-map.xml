@@ -10,7 +10,7 @@
 
 	<insert id="lessonInsert" parameterType="co.makeu.up.lesson.service.LessonVO">
 		INSERT INTO LESSON VALUES
-		((SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON), #{ttl}, #{lsnFile}, #{ltNo},
+		((SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON), #{ttl}, #{lsnFile},(SELECT NVL(MAX(LT_NO), 0) FROM LECTURE),
 		SYSDATE, SYSDATE,'20')
 	</insert>
 

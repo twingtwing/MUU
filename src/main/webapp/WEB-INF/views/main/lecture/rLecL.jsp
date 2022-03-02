@@ -21,6 +21,9 @@
             font-weight: bold;
             color: #e53637;
         }
+        a{
+        	cursor:pointer;
+        }
     </style>
 </head>
 <body>
@@ -117,9 +120,9 @@
                                     <div class="row ml-1">
                                         <div class="col-3 d-flex align-items-center">
                                         <!-- 강의 상세페이지 링크 -->
-                                            <a href="#">
-                                                <img src="${list.thumb }" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
-                                            </a>
+                                        <a>
+                                          <img src="${list.thumb }" onclick="lectureInfo(${list.ltNo })" class="card-img-left img-thumbnail rounded-circle" data-ltno="${list.ltNo }" style="width: 12rem; height: 12rem;">
+                                        </a>
                                         </div>
                                         <div class="col-8 d-flex align-items-center ml-3">
                                             <table class="table" style="table-layout:fixed">
@@ -131,7 +134,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">강의게시기간</th>
-                                                        <td style="width:100px">${list.openTerm }개월</td>
+                                                        <td style="width:100px">${list.startDate } ~ ${list.expDate }</td>
                                                         <th scope="row" style="width:150px">강의수강기간</th>
                                                         <td style="width:100px">${list.tlsnTerm }개월</td>
                                                     </tr>
@@ -144,10 +147,18 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <!-- 처리상태에 따라서 색상변경 할것-->
+                                    
+                                    <!-- 처리상태에 따라서 색상변경-->
                                     <div class="text-right align-items-right">
                                         <span class="font-weight-bold">처리상태&nbsp;&nbsp;:&nbsp;</span>
-                                        <input readonly type="text" class="text-danger" style="border:none; width:60px;" value="미처리" spellcheck="false">
+                                        <c:choose>
+                                        <c:when test="${list.ltStCode eq 'L02'}">
+                                        	<input readonly type="text" class="text-success" style="border:none; width:60px;" value="미처리" spellcheck="false">
+                                        </c:when>
+                                        <c:when test="${list.ltStCode eq 'L07' }">
+                                        	<input readonly type="text" class="text-danger" style="border:none; width:60px;" value="반려" spellcheck="false">
+                                        </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -171,8 +182,8 @@
                                     <div class="row ml-1">
                                         <div class="col-3 d-flex align-items-center">
                                         <!-- 강의 상세페이지 링크 -->
-                                            <a href="#">
-                                                <img src="${list.thumb }" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                            <a>
+                                                <img src="${list.thumb }" onclick="lectureInfo(${list.ltNo })" class="card-img-left img-thumbnail rounded-circle" data-ltno="${list.ltNo }" style="width: 12rem; height: 12rem;">
                                             </a>
                                         </div>
                                         <div class="col-8 d-flex align-items-center ml-3">
@@ -185,7 +196,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">강의게시기간</th>
-                                                        <td style="width:100px">${list.openTerm }개월</td>
+                                                        <td style="width:100px">${list.startDate } ~ ${list.expDate }</td>
                                                         <th scope="row" style="width:150px">강의수강기간</th>
                                                         <td style="width:100px">${list.tlsnTerm }개월</td>
                                                     </tr>
@@ -198,139 +209,22 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <!-- 처리상태에 따라서 색상변경 할것-->
+                                    <div class="getltno" style="display:none;">${list.ltNo }</div>
+                                    <!-- 처리상태에 따라서 색상변경-->
                                     <div class="text-right align-items-right">
                                         <span class="font-weight-bold">처리상태&nbsp;&nbsp;:&nbsp;</span>
-                                        <input readonly type="text" class="text-danger" style="border:none; width:60px;" value="미처리" spellcheck="false">
+                                        <c:choose>
+                                        <c:when test="${list.ltStCode eq 'L02'}">
+                                        	<input readonly type="text" class="text-success" style="border:none; width:60px;" value="미처리" spellcheck="false">
+                                        </c:when>
+                                        <c:when test="${list.ltStCode eq 'L07' }">
+                                        	<input readonly type="text" class="text-danger" style="border:none; width:60px;" value="반려" spellcheck="false">
+                                        </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
                             </c:forEach>
-                            
-                            
-                            <!-- 테스트 카드, 확인 후 삭제 ! -->
-                            
-                            <div class="card ml-1 mt-2 mb-3">
-                                <div class="card-body ml-1">
-                                    <div class="row ml-1">
-                                        <div class="col-3 d-flex align-items-center">
-                                            <a href="https://www.naver.com">
-                                                <img src="img/dog/boxer.jpeg" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
-                                            </a>
-                                        </div>
-                                        <div class="col-8 d-flex align-items-center ml-3">
-                                            <table class="table" style="table-layout:fixed">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의제목</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">집에서 하는 나다라나다라나다라나라다가가가가가가가가가가가가가</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 게시기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">2022.02.01 ~ 2023.01.31</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 수강기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">1개월</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">가격</th>
-                                                        <td style="width:100px">5만원</td>
-                                                        <th scope="row" style="width:150px">평균 별점</th>
-                                                        <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>4.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">수강생 수</th>
-                                                        <td colspan="3">12명</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card ml-1 mt-2 mb-3">
-                                <div class="card-body ml-1">
-                                    <div class="row ml-1">
-                                        <div class="col-3 d-flex align-items-center">
-                                            <a href="https://www.naver.com">
-                                                <img src="img/dog/boxer.jpeg" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
-                                            </a>
-                                        </div>
-                                        <div class="col-8 d-flex align-items-center ml-3">
-                                            <table class="table" style="table-layout:fixed">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의제목</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">집에서 하는 나다라나다라나다라나라다가가가가가가가가가가가가가</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 게시기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">2022.02.01 ~ 2023.01.31</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 수강기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">1개월</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">가격</th>
-                                                        <td style="width:100px">5만원</td>
-                                                        <th scope="row" style="width:150px">평균 별점</th>
-                                                        <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>4.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">수강생 수</th>
-                                                        <td colspan="3">12명</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card ml-1 mt-2 mb-3">
-                                <div class="card-body ml-1">
-                                    <div class="row ml-1">
-                                        <div class="col-3 d-flex align-items-center">
-                                            <a href="https://www.naver.com">
-                                                <img src="img/dog/boxer.jpeg" class="card-img-left img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
-                                            </a>
-                                        </div>
-                                        <div class="col-8 d-flex align-items-center ml-3">
-                                            <table class="table" style="table-layout:fixed">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의제목</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">집에서 하는 나다라나다라나다라나라다가가가가가가가가가가가가가</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 게시기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">2022.02.01 ~ 2023.01.31</td>                                                    
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row" style="width:150px">강의 수강기간</th>
-                                                        <td colspan="3" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">1개월</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">가격</th>
-                                                        <td style="width:100px">5만원</td>
-                                                        <th scope="row" style="width:150px">평균 별점</th>
-                                                        <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>4.5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">수강생 수</th>
-                                                        <td colspan="3">12명</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            
                             
                             
                             
@@ -348,16 +242,42 @@
             </div>
         </div>
     </section>
-
+    <form id="frm" action="/creator/rLecS">
+    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    </form>
 </body>
 <script>
+//더보기
 $('#plusBtn').on('click', function(){
 	$('#listPlus').hide();
 	$('#listMinus').show();
 })
+//접기
 $('#minusBtn').on('click', function(){
 	$('#listPlus').show();
 	$('#listMinus').hide();
 })
+
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+    $(this).css('background-color','#e53637');
+    $(this).find('.list-link').css('color','#ffffff');
+})
+
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+    $(this).css('background-color','#ffffff');
+    $(this).find('.list-link').css('color','#000000');
+    $(this).find('.list-link.active').css('color','#e53637');
+})
+
+//시큐리티 토큰
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	
+function lectureInfo(e){
+	$('.sendltno').val(e);
+	$('#frm').submit();
+}
 </script>
 </html>
