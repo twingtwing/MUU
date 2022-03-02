@@ -74,8 +74,9 @@ public class LtQnaController {
 	
 	@PostMapping("/user/userInsertLQ")
 	@ResponseBody
-	public void userInsertLQ(LtQnaVO vo, Principal pri) {
+	public LtQnaVO userInsertLQ(LtQnaVO vo, Principal pri) {
 		vo.setWriter(pri.getName());
 		ltqnaDao.insertQna(vo);
+		return vo;
 	}
 }
