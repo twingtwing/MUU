@@ -8,7 +8,8 @@ public interface BoardService {
 	BoardVO selectBoard(BoardVO vo);//단건 조회
 
 	List<BoardVO> selectadbad();
-	BoardVO insertBoard(BoardVO vo);
-	List<BoardVO> selectadbads();
-	String deladbad(BoardVO vo);
+	int insertBoard(BoardVO vo);
+	BoardVO selectadbads(BoardVO vo);
+	int deladbad(BoardVO vo);
+	int upadbad(BoardVO vo);
 }
