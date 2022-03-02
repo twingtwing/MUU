@@ -41,7 +41,9 @@ public class LectureController {
 	
 	//강의검색
 	@GetMapping("/lecS")
-	public String lecS() {
+	public String lecS(LectureVO vo, Model model) {
+		model.addAttribute("upCtgr",vo.getUpCtgr());
+		model.addAttribute("downCtgr",vo.getDownCtgr());
 		return "main/lecture/lecS";
 	}
 	

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.extendedLecture.service.ExtendedLetureMapper">
+	
+	<select id="lectureList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE 
+		WHERE LT_ST_CODE = 'L01'
+		<if test="upCtgr != ''">AND UP_CTGR = #{upCtgr}</if>
+		<if test="downCtgr != ''">AND DOWN_CTGR = #{downCtgr}</if>
+		ORDER BY lt_No
+	</select>
+	
+	<select id="ctgrList" resultType="co.makeu.up.ctgr.service.CtgrVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
+		SELECT C.* , U.NAME UP_NAME 
+		FROM CTGR C JOIN CTGR U
+		ON C.UP_CTGR = U.CTGR_ID
+		WHERE C.UP_CTGR = #{upCtgr} 
+		ORDER BY C.CTGR_ID
+	</select>
+</mapper>

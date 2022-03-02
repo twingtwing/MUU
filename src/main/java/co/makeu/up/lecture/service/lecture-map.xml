@@ -22,4 +22,5 @@
 	<select id="reportLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM LECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L04'
 	</select>
+	
 </mapper>

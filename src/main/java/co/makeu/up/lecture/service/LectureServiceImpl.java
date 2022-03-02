@@ -41,6 +41,4 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.reportLecture(vo);
 	}
 
-	
-
 }
