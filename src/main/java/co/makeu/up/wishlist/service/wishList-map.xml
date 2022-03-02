@@ -22,7 +22,12 @@
 		SELECT COUNT(*) FROM WISHLIST
 	</select>
 	
-	<delete id="deleteWishList" >
+	<delete id="deleteWishList">
 		DELETE FROM WISHLIST WHERE lt_no = #{ltNo} and id =#{id}
 	</delete>
+	
+	<insert id="heartInsert" parameterType="co.makeu.up.wishlist.service.WishlistVO">
+		INSERT INTO WISHLIST(LT_NO,ID)
+		VALUES(#{ltNo},#{id})
+	</insert>
 </mapper>

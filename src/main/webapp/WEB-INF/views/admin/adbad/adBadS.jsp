@@ -63,9 +63,13 @@
                                                     <h6 class="mb-0">작성일자</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">${board.wrDate }</h6>
                                                 </div>
-                                                <div class="row mx-2">
+                                                <div class="row mr-1">
                                                     <h6 class="mb-0">조회수</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">${board.hits }</h6>
+                                                </div>
+                                                <div class="row mx-2">
+                                                    <h6 class="mb-0">상태</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">값넣기</h6>
                                                 </div>
                                             </div>
                                         </div>

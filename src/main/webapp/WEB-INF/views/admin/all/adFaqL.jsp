@@ -72,12 +72,19 @@
                                         </tr>
                                         <tr height="38">
                                             <th class="align-middle">작성일</th>
-                                            <td colspan="3">
+                                            <td>
                                                 <div class="row ml-1">
                                                     <div><input type="date"></div>
                                                     <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
                                                     <div><input type="date"></div>
                                                 </div>
+                                            </td>
+                                            <th>상태</th>
+                                            <td class="text-left">
+                                                <input type="checkbox" class="ml-2" name="" id="code_1" spellcheck="false">
+                                                <label for="code_1" class="mr-3 mb-0">등록</label>
+                                                <input type="checkbox" name="" id="code_2" spellcheck="false">
+                                                <label for="code_2" class="mb-0 mr-3">삭제</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -153,9 +160,13 @@
                                                                 <h6 class="mb-0">카테고리</h6>
                                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">강의</h6>
                                                             </div>
-                                                            <div class="row mr-1">
+                                                            <div class="row mr-4">
                                                                 <h6 class="mb-0">작성일자</h6>
                                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                            </div>
+                                                            <div class="row mr-1">
+                                                                <h6 class="mb-0">상태</h6>
+                                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">삭제</h6>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -168,6 +179,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- 상태가 삭제면 보이면 안됨 -->
                                             <div class="row d-flex justify-content-end mb-2">
                                                 <button type="button" class="btn btn-secondary" onclick="location.href='./자주묻는질문 수정페이지.html'";>수정</button>
                                                 <button type="button" class="btn btn-secondary ml-1 mr-2" onclick="javascript:btn();">삭제</button>

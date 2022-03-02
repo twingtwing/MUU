@@ -46,23 +46,61 @@
                                         <div class="row justify-content-between p-2"
                                             style="background-color: #eeeeee; border-bottom: 1px solid black; border-top:2px solid black;">
                                             <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">신고</h6>
-
-                                                <h6 class="mb-0 ml-2 pl-1">카테고리</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">凸</h6>
+                                                <h6 class="mb-0 ml-2 pl-1">신고 대상</h6>
                                             </div>
                                             <div class="row">
-
                                                 <div class="row mx-2">
                                                     <div class="row">
-                                                        <h6 class="mb-0 ml-2 pl-1">신고자</h6>
-                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">익명으</h6>
                                                         <div class="row mx-2">
-
-                                                            <h6 class="mb-0 ml-2 pl-1">상태</h6>
-                                                            <h6 class="mb-0 ml-2" style="font-weight: 500;">미해결</h6>
+	                                                        <h6 class="mb-0 ml-2 pl-1">신고 대상자</h6>
+	                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">익명으</h6>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between p-2"
+                                            style="background-color: #eeeeee; border-bottom: 2px solid black;">
+                                            <div class="row">
+                                                <h6 class="mb-0 ml-2 pl-1">리뷰번호</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row mx-2">
+                                                    <h6 class="mb-0">강의 이름</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄴㅇㅇㄴㅇㄴㅇ</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="card w-100">
+                                        <div class="card-body" style="height: 25vh;">
+                                            신고당한사유
+                                        </div>
+                                         <div class="card-footer row justify-content-end" style="background-color: white;">
+	                                         <div>
+	                                            신고 대상 리뷰 별점
+	                                         </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 여기서부터 작성 -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row justify-content-between p-2"
+                                            style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
+                                            <div class="row">
+                                                <h6 class="mb-0 ml-2 pl-1">신고</h6>
+                                                <h6 class="mb-0 ml-2 pl-1">신고유형</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">??</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row mx-2">
+                                                    <h6 class="mb-0 ml-2 pl-1">신고자</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -73,50 +111,24 @@
                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
                                             </div>
                                             <div class="row">
-
                                                 <div class="row mx-2">
-                                                    <h6 class="mb-0">신고일자</h6>
+                                                    <h6 class="mb-0">신고 일자</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="card">
-                                        <div class="card-body" style="height: 25vh;">
-                                            신고당한사유
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 여기서부터 작성 -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="row justify-content-between p-2"
-                                            style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">신고대상리뷰</h6>
-
-
-                                            </div>
-                                            <div class="row">
-                                                <h6 class="mb-0 ml-2 pl-1">리뷰번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">1111</h6>
-                                                <div class="row mx-2">
-
-                                                    <h6 class="mb-0 ml-2 pl-1">신고 대상자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <div class="card">
+                                    <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
                                             ㅋㅋㅋㅋㅋ
+                                        </div>
+                                        <div class="card-footer row justify-content-end" style="background-color: white;">
+	                                         <div>
+	                                            처리 상태 : <span class="text-danger font-weight-bold">처리</span>
+	                                         </div>
                                         </div>
                                     </div>
                                 </div>

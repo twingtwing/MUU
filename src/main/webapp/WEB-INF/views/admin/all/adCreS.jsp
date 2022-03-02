@@ -50,6 +50,42 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
+                                <!-- 프로필 사진? -->
+                                <!-- 크리에이터 정보 -->
+								<div class="row">
+                                    <table class="table table-bordered mb-5">
+                                        <tr style="background-color: #eeeeee;">
+                                        	<th>상태</th>
+                                            <th>아이디</th>
+                                            <th>이름</th>
+                                            <th>생년월일</th>
+                                            <th>전화번호</th>
+                                            <th>성별</th>
+                                            <th>가입날짜</th>
+                                        </tr>
+                                        <tr>
+                                        	<td>비활성</td>
+                                            <td>user123@naver.com</td>
+                                            <td>정혜윤</td>
+                                            <td>생일</td>
+                                            <td>000-0000-000</td>
+                                            <td>여자</td>
+                                            <td>22/02/02</td>
+                                        </tr>
+                                        <tr style="background-color: #eeeeee;">
+                                            <th colspan="5">크리에이터 소개</th>
+                                            <th>유저 정보</th>
+                                            <th>등급</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">user123@naver.com</td>
+                                            <td>-</td>
+                                            <!--유저 정보 상세페이지로 연결-->
+                                            <td>VVIP</td>
+                                        </tr>
+                                    </table>
+ 
+								</div>                                
                                 <!--크리에이터 강의정보내역-->
                                 <div class="row">
                                     <h5><i class="fas fa-hashtag mr-1"></i>강의리스트</h5>

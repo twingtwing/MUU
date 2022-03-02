@@ -1,7 +1,5 @@
 package co.makeu.up.lecture.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
@@ -51,7 +49,8 @@ public class LectureController {
 	
 	//강의상세
 	@GetMapping("/lecD")
-	public String lecD() {
+	public String lecD(LectureVO vo, Model model) {
+		model.addAttribute("ltNo",vo.getLtNo());
 		return "main/lecture/lecD";
 	}
 	

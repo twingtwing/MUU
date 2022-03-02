@@ -9,5 +9,4 @@ public interface ExtendedLetureMapper {
 	
 	List<LectureVO> lectureList(ExtendedLectureVO vo);
 	List<CtgrVO> ctgrList(ExtendedLectureVO vo);
-
 }
