@@ -16,5 +16,6 @@
 		ON C.UP_CTGR = U.CTGR_ID
 		WHERE C.UP_CTGR = #{upCtgr} 
 		ORDER BY C.CTGR_ID
+		
 	</select>
 </mapper>
