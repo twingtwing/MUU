@@ -10,7 +10,7 @@
 			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
 				AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
 			ORDER BY WR_DATE DESC)
-		WHERE RN <![CDATA[>=]]> (10*#{page})+1
+		
 	</select>
 	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM NOTICE

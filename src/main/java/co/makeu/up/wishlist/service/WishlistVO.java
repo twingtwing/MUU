@@ -1,5 +1,7 @@
 package co.makeu.up.wishlist.service;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -12,6 +14,7 @@ public class WishlistVO {
 	private String intro;
 	private int prc;
 	private String ltStCode;
+	private String thumb;
 	
 	// 페이지네이션을 위한 vo객체
 	private int page;
