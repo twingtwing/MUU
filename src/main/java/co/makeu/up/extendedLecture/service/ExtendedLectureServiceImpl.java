@@ -14,4 +14,14 @@ public class ExtendedLectureServiceImpl implements ExtendedLetureService{
 		vo.setCtgrList(map.ctgrList(vo));
 		return vo;
 	}
+
+	@Override
+	public ExtendedLectureVO extendedLecture(ExtendedLectureVO vo) {
+		vo.setLectureDetail(map.lectureDetail(vo));
+		vo.setLessonList(map.lessonList(vo));
+		vo.setReviewList(map.reviewList(vo));
+		vo.setLtQnaList(map.ltQnaList(vo));
+		vo.setCtgrList(map.ctgrDetail(vo.getLectureDetail().getDownCtgr()));
+		return vo;
+	}
 }

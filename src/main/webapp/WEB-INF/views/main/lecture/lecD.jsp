@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +54,11 @@
         	font-weight: bold;
         	color: #dc3545;
         }
+        
+        #stars .gr{
+	      color: gray;
+	      cursor: pointer;
+	    }
     </style>
 </head>
 <body>
@@ -123,7 +129,7 @@
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <i class="fa fa-plus"></i>
-                                                     <a href="/creD">
+                                                     <a :href="'/creD?creId='+lecDetails.creId">
                                                         <h5 class="mb-0 ml-1">크리에이터 상세 정보</h5>
                                                     </a>
                                                 </div>
@@ -148,10 +154,11 @@
                                             <div id="lec_intro" class="row">
                                                 <div class="col-lg-12">
                                                     <h5 class="font-weight-bold my-2">강의소개</h5>
-                                                    <p class="mx-2 py-2">{{lecDetails.intro}}</p>
+                                                    <p class="mx-2 mt-3 px-2 py-3" style="border-left:4px solid #dc3545">{{lecDetails.intro}}</p>
                                                     <h6 class="font-weight-bold mb-2 mx-4">&lt; OT영상 &gt;</h6>
-                                                    <video class="mx-3" src="resourecs/videos/1.mp4"></video>
-                                                    <!-- lesson영상 가장 처음꺼 쓰면 됨 -->
+                                                    <!-- <video controls width="100%" controlsList="nodownload" id="player">
+	                                                    <source :src="lessonList[0].lsnFile" type="video/mp4"></video>
+												     </video>  -->
                                                 </div>
                                             </div>
                                             <hr>
@@ -159,14 +166,14 @@
                                                 <div class="col-lg-12">
                                                     <div class="my-2 row mx-0">
                                                         <h5 class="font-weight-bold">커리큘럼</h5>
-                                                        <p class="ml-2">총 {{lecDetails.lessons.length}}개</p>
+                                                        <p class="ml-2">총 {{lessonList .length}}개</p>
                                                     </div>
                                                     <div class="row mx-2">
                                                         <table class="table border-bottom border-left border-right">
                                                             <tbody>
-                                                                <tr v-for="(lesson,index) in lecDetails.lessons">
-                                                                    <td> {{index+1}}. {{lesson.ttl}}</td>
-                                                                    <td width="15%">{{lesson.time}}분</td>
+                                                                <tr v-for="(lesson,index) in lessonList">
+                                                                    <td width="10%" class="border-right text-center"> {{index+1}}</td>
+                                                                    <td class="text-center">{{lesson.ttl}}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -181,15 +188,25 @@
                                                         <div class="d-flex align-items-center mr-2">
                                                             <i class="fa fa-star text-warning"></i>
                                                         </div>
-                                                        <p class="mb-0">후기 총점 : ?점</p>
-                                                        <p class="ml-2 mb-0">후기 갯수 : {{lecDetails.reviews.length}}개</p>
+                                                        <p class="mb-0">별점 평균 : 
+                                                        	<i v-for="index in avgStar" class="fa fa-star text-warning"></i>
+                                                        	<i v-for="index in 5-avgStar" class="fa fa-star-o text-warning"></i>
+                                                        </p>
+                                                        <p class="ml-2 mb-0"> 후기 갯수 : {{reviewList != null ? reviewList.length : 0}}개</p>
                                                     </div>
                                                     <!-- 후기 이미 작성했으면 보이면 안됨 -->
-                                                    <div class="row mx-3">
+                                                    <div v-if="myReview == null" class="row mx-3">
                                                         <div class="blog__details__form mb-4 pt-0 w-100">
                                                             <form onsubmit="return false">  
                                                                 <div class="row mr-2 position-relative">
-                                                                    <textarea v-on:change="changeErr" class="border mb-0" rows="10" spellcheck="false"  placeholder="리뷰작성..."></textarea>
+	                                                                <h5 class="row text-center w-100 position-absolute" id="stars" style="bottom: 10px; left: 25px;">
+															          <span class="fas fa-star gr" data-num="0"></span>
+															          <span class="fas fa-star gr" data-num="1"></span>
+															          <span class="fas fa-star gr" data-num="2"></span>
+															          <span class="fas fa-star gr" data-num="3"></span>
+															          <span class="fas fa-star gr" data-num="4"></span>
+															        </h5>
+                                                                    <textarea v-on:change="changeErr" class="border mb-0" rows="10" spellcheck="false"  placeholder="리뷰 작성..."></textarea>
                                                                     <button v-on:click="reviewInsert" class="btn btn-secondary position-absolute" style="bottom: 12px; right: 12px;">등록</button>
                                                                 </div>
                                                                 <div class="d-flex justify-content-end">
@@ -198,29 +215,26 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <!-- 후기 이미 작성한 경우-->
-                                                    <div class="row mx-2 mb-3">
-                                                        <div class="col-lg-12 px-0">
-                                                            <div class="row mx-2">
+                                                    <!-- 후기 이미 작성한 경우 -->
+                                                    <div v-if="myReview != null" class="row mx-2 mb-3">
+                                                        <div class="col-lg-12 py-1 px-0" style="border: 0.125rem solid #fdb6b6f5;">
+                                                            <div class="row mx-1">
                                                                 <div class="col-lg-12 px-0">
                                                                     <div>
                                                                         <div class="row mx-0">
-                                                                            <div class="col-lg-2">
+                                                                            <div class="col-lg-1 px-0">
                                                                                 <img class="rounded-circle" src="/resources/img/anime/details-pic.jpg" alt="프로필 사진" style="width: 50px; height: 50px;">
                                                                             </div>
                                                                             <div class="col-lg-9">
-                                                                                <p class="mb-0">내 이름</p>
+                                                                                <p class="mb-0">{{myReview.writer}}</p>
                                                                                 <div>
-                                                                                    <i class="fa fa-star text-warning"></i>
-                                                                                    <i class="fa fa-star text-warning"></i>
-                                                                                    <i class="fa fa-star text-warning"></i>
-                                                                                    <i class="fa fa-star-o text-warning"></i>
-                                                                                    <i class="fa fa-star-o text-warning"></i>
+                                                                                    <i v-for="index in myReview.star" class="fa fa-star text-warning"></i>
+                                                                                    <i v-for="index in 5-myReview.star" class="fa fa-star-o text-warning"></i>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row mx-3 my-2 pt-1">
-                                                                            후기 내용
+                                                                            {{myReview.content}}
                                                                         </div>
                                                                     </div>
                                                                     <div class="row mx-0 d-flex justify-content-end">
@@ -232,17 +246,17 @@
                                                         </div>
                                                     </div>
                                                     <!-- 남의 후기 다 보여줌-->
-                                                    <div v-for="review in lecDetails.reviews" class="row mx-2 mb-3">
-                                                        <div class="col-lg-12 px-0">
-                                                            <div class="row mx-2">
+                                                    <div v-if="reviewList != null" v-for="review in reviewList " class="row mx-2 mb-3">
+                                                        <div v-if="review.myReview == 'N'" class="col-lg-12 py-1 px-0" style="border: 0.125rem solid #afafaf;">
+                                                            <div class="row mx-1">
                                                                 <div class="col-lg-12 px-0">
                                                                     <div class="revCopy">
                                                                         <div class="row mx-0">
-                                                                            <div class="col-lg-2">
+                                                                            <div class="col-lg-1 px-0">
                                                                                 <img class="rounded-circle" src="/resources/img/anime/details-pic.jpg" alt="프로필 사진" style="width: 50px; height: 50px;">
                                                                             </div>
                                                                             <div class="col-lg-9">
-                                                                                <p class="mb-0">{{review.name}}</p>
+                                                                                <p class="mb-0">{{review.writer}}</p>
                                                                                 <div>
                                                                                     <i v-for="index in review.star" class="fa fa-star text-warning"></i>
                                                                                     <i v-for="index in 5-review.star" class="fa fa-star-o text-warning"></i>
@@ -261,10 +275,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div v-if="lecDetails.reviews.length > 0" class="row d-flex justify-content-center">
-                                                        <span v-on:click="revMore" v-if="lecDetails.reviews[0].count > 5" class="revMore">더보기</span>
+                                                    <div v-if="reviews != null" class="row d-flex justify-content-center">
+                                                    	<span v-on:click="revMore"  v-bind:class="{'d-none':this.reviews.length > 3}"  class="revMore">더보기</span>
                                                     </div>
-                                                    <!-- 더보기버튼 -->
                                                 </div>
                                             </div>
                                             <hr>
@@ -283,6 +296,7 @@
                                                     <h5 class="font-weight-bold my-2">질문 & 답변</h5>
                                                     <div class="blog__details__form pt-2 mx-3 w-100">
                                                         <form onsubmit="return false">  
+                                                        <!-- id값있을경우만 -->
                                                             <div class="row mr-2 position-relative">
                                                                 <textarea class="border" name="" id=""rows="10" spellcheck="false"></textarea>
                                                                 <button class="btn btn-secondary position-absolute" style="bottom: 45px; right: 12px;">등록</button>
@@ -291,29 +305,34 @@
                                                     </div>
                                                     <div class="row mx-0 mb-3">
                                                         <div class="col-lg-12">
-                                                            <!-- 반복 -->
+                                                            <!-- 반복 내질문 상단 노출할려고 했는데 생각 보다 값이 많아서 안함-->
                                                             <div class="row mx-0">
                                                                 <div class="col-lg-12">
-                                                                    <div v-for="(qna,index) in lecDetails.Qnas" class="mb-5">
+                                                                    <div v-for="(qna , index) in qnaList " class="py-1 px-2 mb-5" style="border: 0.15rem solid #afafaf; border-radius: 15px;">
                                                                         <div>
-                                                                            <p>Q. <a class="qna_collapse text-dark" data-toggle="collapse" :href="`#qna_${index}`" >{{qna.name}}</a></p>
+                                                                        	<div class="row col-12 justify-content-between pr-0">
+	                                                                            <p class="font-weight-bold">Q. 
+	                                                                            	<a class="qna_collapse text-dark" data-toggle="collapse" :href="'#collapse_' + index" >{{qna.writer}}</a>
+	                                                                            </p>
+	                                                                        	<span v-if="qna.qnaStCode == 'Q01'" class="text-primary mt-1 font-weight-bold">미답변</span>
+	                                                                        	<span v-if="qna.qnaStCode == 'Q02'" class="text-danger mt-1 font-weight-bold">답변완료</span>
+                                                                        	</div>
                                                                             <p class="mx-2">{{qna.qContent}}</p>
-                                                                            <div class="d-flex justify-content-end">
+                                                                            <div v-if="qna.myQna =='Y'" class="d-flex justify-content-end">
                                                                                 <button class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="collapse" :id="`qna_${index}`">
-                                                                            <p>A. {{lecDetails.name}}</p>
-                                                                            <p class="mx-2">{{qna.aContnet}}</p>
+                                                                        <div v-if="qna.qnaStCode == 'Q02'" class="collapse" :id="'collapse_' + index">
+                                                                            <p class="font-weight-bold">A. {{lecDetails.name}}</p>
+                                                                            <p class="mx-2">{{qna.aContent}}</p>
                                                                         </div>
                                                                     </div>
-                                                                    <div v-if="lecDetails.Qnas.length > 0" class="row d-flex justify-content-center">
-                                                                        <span v-on:click="qnaMore" v-if="lecDetails.Qnas[0].count > 5" class="qnaMore">더보기</span>
+                                                                    <div v-if="qnas != null" class="row d-flex justify-content-center">
+                                                                        <span v-on:click="qnaMore"  v-bind:class="{'d-none':this.qnas.length > 5}"  class="qnaMore">더보기</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 더보기 버튼 -->
                                                     </div>
                                                     <hr class="mt-0">
                                                 </div>
@@ -329,20 +348,20 @@
                                                     <div class="row">
                                                         <div class="col-lg-12 mt-1">
                                                             <div class="row pl-2">
-                                                                <p>{{lecDetails.upCtgr}} · {{lecDetails.downCtgr}}</p>
+                                                                <p>{{ctgrList.upName}} · {{ctgrList.name}}</p>
                                                             </div>
                                                             <div class="row pl-2">
                                                                 <h5 class="font-weight-bold">{{lecDetails.ttl}}</h5>
                                                             </div>
                                                             <div class="row mt-3">
                                                                 <div class="col-lg-12 px-2">
-                                                                    <div class="d-flex justify-content-between">
+                                                                    <div v-if="lecDetails.kitName !=''" class="d-flex justify-content-between">
                                                                         <p>키트가격 :</p>
                                                                         <p class="mb-2">{{lecDetails.kitPrc}} 원</p>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between">
                                                                         <p>전체 총 가격 : </p> 
-                                                                        <p class="mb-4 text-right">{{lecDetails.prc}} 원</p>
+                                                                        <p class="mb-4 text-right">{{lecDetails.prc + lecDetails.kitPrc}} 원</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -350,7 +369,7 @@
                                                                 <button onclick="location.href='/lecP'" class="btn btn-danger w-100">구매</button>
                                                             </div>
                                                             <div class="row mt-2 d-flex justify-content-end pr-2">
-                                                                <p class="heart"><i v-bind:class="[lecDetails.wash ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> 찜</p>
+                                                                <p class="heart"><i v-bind:class="[lecDetails.wash=='Y' ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> {{lecDetails.wCount}}</p>
                                                                 <!-- 강의 신청한적없으면 신고안됨 -->
                                                                 <p class="ml-3" data-toggle="modal" data-target="#lecReport"><i class="fa fa-ban text-muted mr-1"></i>신고</p>
                                                             </div>
@@ -500,27 +519,64 @@
         const lecD = Vue.createApp({
             data(){
                 return{
-                    revNum : 1,
-                    qnaNum : 1,
-                    lecDetails :{}
+                    lecDetails :{},
+                    lessonList :[],
+                    ctgrList : {},
+                    reviews :[],
+                    qnas :[],
+                    reviewList :[],
+                    qnaList :[],
+                    myReview : null,
+                    avgStar : 0
                 }
+            },
+            computed:{
+            	collapseId(no){
+            		console.log(no);
+            		return "collapse_"+ no;
+            	},
+            	collapseHref(no){
+            		return "collapse_"+ no;
+            	}
             },
             methods :{
                 heartClick(){//워시리스트 추가 혹은 삭제
-                    if($(event.target).hasClass('text-muted')){
+                    if(this.lecDetails.wCount = 'N'){
                         console.log('추가');
                         //추가 fetch
+                        this.lecDetails.wCount = 'Y';
                     }else{
                         console.log('삭제');
                         //삭제 fetch
+                        this.lecDetails.wCount = 'N';
                     }
-                    $(event.target).toggleClass('text-muted');
-                    $(event.target).toggleClass('text-danger');
                     
                 },
                 reviewInsert(){//리뷰등록
-                    if($(event.target).closest('div').find('textarea').val() != ''){
-                        console.log($(event.target).closest('div').find('textarea').val());
+                	let content = $(event.target).closest('div').find('textarea').val()
+                    if(content == ''){
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
+                    }else{
+                    	if(this.lecDetails.mySugang == 'N'){
+                    		alert("리뷰 작성을 위해 먼저 강의를 신청하셔야 합니다.");
+                    		return;
+                    	}
+                    	console.log(this.lecDetails.mySugang);
+                    	/*
+                    	$.ajax({
+                    		url : '/user/userLRWrite',
+                      	  data : {writer : '', ltNo : '${ltNo}', star: $('.fas.selected').length, content: content},
+                      	  type : 'post',
+                      	  beforeSend : (xhr) =>{
+                  		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                  		  }
+                    	})
+                    	.done((result)=> {
+                        	if(result == 'ok'){
+                        		//맨 앞에 추가하기
+                        	}
+                        }); 
+                    	*/
                     }
                 },
                 revCopy(){//모달창에 신고대상 리뷰 복사
@@ -539,31 +595,34 @@
                     }
                 },
                 revMore(){
-                    //this.lecDetails.reviews[0].count
-                    if(this.revNum < (this.lecDetails.reviews[0].count)/5){
-                        this.revNum ++;
-                        //fetch 후에 push
-                        this.lecDetails.reviews.push(
-                            {name:'이름3',content:'내용3',star:1,count:7},
-                            {name:'이름4',content:'내용4',star:2,count:7}
-                            );
-                        if(!(this.revNum < (this.lecDetails.reviews[0].count)/5)){
-                            $('.revMore').addClass('d-none')
-                        }
-                    }
+                	if(this.reviews !=null){
+	                	if(this.reviews.length > 3){
+	                		for (var i = 0; i < 3; i++) {
+		                        this.reviewList.push(this.reviews[i]);
+							}
+	                		this.reviews = this.reviews.slice(3);
+	                	}else{
+	                		this.reviewList = this.reviewList.concat(this.reviews);
+	                		this.reviews = null;
+	                	}
+                	}else{
+                		this.reviewList = null;
+                	}
                 },
                 qnaMore(){
-                    if(this.qnaNum < (this.lecDetails.Qnas[0].count)/5){
-                        this.qnaNum ++;
-                        //fetch 후에 push
-                        this.lecDetails.Qnas.push(
-                            {qnaNo:6, name:'작성자6',qContent:'질문6',aContnet:'답변6',count:7},
-                            {qnaNo:7, name:'작성자7',qContent:'질문7',aContnet:'답변7',count:7}
-                        );
-                        if(!(this.qnaNum < (this.lecDetails.Qnas[0].count)/5)){
-                            $('.qnaMore').addClass('d-none')
-                        }
-                    }
+                	if(this.qnas !=null){
+	                	if(this.qnas.length > 5){
+	                		for (var i = 0; i < 5; i++) {
+		                        this.qnaList.push(this.qnas[i]);
+							}
+	                		this.qnas = this.qnas.slice(5);
+	                	}else{
+	                		this.qnaList = this.qnaList.concat(this.qnas);
+	                		this.qnas = null;
+	                	}
+                	}else{
+                		this.qnaList = [];
+                	}
                 },
                 lecReport(){//강의신고
                     //빈칸체크
@@ -585,60 +644,68 @@
                     }
                 }
             },
-            beforeMount : function(){
-            	console.log('${ltNo}');
-                /*
-                beforeCreate
-
-                fetch("../전부가져오기")
+            beforeCreate : function(){
+                fetch('/lectureDetail?ltNo='+'${ltNo}')
                 .then(response => response.json())
-                .then(result => {this.lecDetails = result;})
-                */
-                //찜 여부와 갯수?
-                this.lecDetails = {
-                    id:'id',//cre_id로 변경
-                    name :'크리에이터 이름',
-                    creIntro : '크리에이터 소개',
-                    ttl:'강의이름들어감',
-                    intro : '강의 소개!!',
-                    upCtgr : '카테고리번호?',
-                    downCtgr : '상세번호?',
-                    prc : '총합 더해야함',
-                    kitName : '키트 이름',
-                    kitIntro : '키트 소개',
-                    kitPrc : '키트가격',
-                    wash : true,
-                    lessons :[
-                        {ttl : '강의 1편',time:'30'},
-                        {ttl : '강의 2편',time:'30'},
-                        {ttl : '강의 3편',time:'30'},
-                        {ttl : '강의 4편',time:'60'}
-                    ],
-                    // 내 리뷰만 따로 갖고 오거나
-                    //내 리뷰만 가장 위로 order by해서 가져와야함
-                    //다른사람 리뷰는 5개씩 들고오기
-                    reviews : [
-                        // count에 리뷰 총 갯수 나와야함
-                        {name:'이름1',content:'내용',star:3,count:7},
-                        {name:'이름1',content:'내용',star:3,count:7},
-                        {name:'이름1',content:'내용',star:3,count:7},
-                        {name:'이름1',content:'내용',star:3,count:7},
-                        {name:'이름2',content:'내용2',star:4,count:7}
-                    ],
-                    Qnas : [
-                        // count에 질문답변 총 갯수 나와야함
-                        {qnaNo:1, name:'작성자1',qContent:'질문1',aContnet:'답변1',count:7},
-                        {qnaNo:2, name:'작성자2',qContent:'질문2',aContnet:'답변2',count:7},
-                        {qnaNo:1, name:'작성자1',qContent:'질문1',aContnet:'답변1',count:7},
-                        {qnaNo:2, name:'작성자2',qContent:'질문2',aContnet:'답변2',count:7},
-                        {qnaNo:3, name:'작성자3',qContent:'질문3',aContnet:'답변3',count:7}
-                    ]
-                };
+                .then(result => {
+                	console.log(result);
+                	this.lecDetails = result.lectureDetail;
+                	this.lessonList = result.lessonList;
+                	this.qnas = result.ltQnaList;
+                	this.qnaMore();
+                	this.ctgrList = result.ctgrList[0];
+                	if(result.reviewList != null){
+                		let sum = 0;
+	                	for(var i = 0; i < result.reviewList.length; i++){
+	                		sum+=result.reviewList[i].star;
+	            			if(result.reviewList[i].myReview =='Y'){
+	            				this.myReview = result.reviewList[i];
+	            				result.reviewList = result.reviewList.slice(i,i+1);
+	            				i--;
+	            			}
+	            		}
+                		this.avgStar = Math.round(sum/(result.reviewList.length));
+                	}
+                	this.reviews = result.reviewList;
+                	this.revMore();
+                })
             }
             
         });
 
         const mountLecD = lecD.mount('#lecture_detail');
+        
+        $('#stars>span').mouseover((e)=>{
+            const num = +e.currentTarget.dataset.num+1
+            const st = document.querySelectorAll('#stars>span');
+            for(let i=0; i<num; i++){
+              $(st[i]).css('color','var(--warning)')
+            }
+          })
+          const getgray = () =>{
+            $('#stars .gr').css('color','gray')
+          }
+          $('#stars').mouseout(getgray)
+          $('#stars>span').click((e)=>{
+            const num = +e.currentTarget.dataset.num+1;
+            const st = document.querySelectorAll('#stars>span');
+ 	      	if($(e.target).hasClass(".selected")){
+       		  console.log(e.target);
+       		  let num = $("#stars.selected") -1;
+       		  let index = $("#stars .selected").index(this);
+       		  for(var i = num; i >= index; i--){
+       			  $("#stars>span").eq(i).removeClass("selected");
+       			  $("#stars>span").eq(i).removeClass("gr");
+       			  getgray();
+        	  }
+        	 }else{
+	            for(let i=0; i<num; i++){
+	              $(st[i]).removeClass('gr');
+	              $(st[i]).addClass('selected');
+	            }
+        	 }
+          })
+
     </script>
 </body>
 </html>

@@ -29,11 +29,14 @@ public class LectureVO {
 	private float avgStar;
 	private int studentCount;
 	
-	//extended vo
+	//extended vo --> 딴데서 재활용해도됨
 	private int star;//별점 평균
-	private int rCount;//워시리스트 갯수
+	private int rCount;//별점 갯수
 	private String wash;//워시리스트 여부
-	private int wCount;
+	private int wCount;//워시리스트 갯수
+	private String name;//크리에이터 이름
+	private String creIntro;//크리에이터 소개
+	private String mySugang;//내 수강 영부
 	
 	public int getLtNo() {
 		return ltNo;
@@ -209,5 +212,24 @@ public class LectureVO {
 	public void setwCount(int wCount) {
 		this.wCount = wCount;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCreIntro() {
+		return creIntro;
+	}
+	public void setCreIntro(String creIntro) {
+		this.creIntro = creIntro;
+	}
+	public String getMySugang() {
+		return mySugang;
+	}
+	public void setMySugang(String mySugang) {
+		this.mySugang = mySugang;
+	}
+	
 	
 }
