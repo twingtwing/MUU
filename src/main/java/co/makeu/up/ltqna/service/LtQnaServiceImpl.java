@@ -34,4 +34,14 @@ public class LtQnaServiceImpl implements LtQnaMapper{
 		return map.selectMyQnaList(vo);
 	}
 
+	@Override
+	public int updateMyQna(LtQnaVO vo) {
+		return map.updateMyQna(vo);
+	}
+
+	@Override
+	public int deleteMyQna(int qnaNo) {
+		return map.deleteMyQna(qnaNo);
+	}
+
 }

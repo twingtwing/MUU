@@ -183,7 +183,7 @@ public class UsersController {
 	@PostMapping("/user/userFarewell")
 	public void userFarewell(String id, String pht) {
 		
-		// 크리에이터의 경우 기존에 서버에있던 강의 다 지우는기능 나중에 추가하기
+		// 크리에이터의 경우 기존에 서버에있던 강의 다 지우는기능 나중에 추가하기(언제?)
 		
 		// 서버에서 프로필사진 삭제
 		if(pht!=null) {

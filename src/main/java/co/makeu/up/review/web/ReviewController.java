@@ -52,6 +52,18 @@ public class ReviewController {
 			model.addAttribute("accessBan","잘못된 접근입니다.");
 			return "redirect:/accessError";
 		}
+		// 이거 왜 두개지? 일단 내비둬보자
+		
+		// 이미 작성한 리뷰 체크
+		ReviewVO myrv = new ReviewVO();
+		myrv.setWriter(pri.getName());
+		myrv.setLtNo(vo.getLtNo());
+		myrv = reviewDao.selectMyReview(myrv);
+		if(myrv != null) {
+			logger.info("이미작성한리뷰가있어요");	
+			model.addAttribute("myReview",myrv);
+			logger.info(myrv.getContent());
+		}
 		
 		List<ReviewVO> list = reviewDao.reviewSelectList(vo);
 		double avg = 0;
@@ -71,5 +83,17 @@ public class ReviewController {
 		vo.setWriter(pri.getName());
 		reviewDao.reviewInsert(vo);
 		return "ok";
+	}
+	
+	@ResponseBody
+	@PostMapping("/user/deleteReview")
+	public void deleteMyReview(int rvNo) {
+		reviewDao.deleteMyReveiw(rvNo);
+	}
+	
+	@ResponseBody
+	@PostMapping("/user/updateReview")
+	public void updateReview(ReviewVO vo) {
+		reviewDao.updateMyReview(vo);
 	}
 }

@@ -24,5 +24,10 @@ public class NoticeServiceImpl implements NoticeMapper{
 		return map.NoticeListCnt(ltNo);
 	}
 
+	@Override
+	public int updateHits(int ntNo) {
+		return map.updateHits(ntNo);
+	}
+
 	
 }

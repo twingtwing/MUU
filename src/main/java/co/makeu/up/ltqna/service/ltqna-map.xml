@@ -9,6 +9,7 @@
 	        AND LT_NO = #{ltNo}
 	        AND (Q_CONTENT LIKE '%'||#{contentSearchKey}||'%'
 	        	AND WRITER LIKE '%'||#{writerSearchKey}||'%')
+	        AND QNA_ST_CODE NOT IN ('Q03')	        	
 	        ORDER BY QNA_NO DESC, QNA_ST_CODE)
         WHERE RN <![CDATA[>=]]> (10*${page})+1
 	</select>
@@ -16,6 +17,7 @@
 		SELECT * FROM LT_QNA
 		WHERE LT_NO = #{ltNo}
 		AND WRITER = #{writer}
+		AND QNA_ST_CODE NOT IN ('Q03')	 
 		ORDER BY Q_REG_DATE DESC
 	</select>
 	<select id="qnaListCnt" parameterType="Integer" resultType="Integer">
@@ -30,4 +32,15 @@
 		NVL((SELECT MAX(QNA_NO) FROM LT_QNA)+1,1),NULL,#{qContent},#{ltNo},NULL,SYSDATE,'Q01',#{writer}
 		)
 	</insert>
+	<update id="updateMyQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		UPDATE LT_QNA
+		SET Q_CONTENT = #{qContent}
+		WHERE QNA_NO = #{qnaNo}
+	</update>
+	
+	<update id="deleteMyQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		UPDATE LT_QNA
+		SET QNA_ST_CODE = 'Q03'
+		WHERE QNA_NO = #{qnaNo}
+	</update>
 </mapper>

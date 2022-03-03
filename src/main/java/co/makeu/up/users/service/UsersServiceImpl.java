@@ -1,6 +1,7 @@
 package co.makeu.up.users.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,5 +46,10 @@ public class UsersServiceImpl implements UsersMapper {
 	@Override
 	public int deleteUsers(String id) {
 		return map.deleteUsers(id);
+	}
+
+	@Override
+	public List<UsersVO> usersList(UsersVO vo) {
+		return map.usersList(vo);
 	}
 }
