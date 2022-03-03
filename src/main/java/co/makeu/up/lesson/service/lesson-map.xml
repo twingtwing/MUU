@@ -9,9 +9,9 @@
 	</select>
 
 	<insert id="lessonInsert" parameterType="co.makeu.up.lesson.service.LessonVO">
-		INSERT INTO LESSON VALUES
-		((SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON), #{ttl}, #{lsnFile},(SELECT NVL(MAX(LT_NO), 0) FROM LECTURE),
-		SYSDATE, SYSDATE,'20')
+		INSERT INTO LESSON(SERIAL_NO, LSN_NO, TTL, LSN_FILE, LT_NO, REG_DATE, MOD_DATE) VALUES
+		((SELECT NVL(MAX(SERIAL_NO), 0)+1 FROM LESSON), #{lsnNo}, #{ttl}, #{lsnFile}, (SELECT NVL(MAX(LT_NO), 0) FROM LECTURE),
+		SYSDATE, SYSDATE)
 	</insert>
 
 	<select id="lessonWithProgress" parameterType="co.makeu.up.lesson.service.LessonVO" resultType="co.makeu.up.lesson.service.LessonVO">

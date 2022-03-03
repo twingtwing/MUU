@@ -8,31 +8,40 @@
 			   SYSDATE, 'L02', (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), SYSDATE)
 	</insert>
 	<select id="lectureSelect" parameterType="Integer" resultType="co.makeu.up.lecture.service.LectureVO">
-		SELECT * FROM LECTURE WHERE LT_NO = #{ltNo}
+		SELECT * FROM CNAMELECTURE WHERE LT_NO = #{ltNo}
 	</select>
 	<select id="requestLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
-		SELECT * FROM LECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE IN ('L02','L07') ORDER BY LT_NO
+		SELECT * 
+		FROM CNAMELECTURE 
+		WHERE CRE_ID = #{creId} AND LT_ST_CODE IN ('L02','L07') 
+		ORDER BY LT_NO DESC
 	</select>
 	<select id="openLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
 		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
-		FROM LECTURE l
+		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L01'
-		ORDER BY l.LT_NO
+		ORDER BY l.LT_NO DESC
 	</select>
 	<select id="closeLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
 		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
-		FROM LECTURE l
+		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L03'
-		ORDER BY l.LT_NO
+		ORDER BY l.LT_NO DESC
 	</select>
 	<select id="reportLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
 		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
-		FROM LECTURE l
+		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
-		ORDER BY l.LT_NO
+		ORDER BY l.LT_NO DESC
 	</select>
+	<update id="lectureUpdate" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE SET
+		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr}, PHT_1 = #{pht1}, PHT_2 = #{pht2}, PHT_3 = #{pht3}, THUMB = #{thumb},
+		TTL = #{ttl}, INTRO = #{intro}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}
+		WHERE LT_NO = #{ltNo}
+	</update>
 	
 </mapper>

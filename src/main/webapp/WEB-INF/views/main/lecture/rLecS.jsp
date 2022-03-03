@@ -140,7 +140,7 @@
                         <!-- 신청 상태 / 상태, 반려사유 가져오기(색처리)-->
                         <div class="row col-12">
                             <div class="col-12 text-right align-items-right">
-                                <button class="btn btn-outline-secondary" type="button" onclick="location.href='#';">강의정보수정</button>
+                                <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${rlists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-info"  type="button">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
@@ -213,9 +213,15 @@
                                 <h5 class="font-weight-bold mb-2">태그</h5>
                                 <!-- 태그 반복문 등록-->
                                 <div>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag1 }</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag2 }</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag3 }</span>
+                                	<c:if test="${rlists.tag1 !='null' }">
+	                                    <span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag1 }</span>
+                                	</c:if>
+                                	<c:if test="${rlists.tag2 != 'null' }">
+                                    	<span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag2 }</span>
+                                    </c:if>
+                                    <c:if test="${rlists.tag3 != 'null' }">
+                                    	<span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag3 }</span>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +252,29 @@
             </div>
         </div>
     </section>
+    <form id="frm" action="/creator/lecU">
+    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    </form>
 
 </body>
+<script>
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+    $(this).css('background-color','#e53637');
+    $(this).find('.list-link').css('color','#ffffff');
+})
+
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+    $(this).css('background-color','#ffffff');
+    $(this).find('.list-link').css('color','#000000');
+    $(this).find('.list-link.active').css('color','#e53637');
+})
+
+//수정 페이지 이동
+function lectureInfo(e){
+	$('.sendltno').val(e);
+	$('#frm').submit();
+}
+</script>
 </html>

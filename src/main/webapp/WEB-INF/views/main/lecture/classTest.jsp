@@ -363,6 +363,7 @@ function classResister(){
 	//form.append("class",$('#class')[0].files[0]);
 	//console.log('---')
 for(var i = 0; i < $('.classUp').length; i++){
+	console.log($('.itemNum').eq(i).text());
 	var titlee = $('.classTtl').eq(i).val();
 	//console.log(titlee);
 	
