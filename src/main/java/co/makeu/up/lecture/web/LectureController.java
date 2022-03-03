@@ -3,6 +3,7 @@ package co.makeu.up.lecture.web;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -264,24 +265,27 @@ public class LectureController {
 	//강의 수정
 	@PostMapping("/creator/lecUpdate")
 	@ResponseBody
-	public String lectureUpdate(HttpServletRequest request, LectureVO vo, MultipartHttpServletRequest multi) {
+	public String lectureUpdate(HttpServletRequest request, LectureVO vo, 
+			MultipartFile file, 
+			MultipartHttpServletRequest multi) {
 		vo.setLtNo(Integer.parseInt(request.getParameter("ltNo")));
-		vo.setTtl(request.getParameter("ttl"));
-		vo.setIntro(request.getParameter("intro"));
-		vo.setUpCtgr(request.getParameter("upCtgr"));
-		vo.setDownCtgr(request.getParameter("downCtgr"));
-		vo.setTag1(request.getParameter("tag1"));
-		vo.setTag2(request.getParameter("tag2"));
-		vo.setTag3(request.getParameter("tag3"));
+//		vo.setTtl(request.getParameter("ttl"));
+//		vo.setIntro(request.getParameter("intro"));
+//		vo.setUpCtgr(request.getParameter("upCtgr"));
+//		vo.setDownCtgr(request.getParameter("downCtgr"));
+//		vo.setTag1(request.getParameter("tag1"));
+//		vo.setTag2(request.getParameter("tag2"));
+//		vo.setTag3(request.getParameter("tag3"));
+		List<MultipartFile> phtlist = multi.getFiles("pht");
+		System.out.println(multi.getFiles("pht"));
+		System.out.println(phtlist);
 		
-		System.out.println(request.getParameter("pht1"));
-		System.out.println(request.getParameter("pht1a"));
-//		System.out.println(multi.);
+		
 //		if(request.getParameter("pht1")==null) {
 //			vo.setPht1(request.getParameter("pht1a"));
 //		} else {
 //			String oriFileName = multi.getOriginalFilename();
-			
+//			
 //			String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 //            vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 //            try {
