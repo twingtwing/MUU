@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.PaginationFive;
-import co.makeu.up.notice.web.NoticeController;
 import co.makeu.up.wishlist.service.WishListServiceImpl;
 import co.makeu.up.wishlist.service.WishlistVO;
 
 @Controller
 public class WishListController {
-	Logger logger = LoggerFactory.getLogger(NoticeController.class);
+	Logger logger = LoggerFactory.getLogger(WishListController.class);
 	
 	@Autowired
 	WishListServiceImpl wishListDao;
