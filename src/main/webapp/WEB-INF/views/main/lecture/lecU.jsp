@@ -226,10 +226,10 @@
     <form style="display:none" action="/creator/lecUpdate" id="frm" method="post" enctype="multipart/form-data">
     	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     	<input id="ltNo" name="ltNo" value="${lecinfo.ltNo }">
-    	<input id="pht1" name="pht1" type="file" accept="image/*">
-    	<input id="pht2" name="pht2" type="file" accept="image/*">
-    	<input id="pht3" name="pht3" type="file" accept="image/*">
-    	<input id="thumb" name="thumb" type="file" accept="image/*">
+    	<input id="pht1" name="pht" type="file" accept="image/*">
+    	<input id="pht2" name="pht" type="file" accept="image/*">
+    	<input id="pht3" name="pht" type="file" accept="image/*">
+    	<input id="thumb" name="pht" type="file" accept="image/*">
     	<input id="ttl" name="ttl" value="">
     	<input id="intro" name="intro" value="">
     	<input id="upCtgr" name="upCtgr" value="">
@@ -465,6 +465,8 @@
     	$('#tag2').val(tagchecklist[1]);
     	$('#tag3').val(tagchecklist[2]);
     	
+    	console.log($('#pht1'));
+    	console.log($('#pht1').val());
     	$('#frm').submit();
     }
                         
