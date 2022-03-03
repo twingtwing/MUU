@@ -4,6 +4,7 @@
 	<select id="reviewSelectList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
 		SELECT * FROM REVIEW
 		WHERE LT_NO = #{ltNo}
+		AND RV_CODE != 'RE03'
 		AND CONTENT LIKE '%'||#{content}||'%'
         AND WRITER LIKE '%'||#{writer}||'%'
 		ORDER BY WR_DATE DESC
@@ -14,4 +15,21 @@
 		(SELECT NVL(MAX(RV_NO),1) FROM REVIEW)+1,SYSDATE,'RE01',#{content},#{star},#{ltNo},#{writer}
 		)
 	</insert>
+	<select id="selectMyReview" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
+		SELECT * FROM REVIEW
+		WHERE WRITER = #{writer}
+		AND LT_NO = #{ltNo}
+		AND RV_CODE != 'RE03'
+	</select>
+	<update id="deleteMyReveiw" parameterType="co.makeu.up.review.service.ReviewVO">
+		UPDATE REVIEW
+		SET RV_CODE = 'RE03'
+		WHERE RV_NO = #{rvNo}
+	</update>
+	<update id="updateMyReview" parameterType="co.makeu.up.review.service.ReviewVO">
+		UPDATE REVIEW
+		SET CONTENT = #{content},
+		STAR = #{star}
+		WHERE RV_NO = #{rvNo}
+	</update>
 </mapper>

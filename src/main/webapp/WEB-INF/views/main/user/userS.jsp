@@ -263,7 +263,7 @@
                                         </tr>
                                         <tr>
                                             <th>VVIP 👑<br><span class="small">(수익이 월 1000만원 이상인 경우)</span></th>
-                                            <td>수수료 10% (둘다 10%??)</td>
+                                            <td>수수료 5%</td>
                                         </tr>
                                     </table>
                                 </div>

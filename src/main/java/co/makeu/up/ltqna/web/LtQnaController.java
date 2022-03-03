@@ -65,11 +65,12 @@ public class LtQnaController {
 		return ltqnaDao.selectQnaList(vo);
 	}
 	
-	@GetMapping(value="/user/selectQna", produces="application/text;charset=utf8")
+	@GetMapping(value="/user/selectQna", produces="application/json;charset=utf8")
 	@ResponseBody
-	public String selectQna(int qnaNo) {
+	public LtQnaVO selectQna(int qnaNo, LtQnaVO vo) {
 		logger.info(ltqnaDao.selectQna(qnaNo).getaContent());
-		return ltqnaDao.selectQna(qnaNo).getaContent();
+		vo = ltqnaDao.selectQna(qnaNo);
+		return vo;
 	}
 	
 	@PostMapping("/user/userInsertLQ")
@@ -78,5 +79,17 @@ public class LtQnaController {
 		vo.setWriter(pri.getName());
 		ltqnaDao.insertQna(vo);
 		return vo;
+	}
+	
+	@PostMapping("/user/updateMyqna")
+	@ResponseBody
+	public void updateMyQna(LtQnaVO vo) {
+		ltqnaDao.updateMyQna(vo);
+	}
+	
+	@PostMapping("/user/deleteMyqna")
+	@ResponseBody
+	public void deleteMyqna(LtQnaVO vo) {
+		ltqnaDao.deleteMyQna(vo.getQnaNo());
 	}
 }

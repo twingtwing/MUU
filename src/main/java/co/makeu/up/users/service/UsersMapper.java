@@ -1,6 +1,7 @@
 package co.makeu.up.users.service;
 
 import java.util.Date;
+import java.util.List;
 
 public interface UsersMapper {
 	int insertUsers(UsersVO vo);
@@ -11,4 +12,7 @@ public interface UsersMapper {
 	int updateUserProfileImg(UsersVO vo);
 	Date chkCreFarewell(String creId);
 	int deleteUsers(String id);
+	
+	// admin
+	List<UsersVO> usersList(UsersVO vo);
 }

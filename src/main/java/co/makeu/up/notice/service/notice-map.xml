@@ -23,4 +23,8 @@
 		ON N.FILE_NO = F.FILE_NO
 		WHERE NT_NO = #{ntNo}
 	</select>
+	<update id="updateHits" parameterType="Integer">
+		UPDATE NOTICE
+		SET HITS = HITS + 1
+	</update>
 </mapper>

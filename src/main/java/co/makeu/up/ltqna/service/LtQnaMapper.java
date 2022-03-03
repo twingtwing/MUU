@@ -7,5 +7,7 @@ public interface LtQnaMapper {
 	List<LtQnaVO> selectMyQnaList(LtQnaVO vo);
 	int qnaListCnt(int ltNo);
 	LtQnaVO selectQna(int qnaNo);
-	int insertQna(LtQnaVO vo);
+	int insertQna(LtQnaVO vo);	
+	int updateMyQna(LtQnaVO vo);
+	int deleteMyQna(int qnaNo);
 }

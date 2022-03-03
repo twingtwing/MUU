@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,19 +57,19 @@
                                             <td width="35%">
                                                 <div class="d-flex">
                                                     <div class="col-3 d-flex align-items-center">
-                                                        <select class="w-100 py-1" name="" id="">
+                                                        <select class="w-100 py-1 searchType">
                                                             <option value="id" selected>아이디</option>
                                                             <option value="name">이름</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-9">
-                                                        <input class="w-100 border py-1" type="text" spellcheck="false">
+                                                        <input class="w-100 border py-1 selectBox" type="text" spellcheck="false">
                                                     </div>
                                                 </div>
                                             </td>
                                             <th width="15%">전화번호</th>
                                             <td width="35%">
-                                                <input class="w-100 border py-1" type="text" spellcheck="false">
+                                                <input class="w-100 border py-1 addr" type="text" spellcheck="false">
                                             </td>
                                         </tr>
                                         <tr height="38">
@@ -86,11 +88,13 @@
                                         <tr height="38">
                                             <th>등급</th>
                                             <td class="text-left">
-                                                <input type="checkbox" class="ml-2" name="" id="sae" spellcheck="false">
+                                            	<input type="checkbox" class="ml-2" id="normal" spellcheck="false" value="일반">
+                                                <label for="normal" class="mr-3 mb-0">일반</label>
+                                                <input type="checkbox" class="ml-2" value="새싹" id="sae" spellcheck="false">
                                                 <label for="sae" class="mr-3 mb-0">새싹</label>
-                                                <input type="checkbox" name="" id="namu" spellcheck="false">
+                                                <input type="checkbox"id="namu"value="나무" spellcheck="false">
                                                 <label for="namu" class="mb-0 mr-3">나무</label>
-                                                <input type="checkbox" name="" spellcheck="false" id="kod">
+                                                <input type="checkbox"spellcheck="false"value="꽃" id="flower">
                                                 <label for="kod" class="mb-0">꽃</label>
                                             </td>
                                             <th>상태</th>
@@ -103,14 +107,14 @@
                                         </tr>
                                         <tr height="38">
                                             <th>가입날짜</th>
-                                            <td colspan="3" class="d-flex border-0 align-items-center">
-                                                <input type="date" class="border py-1">
+                                            <td class="d-flex border-0 align-items-center">
+                                                <input type="date" class="border py-1 pastDate">
                                                 <i class="fas fa-minus mx-2"></i>
-                                                <input type="date" class="border py-1">
+                                                <input type="date" class="border py-1 recentDate">
                                             </td>
                                         </tr>
                                     </table>
-                                    <button class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 22px;">검색</button>
+                                    <button class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 22px;" id="usersSearch">검색</button>
                                 </div>
                                 <div class="row">
                                     <table class="table table-bordered">
@@ -124,45 +128,37 @@
                                             <th>등급</th>
                                             <th>가입날짜</th>
                                         </tr>
-                                        <tr>
-                                        	<td>1</td>
-                                            <td>활성</td>
-                                            <td>user123@naver.com</td>
-                                            <td>정혜윤</td>
-                                            <td>성별</td>
-                                            <td>000-0000-0000</td>
-                                            <td>나무</td>
-                                            <td>22/02/02</td>
-                                        </tr>
+                                        <c:forEach items="${users}" var="user">
+	                                        <tr>
+	                                            <td>${user.id }</td>
+	                                            <td>${user.name }</td>
+	                                            <td>${user.addr } ${user.detaAddr }</td>
+	                                            <td>${user.uGrdCode }</td>
+	                                            <td><fmt:formatNumber>${user.point }</fmt:formatNumber>원</td>
+	                                            <td>${user.joinDate }</td>
+	                                        </tr>
+                                        </c:forEach>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
                                     <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
                                         <ul class="pagination">
+                                        	<c:if test="${pages.currPage ne 1 }">
                                             <li class="paginate_button page-item previous"
-                                                id="zero_config_previous"><a href="#" aria-controls="zero_config"
-                                                    data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
+                                                id="zero_config_previous">
+                                            <a href="#" aria-controls="zero_config" data-dt-idx="0" tabindex="0" class="page-link">
+                                            <i class="mdi mdi-chevron-double-left"></i></a></li>
+                                        	</c:if>
+                                        	<c:forEach begin="${pages.startPage }" end="${pages.endPage }" var="page">
+                                            <li class="paginate_button page-item <c:if test="${pages.currPage eq page}">active</c:if>"><a href="#"
                                                     aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                                    class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="2" tabindex="0"
-                                                    class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="3" tabindex="0"
-                                                    class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="4" tabindex="0"
-                                                    class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="5" tabindex="0"
-                                                    class="page-link">5</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="6" tabindex="0"
-                                                    class="page-link">6</a></li>
+                                                    class="page-link">${page }</a></li>
+                                        	</c:forEach>
+                                        	<c:if test="${pages.currRange ne pages.pageCnt}">
                                             <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
                                                     aria-controls="zero_config" data-dt-idx="7" tabindex="0"
                                                     class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
+                                        	</c:if>
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
@@ -178,6 +174,33 @@
             </div>
             <!-- 내용 끝 -->
 
-            <!-- 바디 끝 -->
+<script type="text/javascript">
+	let grade = [];
+	for(let g of $('input:checkbox')){
+		grade.push(g)
+	}
+	$('#usersSearch').click(()=>{
+		let filtered = [];
+		filtered = grade.filter((v)=>{
+			return v.checked
+		})
+		let data = {id:'',name:'',addr:$('.addr').val(),pastDate:$('.pastDate').val(),recentDate:$('.recentDate').val(),uGrdCode:filtered,
+			page : 0}
+		ajaxsearch(data);
+	})
+	const ajaxsearch = (d) =>{
+		$.ajax({
+			url:'/admin/userSearch',
+			data : d,
+		})
+		.done((r)=>{
+			console.log(r)
+		})
+	}
+	// pagination
+	$('.page-link').click((e)=>{
+		
+	})
+</script>
 </body>
 </html>

@@ -6,4 +6,5 @@ public interface NoticeMapper {
 	List<NoticeVO> NoticeList(NoticeVO vo);
 	int NoticeListCnt(int ltNo);
 	NoticeVO NoticeSelect(NoticeVO vo);
+	int updateHits(int ntNo);
 }

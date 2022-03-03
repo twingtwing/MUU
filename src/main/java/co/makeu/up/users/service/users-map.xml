@@ -47,4 +47,24 @@
 		SOCIAL_CODE=NULL
 		WHERE ID = #{id}
 	</update>
+	<select id="usersList" resultType="co.makeu.up.users.service.UsersVO" parameterType="co.makeu.up.users.service.UsersVO">
+		SELECT * FROM (
+		    SELECT ROWNUM RN, U.* FROM USERS_V U
+		    WHERE ROWNUM <![CDATA[<]]> 10*(#{page}+1)
+		    AND AUTH_CODE != 'A01'
+		    AND (ID LIKE '%'||#{id}||'%'
+			    AND NAME LIKE '%'||#{name}||'%'
+			    <if test="addr != null">
+			    AND ADDR LIKE '%'||#{addr}||'%'
+			    </if>
+			    <if test="pastDate != null">
+			    AND #{pastDate}<![CDATA[<]]> JOIN_DATE
+			    </if>
+			    <if test="recentDate !=null">
+			    AND JOIN_DATE <![CDATA[<]]> #{recentDate}
+			    </if>
+			)			    
+		)
+		WHERE RN <![CDATA[>=]]> (#{page}*10)+1
+	</select>
 </mapper>

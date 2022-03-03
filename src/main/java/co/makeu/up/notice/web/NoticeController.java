@@ -102,8 +102,8 @@ public class NoticeController {
 		checkvo = sugangDao.sugangCheckDate(checkvo);
 		checkvo.setProgPct(progressDao.wholeProgress(prvo));
 		model.addAttribute("sugang",checkvo);
-		logger.info(checkvo.getLtNo()+"ltno가넘어가는지 ㅇㅅㅇ");
 		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
+		noticeDao.updateHits(vo.getNtNo());
 		return "main/user/userLNS";
 	}
 }

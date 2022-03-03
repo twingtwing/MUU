@@ -155,10 +155,14 @@
             <div class="card-body">
               <div class="row mt-4 col-12 justify-content-center mx-0">
                 <h5 class="font-weight-bold">수강 리뷰( <span class="fas fa-star"></span><span> ${starAvg}</span> / 5 )</h5>
-              </div>
-              
+              </div>            
               <div class="row col-12 justify-content-between mt-4 pr-4 mx-3">
+              <c:if test="${empty myReview }">
                 <button class="btn btn-warning py-2 px-4 font-weight-bold text-white" id="wr">작성</button>
+              </c:if>
+              <c:if test="${not empty myReview }">
+                <button class="btn btn-success py-2 px-4 font-weight-bold text-white" id="modify">내 리뷰 수정</button>
+              </c:if>
                 <div class="row mr-4">
                   <div>
                     <select class="border px-4 rvSearchType">
@@ -172,8 +176,33 @@
               </div>
 
               <div class="row col-12 justify-content-center m-0 reviewContainer">
+                <!-- 내 리뷰 -->
+                <c:if test="${not empty myReview.rvNo}">     
+                <div class="col-6 mt-3 myrv">
+			                <div class="bg-success border rounded d-flex flex-column align-items-center p-3 mx-3 mb-3 rv">
+			                  <div class="d-flex justify-content-between w-100 mb-2 px-1">
+		                      <span>
+		                        <span class="text-white font-weight-bold">내가 쓴 리뷰</span>
+		                        <span class="mystars">
+		                        <c:forEach begin="1" end="${myReview.star}">
+		                        <span class="fas fa-star"></span>
+		                        </c:forEach>
+		                        </span>
+		                      </span>
+		                      <span>
+		                        <span>${myReview.wrDate }</span><span class="delete text-danger font-weight-bold ml-2" aria-hidden="true" data-rvno="${myReview.rvNo}">X</span>
+		                      </span>
+		                    </div>
+		                    <div class="bg-white h-25 w-100 h-100 rounded p-2 myrvContent">
+		                      ${myReview.content}
+		                    </div>
+		                  </div>
+	                </div>
+                </c:if>
+                
                 <c:forEach items="${reviews}" var="review" varStatus="st">
                 <!--  card 사실 유저페이지랑 거의 똑같음 -->
+                <c:if test="${review.writer ne myReview.writer }">
                 	<c:choose>
                 		<c:when test="${review.rvCode eq 'RE01' }">
                 		  <div class="col-6 mt-3 reviews <c:if test="${st.count > 6}">hided</c:if>">
@@ -205,12 +234,13 @@
 	                      </span>
 	                    </div>
 	                    <div class="bg-light h-25 w-100 h-100 rounded pt-4 text-center">
-	                      신고된 리뷰입니다.
+	                      관리자에 의해 신고 처리된 리뷰입니다.
 	                    </div>
 	                  </div>
 	                </div>
                 	</c:otherwise>
                 </c:choose>
+                </c:if>
                </c:forEach> 
                 <div class="text-secondary small" style="cursor:pointer;" id="more">더보기</div>              
               </div>  
@@ -287,7 +317,7 @@
         </h2>
         <textarea spellcheck="false" class="m-5 p-3 bg-white border wrbox" placeholder="리뷰를 작성해주세요"></textarea>
         <div class="d-flex justify-content-center align-items-center">
-          <button class="btn border mx-2" id="modalY" href="#">작성</button>
+          <button class="btn border mx-2" id="modalY">작성</button>
           <button class="btn border mx-2" type="button" data-dismiss="modal">취소</button>
         </div>
 
@@ -358,18 +388,44 @@
       if(num===0){
     	  return;
       }
-      $.ajax({
-    	  url : '/user/userLRWrite',
-    	  data : {writer : '', ltNo : ${ltNo}, star: num, content: $('.wrbox').val()},
-    	  type : 'post',
-    	  beforeSend : (xhr) =>{
-		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-		  },
-      })
-      .done((r)=>{
-    	  $('#wrmodal').modal('hide');
-    	  location.href='/user/userLR?ltNo=${ltNo}';
-      })
+      if($('#modalY').text()==='작성'){
+	      $.ajax({
+	    	  url : '/user/userLRWrite',
+	    	  data : {writer : '', ltNo : ${ltNo}, star: num, content: $('.wrbox').val()},
+	    	  type : 'post',
+	    	  beforeSend : (xhr) =>{
+			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			  },
+	      })
+	      .done((r)=>{
+	    	  $('#wrmodal').modal('hide');
+	    	  location.href='/user/userLR?ltNo=${ltNo}';
+	      })	  
+      } else if($('#modalY').text()==='수정'){
+    	  	$.ajax({
+    	  		url : '/user/updateReview',
+    	  		type : 'post',
+	  	    	beforeSend : (xhr) =>{
+	  			  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	  			},
+	  			data : {rvNo : +'${myReview.rvNo}', content: $('.wrbox').val(), star: num}
+    	  	})
+    	  	.done(()=>{
+	    	  		window.alert('수정이 완료되었습니다.');
+	    	  		$('#wrmodal').modal('hide');
+	    	  		$('.myrvContent').text($('.wrbox').val());
+	    	  		$('.wrbox').val('');
+	    	  		getgray();
+	    	  		//별수정
+	    	  		$('.mystars').children().remove();
+	    	  		for(let i=0; i<num;i++){
+	    	  			$('.mystars').append(
+	    	  				$('<span>').addClass('fas fa-star')		
+	    	  			)
+	    	  		}
+    	  		})
+    	  	
+      }
     })
 	
     // 더보기 클릭
@@ -419,6 +475,34 @@
     		$('.ReviewSearchForm').submit();	
     	}
     })
+    
+    // 리뷰 삭제
+    $('.delete').click((e)=>{
+    	let rvNo = $('.delete').data('rvno');
+    	$.ajax({
+    		url : '/user/deleteReview',
+    		data : {rvNo : rvNo},
+    		type : 'post',
+    		beforeSend : (xhr) =>{
+    		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+    		  	},
+    	})
+    	.done(()=>{
+    		$('#modify').parent().removeClass('justify-content-between')
+    		$(e.target).parent().parent().parent().parent().remove();
+    		$('#modify').parent().addClass('justify-content-end')
+    		$('#modify').addClass('d-none');
+    		$('#wr').addClass('d-block')
+    	})
+    })
+    
+    //리뷰수정
+    $('#modify').click((e)=>{
+    	$('.wrbox').val($('.myrvContent').text().trim())
+    	$('#wrmodal').modal('show');
+    	$('#modalY').text('수정');
+    })
+    
     
     //mouseover 이벤트 : 사이드바 css변경
       $('#cctgr  .list-group-item:not(.mylist)').on('mouseover',function(){

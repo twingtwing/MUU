@@ -19,4 +19,19 @@ public class ReviewServiceImpl implements ReviewMapper {
 		return map.reviewInsert(vo);
 	}
 
+	@Override
+	public ReviewVO selectMyReview(ReviewVO vo) {
+		return map.selectMyReview(vo);
+	}
+
+	@Override
+	public int deleteMyReveiw(int rvNo) {
+		return map.deleteMyReveiw(rvNo);
+	}
+
+	@Override
+	public int updateMyReview(ReviewVO vo) {
+		return map.updateMyReview(vo);
+	}
+
 }

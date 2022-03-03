@@ -19,12 +19,34 @@ public class UsersVO {
 	private String u_grd_code;
 	private String pht;
 	private Date joinDate;
+	private Date pastDate;
+	private Date recentDate;
+	public Date getPastDate() {
+		return pastDate;
+	}
+	public void setPastDate(Date pastDate) {
+		this.pastDate = pastDate;
+	}
+	public Date getLastDate() {
+		return recentDate;
+	}
+	public void setLastDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
 	private String uStCode;
 	private int point;
 	private String creIntro;
 	private String creGrdCode;
 	private String socialCode;
 	private int age;
+	
+	private int page; // for pagination
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public String getId() {
 		return id;
 	}
