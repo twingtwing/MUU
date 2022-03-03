@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +24,7 @@
             color: red;
         }
 
-        .fa-ban:hover,.fa-heart:hover{
+        .fa-ban:hover,.fa-heart:hover, #rev_a:hover{
             cursor: pointer;
         }
 
@@ -33,7 +32,7 @@
             color: black;
         }
 
-        .qna_collapse:hover{
+        .qna_collapse:hover, #rev_a:hover{
             text-decoration: underline;
         }
 
@@ -55,7 +54,7 @@
         	color: #dc3545;
         }
         
-        #stars .gr{
+        #stars .gr,#revU .gr{
 	      color: gray;
 	      cursor: pointer;
 	    }
@@ -79,16 +78,14 @@
         </section>
         <!-- 배너끝 -->
         
-        
-
         <!-- 카테고리 시작-->
         <div class="breadcrumb-option">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb__links">
-                            <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
-                            <a href="#" class="text-dark font-weight-bold">강의</a>
+                            <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                            <a href="/lecS" class="text-dark font-weight-bold">강의</a>
                             <span>{{lecDetails.ttl}}</span>
                         </div>
                     </div>
@@ -189,22 +186,22 @@
                                                             <i class="fa fa-star text-warning"></i>
                                                         </div>
                                                         <p class="mb-0">별점 평균 : 
-                                                        	<i v-for="index in avgStar" class="fa fa-star text-warning"></i>
-                                                        	<i v-for="index in 5-avgStar" class="fa fa-star-o text-warning"></i>
+                                                        	<i v-for="index in (length !=0 ?Math.round(avgStar/length):0)" class="fa fa-star text-warning"></i>
+                                                        	<i v-for="index in 5-(length !=0 ?Math.round(avgStar/length):0)" class="fa fa-star-o text-warning"></i>
                                                         </p>
-                                                        <p class="ml-2 mb-0"> 후기 갯수 : {{reviewList != null ? reviewList.length : 0}}개</p>
+                                                        <p class="ml-2 mb-0"> 후기 갯수 : {{reviewList != null ? length : 0}}개</p>
                                                     </div>
                                                     <!-- 후기 이미 작성했으면 보이면 안됨 -->
                                                     <div v-if="myReview == null" class="row mx-3">
                                                         <div class="blog__details__form mb-4 pt-0 w-100">
                                                             <form onsubmit="return false">  
                                                                 <div class="row mr-2 position-relative">
-	                                                                <h5 class="row text-center w-100 position-absolute" id="stars" style="bottom: 10px; left: 25px;">
-															          <span class="fas fa-star gr" data-num="0"></span>
-															          <span class="fas fa-star gr" data-num="1"></span>
-															          <span class="fas fa-star gr" data-num="2"></span>
-															          <span class="fas fa-star gr" data-num="3"></span>
-															          <span class="fas fa-star gr" data-num="4"></span>
+	                                                                <h5 v-on:mouseout="revOut" class="row text-center w-100 position-absolute" id="stars" style="bottom: 10px; left: 25px;">
+															          <span v-on:mouseover="revOver" v-on:click="revClick" class="fas fa-star gr" data-num="0"></span>
+															          <span v-on:mouseover="revOver" v-on:click="revClick" class="fas fa-star gr" data-num="1"></span>
+															          <span v-on:mouseover="revOver" v-on:click="revClick" class="fas fa-star gr" data-num="2"></span>
+															          <span v-on:mouseover="revOver"  v-on:click="revClick" class="fas fa-star gr" data-num="3"></span>
+															          <span v-on:mouseover="revOver" v-on:click="revClick" class="fas fa-star gr" data-num="4"></span>
 															        </h5>
                                                                     <textarea v-on:change="changeErr" class="border mb-0" rows="10" spellcheck="false"  placeholder="리뷰 작성..."></textarea>
                                                                     <button v-on:click="reviewInsert" class="btn btn-secondary position-absolute" style="bottom: 12px; right: 12px;">등록</button>
@@ -220,7 +217,7 @@
                                                         <div class="col-lg-12 py-1 px-0" style="border: 0.125rem solid #fdb6b6f5;">
                                                             <div class="row mx-1">
                                                                 <div class="col-lg-12 px-0">
-                                                                    <div>
+                                                                    <div id="myStar">
                                                                         <div class="row mx-0">
                                                                             <div class="col-lg-1 px-0">
                                                                                 <img class="rounded-circle" src="/resources/img/anime/details-pic.jpg" alt="프로필 사진" style="width: 50px; height: 50px;">
@@ -233,13 +230,23 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mx-3 my-2 pt-1">
+                                                                        <div id="revD" class="row mx-3 my-2 pt-1">
                                                                             {{myReview.content}}
                                                                         </div>
+                                                                        <div id="revU" class="row mx-3 my-2 pt-1 d-none position-rel position-relative">
+                                                                        	<h3 class="row text-center position-absolute" style="bottom: -40px; left: 15px;">
+																	        </h3>
+                                                                        	<textarea rows="3" cols="100">{{myReview.content}}</textarea>
+                                                                        	<input type="hidden" name="num" :value="myReview.rvNo">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="row mx-0 d-flex justify-content-end">
-                                                                        <button class="btn btn-secondary mr-2" style="bottom: 45px; right: 12px;">수정</button>
-                                                                        <button class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                    <div id="backBtn" class="row mx-0 justify-content-end">
+                                                                        <button v-on:click="revBack(1)" class="btn btn-secondary mr-2" style="bottom: 45px; right: 12px;">수정</button>
+                                                                        <button v-on:click="revDelete" class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                    </div>
+                                                                    <div id="upBtn" class="row mx-0 justify-content-end d-none">
+                                                                        <button v-on:click="revUpdate" class="btn btn-secondary mr-2" style="bottom: 45px; right: 12px;">수정</button>
+                                                                        <button v-on:click="revBack(0)" class="btn btn-secondary" style="bottom: 45px; right: 12px;">취소</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -266,10 +273,10 @@
                                                                         <div class="row mx-3 my-2 pt-1">
                                                                             {{review.content}}
                                                                         </div>
+                                                                        <input type="hidden" name="num" :value="review.rvNo">
                                                                     </div>
                                                                     <div class="row mx-0 d-flex justify-content-end">
-                                                                        <!-- 비회원일경우 보이면 안됨 -->
-                                                                        <button v-on:click="revCopy" data-toggle="modal" data-target="#revReport" class="btn btn-secondary" style="bottom: 45px; right: 12px;">신고</button>
+                                                                        <a id="rev_a" v-on:click="revCopy" data-toggle="modal" data-target="#revReport" class="text-muted rep_a" style="bottom: 45px; right: 12px;">신고</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -294,12 +301,14 @@
                                             <div id="lec_qna" class="row">
                                                 <div class="col-lg-12">
                                                     <h5 class="font-weight-bold my-2">질문 & 답변</h5>
-                                                    <div class="blog__details__form pt-2 mx-3 w-100">
+                                                    <div class="blog__details__form pt-2 mx-3 mb-4 w-100">
                                                         <form onsubmit="return false">  
-                                                        <!-- id값있을경우만 -->
                                                             <div class="row mr-2 position-relative">
-                                                                <textarea class="border" name="" id=""rows="10" spellcheck="false"></textarea>
-                                                                <button class="btn btn-secondary position-absolute" style="bottom: 45px; right: 12px;">등록</button>
+                                                                <textarea v-on:change="changeErr" class="border mb-0" name="" id=""rows="10" spellcheck="false"></textarea>
+                                                                <button v-on:click="qnaInsert" class="btn btn-secondary position-absolute" style="bottom: 5px; right: 5px;">등록</button>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <p class="lecErr d-none text-danger mb-0 mr-2">내용을 꼭 적어주셔야합니다.</p>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -319,7 +328,7 @@
                                                                         	</div>
                                                                             <p class="mx-2">{{qna.qContent}}</p>
                                                                             <div v-if="qna.myQna =='Y'" class="d-flex justify-content-end">
-                                                                                <button class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                                <button v-if="qna.qnaStCode =='Q01'"class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
                                                                             </div>
                                                                         </div>
                                                                         <div v-if="qna.qnaStCode == 'Q02'" class="collapse" :id="'collapse_' + index">
@@ -397,61 +406,62 @@
                             <h5 class="font-weight-bold mt-2 text-danger">강의신고</h5>
                             <div class="modal_close" data-dismiss="modal"><i class="icon_close"></i></div>
                         </div>
-                        <div class="modal-body border-bottom-0">
-                            <div class="col-lg-12">
-                                <div class="row d-flex justify-content-center mb-3">
-                                    <h5>강의 : <strong>{{lecDetails.ttl}}</strong></h5>
-                                </div>
-                                <div class="row product__page__title d-flex justify-content-center mb-0">
-                                    <div class="product__page__filter">
-                                        <p class="text-dark">신고 유형 :</p>
-                                        <select class="ctgr" style="display: none;">
-                                            <option value="RPT01">부적절한 콘텐츠</option>
-                                            <option value="RPT02">피싱 또는 스팸</option>
-                                            <option value="RPT03">기타</option>
-                                        </select>
-                                        <div class="nice-select" tabindex="0">
-                                            <span class="current">부적절한 콘텐츠</span>
-                                            <ul class="list">
-                                                <li data-value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
-                                                <li data-value="RPT02" class="option">피싱 또는 스팸</li>
-                                                <li data-value="RPT03" class="option">기타</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row d-flex justify-content-center">
-                                    <div v-for="(lesson,index) in lecDetails.lessons" class="mr-2 lesson_check">
-                                        <input type="radio" name="num" :id="[index]" :value="[index]" spellcheck="false" ondblclick="this.checked=false">
-                                        <label :for="[index]" class="ml-1 mb-0">{{index}}편</label>
-                                    </div>
-                                </div>
-                                <div class="row d-flex justify-content-end mb-3">
-                                    <div class="row mr-2">
-                                        <div class="d-flex align-items-center mr-1">
-                                            <i class="fa fa-exclamation-circle  text-muted"></i>
-                                        </div>
-                                        <p class="mb-0 text-muted">신고는 수업1개 만 가능합니다.</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="blog__details__form pt-0 w-100">
-                                        <form onsubmit="return false">  
-                                            <div class="row ml-0 mr-1">
-                                                <textarea v-on:change="changeErr" class="mb-0 border content" rows="10" spellcheck="false"></textarea>
-                                            </div>
-                                            <div class="d-flex justify-content-end">
-                                                <p class="lecErr d-none text-danger mb-0 mr-2">신고 내용을 꼭 적어주셔야합니다.</p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer border-top-0">
-                            <button v-on:click="lecReport" type="button" class="btn btn-outline-secondary mr-2">신고</button>
-                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
-                        </div>
+                        <form id="rptLecFrm">
+	                        <div class="modal-body border-bottom-0">
+	                            <div class="col-lg-12">
+	                                <div class="row d-flex justify-content-center mb-3">
+	                                    <h5>강의 : <strong>{{lecDetails.ttl}}</strong></h5>
+	                                </div>
+	                                <div class="row product__page__title d-flex justify-content-center mb-0">
+	                                    <div class="product__page__filter">
+	                                        <p class="text-dark">신고 유형 :</p>
+	                                        <select class="type" name="type" style="display: none;">
+	                                            <option value="RPT01">부적절한 콘텐츠</option>
+	                                            <option value="RPT02">피싱 또는 스팸</option>
+	                                            <option value="RPT03">기타</option>
+	                                        </select>
+	                                        <div class="nice-select" tabindex="0">
+	                                            <span class="current">부적절한 콘텐츠</span>
+	                                            <ul class="list">
+	                                                <li data-value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
+	                                                <li data-value="RPT02" class="option">피싱 또는 스팸</li>
+	                                                <li data-value="RPT03" class="option">기타</li>
+	                                            </ul>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="row d-flex justify-content-center">
+	                                    <div v-for="(lesson,index) in lessonList" class="mr-2 lesson_check">
+	                                        <input type="radio" name="num" :id="index+1" :value="index+1" spellcheck="false" ondblclick="this.checked=false">
+	                                        <label :for="index+1" class="ml-1 mb-0">{{index + 1}}편</label>
+	                                    </div>
+	                                </div>
+	                                <div class="row d-flex justify-content-end mb-3">
+	                                    <div class="row mr-2">
+	                                        <div class="d-flex align-items-center mr-1">
+	                                            <i class="fa fa-exclamation-circle text-muted"></i>
+	                                        </div>
+	                                        <p class="mb-0 text-muted">신고는 수업1개 만 가능합니다.</p>
+	                                    </div>
+	                                </div>
+	                                <div class="row">
+	                                    <div class="blog__details__form pt-0 w-100">
+	                                    	<div class="row ml-0 mr-1">
+	                                        	<textarea v-on:change="changeErr" class="mb-0 border" name="content" cols="50" rows="8" spellcheck="false"></textarea>
+	                                        </div>
+	                                        <div class="d-flex justify-content-end">
+	                                        	<p class="lecErr d-none text-danger mb-0 mr-2">신고 내용을 꼭 적어주셔야합니다.</p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <input type="hidden" name="ltNo" value="${ltNo}">
+	                        </div>
+	                        <div class="modal-footer border-top-0">
+	                            <button v-on:click="lecReport" type="button" class="btn btn-outline-secondary mr-2">신고</button>
+	                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
+	                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -464,48 +474,48 @@
                             <h5 class="font-weight-bold mt-2 text-danger">리뷰신고</h5>
                             <div class="modal_close" data-dismiss="modal"><i class="icon_close"></i></div>
                         </div>
-                        <div class="modal-body border-bottom-0">
-                            <div class="col-lg-12">
-                                <p class="font-weight-bold">신고 대상</p>
-                                <div class="row d-flex justify-content-center mb-3 border px-2 pt-4 pb-2">
-                                    <div class="report_object col-lg-12 px-0"></div>
-                                </div>
-                                <div class="row product__page__title ml-1 mb-0">
-                                    <div class="product__page__filter">
-                                        <p class="text-dark font-weight-bold">신고 유형 :</p>
-                                        <select class="ctgr" style="display: none;">
-                                            <option value="RPT01">부적절한 콘텐츠</option>
-                                            <option value="RPT02">피싱 또는 스팸</option>
-                                            <option value="RPT03">기타</option>
-                                        </select>
-                                        <div class="nice-select" tabindex="0">
-                                            <span class="current">부적절한 콘텐츠</span>
-                                            <ul class="list">
-                                                <li data-value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
-                                                <li data-value="RPT02" class="option">피싱 또는 스팸</li>
-                                                <li data-value="RPT03" class="option">기타</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="blog__details__form pt-0 w-100">
-                                        <form onsubmit="return false">  
-                                            <div class="row ml-0 mr-1">
-                                                <textarea v-on:change="changeErr" class="mb-0 border content" rows="10" spellcheck="false"></textarea>
-                                            </div>
-                                            <div class="d-flex justify-content-end">
-                                                <p class="lecErr d-none text-danger mb-0 mr-2">신고 내용을 꼭 적어주셔야합니다.</p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer border-top-0">
-                            <button v-on:click="revReport" type="button" class="btn btn-outline-secondary mr-2">신고</button>
-                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
-                        </div>
+                        <form id="revRepFrm">
+	                        <div class="modal-body border-bottom-0">
+	                            <div class="col-lg-12">
+	                                <p class="font-weight-bold">신고 대상</p>
+	                                <div class="row d-flex justify-content-center mb-3 border px-2 pt-4 pb-2">
+	                                    <div class="report_object col-lg-11 px-0"></div>
+	                                </div>
+	                                <div class="row product__page__title ml-1 mb-0">
+	                                    <div class="product__page__filter">
+	                                        <p class="text-dark font-weight-bold">신고 유형 :</p>
+	                                        <select class="type" name="type" style="display: none;">
+	                                            <option value="RPT01">부적절한 콘텐츠</option>
+	                                            <option value="RPT02">피싱 또는 스팸</option>
+	                                            <option value="RPT03">기타</option>
+	                                        </select>
+	                                        <div class="nice-select" tabindex="0">
+	                                            <span class="current">부적절한 콘텐츠</span>
+	                                            <ul class="list">
+	                                                <li data-value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
+	                                                <li data-value="RPT02" class="option">피싱 또는 스팸</li>
+	                                                <li data-value="RPT03" class="option">기타</li>
+	                                            </ul>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="row">
+	                                    <div class="blog__details__form pt-0 w-100">
+	                                        <div class="row ml-0 mr-1">
+	                                            <textarea v-on:change="changeErr" name="content" class="mb-0 border content" rows="5" cols="50" spellcheck="false"></textarea>
+	                                        </div>
+	                                        <div class="d-flex justify-content-end">
+	                                            <p class="lecErr d-none text-danger mb-0 mr-2">신고 내용을 꼭 적어주셔야합니다.</p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="modal-footer border-top-0">
+	                            <button v-on:click="revReport" type="button" class="btn btn-outline-secondary mr-2">신고</button>
+	                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
+	                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -527,7 +537,8 @@
                     reviewList :[],
                     qnaList :[],
                     myReview : null,
-                    avgStar : 0
+                    avgStar : 0,
+                    length : 0
                 }
             },
             computed:{
@@ -540,17 +551,170 @@
             	}
             },
             methods :{
-                heartClick(){//워시리스트 추가 혹은 삭제
-                    if(this.lecDetails.wCount = 'N'){
-                        console.log('추가');
-                        //추가 fetch
-                        this.lecDetails.wCount = 'Y';
+            	revBack(num){//수정으로 변경
+            		if(num ==0){//춰소
+            			$('#revU').addClass('d-none');
+            			$('#revD').removeClass('d-none');
+            			$('#upBtn').addClass('d-none');
+            			$('#backBtn').removeClass('d-none');
+            			$('#revU h3').empty();
+            			$('#revU textarea').val();
+            		}else if(num ==1){//수정 보여주기
+            			$('#revU').removeClass('d-none');
+            			$('#revD').addClass('d-none');
+            			$('#upBtn').removeClass('d-none');
+            			$('#backBtn').addClass('d-none');
+                        for(var i =0 ; i < this.myReview.star; i++){
+                        	$('#revU h3').append('<i class="fa fa-star text-warning" data-num="'+ i +'"></i>');
+                        }
+                        for(var i = this.myReview.star ; i < 5; i++){
+                        	$('#revU h3').append('<i class="fa fa-star gr" data-num="'+ i +'"></i>');
+                        }
+                        $('#myStar h3 i').mouseover((e)=>{
+                            const num = +e.currentTarget.dataset.num+1
+                            const st = document.querySelectorAll('#myStar h3 i');
+                            for(let i=0; i<num; i++){
+                              $(st[i]).css('color','var(--warning)')
+                            }
+                          })
+                          
+                          $('#myStar h3').mouseout(()=>{
+                        	  $('#myStar .gr').css('color','gray')
+                          })
+                          
+                          $('#myStar h3 i').click((e)=>{
+                            const num = +e.currentTarget.dataset.num+1;
+                            const st = document.querySelectorAll('#myStar h3 i');
+                            
+                 	      	if($(e.target).hasClass("text-warning")){
+                              //star 삭제
+                       		  let num = $("#myStar h3 .text-warning").length -1;
+                       		  let index = $("#myStar h3 .text-warning").index($(e.target));
+                       		  for(var i = num; i >= index; i--){
+                       			  $("#myStar h3 i").eq(i).removeClass("text-warning");
+                       			  $("#myStar h3 i").eq(i).addClass("gr");
+                        	  }
+                        	 }else{
+                        		//star 추가
+                	            for(let i=0; i<num; i++){
+                	              $(st[i]).removeClass('gr');
+                	              $(st[i]).addClass('text-warning');
+                	            }
+                        	 }
+                          })
+            		}
+            	},
+            	revUpdate(){//리뷰수정
+            		$.ajax({
+            	  		url : '/user/updateReview',
+            	  		type : 'post',
+        	  	    	beforeSend : (xhr) =>{
+        	  			  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        	  			},
+        	  			data : {
+        	  				rvNo : $('#revU input').val(), 
+        	  				content: $('#revU textarea').val(), 
+        	  				star: $('#revU h3 .text-warning').length
+        	  			}
+            	  	})
+            	  	.done(()=>{
+            	  		alert('해당 리뷰가 수정되었습니다.');
+            	  		this.avgStar = this.avgStar - this.myReview.star + $('#revU h3 .text-warning').length;
+            	  		this.myReview.content = $('#revU textarea').val();
+            	  		this.myReview.star = $('#revU h3 .text-warning').length;
+            	  		$('#revU').addClass('d-none');
+            			$('#revD').removeClass('d-none');
+            			$('#upBtn').addClass('d-none');
+            			$('#backBtn').removeClass('d-none');
+            			$('#revU h3').empty();
+            			$('#revU textarea').val();
+            	  	})
+            	},
+            	revDelete(){//리뷰삭제
+            	 	$.ajax({
+                		url : '/user/deleteReview',
+                		data : {rvNo : $('#revU input').val()},
+                		type : 'post',
+                		beforeSend : (xhr) =>{
+                		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                		  	},
+                	})
+                	.done(()=>{
+            	  		alert('해당 리뷰가 삭제되었습니다.');
+            	  		this.length -=1;
+            	  		this.avgStar -= this.myReview.star;
+            	  		this.myReview=null;
+            	  	})   
+            	},
+            	revOver(e){
+            		const num = +e.currentTarget.dataset.num+1
+    	            const st = document.querySelectorAll('#stars>span');
+    	            for(let i=0; i<num; i++){
+    	              $(st[i]).css('color','var(--warning)')
+    	            }
+            	},
+            	revOut(){
+            		$('#stars .gr').css('color','gray')
+            	},
+            	revClick(e){
+            		const num = +e.currentTarget.dataset.num+1;
+    	            const st = document.querySelectorAll('#stars>span');
+    	            
+    	 	      	if($(e.target).hasClass("selected")){
+    	              //star 삭제
+    	       		  let num = $("#stars .selected").length -1;
+    	       		  let index = $("#stars .selected").index($(e.target));
+    	       		  console.log(num);
+    	       		  console.log(index);
+    	       		  for(var i = num; i >= index; i--){
+    	       			  $("#stars>span").eq(i).removeClass("selected");
+    	       			  $("#stars>span").eq(i).addClass("gr");
+    	        	  }
+    	        	 }else{
+    	        		//star 추가
+    		            for(let i=0; i<num; i++){
+    		              $(st[i]).removeClass('gr');
+    		              $(st[i]).addClass('selected');
+    		            }
+    	        	 }         		
+            	},
+                heartClick(){
+                    let ltNo = this.lecDetails.ltNo;
+                    let sum = 0;
+                    let wash = '';
+                    let heartPath = '';
+                    let heart = event.target;
+                    console.log(ltNo);
+                  	if(this.lecDetails.wash == 'N'){
+                    	console.log('추가');
+                    	sum = 1;
+                    	wash ='Y';
+                        heartPath = '/user/heartInsert';
                     }else{
-                        console.log('삭제');
-                        //삭제 fetch
-                        this.lecDetails.wCount = 'N';
+                  		console.log('삭제');
+                        sum = -1;
+                        wash ='N';
+                        heartPath = '/user/heartDelete';
                     }
-                    
+                    $.ajax({
+                    	url : heartPath,
+                    	type : "POST",
+                    	data :{
+                    		ltNo: ltNo,
+                    	},
+                    	beforeSend: function(xhr) {
+                			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                		}
+                    })
+                    .done((result)=> {
+                    	if(result == 'Y'){
+                        	this.lecDetails.wCount +=sum;
+                        	this.lecDetails.wash = wash;
+                    	}else{
+                    		alert("찜하기 위해 로그인해주세요");
+                    		location.href="/customLogin";
+                    	}
+                    });   
                 },
                 reviewInsert(){//리뷰등록
                 	let content = $(event.target).closest('div').find('textarea').val()
@@ -562,7 +726,6 @@
                     		return;
                     	}
                     	console.log(this.lecDetails.mySugang);
-                    	/*
                     	$.ajax({
                     		url : '/user/userLRWrite',
                       	  data : {writer : '', ltNo : '${ltNo}', star: $('.fas.selected').length, content: content},
@@ -573,26 +736,96 @@
                     	})
                     	.done((result)=> {
                         	if(result == 'ok'){
-                        		//맨 앞에 추가하기
+                        		alert('리뷰가 등록되었습니다.');
+                        		location.href ="/lecD?ltNo="+'${ltNo}'
                         	}
                         }); 
-                    	*/
                     }
                 },
-                revCopy(){//모달창에 신고대상 리뷰 복사
-                    let copy = $($(event.target).closest('div.col-lg-12').find('.revCopy')).clone();
-                    $('.report_object').html(copy);
+                qnaInsert(){
+                	let content = $(event.target).closest('div').find('textarea').val()
+                    if(content == ''){
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
+                    }else{
+                    	if(this.lecDetails.mySugang == 'N'){
+                    		alert("질문 작성을 위해 먼저 강의를 신청하셔야 합니다.");
+                    		return;
+                    	}
+                    	console.log(this.lecDetails.mySugang);
+                    	$.ajax({
+                            url: '/user/userInsertLQ',
+                            data: {
+                                qContent: content,
+                                ltNo: '${ltNo}'
+                            },
+                            method: 'post',
+                            beforeSend: (xhr) => {
+                              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            },
+                        })
+                        .done((r) => {
+                        	//맨 앞에 추가하기
+                        })
+                    }
+                },
+                lecReport(){//강의신고
+                    //빈칸체크
+                    let content = $('#lecReport textarea').val();
+                    if( content == ''){
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
+
+                    }else{
+                    	if(this.lecDetails.mySugang == 'N'){
+                    		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
+                    		$('#lecReport').modal('hide');
+                    		$('#lecReport textarea').val('');
+                    		return;
+                    	}
+                    	console.log(this.lecDetails.mySugang);
+                    	$.ajax({
+                            url: '/user/insertLecReport',
+                            data: $('#rptLecFrm').serialize(),
+                            method: 'post',
+                            beforeSend: (xhr) => {
+                              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            },
+                        })
+                        .done((r) => {
+                        	$('#lecReport').modal('hide');
+                    		$('#lecReport textarea').val('');
+                        	alert("해당 강의를 신고하셨습니다.");
+                        })
+                    }
                 },
                 revReport(){//리뷰신고
                     //빈칸체크
-                    if($('#lecReport #content').val() != ''){
-                        console.log($('#revReport .ctgr').val()); //신고카테고리
-                        console.log($('#revReport .content').val()); //신고내용
+                    if($('#revReport textarea').val() != ''){
+                    	$.ajax({
+                    		url : '/user/reportReview',
+                    		data: $('#revRepFrm').serialize(),
+                    		type : 'post',
+                    		beforeSend : (xhr) =>{
+                  		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                  		  	},
+                    	})
+                    	.done((r)=>{
+                    		console.log(r);
+                    		if(r){
+								alert("리뷰를 신고하기 전에 로그인하셔야 합니다.");
+								location.href="/customLogin";
+                    		}else{
+	                    		$('#revReport').modal('hide');
+	                    		$('#revReport textarea').val('');
+	                        	alert("해당 리뷰를 신고하셨습니다.");
+                    		}
+                    	})
 
-                        //fetch
-                        //결과 : 신고성공알람과 모달창이 닫아져야함
-
+                    }else{
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
                     }
+                },
+                revCopy(){//모달창에 신고대상 리뷰 복사
+                    $('.report_object').html($($(event.target).closest('div.col-lg-12').find('.revCopy')).html());
                 },
                 revMore(){
                 	if(this.reviews !=null){
@@ -624,18 +857,6 @@
                 		this.qnaList = [];
                 	}
                 },
-                lecReport(){//강의신고
-                    //빈칸체크
-                    if($('#lecReport #content').val() != ''){
-                        console.log($('#lecReport .ctgr').val()); //신고카테고리
-                        console.log($('#lecReport input[name="num"]').val()); //신고수업
-                        console.log($('#lecReport .content').val()); //신고내용
-
-                        //fetch
-                        //결과 : 신고성공알람과 모달창이 닫아져야함
-
-                    }
-                },
                 changeErr(){//빈칸일 시에 에러문장 보이도록 설정
                     if($(event.target).val() ===''){
                         $(event.target).closest('form').find('.lecErr').removeClass('d-none');
@@ -644,68 +865,39 @@
                     }
                 }
             },
-            beforeCreate : function(){
+             beforeCreate : function(){
                 fetch('/lectureDetail?ltNo='+'${ltNo}')
                 .then(response => response.json())
                 .then(result => {
-                	console.log(result);
+                 	console.log(result);
                 	this.lecDetails = result.lectureDetail;
                 	this.lessonList = result.lessonList;
+                	
                 	this.qnas = result.ltQnaList;
                 	this.qnaMore();
+                	
                 	this.ctgrList = result.ctgrList[0];
+                	
+                	this.length = result.reviewList.length;
                 	if(result.reviewList != null){
-                		let sum = 0;
 	                	for(var i = 0; i < result.reviewList.length; i++){
-	                		sum+=result.reviewList[i].star;
+	                		console.log(result.reviewList[i].star)
+	                		this.avgStar = this.avgStar + result.reviewList[i].star;
 	            			if(result.reviewList[i].myReview =='Y'){
 	            				this.myReview = result.reviewList[i];
-	            				result.reviewList = result.reviewList.slice(i,i+1);
-	            				i--;
+	            			 	result.reviewList.splice(i,1);
+	            			 	i--;
 	            			}
 	            		}
-                		this.avgStar = Math.round(sum/(result.reviewList.length));
-                	}
+                	} 
                 	this.reviews = result.reviewList;
-                	this.revMore();
+                	this.revMore(); 
                 })
-            }
+            } 
             
         });
 
         const mountLecD = lecD.mount('#lecture_detail');
-        
-        $('#stars>span').mouseover((e)=>{
-            const num = +e.currentTarget.dataset.num+1
-            const st = document.querySelectorAll('#stars>span');
-            for(let i=0; i<num; i++){
-              $(st[i]).css('color','var(--warning)')
-            }
-          })
-          const getgray = () =>{
-            $('#stars .gr').css('color','gray')
-          }
-          $('#stars').mouseout(getgray)
-          $('#stars>span').click((e)=>{
-            const num = +e.currentTarget.dataset.num+1;
-            const st = document.querySelectorAll('#stars>span');
- 	      	if($(e.target).hasClass(".selected")){
-       		  console.log(e.target);
-       		  let num = $("#stars.selected") -1;
-       		  let index = $("#stars .selected").index(this);
-       		  for(var i = num; i >= index; i--){
-       			  $("#stars>span").eq(i).removeClass("selected");
-       			  $("#stars>span").eq(i).removeClass("gr");
-       			  getgray();
-        	  }
-        	 }else{
-	            for(let i=0; i<num; i++){
-	              $(st[i]).removeClass('gr');
-	              $(st[i]).addClass('selected');
-	            }
-        	 }
-          })
-
     </script>
 </body>
 </html>
