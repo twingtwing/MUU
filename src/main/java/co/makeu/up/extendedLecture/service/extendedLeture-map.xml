@@ -4,7 +4,7 @@
 	
 	<select id="lectureList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
-		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,TRUNC(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
 		ON J.LT_NO = R.LT_NO
 		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
 		ON J.LT_NO = W.LT_NO
@@ -59,6 +59,7 @@
 		 ELSE 'N' END MY_REVIEW
 		FROM REVIEW
 		WHERE LT_NO = #{ltNo}	
+		AND RV_CODE != 'RE03'
 		ORDER BY RV_NO DESC	
 	</select>
 	

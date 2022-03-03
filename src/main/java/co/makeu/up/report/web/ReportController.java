@@ -39,12 +39,20 @@ public class ReportController {
 		return "admin/report/adRRepS";
 	}
 	
-  //신고 모달창
+	//신고 모달창
 	@PostMapping("/user/reportReview")
 	@ResponseBody
 	public void reportReview(Principal pri, ReportVO vo) {
 		vo.setReporter(pri.getName());
 		reportDao.insertReviewReport(vo);
+	}
+	
+	//강의 신고모달창
+	@ResponseBody
+	@PostMapping("/user/insertLecReport")
+	public void insertLecReport(Principal pri, ReportVO vo) {
+		vo.setReporter(pri.getName());
+		reportDao.insertLecReport(vo);
 	}
 
 }
