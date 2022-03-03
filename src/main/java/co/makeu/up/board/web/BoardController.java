@@ -2,15 +2,18 @@ package co.makeu.up.board.web;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.board.service.BoardService;
 import co.makeu.up.board.service.BoardVO;
+import co.makeu.up.common.view.PageVo;
 
 @Controller
 public class BoardController {
@@ -46,15 +49,21 @@ public class BoardController {
 	
 	//공지사항 list - admin
 	@GetMapping("/admin/adBadLi")
-	public String adBadLi(BoardVO vo , Model model) {
-		model.addAttribute("list",boardDao.selectadbad());
+	public String adBadLi(BoardVO vo,@Param("mix") String mix , Model model) {
+		if(mix != null) {
+			vo.setTtl(mix);
+			vo.setContent(mix);
+		}
+		List<BoardVO> list = boardDao.selectadbad(vo);
+		model.addAttribute("list",list);
+		model.addAttribute("pageMaker",new PageVo(vo,list.get(0).getLength()));
 		return "admin/adbad/adBadLi";
 	}
 	
 	
 	@GetMapping("/admin/adBadl")
-	public String adBadl(BoardVO vo ,Model model) {
-		model.addAttribute("list",boardDao.selectadbad());
+	public String adBadl( ) {
+		
 		return "admin/adbad/adBadl";
 	}
 	
