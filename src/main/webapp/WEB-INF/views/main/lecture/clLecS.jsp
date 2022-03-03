@@ -177,7 +177,7 @@
 
                         <div class="row col-12 mt-3">
                             <div class="col-12 text-right align-items-right">
-                                <button class="btn btn-outline-secondary" type="button" onclick="location.href='#';">강의정보수정</button>
+                                <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${cllists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-info" type="button">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
@@ -280,9 +280,15 @@
                                 <h5 class="font-weight-bold mb-2">태그</h5>
                                 <!-- 태그 반복문 등록-->
                                 <div>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag1 }</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag2 }</span>
-                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag3 }</span>
+                                    <c:if test="${cllists.tag1 !='null' }">
+                                    	<span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag1 }</span>
+                                    </c:if>	
+                                    <c:if test="${cllists.tag2 !='null' }">
+	                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag2 }</span>
+	                                </c:if>
+	                                <c:if test="${cllists.tag3 !='null' }">    
+	                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag3 }</span>
+	                                </c:if>   
                                 </div>
                             </div>
                         </div>
@@ -313,6 +319,9 @@
             </div>
         </div>
     </section>
+    <form id="frm" action="/creator/lecU">
+    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    </form>
 
 </body>
 <script>
@@ -343,6 +352,11 @@
         }
     })
     
+    //수정 페이지 이동
+	function lectureInfo(e){
+		$('.sendltno').val(e);
+		$('#frm').submit();
+	}
     
 
 </script>
