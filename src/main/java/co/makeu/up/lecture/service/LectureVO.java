@@ -26,6 +26,15 @@ public class LectureVO {
 	private String ltStCode;
 	private Date expDate;
 	private Date startDate;
+	private float avgStar;
+	private int studentCount;
+	
+	//extended vo
+	private int star;//별점 평균
+	private int rCount;//워시리스트 갯수
+	private String wash;//워시리스트 여부
+	private int wCount;
+	
 	public int getLtNo() {
 		return ltNo;
 	}
@@ -164,6 +173,41 @@ public class LectureVO {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
+	public float getAvgStar() {
+		return avgStar;
+	}
+	public void setAvgStar(float avgStar) {
+		this.avgStar = avgStar;
+	}
+	public int getStudentCount() {
+		return studentCount;
+	}
+	public void setStudentCount(int studentCount) {
+		this.studentCount = studentCount;
+	}
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public String getWash() {
+		return wash;
+	}
+	public void setWash(String wash) {
+		this.wash = wash;
+	}
+	public int getrCount() {
+		return rCount;
+	}
+	public void setrCount(int rCount) {
+		this.rCount = rCount;
+	}
+	public int getwCount() {
+		return wCount;
+	}
+	public void setwCount(int wCount) {
+		this.wCount = wCount;
+	}
 	
 }

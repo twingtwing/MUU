@@ -48,54 +48,56 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
-                                <form action="/admin/insertBoard" method="get" id="frm">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <h4><i class="fa fa-hashtag"></i>&nbsp;공지사항 작성</h4>
-                                        </div>
-                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
-                                            <div class="col-1 px-0 d-flex justify-content-center align-items-center">
-                                                <h5 class="mb-0">제목</h5>
-                                            </div>
-                                            <div class="col-11 px-0">
-                                                <input class="w-100" type="text" spellcheck="false" name="ttl" >
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
-                                            <div class="row ml-1">
-                                                <h6 class="mb-0 ml-2 pl-1">작성자</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">관리자</h6>
-                                            </div>
-                                            <div class="row mr-2">
-                                                <div class="row mr-1">
-                                                    <h6 class="mb-0">작성일자</h6>
-                                                
-		                                        <h6 class="mb-0 ml-2" style="font-weight: 500;" ><%= sf.format(nowTime) %></h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                                <div class="row form-group mt-3">
-                                    <textarea class="form-control" name="content" rows="25"></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <input type="file"   spellcheck="false">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row d-flex justify-content-between mt-2">
-                                    <div>
-                                        <button type="submit" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="btn btn-secondary" >공지사항 등록</button>
-                                    </div>
-                                </div>
+                                <form action="/admin/insertBoard" method="post" id="frm">
+	                                <div class="row">
+	                                    <div class="col-lg-12">
+	                                        <div class="row">
+	                                            <h4><i class="fa fa-hashtag"></i>&nbsp;공지사항 작성</h4>
+	                                        </div>
+	                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
+	                                            <div class="col-1 px-0 d-flex justify-content-center align-items-center">
+	                                                <h5 class="mb-0">제목</h5>
+	                                            </div>
+	                                            <div class="col-11 px-0">
+	                                                <input class="w-100 insert_vali" type="text" spellcheck="false" name="ttl" id="ttli" required>
+	                                            </div>
+	                                        </div>
+	                                        <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
+	                                            <div class="row ml-1">
+	                                                <h6 class="mb-0 ml-2 pl-1">작성자</h6>
+	                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">관리자</h6>
+	                                            </div>
+	                                            <div class="row mr-2">
+	                                                <div class="row mr-1">
+	                                                    <h6 class="mb-0">작성일자</h6>
+	                                                
+			                                        <h6 class="mb-0 ml-2" style="font-weight: 500;" ><%= sf.format(nowTime) %></h6>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                               
+	                                <div class="row form-group mt-3">
+	                                    <textarea class="form-control insert_vali" name="content" rows="25" id="cont"></textarea>
+	                                </div>
+	                                <div class="row">
+	                                    <div class="col-lg-12">
+	                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
+	                                            <input type="file"   spellcheck="false">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="row d-flex justify-content-between mt-2">
+	                                    <div>
+	                                        <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
+	                                    </div>
+	                                    <div>
+	                                        <button type="submit" id="boardBtn"  class="btn btn-secondary" disabled >공지사항 등록</button>
+	                                    </div>
+	                                </div>
+	                                <s:csrfInput/>
+	                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
                             </div>
                         </div>
@@ -104,6 +106,31 @@
                 <!-- 내용 끝 -->
 
                 <!-- 바디 끝 -->
+                
+          <!-- boardBtn  insert_vali -> chanbe : val() 없으면 console.log 없다  -->
+          <script type="text/javascript">
+        
+          
+         
+         $('#ttli').keyup(function(){
+        	 btnDisabled()
+         })
+         
+         $('#cont').keyup(function(){
+        	 btnDisabled()
+         })
+         
+         function btnDisabled() {
+        	 var ttli = document.getElementById('ttli').value;
+        	 var cont = document.getElementById('cont').value;
+        	 if(ttli == "" || cont == "") {
+        		 $('#boardBtn').attr('disabled','disabled');
+        	 } else if(ttli != "" && cont != "") {
+        		 $('#boardBtn').removeAttr('disabled');
+        	 }
+         }
+          </script>
+                
 </body>
 
 </html>

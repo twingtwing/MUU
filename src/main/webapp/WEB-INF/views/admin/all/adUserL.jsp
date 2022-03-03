@@ -67,9 +67,22 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <th width="15%">주소</th>
+                                            <th width="15%">전화번호</th>
                                             <td width="35%">
                                                 <input class="w-100 border py-1 addr" type="text" spellcheck="false">
+                                            </td>
+                                        </tr>
+                                        <tr height="38">
+                                            <th>생년월일</th>
+											<td>
+                                                <input class="w-100 border py-1" type="text" spellcheck="false">
+                                            </td>
+                                            <th>성별</th>
+                                            <td class="text-left">
+                                                <input type="checkbox" class="ml-2" name="" id="code_F" spellcheck="false">
+                                                <label for="code_F" class="mr-3 mb-0">여자</label>
+                                                <input type="checkbox" name="" id="code_M" spellcheck="false">
+                                                <label for="code_M" class="mb-0 mr-3">남자</label>
                                             </td>
                                         </tr>
                                         <tr height="38">
@@ -84,6 +97,15 @@
                                                 <input type="checkbox"spellcheck="false"value="꽃" id="flower">
                                                 <label for="kod" class="mb-0">꽃</label>
                                             </td>
+                                            <th>상태</th>
+                                            <td class="text-left">
+                                                <input type="checkbox" class="ml-2" name="" id="code_1" spellcheck="false">
+                                                <label for="code_1" class="mr-3 mb-0">활성</label>
+                                                <input type="checkbox" name="" id="code_2" spellcheck="false">
+                                                <label for="code_2" class="mb-0 mr-3">비활성</label>
+                                            </td>
+                                        </tr>
+                                        <tr height="38">
                                             <th>가입날짜</th>
                                             <td class="d-flex border-0 align-items-center">
                                                 <input type="date" class="border py-1 pastDate">
@@ -97,11 +119,13 @@
                                 <div class="row">
                                     <table class="table table-bordered">
                                         <tr style="background-color: #eeeeee;">
+                                            <th width="100px">번호</th>
+                                            <th>상태</th>
                                             <th>아이디</th>
                                             <th>이름</th>
-                                            <th>주소</th>
+                                            <th>성별</th>
+                                            <th>전화번호</th>
                                             <th>등급</th>
-                                            <th>적립금</th>
                                             <th>가입날짜</th>
                                         </tr>
                                         <c:forEach items="${users}" var="user">

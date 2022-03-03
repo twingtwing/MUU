@@ -69,18 +69,25 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <th width="15%">주소</th>
+                                             <th width="15%">전화번호</th>
                                             <td width="35%">
-                                                <input class="w-100" type="text" id="addr" spellcheck="false">
+                                                <input class="w-100 border py-1" type="text" spellcheck="false">
                                             </td>
                                         </tr>
                                         <tr height="38">
-                                            <th>가입 날짜</th>
-                                            <td class="text-left">
-                                                <input class="" id="firstJdate" type="date" spellcheck="false">
-                                                <i class="fas fa-minus mx-1"></i>
-                                                <input class="" id="lastJdate" type="date" spellcheck="false">
+                                            <th>생년월일</th>
+											<td>
+                                                <input class="w-100 border py-1" type="text" spellcheck="false">
                                             </td>
+                                            <th>성별</th>
+                                            <td class="text-left">
+                                                <input type="checkbox" class="ml-2" name="" id="code_F" spellcheck="false">
+                                                <label for="code_F" class="mr-3 mb-0">여자</label>
+                                                <input type="checkbox" name="" id="code_M" spellcheck="false">
+                                                <label for="code_M" class="mb-0 mr-3">남자</label>
+                                            </td>
+                                        </tr>
+                                        <tr height="38">
                                             <th>등급</th>
                                             <td class="text-left">
                                                 <input type="radio" class="ml-2" name="grade" id="radioF" value="family" ondblclick="this.checked = false">
@@ -89,6 +96,21 @@
                                                 <label for="radioV" class="mr-3 mb-0">VIP</label>
                                                 <input type="radio" name="grade" id="radioVV" value="VVIP" ondblclick="this.checked = false">
                                                 <label for="radioVV" class="mb-0">VVIP</label>
+                                            </td>
+                                            <th>상태</th>
+                                            <td class="text-left">
+                                                <input type="checkbox" class="ml-2" name="" id="code_1" spellcheck="false">
+                                                <label for="code_1" class="mr-3 mb-0">활성</label>
+                                                <input type="checkbox" name="" id="code_2" spellcheck="false">
+                                                <label for="code_2" class="mb-0 mr-3">비활성</label>
+                                            </td>
+                                        </tr>
+                                         <tr height="38">
+                                            <th>가입날짜</th>
+                                            <td class="text-left">
+                                                <input class="" id="firstJdate" type="date" spellcheck="false">
+                                                <i class="fas fa-minus mx-1"></i>
+                                                <input class="" id="lastJdate" type="date" spellcheck="false">
                                             </td>
                                         </tr>
                                     </table>
@@ -99,14 +121,18 @@
                                     <table class="table table-bordered">
                                         <tr style="background-color: #eeeeee;">
                                             <th width="100px">번호</th>
-                                            <th width="150px">아이디</th>
-                                            <th width="150px">이름</th>
-                                            <th>주소</th>
+                                            <th width="100px">상태</th>
+                                            <th>아이디</th>
+                                            <th>이름</th>
+                                            <th width="100px">성별</th>
+                                            <th>전화번호</th>
                                             <th width="110px">등급</th>
                                             <th width="130px">가입날짜</th>
                                         </tr>
                                         <!--크리에이터 정보 가져오기-->
                                         <tr>
+                                            <td>dfdsf</td>
+                                            <td>dfdsf</td>
                                             <td>dfdsf</td>
                                             <td>dfdsf</td>
                                             <td>dfdsf</td>

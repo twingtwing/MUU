@@ -112,8 +112,20 @@
                                             </td>
                                         </tr>
                                         <tr height="38">
+                                            <th>강의명</th>
+                                            <td class="text-left">
+                                                <input class="w-100" type="text" spellcheck="false">
+                                            </td>
+                                            <th>신고날짜</th>
+                                            <td class="text-left">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq">
+                                                <i class="fas fa-minus"></i>
+                                                <input class="w-30" type="date" spellcheck="false" id="haq1">
+                                            </td>
+                                        </tr>
+                                        <tr height="38">
                                             <th>별점</th>
-                                            <td  class="text-left">
+                                            <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
                                                     <input type="radio" value="1" id="1" name=star ondblclick="this.checked=false">
                                                     <label for="1" class="mb-0 ml-1 mr-2">
@@ -147,12 +159,6 @@
                                                     </label>
                                                 </div>
                                             </td>
-                                            <th>신고날짜</th>
-                                            <td class="text-left">
-                                                <input class="w-30" type="date" spellcheck="false" id="haq">
-                                                <i class="fas fa-minus"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="haq1">
-                                            </td>
                                         </tr>
                                     </table>
                                     <button class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;">검색</button>
@@ -163,31 +169,25 @@
 
                                             <tr style="background-color: #eeeeee;">
                                                 <th style="width: 5%;">번호</th>
+                                                <th style="width: 15%;">신고유형</th>
                                                 <th style="width: 10%;">크리에이터</th>
+                                                <th>강의명</th>
                                                 <th style="width: 10%;">신고자</th>
                                                 <th>신고당한 리뷰</th>
-                                                <th style="width: 15%;">신고한 날짜</th>
-                                                 <th  style="width: 5%;">상태</th>
-                                               
+                                                <th style="width: 10%;">신고한 날짜</th>
+                                                <th  style="width: 5%;">상태</th>
                                             </tr>
                                         </thead>
                                         <tbody id="mo" onclick="location.href='리신고상세.html'">
                                             <tr>
                                                 <td>1</td>
                                                 <td>qqq</td>
+                                                <td>qqq</td>
+                                                <td>qqq</td>
                                                 <td>sta</td>
                                                 <td>ㅋㅋㅋㅋㅋㅋ</td>
                                                 <td>2202-02-23</td>
                                                 <td>처리</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>d22</td>
-                                                <td>d22</td>
-                                                <td>dfdsf</td>
-                                                <td>dfdsf</td>
-                                                <td>dfdsf</td>
-                                                <td>dfdsf</td>
                                                 
                                             </tr>
                                         </tbody>

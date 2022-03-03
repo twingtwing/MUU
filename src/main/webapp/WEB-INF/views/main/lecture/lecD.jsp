@@ -586,6 +586,7 @@
                 }
             },
             beforeMount : function(){
+            	console.log('${ltNo}');
                 /*
                 beforeCreate
 
@@ -593,8 +594,9 @@
                 .then(response => response.json())
                 .then(result => {this.lecDetails = result;})
                 */
+                //찜 여부와 갯수?
                 this.lecDetails = {
-                    id:'id',
+                    id:'id',//cre_id로 변경
                     name :'크리에이터 이름',
                     creIntro : '크리에이터 소개',
                     ttl:'강의이름들어감',

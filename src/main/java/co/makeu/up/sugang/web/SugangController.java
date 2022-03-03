@@ -83,8 +83,8 @@ public class SugangController {
 		checkvo.setId(pri.getName());
 		checkvo.setLtNo(vo.getLtNo());
 		checkvo = sugangDao.sugangCheckDate(checkvo);	
-		// 7일이 지났거나 본 강의가 OT제외 3개를 초과할 때 접근 불가
-		if(sugangDao.sugangBeforeRefund(checkvo)==0 || progressDao.countBeforeRefund(prvo)>3) {
+		// 7일이 지났거나 본 강의가 OT제외 3개를 초과할 때 접근 불가 + 구매확정시 불가 추가
+		if(sugangDao.sugangBeforeRefund(checkvo)==0 || progressDao.countBeforeRefund(prvo)>3 || checkvo.getShipStCode().equals("D03")) {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			lessonvo.setId(pri.getName());
 			lessonvo.setLtNo(vo.getLtNo());

@@ -101,13 +101,25 @@
                                         </tr>
 
                                         <tr height="38">
-                                            <th>ID</th>
-                                            <td >
-                                                <input class="w-100" type="text" id="incheck" spellcheck="false">
+                                            <th>크리에이터</th>
+                                            <td>
+                                            	<div class="d-flex">
+                                                    <div class="col-3 row align-items-center">
+                                                        <select class="w-100">
+                                                        <option value="ID">ID</option>
+                                                        <option value="이름">이름</option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <input class="w-100" type="text" spellcheck="false">
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <th>이름</th>
-                                            <td >
-                                                <input class="w-100" type="text" id="incheck" spellcheck="false">
+                                            <th>강의 게시 날짜</th>
+                                            <td class="text-left">
+                                            	<input class="w-30" type="date" spellcheck="false" id="firstJdate">
+                                                <i class="fas fa-minus mx-1"></i>
+                                                <input class="w-30" type="date" spellcheck="false" id="lastJdate">
                                             </td>
                                         </tr>
 
@@ -145,11 +157,11 @@
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                     </label>
                                             </td>
-                                            <th>강의 게시 날짜</th>
+                                            <th>상태</th>
                                             <td class="text-left">
-                                            	<input class="w-30" type="date" spellcheck="false" id="firstJdate">
-                                                <i class="fas fa-minus mx-1"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="lastJdate">
+                                                <input type="checkbox" class="ml-2" name="" id="code_1" spellcheck="false">
+                                                <label for="code_1" class="mr-3 mb-0">아직 덜 정함</label>
+                                                <!-- 아직 픽수가 안되서 상태 많아지면 SELECT BOX로 할 예정 -->
                                             </td>
                                         </tr>
                                         
@@ -162,11 +174,13 @@
                                         <tr style="background-color: #eeeeee;">
                                             <th style="width:90px;">번호</th>
                                             <th style="width: 200px;">카테고리</th>
-                                            <th>강의제목</th>
-                                            <th style="width:110px;">강사이름</th>
+                                            <th>강의명</th>
+                                            <th style="width:110px;">ID</th>
+                                            <th style="width:110px;">이름</th>
                                             <th style="width:120px;">강의등록날짜</th>
                                             <th style="width:110px;">강의가격</th>
                                             <th style="width:130px;">강의별점</th>
+                                            <th style="width:130px;">상태</th>
                                         </tr>
                                         <!--강의 정보 가져와서 데이터 뿌리기 / 기본 강의소개페이지로 이동-->
                                         <tr>
@@ -176,7 +190,9 @@
                                             <td>dfdsf</td>
                                             <td>dfdsf</td>
                                             <td>dfdsf</td>
+                                            <td>dfdsf</td>
                                             <td><i class="fa fa-star text-warning mr-0"></i></td>
+                                            <td>dfdsf</td>
                                         </tr>
                                     </table>
                                 </div>

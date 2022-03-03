@@ -50,7 +50,7 @@
                                                 <h5 class="mb-0">제목</h5>
                                             </div>
                                             <div class="col-11 px-0">
-                                                <input class="w-100" type="text" spellcheck="false">
+                                                <input class="w-100" type="text" value="${board.ttl}" spellcheck="false" id="ttli" name="ttli">
                                             </div>
                                         </div>
                                         <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
@@ -61,19 +61,19 @@
                                             <div class="row mr-2">
                                                 <div class="row mr-1">
                                                     <h6 class="mb-0">작성일자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${board.wrDate }</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row form-group mt-3">
-                                    <textarea class="form-control"  rows="25"></textarea>
+                                    <textarea class="form-control"  rows="25" id="cont" name="cont">${board.content}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <input type="file" name="" id="" spellcheck="false">
+                                            <input type="file" name="" id="" spellcheck="false" >
                                         </div>
                                     </div>
                                 </div>
@@ -82,15 +82,69 @@
                                         <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-secondary" onclick="location.href='./공지사항 관리자 페이지.html'";>공지사항 수정</button>
+                                        <button type="button" id="boardBtn" class="btn btn-secondary" onclick="btn()" disabled>공지사항 수정</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </div>
                 <!-- 내용 끝 -->
 
                 <!-- 바디 끝 -->
+                <script type="text/javascript">
+                
+                
+                $('#ttli').keyup(function(){
+                	console.log("4번 테스트")
+               	 btnDisabled()
+                })
+                
+                $('#cont').keyup(function(){
+                	console.log("9번 테스트")
+               	 btnDisabled()
+                })
+                
+                function btnDisabled() {
+               	 var ttli = document.getElementById('ttli').value;
+               	 var cont = document.getElementById('cont').value;
+               	 if(ttli == "" || cont == "") {
+               		 $('#boardBtn').attr('disabled','disabled');
+               	 } else if(ttli != "" && cont != "") {
+               		 $('#boardBtn').removeAttr('disabled');
+               	 }
+                }
+                
+                
+                function btn() {
+                	console.log("1번 테스트")
+                	let header = "${_csrf.headerName}";
+            		let token = "${_csrf.token}";
+            		var bNo = "${board.getBNo()}";
+            		var ttl = $('#ttli').val();
+            		var content = $('#cont').val();
+              	 $.ajax ({
+                   	 url:'/admin/upadbad',
+                   	 type:'post',
+                   	 data:{bNo:bNo ,ttl:ttl, content:content},
+                   	 beforeSend: function(xhr) {
+                			xhr.setRequestHeader(header, token);
+                		},
+                   	 success:function(result){
+                   		 console.log(result)
+                   		 if(result == 1){
+                   			 alert("성공적으로 수정완료.")
+                   		  location.href = "/admin/adBadS?bNo="+bNo;
+                   			 
+                   		 }else{
+                   			 alert("수정도중에 에러 발생하여중단합니다.")
+                   		 }
+                   	 }
+                    }) 
+                }
+                
+                </script>
+                
 </body>
 </html>

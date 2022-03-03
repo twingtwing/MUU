@@ -49,22 +49,40 @@
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->                               
                                 <div class="row">
+                                <!-- 프로필 사진도 보여야하나..? -->
                                     <table class="table table-bordered mb-5">
                                         <tr style="background-color: #eeeeee;">
+                                        	<th>상태</th>
                                             <th>아이디</th>
                                             <th>이름</th>
-                                            <th>주소</th>
-                                            <th>등급</th>
-                                            <th>적립금</th>
+                                            <th>생년월일</th>
+                                            <th>전화번호</th>
+                                            <th>성별</th>
                                             <th>가입날짜</th>
                                         </tr>
                                         <tr>
+                                        	<td>비활성</td>
                                             <td>user123@naver.com</td>
                                             <td>정혜윤</td>
-                                            <td>대구광역시 중구 태왕아너스 타워 5층</td>
+                                            <td>생일</td>
+                                            <td>000-0000-000</td>
+                                            <td>여자</td>
+                                            <td>22/02/02</td>
+                                        </tr>
+                                        <tr style="background-color: #eeeeee;">
+                                        	<th>우편번호</th>
+                                            <th colspan="3">주소(상세주소)</th>
+                                            <th>크리에이터</th>
+                                            <th>등급</th>
+                                            <th>적립금</th>
+                                        </tr>
+                                        <tr>
+                                        	<td>비활성</td>
+                                            <td colspan="3">user123@naver.com</td>
+                                            <td>-</td>
+                                            <!--크리에이터이기도 하면 관리자 크리에이터 상세페이지로 연결-->
                                             <td>나무</td>
                                             <td>5,000</td>
-                                            <td>22/02/02</td>
                                         </tr>
                                     </table>
                                     <h5><i class="fas fa-hashtag mr-1"></i>수강내역</h5>
@@ -101,16 +119,18 @@
                                             <th>강의명</th>
                                             <th>크리에이터</th>
                                             <th>환불사유</th>
-                                            <th>환불날짜</th>
                                             <th>금액</th>
+                                            <th>환불날짜</th>
+                                            <th>환불상태</th>
                                         </tr>
                                         <tr>
                                             <td>7</td>
                                             <td>단타 너도 할 수 있다!</td>
                                             <td>영차영차</td>
                                             <td>단타해서 다 잃음</td>
-                                            <td>2022/02/02</td>
                                             <td>50,000</td>
+                                            <td>2022/02/02</td>
+                                            <td>상태?</td>
                                         </tr>
                                     </table>
                                     <h5><i class="fas fa-hashtag mr-1"></i>배송내역</h5>
@@ -134,6 +154,7 @@
                                     </table>
                                     <a href="javscript:history.back()" class="btn btn-secondary">뒤로가기</a>
                                 </div>
+   
                             </div>
                         </div>
                     </div>

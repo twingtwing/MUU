@@ -7,7 +7,8 @@ public interface BoardMapper {
 	int upboard(BoardVO vo);
 	BoardVO selectBoard(BoardVO vo);//�떒嫄� 議고쉶
 	List<BoardVO> selectadbad();
-	BoardVO insertBoard(BoardVO vo);
-	List<BoardVO> selectadbads();
-	String deladbad(BoardVO vo);
+	int insertBoard(BoardVO vo);
+	BoardVO selectadbads(BoardVO vo);
+	int deladbad(BoardVO vo);
+	int upadbad(BoardVO vo);
 }

@@ -41,100 +41,95 @@
 						<nav class="header__menu mobile-menu">
 							<ul class="d-flex justify-content-center align-items-center">
 								<li class="m-0"><a href="/home">홈</a></li>
-								<li><a href="#">카테고리<span class="arrow_carrot-down"></span></a>
+								<li><a href="/lecS">카테고리<span class="arrow_carrot-down"></span></a>
 									<ul class="dropdown">
 										<li class="dropdown-submenu">
-											<a href="/lecS" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											<a href="/lecS?upCtgr=HC01" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 												<span class="nav-label">음악</span>
 											</a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">클래식</a></li>
-												<li><a href="/lecS">재즈</a></li>
-												<li><a href="/lecS">락</a></li>
-												<li><a href="/lecS">힙합/랩</a></li>
-												<li><a href="/lecS">타악기</a></li>
-												<li><a href="/lecS">기타/베이스</a></li>
-												<li><a href="/lecS">동양음악</a></li>
-												<li><a href="/lecS">보컬</a></li>
-												<li><a href="/lecS">작사/작곡</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC01">클래식</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC02">재즈/락</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC03">힙합/랩</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC04">기타/베이스</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC05">동양</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC06">보컬</a></li>
+												<li><a href="/lecS?upCtgr=HC01&downCtgr=LC07">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="/lecS"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC02"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">요리</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">양식</a></li>
-												<li><a href="/lecS">동양식</a></li>
-												<li><a href="/lecS">간편요리</a></li>
-												<li><a href="/lecS">코스요리</a></li>
-												<li><a href="/lecS">가정식</a></li>
-												<li><a href="/lecS">베이킹</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC08">한식</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC09">양식</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC10">일식</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC11">중식</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC12">베이킹</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC13">가정식</a></li>
+												<li><a href="/lecS?upCtgr=HC02&downCtgr=LC14">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="#"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC03"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">건강</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">홈 트레이닝</a></li>
-												<li><a href="/lecS">필라테스</a></li>
-												<li><a href="/lecS">요가</a></li>
-												<li><a href="/lecS">헬스</a></li>
-												<li><a href="/lecS">정신건강</a></li>
-												<li><a href="/lecS">테라피</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC15">홈 트레이닝</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC16">필라테스</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC17">요가</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC18">헬스</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC19">정신건강</a></li>
+												<li><a href="/lecS?upCtgr=HC03&downCtgr=LC20">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="/lecS"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC04"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">아트</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">2D/애니메이션</a></li>
-												<li><a href="/lecS">드로잉</a></li>
-												<li><a href="/lecS">수채화</a></li>
-												<li><a href="/lecS">유화</a></li>
-												<li><a href="/lecS">동양화</a></li>
-												<li><a href="/lecS">판화</a></li>
-												<li><a href="/lecS">공예</a></li>
-												<li><a href="/lecS">사진</a></li>
-												<li><a href="/lecS">메이크업/분장</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC21">2D/애니메이션</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC22">드로잉</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC23">수채화/유화</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC24">동양화</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC25">사진</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC26">메이크업/분장</a></li>
+												<li><a href="/lecS?upCtgr=HC04&downCtgr=LC27">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="/lecS"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC05"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">IT/컴퓨터</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">Java</a></li>
-												<li><a href="/lecS">Python</a></li>
-												<li><a href="/lecS">C/C++/C/lecS</a></li>
-												<li><a href="/lecS">웹 프로그래밍</a></li>
-												<li><a href="/lecS">Unity</a></li>
-												<li><a href="/lecS">영상편집</a></li>
-												<li><a href="/lecS">Photoshop/Illustrator</a></li>
-												<li><a href="/lecS">3D 모델링</a></li>
-												<li><a href="/lecS">기타</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC28">Java</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC29">Python</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC30">C언어</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC31">웹 프로그래밍</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC32">Unity</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC33">Photoshop/Illustrator</a></li>
+												<li><a href="/lecS?upCtgr=HC05&downCtgr=LC34">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="/lecS"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC06"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">외국어</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">영어</a></li>
-												<li><a href="/lecS">일본어</a></li>
-												<li><a href="/lecS">중국어</a></li>
-												<li><a href="/lecS">스페인어</a></li>
-												<li><a href="/lecS">포르투갈어</a></li>
-												<li><a href="/lecS">아랍어</a></li>
-												<li><a href="/lecS">러시아어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC35">영어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC36">일본어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC37">중국어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC38">스페인어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC39">아랍어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC40">러시아어</a></li>
+												<li><a href="/lecS?upCtgr=HC06&downCtgr=LC41">기타</a></li>
 											</ul></li>
-										<li class="dropdown-submenu"><a href="/lecS"
+										<li class="dropdown-submenu"><a href="/lecS?upCtgr=HC07"
 											class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false"><span
 												class="nav-label">자기계발</span></a>
 											<ul class="dropdown-menu">
-												<li><a href="/lecS">부동산</a></li>
-												<li><a href="/lecS">주식</a></li>
-												<li><a href="/lecS">면접/자소서</a></li>
-												<li><a href="/lecS">SNS/블로그</a></li>
-												<li><a href="/lecS">기타</a></li>
+												<li><a href="/lecS?upCtgr=HC07&downCtgr=LC42">부동산</a></li>
+												<li><a href="/lecS?upCtgr=HC07&downCtgr=LC43">주식</a></li>
+												<li><a href="/lecS?upCtgr=HC07&downCtgr=LC44">면접/자소서</a></li>
+												<li><a href="/lecS?upCtgr=HC07&downCtgr=LC45">SNS/블로그</a></li>
+												<li><a href="/lecS?upCtgr=HC07&downCtgr=LC46">기타</a></li>
 											</ul></li>
 									</ul></li>
 								<li><a href="#">고객센터<span class="arrow_carrot-down"></span></a>

@@ -74,11 +74,22 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <th style="width: 15%" class="align-middle">작성일</th>
-                                            <td style="width: 35%" class="text-left align-middle">
+                                            <th style="width: 15%" class="align-middle">상태</th>
+                                            <td style="width: 35%" class="align-middle">
+                                                <div class="row align-items-center ml-1">
+                                                    <input type="checkbox" name="code" id="code_Y" class="mr-1">
+                                                    <label class="mb-0" for="code_Y">등록</label>
+                                                    <input type="checkbox" name="code" id="code_N" class="ml-3 mr-1">
+                                                    <label class="mb-0" for="code_N">삭제</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr height="38">
+                                            <th>등록일</th>
+                                            <td colspan="3" class="text-left align-middle">
                                                 <div class="row pl-4 d-flex justify-content-start">
                                                     <div><input type="date"></div>
-                                                    <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
+                                                    <div class="ml-3 mr-3 align-self-center"><i class="fa fa-minus"></i></div>
                                                     <div><input type="date"></div>
                                                 </div>
                                             </td>
@@ -91,11 +102,12 @@
                                     <table class="table table-bordered">
                                     	<thead>
                                         <tr style="background-color: #eeeeee;">
-                                            <th>번호</th>
-                                            <th class="w-50">제목</th>
-                                            <th>작성자</th>
-                                            <th>작성일</th>
-                                            <th>첨부파일</th>
+                                            <th width="100px">번호</th>
+                                            <th>제목</th>
+                                            <th width="130px">작성자</th>
+                                            <th width="130px">작성일</th>
+                                            <th width="130px">첨부파일</th>
+                                            <th width="100px">상태</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -103,12 +115,20 @@
 	                                        <tr>
 	                                            <td>${board.getBNo() }</td>
 	                                            <td>
-	                                          <a href="${path }/admin/adBadS?bno=${board.getBNo() }">
+	                                          <a href="/admin/adBadS?bNo=${board.getBNo() }">
 	                                          ${board.ttl}
 	                                          </a></td>
 	                                            <td>관리자</td>
 	                                            <td>${board.wrDate }</td>
-	                                            <td><i class="fa fa-download"></i></td>
+	                                            <td>
+	                                            	<c:if test="${board.fileNo eq -1}">
+	                                            		<i class="fas fa-minus mr-0"></i>
+	                                            	</c:if>
+	                                            	<c:if test="${board.fileNo ne -1}">
+	                                            		<i class="fas fa-minus mr-0"></i>
+	                                            	</c:if>
+	                                            </td>
+	                                            <td>값넣기</td>
 	                                        </tr>
 	                                            </c:forEach>
                                         </tbody>

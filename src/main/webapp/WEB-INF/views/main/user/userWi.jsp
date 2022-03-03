@@ -121,33 +121,63 @@ keyframes rotate_image { 100% {
 										<div class="form-check">
 											<table class="table border-bottom">
 												<thead class="text-center">
+												<tr>
 													<th style="width: 60px;">체크</th>
 													<th style="width: 300px;">강의사진test</th>
 													<th>강의제목</th>
-													<th>강의설명</th>
 													<th style="width: 120px;">강의비용</th>
+													<th>강의상태</th>
+												</tr>
 												</thead>
 												<tbody id="WishList">
 													<c:forEach items="${wishlists}" var="wishlist">
 														<tr>
-															<td class="text-center align-middle">
-															<input type="checkbox" id="checkbox" name="checkbox"
-																class="form-check-input m-0" type="checkbox" value="1">
-															</td>
+															<td class="text-center align-middle"><input
+																onclick="FalseCheck(this)" type="checkbox" id="checkbox"
+																name="checkbox" class="form-check-input m-0 checkbox"
+																type="checkbox" value="${wishlist.ltNo }"></td>
 															<td>
 																<div class="text-align-last:center">
-																	<img src="/resources/img/blog/blog-1.jpg" alt=""
+																	<img src="${wishlist.thumb }" alt="test중"
 																		class="rounded" style="height: 150px; width: 300px;">
 																</div>
 															</td>
 															<td class="text-center align-middle">${wishlist.ttl }</td>
-															<td class="text-center align-middle">${wishlist.intro }</td>
 															<td class="text-center align-middle">${wishlist.prc}</td>
+															<td class="text-center align-middle">${wishlist.ltStCode}</td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
 										</div>
+										<table style="display: none">
+											<thead class="text-center">
+											<tr>
+												<th style="width: 60px;">체크</th>
+												<th style="width: 300px;">강의사진test</th>
+												<th>강의제목</th>
+												<th style="width: 120px;">강의비용</th>
+												<th>강의상태</th>
+											</tr>
+											</thead>
+											<tbody id="sampleTr">
+												<tr>
+													<td id="check_sam" class="text-center align-middle"><input
+														onclick="FalseCheck(this)" type="checkbox" id="checkbox"
+														name="checkbox" class="form-check-input m-0 checkbox"
+														type="checkbox" value=""></td>
+													<td id="img_sam">
+														<div class="text-align-last:center">
+															<img src="" alt="test중" class="rounded"
+																style="height: 150px; width: 300px;">
+														</div>
+													</td>
+													<td id="ttl_sam" class="text-center align-middle">${wishlist.ttl }</td>
+													<td id="prc_sam" class="text-center align-middle">${wishlist.prc}</td>
+													<td id="code_sam" class="text-center align-middle">${wishlist.ltStCode}</td>
+												</tr>
+											</tbody>
+										</table>
 										<div class="product__pagination d-flex justify-content-center">
 											<c:if test="${pagination.currRange ne 1}">
 												<a><i class="fa fa-angle-double-left"></i></a>
@@ -173,10 +203,10 @@ keyframes rotate_image { 100% {
 								<div class="row position-absolute"
 									style="right: 40px; bottom: 20px;">
 									<!-- onclick="location.href='./결제창.html'" -->
-									<button type="button" class="site-btn"
+									<button type="button" onclick="paymentCheck()" class="site-btn"
 										style="padding: 8px 20px;">결제</button>
-									<button type="button" class="site-btn ml-2"
-										style="padding: 8px 20px;">삭제</button>
+									<button type="button" onclick="deleteCheck()"
+										class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
 								</div>
 							</div>
 							<!-- 본편 끝-->
@@ -190,44 +220,104 @@ keyframes rotate_image { 100% {
 	</section>
 	<script>
 		// 일반 페이지네이션 함수
-		const normalPageAjax = (data) => {
+		const normalPageAjax = (result) => {
 			$.ajax({
 					url: '/user/userWishListPage',
-					data: {id : "user123@naver.com"},
+					data: result,
 					contentType: 'application/json;charset=utf-8',
 				})
 				.done((res) => {
-					$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
+					console.log(res)
 					removeAll();
-					changePage(res);
+					changePage(res); 
 				})
 		}
+		
 		// 페이지네이션
 		$('.paging').click((e) => {
 			let pageNum = +e.currentTarget.textContent - 1;
-			const data = {page : pageNum};
-			if(!$('#noticeSearchKey').val()){
-				normalPageAjax(data);			
-			} else {
-				const searchData = makeSearchObj();
-				searchData.page = pageNum;
-				searchPageAjax(searchData);
-			}
-			/* const data = {ltNo : ${ltno} , page : pageNum}; */
+			const data = {page : pageNum, id : '${username}'};
+			normalPageAjax(data);
+			$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
+			$(e.currentTarget).addClass('current-page');
 		});
+		
 		// 페이지네이션 DOM 조작 함수
 		const removeAll = () => {
 			$('#WishList').children().remove();
 		}
-		const changePage = (list) => {
-			list.forEach((val) => {
-				let tr = $('<tr>').append(
-					$('<td>').text("test").attr("text-center align-middle"),
-					$('<td>').text("test1").attr("text-center align-middle"),
-					$('<td>').text("test2").attr("text-center align-middle"),
-					$('<td>').text("test3").attr("text-center align-middle"),
-					$('<td>').text("test4").attr("text-center align-middle"));
-				$('#WishList').append(tr);
+		const changePage = (res) => {
+			res.forEach((val) => {
+				console.log(val);
+					$('#sampleTr #check_sam input').val(val.ltNo);
+					$('#sampleTr #img_sam img').attr("src",val.thumb);
+					$('#sampleTr #ttl_sam').text(val.ttl);
+					$('#sampleTr #intro_sam').text(val.intro);
+					$('#sampleTr #prc_sam').text(val.prc+" 원");
+					$('#sampleTr #code_sam').text(val.ltStCode);
+					$('#WishList').append($('#sampleTr').html());
+			})
+		}
+		
+		//check click 이벤트
+		function FalseCheck(event){
+		$(event).closest('tr').children().last()
+		console.log($(event).closest('tr').children().last().text())
+		if($(event).closest('tr').children().last().text() != "가능"){
+				
+			}
+		};
+		
+		//check delete 이벤트
+		function deleteCheck(event){
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		
+		let checkboxArr=[]
+		/* console.log($('.checkbox').is(':checked')); */
+		$("input[name=checkbox]:checked").each(function(){
+			let check = $(this).val();
+			console.log(check)
+			checkboxArr.push(check)
+			})
+			console.log(checkboxArr);
+			console.log(checkboxArr[0]);
+		$.ajax({
+            type : "post",          
+            url : "/user/deleteWishList",     
+            //data : JSON.stringify({ltNoArr : checkboxArr}),
+            data : {ltNoArr : checkboxArr},
+            //dataType: 'json',
+            //contentType:'application/json; charset=UTF-8',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success : function(res){
+            	console.log("성공")
+            	location.reload();
+            }
+        });
+	}
+		function paymentCheck(event){
+			let header = "${_csrf.headerName}";
+			let token = "${_csrf.token}";
+			let checkboxArr=[];
+			const ary = $("input[name=checkbox]:checked");
+			
+			//each/for 구문 돌려서 for var i of ary $(i).closest('tr').children().last().text() == '불가';
+			console.log(ary);
+			for(var obj of ary){
+			let check = $(obj).closest('tr').children().last().text();
+			if(check == "불가"){
+					alert($(obj).closest('tr').children().eq(2).text() + " 는 결제 불가능한 강의입니다.");
+					obj.checked=false;
+					return ;
+				}
+			}
+			$("input[name=checkbox]:checked").each(function(){
+				let check = $(this).val();
+				checkboxArr.push(check)
+				console.log(checkboxArr)
 			})
 		}
 

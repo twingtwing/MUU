@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.wishlist.service.WishListMapper">
-	<select id="WishListSearch" resultType="co.makeu.up.wishlist.service.WishlistVO">
-		SELECT l.LT_NO,l.THUMB,l.TTL,l.INTRO,l.PRC,l.LT_ST_CODE
+	<select id="WishListSearch"
+		resultType="co.makeu.up.wishlist.service.WishlistVO">
+		SELECT * FROM(
+		SELECT ROWNUM RN,l.LT_NO,l.THUMB,l.TTL,l.PRC,
+		CASE l.LT_ST_CODE WHEN 'L01' THEN '가능'
+		ELSE '불가' END LT_ST_CODE
 		FROM LECTURE l JOIN WISHLIST w
 		ON l.lt_no = w.lt_no
-		AND w.id=#{id}
-		WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
-		order by l.lt_no
+		WHERE ROWNUM <![CDATA[<=]]>
+		5*(#{page}+1)
+		AND w.id=#{id})
+		WHERE RN <![CDATA[>=]]>
+		(5*#{page})+1
+		order by lt_no DESC
 	</select>
-	
-	<select id="WishListCnt" parameterType="Integer" resultType="Integer">
+
+	<select id="WishListCnt" parameterType="Integer"
+		resultType="Integer">
 		SELECT COUNT(*) FROM WISHLIST
 	</select>
+	
+	<delete id="deleteWishList">
+		DELETE FROM WISHLIST WHERE lt_no = #{ltNo} and id =#{id}
+	</delete>
+	
+	<insert id="heartInsert" parameterType="co.makeu.up.wishlist.service.WishlistVO">
+		INSERT INTO WISHLIST(LT_NO,ID)
+		VALUES(#{ltNo},#{id})
+	</insert>
 </mapper>

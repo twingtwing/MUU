@@ -41,13 +41,16 @@ public class LectureController {
 	
 	//강의검색
 	@GetMapping("/lecS")
-	public String lecS() {
+	public String lecS(LectureVO vo, Model model) {
+		model.addAttribute("upCtgr",vo.getUpCtgr());
+		model.addAttribute("downCtgr",vo.getDownCtgr());
 		return "main/lecture/lecS";
 	}
 	
 	//강의상세
 	@GetMapping("/lecD")
-	public String lecD() {
+	public String lecD(LectureVO vo, Model model) {
+		model.addAttribute("ltNo",vo.getLtNo());
 		return "main/lecture/lecD";
 	}
 	
@@ -134,16 +137,16 @@ public class LectureController {
 				String oriFileName = fileList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
-					vo.setPht1(safeFile);
+					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 				}
 				if(i == 1) {
-					vo.setPht2(safeFile);
+					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
 				}
 				if(i == 2) {
-					vo.setPht3(safeFile);
+					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
 				}
 			    if(i == 3) {
-	                vo.setThumb(safeFile);
+	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
 	            }
 
 				try {
@@ -156,7 +159,6 @@ public class LectureController {
 			}
 			
 			lectureDao.lectureInsert(vo);
-			int ltno = vo.getLtNo();
 			
 			try {
 				Thread.sleep(3000);
@@ -171,9 +173,8 @@ public class LectureController {
 				String oriFileName = classList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				
-				lvo.setLtNo(ltno);
 				lvo.setTtl(classTitle[i]);
-				lvo.setLsnFile(safeFile);
+				lvo.setLsnFile("/upload/" + safeFile.substring(saveDir.length()));
 				
 				try {
 					classList.get(i).transferTo(new File(safeFile));
@@ -218,6 +219,34 @@ public class LectureController {
 		vo.setCreId(principal.getName());
 		model.addAttribute("rplists", lectureDao.reportLecture(vo));
 		return "main/lecture/rpLecL";
+	}
+	
+	//신청 강의 상세 페이지
+	@RequestMapping("/creator/rLecS")
+	public String requestLecSelect(int sendltno, Model model) {
+			model.addAttribute("rlists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/rLecS";
+	}
+	
+	//열린 강의 상세 페이지
+	@RequestMapping("/creator/oLecS")
+	public String openLecSelect(int sendltno, Model model) {
+			model.addAttribute("olists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/oLecS";
+	}
+	
+	//닫힌 강의 상세 페이지
+	@RequestMapping("/creator/clLecS")
+	public String closeLecSelect(int sendltno, Model model) {
+			model.addAttribute("cllists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/clLecS";
+	}
+		
+	//신고된 강의 상세 페이지
+	@RequestMapping("/creator/rpLecS")
+	public String reportLecSelect(int sendltno, Model model) {
+			model.addAttribute("rplists", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/rpLecS";
 	}
 
 }
