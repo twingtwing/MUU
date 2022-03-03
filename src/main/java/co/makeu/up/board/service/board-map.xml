@@ -24,9 +24,37 @@
 	</update>
 	
 	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-	select b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no
-	from board
-	order by b_no desc
+		select * from (    
+            select rownum rn, w.*
+            from (
+            select b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no, b_st_code  ,COUNT(*) over() as length
+            from board
+            where 1=1
+            <if test="ttl !=null">
+            and	ttl like '%' || #{ttl}  || '%'
+            </if>
+            <if test= "content != null">
+            and content like '%' || #{content}  || '%'
+            </if>
+            <if test="bStCode != null">
+           and b_st_code = #{bStCode}
+            </if>
+             <if test="start != null">
+             <![CDATA[
+             and TO_DATE(#{start}, 'YYYY-MM-DD') < #{wrDate}
+             ]]>
+            </if>
+            <if test="end != null">
+            <![CDATA[
+             and TO_DATE(#{end}, 'YYYY-MM-DD')  > #{wrDate}
+             ]]>
+            </if>
+            order by b_no desc) w
+        )
+        <![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	      ]]>
 	</select>
 	
 	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">
@@ -51,4 +79,10 @@
     set ttl = #{ttl} , content = #{content}
     where b_no = #{bNo}
 	</update>
+	
+	<select id="seradbad">
+	
+	</select>
+	
+	
 </mapper>

@@ -28,8 +28,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> selectadbad() {
-		return map.selectadbad();
+	public List<BoardVO> selectadbad(BoardVO vo) {
+		return map.selectadbad(vo);
 	}
 
 	@Override
@@ -50,6 +50,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int upadbad(BoardVO vo) {
 		return map.upadbad(vo);
+	}
+
+	@Override
+	public List<BoardVO> seradbad(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return map.seradbad(vo);
 	}
 	
 	

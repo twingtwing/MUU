@@ -20,7 +20,20 @@ public class BoardVO {
 	private int prebno;
 	private String nextbttl;
 	private String prebttl;
+	private int length;
+	private String start;
+	private String end;
 	
 	private List<DetafileVO> detaFileList;
-	
+
+	private int pageNum;
+	private int amount;
+
+	public BoardVO(){
+		this (1,10);
+	}
+	public BoardVO(int pageNum , int amount) {
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
 }

@@ -69,7 +69,17 @@
                                                 </div>
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">상태</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">값넣기</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">
+                                                     <c:if test="${board.getBStCode() eq 'B01' }">
+		                                            	등록
+		                                            </c:if>
+		                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
+		                                        		삭제
+		                                            </c:if>
+                                                    
+                                                    
+                                                    
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
