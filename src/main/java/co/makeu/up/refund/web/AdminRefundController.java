@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RefundContorller {
+public class AdminRefundController {
 
 	@GetMapping("/admin/adRef")
 	public String adRef() {

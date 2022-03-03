@@ -9,11 +9,9 @@
 		ELSE '불가' END LT_ST_CODE
 		FROM LECTURE l JOIN WISHLIST w
 		ON l.lt_no = w.lt_no
-		WHERE ROWNUM <![CDATA[<=]]>
-		5*(#{page}+1)
+		WHERE ROWNUM <![CDATA[<=]]>5*(#{page}+1)
 		AND w.id=#{id})
-		WHERE RN <![CDATA[>=]]>
-		(5*#{page})+1
+		WHERE RN <![CDATA[>=]]>(5*#{page})+1
 		order by lt_no DESC
 	</select>
 

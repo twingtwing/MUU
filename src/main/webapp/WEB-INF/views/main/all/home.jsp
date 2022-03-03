@@ -44,6 +44,7 @@
 		참고하세여.(아 ㅋㅋ참고 하라고)<br>
 		관리자아이디: admin123@naver.com / 비밀번호 : 관리자<br>
 		유저아이디 : user123@naver.com / 비밀번호 : 정혜윤<br>
+		크리에이터아이디 : test111@naver.com / 비밀번호 : 테스트111<br>
 				
 		<security:authorize access="isAuthenticated()">
 		<security:authentication property="principal.username" var="username"/>
@@ -80,6 +81,7 @@
 		<a href="/creator/cLecQ">질답</a><br>
 		<a href="excel">엑셀다운로드</a>
 		<a href="/user/userWishList">유저-위시리스트</a>
+		<a href="/creator/creRefund">크리에이터-환불내역</a>
 		
 	</div>
     <!-- slide benner -->

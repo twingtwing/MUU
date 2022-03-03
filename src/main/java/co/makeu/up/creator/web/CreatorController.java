@@ -60,10 +60,7 @@ public class CreatorController {
 	public String creLectureReview() {
 		return "main/creator/cLecR";
 	}
-	@GetMapping("/creator/creRefund")
-	public String creRefund() {
-		return "main/creator/creR";
-	}
+	
 	@GetMapping("/creator/creSaleYear")
 	public String creSalesYear() {
 		return "main/creator/creSaYear";

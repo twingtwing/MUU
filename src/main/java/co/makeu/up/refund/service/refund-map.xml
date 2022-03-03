@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.refund.service.RefundMapper">
-	<insert id="insertRefund" parameterType="co.makeu.up.refund.service.RefundVO">
+	<insert id="insertRefund"
+		parameterType="co.makeu.up.refund.service.RefundVO">
 		INSERT INTO REFUND
 		VALUES(
 		SYSDATE,#{content},'RF01',#{tlsnNo}
 		)
 	</insert>
+
+	<select id="RefundList" resultType="co.makeu.up.refund.service.RefundVO">
+		SELECT * FROM(SELECT ROWNUM RN,
+		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no ,COUNT(*) OVER() COUNT
+		FROM SUGANG S JOIN REFUND R
+		ON S.TLSN_NO = R.TLSN_NO
+		JOIN LECTURE L
+		ON L.LT_NO = S.LT_NO
+		ORDER BY R.TLSN_NO DESC)
+		WHERE RN <![CDATA[<=]]>10*(#{page}+1)
+		AND RN <![CDATA[>=]]>(10*#{page})+1
+		AND TTL LIKE '%'||#{ttlSearchKey}||'%'
+		AND CONTENT LIKE '%'||#{contentSearchKey}||'%'
+		AND ID LIKE '%'||#{idSearchKey}||'%'
+	</select>
+	
+	<select id="RefundListSelect" resultType="co.makeu.up.refund.service.RefundVO">
+		SELECT * FROM(SELECT ROWNUM RN,
+		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no ,COUNT(*) OVER() COUNT
+		FROM SUGANG S JOIN REFUND R
+		ON S.TLSN_NO = R.TLSN_NO
+		JOIN LECTURE L
+		ON L.LT_NO = S.LT_NO
+		ORDER BY R.TLSN_NO DESC)
+		WHERE RN <![CDATA[<=]]>10*(#{page}+1)
+		AND RN <![CDATA[>=]]>(10*#{page})+1
+		AND rf_st_code LIKE'%'||#{rfStCode}||'%'
+	</select>
+	
+	
 </mapper>
