@@ -24,5 +24,12 @@ public class RestLectureController {
 	}
 	
 	//강의 상세
+	@RequestMapping(value = "/lectureDetail",method=RequestMethod.GET)
+	public ExtendedLectureVO lectureDetail(ExtendedLectureVO vo, Principal pri) {
+		if(pri != null) {
+			vo.setId(pri.getName());
+		}
+		return extendedDao.extendedLecture(vo);
+	}
 
 }

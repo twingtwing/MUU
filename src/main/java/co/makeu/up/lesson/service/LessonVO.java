@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class LessonVO {
+	private int serialNo;
 	private int lsnNo;
 	private String ttl;
 	private String lsnFile;

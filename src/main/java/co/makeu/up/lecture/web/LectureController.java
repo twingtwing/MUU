@@ -3,8 +3,11 @@ package co.makeu.up.lecture.web;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,8 +112,10 @@ public class LectureController {
 	@PostMapping("/creator/lectureResister")
 	@ResponseBody
 	public void lectureResister(LectureVO vo, LessonVO lvo,
-			@RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
-			@RequestParam(value="lecFile", required = false) String[] lecList, @RequestParam(value="class", required = false) MultipartFile classfile,
+			@RequestParam(value="mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
+			@RequestParam(value="lecFile", required = false) String[] lecList,
+			@RequestParam(value="class", required = false) MultipartFile classfile,
+			@RequestParam(value="classNo", required = false) int[] classNo,
 			@RequestParam(value="classTtl", required = false) String[] classTitle) {
 			
 			vo.setCreId(lecList[13]);
@@ -161,7 +166,7 @@ public class LectureController {
 			lectureDao.lectureInsert(vo);
 			
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(1500);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -173,6 +178,7 @@ public class LectureController {
 				String oriFileName = classList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				
+				lvo.setLsnNo(classNo[i]);
 				lvo.setTtl(classTitle[i]);
 				lvo.setLsnFile("/upload/" + safeFile.substring(saveDir.length()));
 				
@@ -247,6 +253,64 @@ public class LectureController {
 	public String reportLecSelect(int sendltno, Model model) {
 			model.addAttribute("rplists", lectureDao.lectureSelect(sendltno));
 		return "main/lecture/rpLecS";
+	}
+	
+	//강의 수정 페이지
+	@RequestMapping("/creator/lecU")
+	public String lectureUpdatePage(int sendltno, Model model) {
+			model.addAttribute("lecinfo", lectureDao.lectureSelect(sendltno));
+		return "main/lecture/lecU";
+	}
+	
+	//강의 수정
+	@PostMapping("/creator/lecUpdate")
+	@ResponseBody
+	public String lectureUpdate(HttpServletRequest request, LectureVO vo, 
+			MultipartFile file, 
+			MultipartHttpServletRequest multi) {
+		vo.setLtNo(Integer.parseInt(request.getParameter("ltNo")));
+//		vo.setTtl(request.getParameter("ttl"));
+//		vo.setIntro(request.getParameter("intro"));
+//		vo.setUpCtgr(request.getParameter("upCtgr"));
+//		vo.setDownCtgr(request.getParameter("downCtgr"));
+//		vo.setTag1(request.getParameter("tag1"));
+//		vo.setTag2(request.getParameter("tag2"));
+//		vo.setTag3(request.getParameter("tag3"));
+		List<MultipartFile> phtlist = multi.getFiles("pht");
+		System.out.println(multi.getFiles("pht"));
+		System.out.println(phtlist);
+		
+		
+//		if(request.getParameter("pht1")==null) {
+//			vo.setPht1(request.getParameter("pht1a"));
+//		} else {
+//			String oriFileName = multi.getOriginalFilename();
+//			
+//			String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+//            vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
+//            try {
+//				multi.transferTo(new File(safeFile));
+//			} catch (IllegalStateException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//		if(request.getParameter("pht2")==null) {
+//			vo.setPht2(request.getParameter("pht2a"));
+//		} else {
+//			
+//		}
+//		if(request.getParameter("pht3")==null) {
+//			vo.setPht3(request.getParameter("pht3a"));
+//		} else {
+//			
+//		}
+		
+		//lectureDao.lectureUpdate(vo);
+		//return "redirect:" + request.getHeader("Referer");
+		return null;
 	}
 
 }

@@ -14,4 +14,9 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.insertReviewReport(vo);
 	}
 
+	@Override
+	public int insertLecReport(ReportVO vo) {
+		return map.insertLecReport(vo);
+	}
+
 }

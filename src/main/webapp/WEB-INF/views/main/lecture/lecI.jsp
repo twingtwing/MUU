@@ -458,10 +458,12 @@
                                     <h6 class="mb-2 font-weight-bold">태그 선택</h6>
                                 </div>
                                 <div id="tagdiv">
-                                    <label class="mr-2"><input type="checkbox" value="1">&nbsp;1번태그</label>
+                                <!--
                                     <label class="mr-2"><input type="checkbox" value="2">&nbsp;2번태그</label>
+                                    <label class="mr-2"><input type="checkbox" value="1">&nbsp;1번태그</label>
                                     <label class="mr-2"><input type="checkbox" value="3">&nbsp;3번태그</label>
                                     <label class="mr-2"><input type="checkbox" value="4">&nbsp;4번태그</label>
+                                  -->
                                 </div>
                             </form>
                         </div>
@@ -517,7 +519,39 @@
 			)
 		})
 	})
-   
+	
+	//태그
+	const taglist = [
+                       { tagId : 'LT01', tagName :'일본'},
+                       { tagId : 'LT02', tagName :'프랑스'},
+                       { tagId : 'LT03', tagName :'이탈리아'},
+                       { tagId : 'LT04', tagName :'중국'},
+                       { tagId : 'LT05', tagName :'동남아'},
+                       { tagId : 'LT06', tagName :'인도'},
+                       { tagId : 'LT07', tagName :'스케치'},
+                       { tagId : 'LT08', tagName :'감성'},
+                       { tagId : 'LT09', tagName :'레트로'},
+                       { tagId : 'LT010', tagName :'인디'},
+                       { tagId : 'LT011', tagName :'오리엔탈'},
+                       { tagId : 'LT012', tagName :'SWAG'},
+                       { tagId : 'LT013', tagName :'자취생'},
+                       { tagId : 'LT014', tagName :'호텔'},
+                       { tagId : 'LT015', tagName :'집밥'},
+                       { tagId : 'LT016', tagName :'운동'},
+                       { tagId : 'LT017', tagName :'힐링'},
+                       { tagId : 'LT018', tagName :'감성샷'},
+                       { tagId : 'LT019', tagName :'인생샷'},
+                       { tagId : 'LT020', tagName :'여행'}
+                    ]
+   $(function(){
+	   		$.each(taglist, function(a,b){
+	   			let taglabel = $('<label>').addClass('mr-2').text(b.tagName).attr('for', a);
+	   			let taginput = $('<input>').attr('type','checkbox').attr('id',a).val(b.tagId);
+					   			
+			    taginput.appendTo($('#tagdiv'));
+			    taglabel.appendTo($('#tagdiv'));
+	   		});
+   });
 	
 	
 	
@@ -749,13 +783,15 @@
 	}); 
     
      //태그 체크
-     $('#tagdiv').find('input[type="checkbox"]').on('click', function(e){
-     	let tagcount = $('input:checked[type="checkbox"]').length;
-     	if(tagcount > 3){
-     		alert("태그는 최대 3개까지 선택가능합니다");
-     		$(this).prop("checked", false);
-     	}
-     });
+     $(function(){
+	     $('#tagdiv').find('input[type="checkbox"]').on('click', function(e){
+	     	let tagcount = $('input:checked[type="checkbox"]').length;
+	     	if(tagcount > 3){
+	     		alert("태그는 최대 3개까지 선택가능합니다");
+	     		$(this).prop("checked", false);
+	     	}
+	     })
+     })
     
 	//시큐리티 토큰
 	let header = "${_csrf.headerName}";
@@ -780,7 +816,7 @@
 		let tag1 = null;
 		let tag2 = null;
 		let tag3 = null;
-		$('input:checked[type="checkbox"]').each(function(a,b){
+		$('input:checked[type="checkbox"]').each(function(a){
 			if(a == 0){
 				tag1 = $(this).val();
 			}
@@ -792,6 +828,7 @@
 			}
 		})
 		for(var i = 0; i < $('.classUp').length; i++){
+			form.append("classNo", $('.itemNum').eq(i).text());
 			form.append("classTtl", $('.classTtl').eq(i).val());
 			form.append("class", $('.classUp')[i].files[0]);
 		}
@@ -883,7 +920,5 @@
         
          
 }
-    
-              
 </script>
 </html>

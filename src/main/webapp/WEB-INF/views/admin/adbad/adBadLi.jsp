@@ -56,48 +56,55 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
-                                <div class="row position-relative">
-                                    <table class="admin_search table table-bordered">
-                                        <tr height="38">
-                                            <th style="width: 15%" class="align-middle">검색분류</th>
-                                            <td style="width: 35%">
-                                                <div class="row">
-                                                    <div class="col-3">
-                                                        <select class="custom-select text-center px-0" style="width: 100px;">
-                                                            <option>제목</option>
-                                                            <option>내용</option>
-                                                            <option>제목 + 내용</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-9 d-flex align-items-center pl-0">
-                                                        <input class="ml-1 w-100" type="text" spellcheck="false">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <th style="width: 15%" class="align-middle">상태</th>
-                                            <td style="width: 35%" class="align-middle">
-                                                <div class="row align-items-center ml-1">
-                                                    <input type="checkbox" name="code" id="code_Y" class="mr-1">
-                                                    <label class="mb-0" for="code_Y">등록</label>
-                                                    <input type="checkbox" name="code" id="code_N" class="ml-3 mr-1">
-                                                    <label class="mb-0" for="code_N">삭제</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr height="38">
-                                            <th>등록일</th>
-                                            <td colspan="3" class="text-left align-middle">
-                                                <div class="row pl-4 d-flex justify-content-start">
-                                                    <div><input type="date"></div>
-                                                    <div class="ml-3 mr-3 align-self-center"><i class="fa fa-minus"></i></div>
-                                                    <div><input type="date"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <button class="btn btn-secondary position-absolute"
-                                        style="width: 75px; height: 33px; right: 5px; bottom: 23px;">검색</button>
-                                </div>
+                                <form action='/admin/adBadLi' id='ser' method='get'>
+	                                <div class="row position-relative">
+	                                    <table class="admin_search table table-bordered">
+	                                        <tr height="38">
+	                                            <th style="width: 15%" class="align-middle" >검색분류</th>
+	                                            <td style="width: 35%">
+	                                                <div class="row">
+	                                                    <div class="col-3">
+	                                                        <select class="custom-select text-center px-0" 
+	                                                        id="sel" onchange="chsel()"
+	                                                        style="width: 100px;">
+	                                                            <option value ="ttl">제목</option>
+	                                                            <option value = "content">내용</option>
+	                                                            <option value = "mix">제목 + 내용</option>
+	                                                        </select>
+	                                                    </div>
+	                                                    <div class="col-9 d-flex align-items-center pl-0">
+	                                                        <input id="inp" class="ml-1 w-100" type="text" name ="ttl" spellcheck="false">
+	                                                    </div>
+	                                                </div>
+	                                            </td>
+	                                            <th style="width: 15%" class="align-middle">상태</th>
+	                                            <td style="width: 35%" class="align-middle">
+	                                                <div class="row align-items-center ml-1">
+	                                                    <input type="checkbox" name="bStCode" id="code_Y" class="mr-1">
+	                                                    <label class="mb-0" for="code_Y" >등록</label>
+	                                                    <input type="checkbox" name="bStCode" id="code_N" class="ml-3 mr-1">
+	                                                    <label class="mb-0" for="code_N">삭제</label>
+	                                                </div>
+	                                            </td>
+	                                        </tr>
+	                                        <tr height="38">
+	                                            <th>등록일</th>
+	                                            <td colspan="3" class="text-left align-middle">
+	                                                <div class="row pl-4 d-flex justify-content-start">
+	                                                    <div><input type="date" name = "start"></div>
+	                                                    <div class="ml-3 mr-3 align-self-center"><i class="fa fa-minus"></i></div>
+	                                                    <div><input type="date" name = 'end'></div>
+	                                                    
+	                                                     <!-- 여기까지ㅇ-->
+	                                                </div>
+	                                            </td>
+	                                        </tr>
+	                                    </table>
+	                                    
+	                                    <button id="but"  type = "submit" class="btn btn-secondary position-absolute"
+	                                        style="width: 75px; height: 33px; right: 5px; bottom: 23px;">검색</button>
+	                                </div>
+                                </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                     	<thead>
@@ -105,7 +112,7 @@
                                             <th width="100px">번호</th>
                                             <th>제목</th>
                                             <th width="130px">작성자</th>
-                                            <th width="130px">작성일</th>
+                                            <th width="150px">작성일</th>
                                             <th width="130px">첨부파일</th>
                                             <th width="100px">상태</th>
                                         </tr>
@@ -128,7 +135,14 @@
 	                                            		<i class="fas fa-minus mr-0"></i>
 	                                            	</c:if>
 	                                            </td>
-	                                            <td>값넣기</td>
+		                                        <td >
+		                                            <c:if test="${board.getBStCode() eq 'B01' }">
+		                                            	등록
+		                                            </c:if>
+		                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
+		                                        		삭제
+		                                            </c:if>
+		                                        </td>
 	                                        </tr>
 	                                            </c:forEach>
                                         </tbody>
@@ -137,32 +151,31 @@
                                 <div class="row d-flex justify-content-center position-relative">
                                     <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
                                         <ul class="pagination">
+                                        <c:if test = "${pageMaker.prev }">
                                             <li class="paginate_button page-item previous"
-                                                id="zero_config_previous"><a href="#" aria-controls="zero_config"
-                                                    data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                                    class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="2" tabindex="0"
-                                                    class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="3" tabindex="0"
-                                                    class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="4" tabindex="0"
-                                                    class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="5" tabindex="0"
-                                                    class="page-link">5</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
+                                                id="zero_config_previous"><a href=" ${pageMaker.startpage -1 }" aria-controls="zero_config"
+                                                    data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i>previous</a></li>
+												                                         
+                                          </c:if>
+                                            
+                                     	<c:forEach var = "num" begin = "${pageMaker.startpage }" end = "${pageMaker.endpage }">
+                                     	<li class = "paginate_button page-item  ${pageMaker.vo.pageNum == num? 'active':'' }">
+                                     	<a href="${num}"aria-controls="zero_config" data-dt-idx="${num}" tabindex="0"class="page-link">${num}</a>
+                                     	</li>
+                                     	</c:forEach>
+                                            
+                                            
+                                            <c:if test = "${pageMaker.next }">
+                                            <li class="paginate_button page-item next" id="zero_config_next"><a href="${pageMaker.endPage +1 }"
                                                     aria-controls="zero_config" data-dt-idx="6" tabindex="0"
-                                                    class="page-link">6</a></li>
-                                            <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="7" tabindex="0"
-                                                    class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
+                                                    class="page-link"><i class="mdi mdi-chevron-double-right"></i>next</a></li>
+                                        	</c:if>
                                         </ul>
                                     </div>
+                                    <form id='actionFrom' method = 'get' action = '/admin/adBadLi'>
+	                                    <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vo.pageNum }'>
+	                                    <input type = 'hidden' name = 'amount' value = '${pageMaker.vo.amount }'>
+                                    </form>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-dark" onclick="location.href='/admin/adBadl'">글 등록</button>
                                         <button class="btn btn-danger">PDF다운</button>
@@ -177,14 +190,23 @@
 
                 <!-- 바디 끝 -->
 
-                <!-- footer -->
-                <footer class="footer text-center">
-                    All Rights Reserved by Matrix-admin. Designed and Developed by <a
-                        href="https://wrappixel.com">WrapPixel</a>.
-                </footer>
-                <!-- End footer -->
             </div>
             <!-- End Page wrapper -->
 </body>
+<script type="text/javascript">
+$(".paginate_button a").on("click" , function(e) {
+	e.preventDefault();
+	console.log('click');
+	
+	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
+	$('#actionFrom').submit();
+});
 
+	
+	function chsel(){
+		var ssel = $("#sel option:selected").val();
+		
+		document.getElementById( 'inp' ).setAttribute( 'name', ssel);
+	}
+</script>
 </html>
