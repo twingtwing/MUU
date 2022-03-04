@@ -85,21 +85,24 @@ public class LectureController {
 	}
 	@PostMapping("/creator/classUpload")
 	@ResponseBody
-	public String classUploadTest(LectureVO vo, @RequestParam(value="class", required = false) MultipartFile classfile, MultipartHttpServletRequest multi) {
+	public String classUploadTest(LectureVO vo, MultipartHttpServletRequest multi) {
 		List<MultipartFile> fileList = multi.getFiles("class");
 		System.out.println(fileList);
 		for (int i = 0; i < fileList.size(); i++) {
-			String oriFileName = fileList.get(i).getOriginalFilename();
-			System.out.println(oriFileName);
-			String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
-			
-
-			try {
-				fileList.get(i).transferTo(new File(safeFile));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			MultipartFile file = fileList.get(i);
+			if(file != null && file.getSize() > 0) {
+				String oriFileName = file.getOriginalFilename();
+				System.out.println(oriFileName);
+				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;				
+				
+				try {
+					fileList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			}
 		}
 		
@@ -112,26 +115,10 @@ public class LectureController {
 	@PostMapping("/creator/lectureResister")
 	@ResponseBody
 	public void lectureResister(LectureVO vo, LessonVO lvo,
-			@RequestParam(value="mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
-			@RequestParam(value="lecFile", required = false) String[] lecList,
-			@RequestParam(value="class", required = false) MultipartFile classfile,
-			@RequestParam(value="classNo", required = false) int[] classNo,
+			MultipartHttpServletRequest multi,
+			@RequestParam(value="lsnNo", required = false) int[] lsnNo,
 			@RequestParam(value="classTtl", required = false) String[] classTitle) {
 			
-			vo.setCreId(lecList[13]);
-			vo.setUpCtgr(lecList[0]);
-			vo.setDownCtgr(lecList[1]);
-			vo.setTtl(lecList[2]);
-			vo.setIntro(lecList[3]);
-			vo.setOpenTerm(Integer.parseInt(lecList[4]));
-			vo.setTlsnTerm(Integer.parseInt(lecList[5]));
-			vo.setKitName(lecList[6]);
-			vo.setKitIntro(lecList[7]);
-			vo.setKitPrc(Integer.parseInt(lecList[8]));
-			vo.setPrc(Integer.parseInt(lecList[9]));
-			vo.setTag1(lecList[10]);
-			vo.setTag2(lecList[11]);
-			vo.setTag3(lecList[12]);
 			//임시 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//vo.setStartDate(null);
 	
@@ -143,14 +130,11 @@ public class LectureController {
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
 					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
-				}
-				if(i == 1) {
+				} else if(i == 1) {
 					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
-				}
-				if(i == 2) {
+				} else if(i == 2) {
 					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
-				}
-			    if(i == 3) {
+				} else if(i == 3) {
 	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
 	            }
 
@@ -172,14 +156,14 @@ public class LectureController {
 			}
 			
 			// 수업 등록
-			List<MultipartFile> classList = multi.getFiles("class");
+			List<MultipartFile> classList = multi.getFiles("classMov");
 			
 			for(int i = 0; i < classList.size(); i++) {
 				String oriFileName = classList.get(i).getOriginalFilename();
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
 				
-				lvo.setLsnNo(classNo[i]);
-				lvo.setTtl(classTitle[i]);
+				lvo.setLsnNo(lsnNo[i]);
+				lvo.setTtl(classTitle[i]); 
 				lvo.setLsnFile("/upload/" + safeFile.substring(saveDir.length()));
 				
 				try {
@@ -265,52 +249,44 @@ public class LectureController {
 	//강의 수정
 	@PostMapping("/creator/lecUpdate")
 	@ResponseBody
-	public String lectureUpdate(HttpServletRequest request, LectureVO vo, 
-			MultipartFile file, 
+	public void lectureUpdate(HttpServletRequest request, LectureVO vo, 
 			MultipartHttpServletRequest multi) {
-		vo.setLtNo(Integer.parseInt(request.getParameter("ltNo")));
-//		vo.setTtl(request.getParameter("ttl"));
-//		vo.setIntro(request.getParameter("intro"));
-//		vo.setUpCtgr(request.getParameter("upCtgr"));
-//		vo.setDownCtgr(request.getParameter("downCtgr"));
-//		vo.setTag1(request.getParameter("tag1"));
-//		vo.setTag2(request.getParameter("tag2"));
-//		vo.setTag3(request.getParameter("tag3"));
-		List<MultipartFile> phtlist = multi.getFiles("pht");
-		System.out.println(multi.getFiles("pht"));
-		System.out.println(phtlist);
+		MultipartFile pht1 = multi.getFile("pht11");
+		MultipartFile pht2 = multi.getFile("pht22");
+		MultipartFile pht3 = multi.getFile("pht33");
+		MultipartFile thumb = multi.getFile("thumbb");
 		
+		List<MultipartFile> filelist = new ArrayList<MultipartFile>();
+		filelist.add(pht1);
+		filelist.add(pht2);
+		filelist.add(pht3);
+		filelist.add(thumb);
 		
-//		if(request.getParameter("pht1")==null) {
-//			vo.setPht1(request.getParameter("pht1a"));
-//		} else {
-//			String oriFileName = multi.getOriginalFilename();
-//			
-//			String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
-//            vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
-//            try {
-//				multi.transferTo(new File(safeFile));
-//			} catch (IllegalStateException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//		if(request.getParameter("pht2")==null) {
-//			vo.setPht2(request.getParameter("pht2a"));
-//		} else {
-//			
-//		}
-//		if(request.getParameter("pht3")==null) {
-//			vo.setPht3(request.getParameter("pht3a"));
-//		} else {
-//			
-//		}
+		for(int i = 0; i < filelist.size(); i++) {
+			if(filelist.get(i) != null) {
+				String oriFileName = filelist.get(i).getOriginalFilename();
+				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				if(i == 0) {
+					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 1) {
+					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 2) {
+					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 3) {
+	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
+	            }
+	
+				try {
+					filelist.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
-		//lectureDao.lectureUpdate(vo);
-		//return "redirect:" + request.getHeader("Referer");
-		return null;
+		lectureDao.lectureUpdate(vo);
 	}
 
 }
