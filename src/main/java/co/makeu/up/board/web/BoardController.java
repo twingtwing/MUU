@@ -57,6 +57,7 @@ public class BoardController {
 		List<BoardVO> list = boardDao.selectadbad(vo);
 		model.addAttribute("list",list);
 		model.addAttribute("pageMaker",new PageVo(vo,list.get(0).getLength()));
+		System.out.println(model.getAttribute("pageMaker"));
 		return "admin/adbad/adBadLi";
 	}
 	

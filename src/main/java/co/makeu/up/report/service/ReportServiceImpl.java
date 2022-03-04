@@ -1,5 +1,7 @@
 package co.makeu.up.report.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +21,18 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.insertLecReport(vo);
 	}
 
+	@Override
+	public List<ReportVO> selectreport(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectreport(vo);
+	}
+
+	@Override
+	public ReportVO selectreports(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectreports(vo);
+	}
+
+	
+	
 }
