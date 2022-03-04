@@ -24,4 +24,24 @@ public class RefundServiceImpl implements RefundMapper {
 	public List<RefundVO> RefundListSelect(RefundVO vo) {
 		return map.RefundListSelect(vo);
 	}
+
+	@Override
+	public List<RefundVO> adminRefundList(RefundVO vo) {
+		return map.adminRefundList(vo);
+	}
+
+	@Override
+	public List<RefundVO> adminRefundListSearch(RefundVO vo) {
+		return map.adminRefundListSearch(vo);
+	}
+
+	@Override
+	public int updateRefund(RefundVO vo) {
+		return map.updateRefund(vo);
+	}
+
+	@Override
+	public int adRefCancleUpdate(RefundVO vo) {
+		return map.adRefCancleUpdate(vo);
+	}
 }

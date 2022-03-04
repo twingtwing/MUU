@@ -1,6 +1,7 @@
 package co.makeu.up.common.view;
 
 import co.makeu.up.board.service.BoardVO;
+import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.report.service.ReportVO;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,48 +12,58 @@ public class PageVo {
 
 	private int startpage;
 	private int endpage;
-	private boolean prev ,next;
-	
+	private boolean prev, next;
+
 	private int total;
-	
-	//vo에따라서 계속 만들어야함
-	//private Vo클래스 vo;
-	
-	/* 
-	public PageVo(Vo클래스 vo , int total) {
-		this.vo  = vo;
+
+	// vo에따라서 계속 만들어야함
+	// private Vo클래스 vo;
+
+	/*
+	 * public PageVo(Vo클래스 vo , int total) { this.vo = vo; this.total = total;
+	 * this.endpage = (int) (Math.ceil(vo.getPageNum() / 5.0)) *5;
+	 * 
+	 * this.startpage = this.endpage - 4;
+	 * 
+	 * int realEnd = (int) (Math.ceil((total * 1.0) / vo.getAmount()));
+	 * 
+	 * if(realEnd < this.endpage) { this.endpage = realEnd; } this.prev =
+	 * this.startpage > 1; this.next = this.endpage < realEnd; }
+	 */
+	private BoardVO vo;
+
+	public PageVo(BoardVO vo, int total) {
+		this.vo = vo;
 		this.total = total;
-		this.endpage = (int) (Math.ceil(vo.getPageNum() / 5.0)) *5;
-		
+		this.endpage = (int) (Math.ceil(vo.getPageNum() / 5.0)) * 5;
+
 		this.startpage = this.endpage - 4;
-		
 		int realEnd = (int) (Math.ceil((total * 1.0) / vo.getAmount()));
-		
-		if(realEnd < this.endpage) {
+
+		if (realEnd < this.endpage) {
 			this.endpage = realEnd;
 		}
 		this.prev = this.startpage > 1;
 		this.next = this.endpage < realEnd;
 	}
-	*/
-	private BoardVO vo;
-	
-	public PageVo (BoardVO vo , int total) {
-		this.vo = vo;
+
+	private RefundVO rvo;
+
+	public PageVo(RefundVO rvo, int total) {
+		this.rvo = rvo;
 		this.total = total;
-		this.endpage = (int) (Math.ceil(vo.getPageNum()/5.0)) *5;
-		
-		this.startpage = this.endpage -4;
-		int realEnd = (int) (Math.ceil((total*1.0)/vo.getAmount()));
-		
-		if(realEnd < this.endpage) {
+		this.endpage = (int) (Math.ceil(rvo.getPageNum() / 5.0)) * 5;
+
+		this.startpage = this.endpage - 4;
+		int realEnd = (int) (Math.ceil((total * 1.0) / rvo.getAmount()));
+
+		if (realEnd < this.endpage) {
 			this.endpage = realEnd;
 		}
-		this.prev = this.startpage >1;
-		this.next = this .endpage < realEnd;
+		this.prev = this.startpage > 1;
+		this.next = this.endpage < realEnd;
 	}
-	
-	
+
 	private ReportVO vot;
 	
 	public PageVo (ReportVO vot , int total) {
@@ -74,5 +85,4 @@ public class PageVo {
 	
 }
 
-	
-
+}

@@ -36,4 +36,70 @@
 		AND RN <![CDATA[>=]]>(10*#{page})+1
 		AND rf_st_code LIKE'%'||#{rfStCode}||'%'
 	</select>
+
+	
+	<select id="adminRefundList" resultType="co.makeu.up.refund.service.RefundVO">
+		SELECT * FROM(SELECT ROWNUM RN,
+		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no,u.name,s.addr,s.zip,s.deta_addr,COUNT(*) OVER() length
+		FROM SUGANG S JOIN REFUND R
+		ON S.TLSN_NO = R.TLSN_NO
+		JOIN LECTURE L
+		ON L.LT_NO = S.LT_NO
+        JOIN USERS U
+        ON U.ID = S.ID
+        where 1=1
+		ORDER BY R.TLSN_NO DESC)
+		<![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	    ]]>
+	</select>
+	
+	<select id="adminRefundListSearch" resultType="co.makeu.up.refund.service.RefundVO">
+		SELECT * FROM(SELECT ROWNUM RN,
+		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no,u.name,s.addr,s.zip,s.deta_addr,COUNT(*) OVER() length
+		FROM SUGANG S JOIN REFUND R
+		ON S.TLSN_NO = R.TLSN_NO
+		JOIN LECTURE L
+		ON L.LT_NO = S.LT_NO
+        JOIN USERS U
+        ON U.ID = S.ID
+		where 1=1
+		<if test="name != null and name != ''">
+		and u.name like '%' || #{name}  || '%'
+		</if>
+		<if test="id != null and id != ''">
+		and u.id like '%' || #{id}  || '%'
+		</if>
+		<if test="rfStCode != null and rfStCode != ''">
+		and r.rf_st_code = #{rfStCode}
+		</if>
+		<if test="ttl != null and ttl != ''">
+		and l.ttl like '%' || #{ttl} || '%'
+		</if>
+		<if test="content != null and content != ''">
+		and r.content = #{content}
+		</if>
+		<if test="start != null and start !=''">
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < r.req_Date ]]>
+        </if>
+        <if test="end != null and end !=''" >
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > r.req_Date ]]>
+        </if>
+		ORDER BY R.TLSN_NO DESC)
+		<![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	    ]]>
+	</select>
+	
+	<update id="updateRefund" parameterType="co.makeu.up.refund.service.RefundVO">
+		update refund set rf_st_code = 'RF02'
+		where TLSN_NO = #{tlsnNo}
+	</update>
+	
+	<update id="adRefCancleUpdate" parameterType="co.makeu.up.refund.service.RefundVO">
+		update refund set rf_st_code = 'RF03'
+		where TLSN_NO = #{tlsnNo}
+	</update>
 </mapper>
