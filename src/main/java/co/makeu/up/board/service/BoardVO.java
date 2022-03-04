@@ -23,6 +23,7 @@ public class BoardVO {
 	private int length;
 	private String start;
 	private String end;
+	private String mix;
 	
 	private List<DetafileVO> detaFileList;
 

@@ -3,12 +3,11 @@
 <mapper namespace="co.makeu.up.report.service.ReportMapper">
 	<insert id="insertReviewReport" parameterType="co.makeu.up.report.service.ReportVO">
 		INSERT INTO REPORT VALUES(
-		(SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP01',#{content},'RPS01', #{num},#{type}
-		)
+		(SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP01',#{content},'RPS01', #{num},#{type},SYSDATE)
 	</insert>
 	
 	<insert id="insertLecReport" parameterType="co.makeu.up.report.service.ReportVO">
 		INSERT INTO REPORT 
-		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type})
+		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type},SYSDATE)
 	</insert>
 </mapper>

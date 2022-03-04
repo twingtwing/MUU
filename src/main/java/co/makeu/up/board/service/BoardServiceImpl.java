@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import co.makeu.up.detafile.service.DetafileMapper;
+import co.makeu.up.detafile.service.DetafileVO;
+import co.makeu.up.files.service.FileMapper;
 
 @Repository("boardDao")
 public class BoardServiceImpl implements BoardService {
 	@Autowired private BoardMapper map;
-	@Autowired private DetafileMapper fileMap;
+	@Autowired private DetafileMapper detafileMap;
+	@Autowired private FileMapper fileMap;
 
 	@Override
 	public List<BoardVO> selectBoardList() {
@@ -21,7 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO selectBoard(BoardVO vo) {
 		vo = map.selectBoard(vo);
 		if(vo.getFileNo() != -1) {
-			vo.setDetaFileList(fileMap.detaFileList(vo.getFileNo()));
+			vo.setDetaFileList(detafileMap.detaFileList(vo.getFileNo()));
 		}
 		map.upboard(vo);
 		return vo;
@@ -34,12 +37,23 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int insertBoard(BoardVO vo) {
+		if(vo.getDetaFileList().size() !=0) {
+			fileMap.insertFile(vo);
+			for (DetafileVO detaVO : vo.getDetaFileList()) {
+				detaVO.setFileNo(vo.getFileNo());
+				detafileMap.detaFileInsert(detaVO);
+			}
+		}
 		return map.insertBoard(vo);
 	}
 
 	@Override
 	public BoardVO selectadbads(BoardVO vo) {
-		return map.selectadbads(vo);
+		vo = map.selectadbads(vo);
+		if(vo.getFileNo() != -1) {
+			vo.setDetaFileList(detafileMap.detaFileList(vo.getFileNo()));
+		}
+		return vo;
 	}
 
 	@Override
@@ -54,7 +68,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> seradbad(BoardVO vo) {
-		// TODO Auto-generated method stub
 		return map.seradbad(vo);
 	}
 	

@@ -34,7 +34,7 @@
 	<select id="lectureDetail" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		WITH
 		LECT_DETA AS(
-		SELECT L.* ,U.name,U.cre_intro,NVL2(W.ID,'Y','N') WASH, C.w_count
+		SELECT L.* ,U.name,U.cre_intro,U.PHT,NVL2(W.ID,'Y','N') WASH, C.w_count
 		FROM LECTURE L JOIN USERS U
 		ON L.CRE_ID = U.ID
 		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
@@ -54,23 +54,25 @@
 	</select>
 	
 	<select id="reviewList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.review.service.ReviewVO">
-		SELECT REVIEW.*
-		,CASE WRITER WHEN #{id} THEN 'Y'
+		SELECT R.*,U.NAME,U.PHT
+		,CASE R.WRITER WHEN #{id} THEN 'Y'
 		 ELSE 'N' END MY_REVIEW
-		FROM REVIEW
-		WHERE LT_NO = #{ltNo}	
-		AND RV_CODE != 'RE03'
-		ORDER BY RV_NO DESC	
+		FROM REVIEW R JOIN USERS U
+		ON R.WRITER = U.ID
+		WHERE R.LT_NO = #{ltNo}	
+		AND R.RV_CODE != 'RE03'
+		ORDER BY R.RV_NO DESC
 	</select>
 	
 	<select id="ltQnaList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
-		SELECT LT_QNA.* 
-		,CASE WRITER WHEN #{id} THEN 'Y'
+		SELECT Q.*, U.NAME
+		,CASE Q.WRITER WHEN #{id} THEN 'Y'
 		 ELSE 'N' END MY_QNA
-		FROM LT_QNA
-		WHERE LT_NO = #{ltNo}	
-		AND QNA_ST_CODE != 'Q03'
-		ORDER BY QNA_NO DESC	
+		FROM LT_QNA Q JOIN USERS U
+        ON Q.WRITER = U.ID
+		WHERE Q.LT_NO = #{ltNo}
+		AND Q.QNA_ST_CODE != 'Q03'
+		ORDER BY Q.QNA_NO DESC
 	</select>
 	
 </mapper>

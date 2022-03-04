@@ -100,11 +100,11 @@
                 <div class="col-lg-12">
                     <div class="row mx-2 mb-4">
                         <div class="col-lg-8 pr-2">
-                            <img src="/resources/img/blog/blog-1.jpg" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
+                            <img :src="lecDetails.pht1" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
                         </div>
                         <div class="col-lg-4 p-0">
-                            <img src="/resources/img/blog/blog-2.jpg" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2`">
-                            <img src="/resources/img/blog/blog-3.jpg" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
+                            <img :src="lecDetails.pht2" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2`">
+                            <img :src="lecDetails.pht3" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
                         </div>
                     </div>
                     <hr class="font-weight-bold">
@@ -119,7 +119,7 @@
                                             </div>
                                             <div class="row d-flex justify-content-between mb-4">
                                                 <div class="row ml-2">
-                                                    <img class="rounded-circle" src="/resources/img/blog/blog-4.jpg" alt="크리에이터이미지" style="width: 75px;">
+                                                    <img class="rounded-circle" :src="lecDetails.pht" alt="크리에이터이미지" style="width: 75px;">
                                                     <div class="d-flex align-items-center ml-3">
                                                         <h5 class="mb-0">{{lecDetails.name}}</h5>
                                                     </div>
@@ -153,9 +153,11 @@
                                                     <h5 class="font-weight-bold my-2">강의소개</h5>
                                                     <p class="mx-2 mt-3 px-2 py-3" style="border-left:4px solid #dc3545">{{lecDetails.intro}}</p>
                                                     <h6 class="font-weight-bold mb-2 mx-4">&lt; OT영상 &gt;</h6>
-                                                    <!-- <video controls width="100%" controlsList="nodownload" id="player">
-	                                                    <source :src="lessonList[0].lsnFile" type="video/mp4"></video>
-												     </video>  -->
+                                                    <div class="row w-100">
+    	                                                <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
+		                                                    <source :src="lessonList[0].lsnFile" type="video/mp4">
+													    </video>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <hr>
@@ -215,15 +217,15 @@
                                                     <!-- 후기 이미 작성한 경우 -->
                                                     <div v-if="myReview != null" class="row mx-2 mb-3">
                                                         <div class="col-lg-12 py-1 px-0" style="border: 0.125rem solid #fdb6b6f5;">
-                                                            <div class="row mx-1">
+                                                            <div class="row ml-2 mr-1 mt-1">
                                                                 <div class="col-lg-12 px-0">
                                                                     <div id="myStar">
                                                                         <div class="row mx-0">
                                                                             <div class="col-lg-1 px-0">
-                                                                                <img class="rounded-circle" src="/resources/img/anime/details-pic.jpg" alt="프로필 사진" style="width: 50px; height: 50px;">
+                                                                                <img class="rounded-circle" :src="myReview.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
                                                                             </div>
                                                                             <div class="col-lg-9">
-                                                                                <p class="mb-0">{{myReview.writer}}</p>
+                                                                                <p class="mb-0 font-weight-bold">나</p>
                                                                                 <div>
                                                                                     <i v-for="index in myReview.star" class="fa fa-star text-warning"></i>
                                                                                     <i v-for="index in 5-myReview.star" class="fa fa-star-o text-warning"></i>
@@ -241,12 +243,12 @@
                                                                         </div>
                                                                     </div>
                                                                     <div id="backBtn" class="row mx-0 justify-content-end">
-                                                                        <button v-on:click="revBack(1)" class="btn btn-secondary mr-2" style="bottom: 45px; right: 12px;">수정</button>
-                                                                        <button v-on:click="revDelete" class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                        <button v-on:click="revBack(1)" class="btn btn-secondary mr-1 px-2 py-1" style="bottom: 45px; right: 12px;">수정</button>
+                                                                        <button v-on:click="revDelete" class="btn btn-secondary px-2 py-1" style="bottom: 45px; right: 12px;">삭제</button>
                                                                     </div>
                                                                     <div id="upBtn" class="row mx-0 justify-content-end d-none">
-                                                                        <button v-on:click="revUpdate" class="btn btn-secondary mr-2" style="bottom: 45px; right: 12px;">수정</button>
-                                                                        <button v-on:click="revBack(0)" class="btn btn-secondary" style="bottom: 45px; right: 12px;">취소</button>
+                                                                        <button v-on:click="revUpdate" class="btn btn-secondary mr-1 px-2 py-1" style="bottom: 45px; right: 12px;">수정</button>
+                                                                        <button v-on:click="revBack(0)" class="btn btn-secondary px-2 py-1" style="bottom: 45px; right: 12px;">취소</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -255,22 +257,22 @@
                                                     <!-- 남의 후기 다 보여줌-->
                                                     <div v-if="reviewList != null" v-for="review in reviewList " class="row mx-2 mb-3">
                                                         <div v-if="review.myReview == 'N'" class="col-lg-12 py-1 px-0" style="border: 0.125rem solid #afafaf;">
-                                                            <div class="row mx-1">
+                                                            <div class="row mx-1 mt-2">
                                                                 <div class="col-lg-12 px-0">
                                                                     <div class="revCopy">
                                                                         <div class="row mx-0">
-                                                                            <div class="col-lg-1 px-0">
-                                                                                <img class="rounded-circle" src="/resources/img/anime/details-pic.jpg" alt="프로필 사진" style="width: 50px; height: 50px;">
+                                                                            <div class="col-lg-2 px-0 d-flex justify-content-center">
+                                                                                <img class="rounded-circle" :src="review.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
                                                                             </div>
-                                                                            <div class="col-lg-9">
-                                                                                <p class="mb-0">{{review.writer}}</p>
+                                                                            <div class="col-lg-9 pl-0">
+                                                                                <p class="mb-0">{{review.name}}</p>
                                                                                 <div>
                                                                                     <i v-for="index in review.star" class="fa fa-star text-warning"></i>
                                                                                     <i v-for="index in 5-review.star" class="fa fa-star-o text-warning"></i>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mx-3 my-2 pt-1">
+                                                                        <div class="row mx-4 my-2 pt-1">
                                                                             {{review.content}}
                                                                         </div>
                                                                         <input type="hidden" name="num" :value="review.rvNo">
@@ -318,17 +320,23 @@
                                                             <div class="row mx-0">
                                                                 <div class="col-lg-12">
                                                                     <div v-for="(qna , index) in qnaList " class="py-1 px-2 mb-5" style="border: 0.15rem solid #afafaf; border-radius: 15px;">
-                                                                        <div>
+                                                                        <div class="qnaBox">
                                                                         	<div class="row col-12 justify-content-between pr-0">
 	                                                                            <p class="font-weight-bold">Q. 
-	                                                                            	<a class="qna_collapse text-dark" data-toggle="collapse" :href="'#collapse_' + index" >{{qna.writer}}</a>
+	                                                                            	<a class="qna_collapse text-dark" data-toggle="collapse" :href="'#collapse_' + index" >{{qna.name}}</a>
 	                                                                            </p>
 	                                                                        	<span v-if="qna.qnaStCode == 'Q01'" class="text-primary mt-1 font-weight-bold">미답변</span>
 	                                                                        	<span v-if="qna.qnaStCode == 'Q02'" class="text-danger mt-1 font-weight-bold">답변완료</span>
                                                                         	</div>
-                                                                            <p class="mx-2">{{qna.qContent}}</p>
-                                                                            <div v-if="qna.myQna =='Y'" class="d-flex justify-content-end">
-                                                                                <button v-if="qna.qnaStCode =='Q01'"class="btn btn-secondary" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                            <p class="mx-2 qnaP">{{qna.qContent}}</p>
+                                                                            <textarea class="d-none w-100" rows="3">{{qna.qContent}}</textarea>
+                                                                            <div v-if="qna.myQna =='Y'" class="row mx-0 justify-content-end upDiv">
+                                                                            	<button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary mr-1 px-2 py-1" v-on:click="qnaUpt(1)" style="bottom: 45px; right: 12px;">수정</button>
+                                                                                <button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary px-2 py-1" v-on:click="qnaDel(index)" style="bottom: 45px; right: 12px;">삭제</button>
+                                                                            </div>
+                                                                            <div class="row mx-0 justify-content-end d-none downDiv">
+                                                                            	<button class="btn btn-secondary mr-1 px-2 py-1" v-on:click="qnaUpdate(index)" style="bottom: 45px; right: 12px;">수정</button>
+                                                                                <button class="btn btn-secondary px-2 py-1" v-on:click="qnaUpt(-1)" style="bottom: 45px; right: 12px;">취소</button>
                                                                             </div>
                                                                         </div>
                                                                         <div v-if="qna.qnaStCode == 'Q02'" class="collapse" :id="'collapse_' + index">
@@ -551,6 +559,52 @@
             	}
             },
             methods :{
+            	qnaUpdate(index){
+            		console.log($(event.target).closest('.qnaBox').find('textarea').val());
+            		console.log(this.qnaList[index].qnaNo)
+            		this.qnaList[index].qContent = $(event.target).closest('.qnaBox').find('textarea').val();
+            		qnaUpt(-1);
+            		/* $.ajax({
+            			url : '/user/updateMyqna',
+            			data : {qnaNo : this.qnaList[index].qnaNo, qContent : },
+            			type : 'post',
+            			beforeSend : (xhr) =>{
+            			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            			},
+            		})
+            		.done(()=>{
+            			
+            		}); */
+            	},
+            	qnaUpt(index){
+            		if(index == 1){//text창 보여줌
+            			$(event.target).closest('.qnaBox').find('.qnaP').addClass('d-none');
+            			$(event.target).closest('.qnaBox').find('.upDiv').addClass('d-none');
+            			$(event.target).closest('.qnaBox').find('textarea').removeClass('d-none');
+            			$(event.target).closest('.qnaBox').find('.downDiv').removeClass('d-none');
+            		}else if(index == -1){//text창 없앰
+            			$(event.target).closest('.qnaBox').find('.qnaP').removeClass('d-none');
+            			$(event.target).closest('.qnaBox').find('.upDiv').removeClass('d-none');
+            			$(event.target).closest('.qnaBox').find('textarea').val($(event.target).closest('.qnaBox').find('.qnaP').text());
+            			$(event.target).closest('.qnaBox').find('textarea').addClass('d-none');
+            			$(event.target).closest('.qnaBox').find('.downDiv').addClass('d-none');
+            		}
+            	},
+            	qnaDel(index){
+            		let qnaNo = this.qnaList[index].qnaNo;
+            		console.log(qnaNo);
+            		$.ajax({
+            			url : '/user/deleteMyqna',
+            			data : {qnaNo : qnaNo},
+            			type : 'post',
+            			beforeSend : (xhr) =>{
+            			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            			},
+            		})
+            		.done(()=>{
+	            		this.qnaList.splice(index,1);
+            		}) 
+            	},
             	revBack(num){//수정으로 변경
             		if(num ==0){//춰소
             			$('#revU').addClass('d-none');
@@ -742,7 +796,7 @@
                         }); 
                     }
                 },
-                qnaInsert(){
+                qnaInsert(){//질문 등록
                 	let content = $(event.target).closest('div').find('textarea').val()
                     if(content == ''){
                     	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
@@ -764,7 +818,8 @@
                             },
                         })
                         .done((r) => {
-                        	//맨 앞에 추가하기
+                        	alert('질문이 등록되었습니다.');
+                    		location.href ="/lecD?ltNo="+'${ltNo}'
                         })
                     }
                 },

@@ -2,8 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.detafile.service.DetafileMapper">
 	<select id="detaFileList" resultType="co.makeu.up.detafile.service.DetafileVO" parameterType="int">
-		SELECT * 
-		FROM DETA_FILE 
-		WHERE file_no = #{fileNo}
+		SELECT D.* 
+		FROM DETA_FILE D JOIN FILES F
+		ON D.FILE_NO = F.FILE_NO
+		WHERE F.FILE_NO = #{fileNo}
+		AND LOWER(F.USE_YN) = 'y'
 	</select>
+	
+	<insert id="detaFileInsert" parameterType="co.makeu.up.detafile.service.DetafileVO">
+		<selectKey keyProperty="detaNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(DETA_NO),0) + 1
+			FROM DETA_FILE
+		</selectKey>
+		INSERT INTO DETA_FILE(DETA_NO,FILE_PATH,PHY_PATH,FILE_NO)
+		VALUES(#{detaNo},#{filePath},#{phyPath},#{fileNo})
+	</insert>
 </mapper>

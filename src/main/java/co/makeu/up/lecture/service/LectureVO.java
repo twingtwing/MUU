@@ -35,6 +35,7 @@ public class LectureVO {
 	private String wash;//워시리스트 여부
 	private int wCount;//워시리스트 갯수
 	private String name;//크리에이터 이름
+	private String pht;//크리에이터 사진
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
 	
@@ -229,6 +230,12 @@ public class LectureVO {
 	}
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
+	}
+	public String getPht() {
+		return pht;
+	}
+	public void setPht(String pht) {
+		this.pht = pht;
 	}
 	
 	
