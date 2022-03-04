@@ -49,7 +49,7 @@
              and TO_DATE(#{end}, 'YYYY-MM-DD')  > #{wrDate}
              ]]>
             </if>
-            order by b_no desc) w
+            order by b_no desc)
         )
         <![CDATA[
 	    where rn > (#{pageNum}-1) * #{amount} 

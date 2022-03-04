@@ -19,6 +19,14 @@ public class RefundVO {
 	private String cre_id;
 	private int count;
 	private int ltNo;
+	private String name;
+	private String start;
+	private String end;
+	
+	private String addr;
+	private int zip;
+	private String deta_addr;
+	
 	
 	// 페이지네이션을 위한 vo객체
 	private int page;
@@ -27,6 +35,18 @@ public class RefundVO {
 	private String ttlSearchKey;
 	private String contentSearchKey;
 	private String idSearchKey;
-
+	
+	// 어드민 페이지네이션을 위한 객체
+	private int pageNum;
+	private int amount;
+	private int length;
+	
+	public RefundVO(){
+		this (1,10);
+	}
+	public RefundVO(int pageNum , int amount) {
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
 	
 }
