@@ -204,14 +204,15 @@
                       <table class="table border-bottom">
                         <thead class="text-center">
                         <tr>
-                          <th style="width:200px">강의사진</th>
-                          <th>강의제목</th>
-                          <th>강의설명</th>
-                          <th>강의가격</th>
-                          <th>구매날짜</th>
+                          <th class="text-center align-middle" style="width:200px">강의사진</th>
+                          <th class="text-center align-middle">강의제목</th>
+                          <th class="text-center align-middle">강의가격<br><span class="small">(키트 가격은 강의 가격에 포함됨)</span></th>
+                          <th class="text-center align-middle">구매날짜</th>
+                          <th class="text-center align-middle">만료날짜</th>
+                          <th class="text-center align-middle">상태</th>
                         </tr>
                         </thead>
-                        <tbody> 
+                        <tbody class="myPayList"> 
                         <c:forEach items="${payInfo }" var="pay" varStatus="st">   
                           <tr <c:if test="${st.count > 4 }">class="hided"</c:if>>
                             <td class="p-0">
@@ -223,15 +224,24 @@
                                 ${pay.ttl }
                             </td>
                             <td class="text-center align-middle">
-                                ${pay.intro }
-                            </td>
-                            <td class="text-center align-middle">
                                 <fmt:formatNumber>${pay.pay }</fmt:formatNumber><br>
                                 <c:if test="${not empty pay.kitPrc }">
-                                <span class="small">( 키트 가격 : <fmt:formatNumber>${pay.kitPrc }</fmt:formatNumber>원, 강의 가격에 포함 )</span>
+                                <span class="small">( 키트 가격 : <fmt:formatNumber>${pay.kitPrc }</fmt:formatNumber>원 )</span>
                                 </c:if>
                             </td>
                             <td class="text-center align-middle">${pay.regDate }</td>
+                            <td class="text-center align-middle">${pay.expDate }</td>
+                            <td class="text-center align-middle">
+                            <c:if test="${pay.rfStCode eq 'RF01'}">
+                                <span class="text-danger">환불 신청 대기</span>
+                            </c:if>
+                            <c:if test="${pay.rfStCode eq 'RF02'}">
+                                <span class="text-success">환불 완료</span>
+                            </c:if>
+                            <c:if test="${pay.rfStCode eq 'RF03'}">
+                                <span class="text-danger">환불 거부됨</span>
+                            </c:if>
+                            </td>
                           </tr>
                           </c:forEach>   
                         </tbody>
@@ -328,34 +338,43 @@
     	.done((r)=>{
     		removeAll();
     		r.forEach((v)=>{
-	    		$('tbody').append(makeRow(v));    			
+	    		$('.myPayList').append(makeRow(v));    			
     		})
     	})
     })
     
     //날짜검색 후 DOM 조작 
     const removeAll = ()=>{
-    	$('tbody').children().remove();
+    	$('.myPayList').children().remove();
     }
     const makeRow = (list)=>{
-    	let ktPrc = '( 키트 가격 : '+list.kitPrc+'원, 강의 가격에 포함 )';
+    	let ktPrc = '( 키트 가격 : '+list.kitPrc+'원 )';
     	let tr = $('<tr>');
+    	if(list.rfStCode==='RF01'){
+    		list.rfStCode='환불 신청 대기'
+    	} else if(list.rfStCode==='RF02') {
+    		list.rfStCode='환불 완료'
+    	} else if(list.rfStCode==='RF03'){
+    		list.rfStCode='환불 거부됨'
+    	}   	
+    	tr.addClass('align-middle');
     	tr.append(
     		$('<td>').append(
     				$('<img>').attr('src',list.thumb).css('width','200px').css('height','150px'))
-    				.addClass('p-0'),
-    		$('<td>').text(list.ttl),
-    		$('<td>').text(list.intro),
+    				.addClass('p-0 text-center align-middle'),
+    		$('<td>').text(list.ttl).addClass('text-center align-middle'),
     		$('<td>').text(list.pay).append($('<br>'),
-    				$('<span>').text(ktPrc).addClass('small')),
-    		$('<td>').text(dateformat(list.regDate))
+    				$('<span>').text(ktPrc)).addClass('text-center align-middle'),
+    		$('<td>').text(dateformat(list.regDate)).addClass('text-center align-middle'),
+    		$('<td>').text(dateformat(list.expDate)).addClass('text-center align-middle'),
+    		$('<td>').text(list.rfStCode).addClass('text-danger').addClass('text-center align-middle')
     	)
     	return tr;
     }
     
     // change to dateformat
     const dateformat = (num)=>{
-    	return new Date(1646167577000).toISOString().slice(0,10);
+    	return new Date(num).toISOString().slice(0,10);
     }
     //mouseover 이벤트 : 사이드바 css변경
     $('.list-group .list-group-item').on('mouseover',function(){
