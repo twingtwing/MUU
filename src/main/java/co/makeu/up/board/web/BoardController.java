@@ -1,8 +1,11 @@
 package co.makeu.up.board.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,15 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.makeu.up.board.service.BoardService;
 import co.makeu.up.board.service.BoardVO;
 import co.makeu.up.common.view.PageVo;
+import co.makeu.up.detafile.service.DetafileVO;
 
 @Controller
 public class BoardController {
 	@Autowired private BoardService boardDao;
-
+	
 	//공지사항 리스트 - MAIN
 	@GetMapping("/boardL")
 	public String boardL() {
@@ -49,34 +55,59 @@ public class BoardController {
 	
 	//공지사항 list - admin
 	@GetMapping("/admin/adBadLi")
-	public String adBadLi(BoardVO vo,@Param("mix") String mix , Model model) {
-		if(mix != null) {
-			vo.setTtl(mix);
-			vo.setContent(mix);
-		}
+	public String adBadLi(BoardVO vo, Model model) {
 		List<BoardVO> list = boardDao.selectadbad(vo);
 		model.addAttribute("list",list);
-		model.addAttribute("pageMaker",new PageVo(vo,list.get(0).getLength()));
+		int length = 0;
+		if(list.size() != 0) {
+			length = list.get(0).getLength();
+		}
+		model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/adbad/adBadLi";
 	}
 	
 	
 	@GetMapping("/admin/adBadl")
 	public String adBadl( ) {
-		
 		return "admin/adbad/adBadl";
 	}
 	
+	@ResponseBody
 	@PostMapping("/admin/insertBoard")
-	public String insertBoard (BoardVO vo) {
+	public BoardVO insertBoard (BoardVO vo,@RequestParam(value="files", required = false) MultipartFile file, MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("files");
+		if(fileList.size() != 0) {
+			List<DetafileVO> list = new ArrayList<DetafileVO>();
+			for (int i = 0; i < fileList.size(); i++) {
+				DetafileVO fileVo = new DetafileVO();
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = UUID.randomUUID().toString() + oriFileName;
+				
+
+				try {
+					fileList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				fileVo.setFilePath(oriFileName);
+				fileVo.setPhyPath(safeFile);
+				list.add(fileVo);
+			}
+			vo.setDetaFileList(list);
+		}
 		boardDao.insertBoard(vo);
-		return "redirect:/admin/adBadLi";
+		return vo;
 	}
+	
 	@GetMapping("/admin/adBadS")
 	public String adBadS(BoardVO vo , Model model) {
 		model.addAttribute("board",boardDao.selectadbads(vo));
 		return "admin/adbad/adBadS";
 	}
+	
 	@PostMapping("/admin/deladbad")
 	@ResponseBody
 	public int deladbad (BoardVO vo ) {

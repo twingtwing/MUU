@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,16 +16,12 @@
     tbody>tr{
       cursor: pointer;
     }
-
     #cctgy > li{
       cursor: pointer;
-
     }
-
     .list-link {
       color: black;
     }
-
     .list-link.active{
       font-weight: bold;
       color: #e53637;

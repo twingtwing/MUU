@@ -6,8 +6,8 @@
 		SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO 
 		WHERE ID = #{id}
-		AND TLSN_ST_CODE NOT IN ('SU03')
-		ORDER BY S.EXP_DATE
+		AND TLSN_ST_CODE != 'SU03'
+		ORDER BY S.REG_DATE
 	</select>
 	<select id="sugangCheckDate" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">		
 		SELECT S.*,L.TTL,L.THUMB FROM SUGANG S JOIN LECTURE L
@@ -29,7 +29,7 @@
         AND TLSN_NO= #{tlsnNo}
 	</select>
 	<select id="sugangPay" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">
-		SELECT S.*,L.TTL,L.INTRO,L.THUMB,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC
+		SELECT R.RF_ST_CODE, P.* FROM (SELECT S.*,L.TTL,L.INTRO,L.THUMB,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC,L.CRE_ID
 		FROM SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO
 		WHERE ID = #{id}
@@ -37,11 +37,19 @@
 		AND S.REG_DATE <![CDATA[>]]> #{regDateSearch}
         AND S.EXP_DATE <![CDATA[<]]> #{expDateSearch}
 	</if>
-		ORDER BY S.REG_DATE
+		ORDER BY S.REG_DATE) P LEFT OUTER JOIN REFUND R
+        ON R.TLSN_NO = P.TLSN_NO
 	</select>
 	<update id="updateSugangConfirm" parameterType="co.makeu.up.sugang.service.SugangVO">
 		UPDATE SUGANG 
 		SET SHIP_ST_CODE = #{shipStCode}
 		WHERE TLSN_NO = #{tlsnNo}
 	</update>
+	
+	<select id="userRefundList" parameterType="String" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT R.*,L.TTL, L.CRE_ID FROM (SELECT R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,S.TLSN_NO,S.PAY,S.LT_NO FROM REFUND R JOIN SUGANG S
+		ON R.TLSN_NO = S.TLSN_NO
+		WHERE ID = #{id}) R JOIN LECTURE L
+		ON R.LT_NO = L.LT_NO
+	</select>
 </mapper>

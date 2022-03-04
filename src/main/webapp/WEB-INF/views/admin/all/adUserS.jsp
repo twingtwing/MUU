@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,34 +57,56 @@
                                         	<th>상태</th>
                                             <th>아이디</th>
                                             <th>이름</th>
-                                            <th>생년월일</th>
+                                            <th>나이</th>
                                             <th>전화번호</th>
                                             <th>성별</th>
                                             <th>가입날짜</th>
                                         </tr>
                                         <tr>
-                                        	<td>비활성</td>
-                                            <td>user123@naver.com</td>
-                                            <td>정혜윤</td>
-                                            <td>생일</td>
-                                            <td>000-0000-000</td>
-                                            <td>여자</td>
-                                            <td>22/02/02</td>
+                                        	<td>
+                                        	<c:if test="${userInfo.uStCode eq 1}">
+                                        		활성
+                                        	</c:if>
+                                        	<c:if test="${userInfo.uStCode eq 0}">
+                                        		비활성
+                                        	</c:if>
+                                        	</td>
+                                            <td>${userInfo.id }</td>
+                                            <td>${userInfo.name }</td>
+                                            <td>${userInfo.age }세</td>
+                                            <td>${userInfo.tel }</td>
+                                            <td>
+                                            <c:if test="${userInfo.gender eq 'W'}">
+                                        		여성
+                                        	</c:if>
+                                        	<c:if test="${userInfo.gender eq 'M'}">
+                                        		남성
+                                        	</c:if>
+                                            </td>
+                                            <td>${userInfo.joinDate}</td>
                                         </tr>
                                         <tr style="background-color: #eeeeee;">
                                         	<th>우편번호</th>
                                             <th colspan="3">주소(상세주소)</th>
-                                            <th>크리에이터</th>
-                                            <th>등급</th>
+                                            <th>크리에이터 등급</th>
+                                            <th>유저 등급</th>
                                             <th>적립금</th>
                                         </tr>
                                         <tr>
-                                        	<td>비활성</td>
-                                            <td colspan="3">user123@naver.com</td>
-                                            <td>-</td>
+                                        	<td>${userInfo.zip }</td>
+                                            <td colspan="3">${userInfo.addr } ${userInfo.detaAddr }</td>
+                                            <td>
+                                            	<c:if test="${ not empty userInfo.creGrdCode }">
+                                            		<a href="#">${userInfo.creGrdCode }</a><br>
+                                            		<span class="small">크리에이터 상세보기로 이동</span>
+                                            	</c:if>
+                                            	<c:if test="${empty userInfo.creGrdCode }">
+                                            		-
+                                            	</c:if>
+                                            </td>
                                             <!--크리에이터이기도 하면 관리자 크리에이터 상세페이지로 연결-->
-                                            <td>나무</td>
-                                            <td>5,000</td>
+                                            <td>${userInfo.uGrdCode }</td>
+                                            <td><fmt:formatNumber>${userInfo.point }</fmt:formatNumber>원</td>
                                         </tr>
                                     </table>
                                     <h5><i class="fas fa-hashtag mr-1"></i>수강내역</h5>
@@ -95,22 +119,16 @@
                                             <th>수강만료일</th>
                                             <th>금액</th>
                                         </tr>
+                                        <c:forEach items="${sugang }" var="s">
                                         <tr>
-                                            <td>1</td>
-                                            <td>강아지도 할 수 있는 뜨개질</td>
-                                            <td>시바</td>
-                                            <td>2022/02/02</td>
-                                            <td>2022/05/02</td>
-                                            <td>60,000</td>
+                                            <td>${s.tlsnNo }</td>
+                                            <td>${s.ttl }</td>
+                                            <td>${s.creId }</td>
+                                            <td>${s.regDate }</td>
+                                            <td>${s.expDate }</td>
+                                            <td><fmt:formatNumber>${s.pay }</fmt:formatNumber>원</td>
                                         </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>디스크 터지는 홈 트레이닝</td>
-                                            <td>인간MRI</td>
-                                            <td>2022/02/02</td>
-                                            <td>2022/05/02</td>
-                                            <td>100,000</td>
-                                        </tr>
+                                        </c:forEach>
                                     </table>
                                     <h5><i class="fas fa-hashtag mr-1"></i>환불내역</h5>
                                     <table class="table table-bordered mb-5">
@@ -123,15 +141,27 @@
                                             <th>환불날짜</th>
                                             <th>환불상태</th>
                                         </tr>
+                                        <c:forEach items="${refund }" var="r">
                                         <tr>
-                                            <td>7</td>
-                                            <td>단타 너도 할 수 있다!</td>
-                                            <td>영차영차</td>
-                                            <td>단타해서 다 잃음</td>
-                                            <td>50,000</td>
-                                            <td>2022/02/02</td>
-                                            <td>상태?</td>
+                                            <td>${r.tlsnNo }</td>
+                                            <td>${r.ttl }</td>
+                                            <td>${r.creId }</td>
+                                            <td>${r.content }</td>
+                                            <td><fmt:formatNumber>${r.pay }</fmt:formatNumber>원</td>
+                                            <td>${r.reqDate }</td>
+                                            <td>
+                                            	<c:if test="${r.rfStCode eq 'RF01'}">
+                                            		환불신청대기
+                                            	</c:if>
+                                            	<c:if test="${r.rfStCode eq 'RF02'}">
+                                            		환불완료
+                                            	</c:if>
+                                            	<c:if test="${r.rfStCode eq 'RF03'}">
+                                            		환불거부
+                                            	</c:if>
+                                            </td>
                                         </tr>
+                                        </c:forEach>
                                     </table>
                                     <h5><i class="fas fa-hashtag mr-1"></i>배송내역</h5>
                                     <table class="table table-bordered">
@@ -143,14 +173,32 @@
                                             <th>운송장번호</th>
                                             <th>배송상태</th>
                                         </tr>
+                                        <c:forEach items="${deliver }" var="d">
                                         <tr>
-                                            <td>7</td>
-                                            <td>쉽게 배우는 수채화</td>
-                                            <td>초보자용 물감 세트</td>
-                                            <td>20,000</td>
-                                            <td>50121752974</td>
-                                            <td>배송중</td>
+                                            <td>${d.tlsnNo }</td>
+                                            <td>${d.ttl }</td>
+                                            <td>${d.kitName }</td>
+                                            <td><fmt:formatNumber>${d.kitPrc }</fmt:formatNumber>원</td>
+                                            <td>${d.shipNum }</td>
+                                            <td>
+                                            	<c:if test="${d.shipStCode eq 'D01' }">
+                                            		배송시작
+                                            	</c:if>
+                                            	<c:if test="${d.shipStCode eq 'D02' }">
+                                            		배송중
+                                            	</c:if>
+                                            	<c:if test="${d.shipStCode eq 'D04' }">
+                                            		배송실패
+                                            	</c:if>
+                                            	<c:if test="${d.shipStCode eq 'D05' }">
+                                            		반송
+                                            	</c:if>
+                                            	<c:if test="${d.shipStCode eq 'D06' }">
+                                            		반송 거부
+                                            	</c:if>
+                                            </td>
                                         </tr>
+                                        </c:forEach>
                                     </table>
                                     <a href="javscript:history.back()" class="btn btn-secondary">뒤로가기</a>
                                 </div>

@@ -73,6 +73,7 @@
 			<a href="/creator/clLecL">닫힌 강의리스트 >></a>
 			<a href="/creator/rpLecL">신고된 강의리스트 >></a>
 			<a href="/creator/aaa">영상 업로드 테스트----</a>
+			<a href="/creator/lesU">영상 관리 페이지</a>
 		</div>
 		<a href="/creator/cLecNL">공지사항</a>
 		<a href="/creator/cLecNS">상세</a><br>

@@ -9,4 +9,7 @@ public interface SugangMapper {
 	int sugangBeforeRefund(SugangVO vo);
 	List<SugangVO> sugangPay(SugangVO vo);
 	int updateSugangConfirm(SugangVO vo);
+	
+	// admin
+	List<SugangVO> userRefundList(String id);
 }

@@ -3,12 +3,69 @@
 <mapper namespace="co.makeu.up.report.service.ReportMapper">
 	<insert id="insertReviewReport" parameterType="co.makeu.up.report.service.ReportVO">
 		INSERT INTO REPORT VALUES(
-		(SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP01',#{content},'RPS01', #{num},#{type}
-		)
+		(SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP01',#{content},'RPS01', #{num},#{type},SYSDATE)
 	</insert>
 	
 	<insert id="insertLecReport" parameterType="co.makeu.up.report.service.ReportVO">
 		INSERT INTO REPORT 
-		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type})
+		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type},SYSDATE)
 	</insert>
+	
+	<select id="selectreport" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
+	 select* from (
+    select rownum rn , w.*
+    from(
+    SELECT R.*,L.CRE_ID, L.TTL,V.CONTENT RECONTENT , v.star, count(*) over() length
+				FROM REPORT R JOIN LECTURE L
+				ON R.LT_NO = L.LT_NO
+				JOIN REVIEW V
+				ON R.NUM = V.RV_NO
+				where 1=1
+				<if test="reporter != null and reporter != ''" >
+				and reporter like '%' || #{reporter}  || '%'
+				</if>
+				<if test="type != null and type != ''">
+				and type = #{type}
+				</if>
+				<if test="recontent != null and recontent != ''">
+				and recontent like '%' || #{recontent}  || '%'
+				</if>
+				<if test="rpStCode != null  and rpStCode != ''">
+				and RP_ST_CODE = #{rpStCode}
+				</if>
+				<if test="ttl != null and ttl != ''">
+				and ttl like '%' || #{ttl}  || '%'
+				</if>
+				<if test="star != null and star != ''">
+				and star = #{star}
+				</if>
+			<if test="start != null  and start != ''">
+             <![CDATA[
+             and TO_DATE(#{start}, 'YYYY-MM-DD') < rpdate  <!-- 컬럼명 -->
+             ]]>
+            </if>
+            <if test="end != null and end != ''">
+            <![CDATA[
+             and TO_DATE(#{end}, 'YYYY-MM-DD')  > #{rpdate}  <!-- 컬럼명 -->
+             ]]>
+             </if>
+    order by rp_no desc) w
+    )
+      <![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	      ]]>
+	</select>
+	<select id="selectreports" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
+	 SELECT R.*,L.CRE_ID, L.TTL,V.CONTENT RECONTENT, v.star
+			FROM REPORT R JOIN LECTURE L
+			ON R.LT_NO = L.LT_NO
+			JOIN REVIEW V
+			ON R.NUM = V.RV_NO
+			
+			where RP_NO = #{rpNo}
+	
+	</select>
+	
 </mapper>
+

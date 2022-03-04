@@ -142,7 +142,7 @@
                             <div class="col-12 text-right align-items-right">
                                 <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${rlists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-outline-info"  type="button">영상 관리</button>
+                                <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rlists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-danger" type="button">재신청</button>
                             </div>
@@ -252,7 +252,7 @@
             </div>
         </div>
     </section>
-    <form id="frm" action="/creator/lecU">
+    <form id="frm">
     	<input class="sendltno" type="hidden" name="sendltno" value="">
     </form>
 
@@ -274,6 +274,14 @@ $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
 //수정 페이지 이동
 function lectureInfo(e){
 	$('.sendltno').val(e);
+	$('#frm').attr("action", "/creator/lecU");
+	$('#frm').submit();
+}
+
+//영상 관리 페이지 이동
+function lessonInfo(e){
+	$('.sendltno').val(e);
+	$('#frm').attr("action", "/creator/lesU");
 	$('#frm').submit();
 }
 </script>

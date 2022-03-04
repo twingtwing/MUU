@@ -36,6 +36,7 @@
 		AND RN <![CDATA[>=]]>(10*#{page})+1
 		AND rf_st_code LIKE'%'||#{rfStCode}||'%'
 	</select>
+
 	
 	<select id="adminRefundList" resultType="co.makeu.up.refund.service.RefundVO">
 		SELECT * FROM(SELECT ROWNUM RN,

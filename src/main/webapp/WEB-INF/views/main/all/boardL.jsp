@@ -4,8 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
+.name:hover{
+	text-decoration : underline;
+ 	cursor: pointer;
+}
 .name {
 	display: inline-block;
 	width: 700px;
@@ -167,6 +170,7 @@
 
             	})
             	.done(result => {
+            		console.log(result);
             		for(obj of result){
             			obj.wrDate = new Date(obj.wrDate).toISOString().slice(0,10);
             		}

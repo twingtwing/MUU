@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +54,7 @@
                                                     <div class="row">
                                                         <div class="row mx-2">
 	                                                        <h6 class="mb-0 ml-2 pl-1">신고 대상자</h6>
-	                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">익명으</h6>
+	                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.creid }</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -63,12 +64,12 @@
                                             style="background-color: #eeeeee; border-bottom: 2px solid black;">
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">리뷰번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.num }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">강의 이름</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄴㅇㅇㄴㅇㄴㅇ</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.ttl }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,11 +78,11 @@
                                 <div class="row form-group">
                                     <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
-                                            신고당한사유
+                                            ${report.content }
                                         </div>
                                          <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
-	                                            신고 대상 리뷰 별점
+	                                            별점 ${report.star }
 	                                         </div>
                                         </div>
                                     </div>
@@ -95,12 +96,22 @@
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">신고</h6>
                                                 <h6 class="mb-0 ml-2 pl-1">신고유형</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">??</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">
+                                                <c:if test="${report.type eq 'RPT01' }">
+                                                부적절한 컨텐츠
+                                                </c:if>
+                                                <c:if test="${report.type eq 'RPT02' }">
+                                                피싱또는 스팸
+                                                </c:if>
+                                                <c:if test="${report.type eq 'RPT03' }">
+                                                기타
+                                                </c:if>
+                                                </h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0 ml-2 pl-1">신고자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.reporter }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,12 +119,12 @@
                                             style="background-color: #eeeeee; border-bottom: 2px solid black;">
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">신고번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.rpNo }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">신고 일자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.rpdate }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +138,17 @@
                                         </div>
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
-	                                            처리 상태 : <span class="text-danger font-weight-bold">처리</span>
+	                                            처리 상태 : <span class="text-danger font-weight-bold">
+	                                            <c:if test = "${report.rpStCode eq 'RPS01' }">
+	                                            	대기중
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02' }">
+	                                            	 신고 처리함
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS03' }">
+	                                            	 신고 반려
+	                                            </c:if>
+	                                            </span>
 	                                         </div>
                                         </div>
                                     </div>

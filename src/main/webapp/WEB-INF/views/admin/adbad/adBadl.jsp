@@ -48,7 +48,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
-                                <form action="/admin/insertBoard" method="post" id="frm">
+                                <form action="/admin/insertBoard" method="post" id="boardFrm">
 	                                <div class="row">
 	                                    <div class="col-lg-12">
 	                                        <div class="row">
@@ -70,7 +70,6 @@
 	                                            <div class="row mr-2">
 	                                                <div class="row mr-1">
 	                                                    <h6 class="mb-0">작성일자</h6>
-	                                                
 			                                        <h6 class="mb-0 ml-2" style="font-weight: 500;" ><%= sf.format(nowTime) %></h6>
 	                                                </div>
 	                                            </div>
@@ -84,7 +83,7 @@
 	                                <div class="row">
 	                                    <div class="col-lg-12">
 	                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-	                                            <input type="file"   spellcheck="false">
+	                                            <input type="file" id="multiFile" name="multiFile" multiple="multiple">
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -93,11 +92,9 @@
 	                                        <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
 	                                    </div>
 	                                    <div>
-	                                        <button type="submit" id="boardBtn"  class="btn btn-secondary" disabled >공지사항 등록</button>
+	                                        <button type="button" id="boardBtn"  class="btn btn-secondary" disabled >공지사항 등록</button>
 	                                    </div>
 	                                </div>
-	                                <s:csrfInput/>
-	                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
                             </div>
                         </div>
@@ -105,6 +102,7 @@
                 </div>
                 <!-- 내용 끝 -->
 
+            </div>
                 <!-- 바디 끝 -->
                 
           <!-- boardBtn  insert_vali -> chanbe : val() 없으면 console.log 없다  -->
@@ -129,6 +127,35 @@
         		 $('#boardBtn').removeAttr('disabled');
         	 }
          }
+         
+         $('#boardBtn').on('click',function(){
+        	 event.preventDefault();
+        	 
+        	 let form  = new FormData();
+        	 form.append("ttl",document.getElementById('ttli').value);
+        	 form.append("content",document.getElementById('cont').value);
+        	 
+        	 for(obj of $('#multiFile')[0].files){
+        		 form.append("files",obj);
+        	 }
+        	 
+        	 $.ajax({
+                url : "/admin/insertBoard",
+               	method : "post",
+               	processData : false,
+                contentType : false,
+                async : false,
+                beforeSend: function(xhr) {
+                     xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                },
+                data : form,
+             })
+             .done((res)=>{
+            	alert("글이 성공적으로 등록되었습니다.");
+	        	location.href="/admin/adBadS?bNo="+res.bno;
+             });
+        	 
+         })
           </script>
                 
 </body>
