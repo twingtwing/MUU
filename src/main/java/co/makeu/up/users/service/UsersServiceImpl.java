@@ -52,4 +52,14 @@ public class UsersServiceImpl implements UsersMapper {
 	public List<UsersVO> usersList(UsersVO vo) {
 		return map.usersList(vo);
 	}
+
+	@Override
+	public Integer usersCount() {
+		return map.usersCount();
+	}
+
+	@Override
+	public Integer creatorsCount() {
+		return map.creatorsCount();
+	}
 }

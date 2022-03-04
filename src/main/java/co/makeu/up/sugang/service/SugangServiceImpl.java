@@ -39,4 +39,9 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.updateSugangConfirm(vo);
 	}
 
+	@Override
+	public List<SugangVO> userRefundList(String id) {
+		return map.userRefundList(id);
+	}
+
 }

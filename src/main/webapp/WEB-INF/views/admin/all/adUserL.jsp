@@ -57,7 +57,7 @@
                                             <td width="35%">
                                                 <div class="d-flex">
                                                     <div class="col-3 d-flex align-items-center">
-                                                        <select class="w-100 py-1 searchType">
+                                                        <select class="w-100 py-1 searchType border">
                                                             <option value="id" selected>아이디</option>
                                                             <option value="name">이름</option>
                                                         </select>
@@ -69,39 +69,37 @@
                                             </td>
                                             <th width="15%">전화번호</th>
                                             <td width="35%">
-                                                <input class="w-100 border py-1 addr" type="text" spellcheck="false">
+                                                <input class="w-100 border py-1 tel" type="text" spellcheck="false">
                                             </td>
                                         </tr>
                                         <tr height="38">
-                                            <th>생년월일</th>
-											<td>
-                                                <input class="w-100 border py-1" type="text" spellcheck="false">
-                                            </td>
                                             <th>성별</th>
                                             <td class="text-left">
-                                                <input type="checkbox" class="ml-2" name="" id="code_F" spellcheck="false">
-                                                <label for="code_F" class="mr-3 mb-0">여자</label>
-                                                <input type="checkbox" name="" id="code_M" spellcheck="false">
-                                                <label for="code_M" class="mb-0 mr-3">남자</label>
+                                            	<input type="radio" value="" class="ml-2" name="gender" id="code_all" spellcheck="false" checked="checked">
+                                                <label for="code_all" class="mr-3 mb-0 gender">모두</label>
+                                                <input type="radio" value="W" class="ml-2" name="gender" id="code_F" spellcheck="false">
+                                                <label for="code_F" class="mr-3 mb-0 gender">여성</label>
+                                                <input type="radio" value="M" name="gender" id="code_M" spellcheck="false">
+                                                <label for="code_M" class="mb-0 mr-3 gender">남성</label>
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>등급</th>
                                             <td class="text-left">
-                                            	<input type="checkbox" class="ml-2" id="normal" spellcheck="false" value="일반">
+                                            	<input type="checkbox"id="normal" class="ml-2" spellcheck="false" value="일반" name="grd">
                                                 <label for="normal" class="mr-3 mb-0">일반</label>
-                                                <input type="checkbox" class="ml-2" value="새싹" id="sae" spellcheck="false">
+                                                <input type="checkbox"id="sae" class="ml-2" value="새싹" spellcheck="false"name="grd">
                                                 <label for="sae" class="mr-3 mb-0">새싹</label>
-                                                <input type="checkbox"id="namu"value="나무" spellcheck="false">
+                                                <input type="checkbox"id="namu" value="나무" spellcheck="false"name="grd">
                                                 <label for="namu" class="mb-0 mr-3">나무</label>
-                                                <input type="checkbox"spellcheck="false"value="꽃" id="flower">
+                                                <input type="checkbox"id="kod"spellcheck="false"value="꽃"name="grd">
                                                 <label for="kod" class="mb-0">꽃</label>
                                             </td>
                                             <th>상태</th>
                                             <td class="text-left">
-                                                <input type="checkbox" class="ml-2" name="" id="code_1" spellcheck="false">
+                                                <input type="radio" class="ml-2" value="1" name="uStCode" id="code_1" spellcheck="false" checked="checked">
                                                 <label for="code_1" class="mr-3 mb-0">활성</label>
-                                                <input type="checkbox" name="" id="code_2" spellcheck="false">
+                                                <input type="radio" name="uStCode" id="code_2" spellcheck="false" value="0">
                                                 <label for="code_2" class="mb-0 mr-3">비활성</label>
                                             </td>
                                         </tr>
@@ -118,26 +116,44 @@
                                 </div>
                                 <div class="row">
                                     <table class="table table-bordered">
+                                    <thead>
                                         <tr style="background-color: #eeeeee;">
-                                            <th width="100px">번호</th>
-                                            <th>상태</th>
                                             <th>아이디</th>
+                                            <th>상태</th>
                                             <th>이름</th>
                                             <th>성별</th>
                                             <th>전화번호</th>
                                             <th>등급</th>
                                             <th>가입날짜</th>
                                         </tr>
+                                    </thead>
+                                    <tbody class="userListBoard">
                                         <c:forEach items="${users}" var="user">
 	                                        <tr>
 	                                            <td>${user.id }</td>
+	                                            <td>
+	                                            	<c:if test="${user.uStCode eq 1 }">
+	                                            		활성	
+	                                            	</c:if>
+	                                            	<c:if test="${user.uStCode eq 0 }">
+	                                            		비활성
+	                                            	</c:if>
+	                                            </td>
 	                                            <td>${user.name }</td>
-	                                            <td>${user.addr } ${user.detaAddr }</td>
+	                                            <td>
+	                                            	<c:if test="${user.gender eq 'M' }">
+	                                            		남성
+	                                            	</c:if>
+	                                            	<c:if test="${user.gender eq 'W' }">
+	                                            		여성
+	                                            	</c:if>
+	                                            </td>
+	                                            <td>${user.tel }</td>
 	                                            <td>${user.uGrdCode }</td>
-	                                            <td><fmt:formatNumber>${user.point }</fmt:formatNumber>원</td>
 	                                            <td>${user.joinDate }</td>
 	                                        </tr>
                                         </c:forEach>
+                                    </tbody>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
@@ -173,33 +189,100 @@
                 </div>
             </div>
             <!-- 내용 끝 -->
-
+<form action="/admin/userSelect" id="userSelectForm">
+<input type="text" name="id" id="userId">
+</form>
 <script type="text/javascript">
-	let grade = [];
-	for(let g of $('input:checkbox')){
-		grade.push(g)
-	}
 	$('#usersSearch').click(()=>{
-		let filtered = [];
-		filtered = grade.filter((v)=>{
-			return v.checked
-		})
-		let data = {id:'',name:'',addr:$('.addr').val(),pastDate:$('.pastDate').val(),recentDate:$('.recentDate').val(),uGrdCode:filtered,
-			page : 0}
+		let data = makeSearchData(0);
 		ajaxsearch(data);
 	})
+	
+	const makeSearchData = (pageNum)=>{
+		let grd = [];		
+		for(let g of $('input[name=grd]:checked')){
+			grd.push(g.value)
+		}
+		let gender = $('input[name=gender]:checked').val();
+		let ustcode = +$('input[name=uStCode]:checked').val();	
+		let data = {
+			id: '',
+			name: '',
+			gender:gender,
+			pastDate:$('.pastDate').val(),
+			recentDate:$('.recentDate').val(),
+			uGrdCodeList: grd,
+			uStCode : ustcode,
+			page : pageNum,
+			tel : $('.tel').val()
+		}
+		if($('.searchType').val()==='id'){
+			data.id = $('.selectBox').val()
+		} else {
+			data.name = $('.selectBox').val();
+		}
+		return data;
+	}
+	
 	const ajaxsearch = (d) =>{
+		console.log(d);
 		$.ajax({
 			url:'/admin/userSearch',
-			data : d,
+			data : JSON.stringify(d),
+			contentType : 'application/json;charset=utf-8',
+			method : 'POST',
+				beforeSend : (xhr) =>{
+				      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				  },
 		})
 		.done((r)=>{
-			console.log(r)
+			removeAll();
+			makeRow(r)
 		})
 	}
 	// pagination
 	$('.page-link').click((e)=>{
-		
+		let pageNum = +e.target.textContent-1;
+		let data = makeSearchData(pageNum);
+		$('.active').removeClass('active');
+		$(e.target).parent().addClass('active');
+		ajaxsearch(data);
+	})
+	
+	const makeRow = (list)=>{
+		list.forEach((v)=>{
+			let tr = $('<tr>')
+			if(v.uStCode===0){
+				v.uStCode = '비활성'
+			} else {
+				v.uStCode = '활성'
+			}
+			if(v.gender==='M'){
+				v.gender = '남성'
+			} else{
+				v.gender = '여성'
+			}
+			tr.append(
+				$('<td>').text(v.id),
+				$('<td>').text(v.uStCode),
+				$('<td>').text(v.name),
+				$('<td>').text(v.gender),
+				$('<td>').text(v.tel),
+				$('<td>').text(v.uGrdCode),
+				$('<td>').text(new Date(v.joinDate).toISOString().slice(0,10))
+			)
+			$('.userListBoard').append(tr);
+		})
+	}
+	const removeAll = ()=>{
+		$('.userListBoard').children().remove();
+	}
+	
+	// select
+	$('.userListBoard').click((e)=>{	
+		let id = e.target.parentElement.firstElementChild.textContent;
+		$('#userId').val(id);
+		$('#userSelectForm').submit();
 	})
 </script>
 </body>
