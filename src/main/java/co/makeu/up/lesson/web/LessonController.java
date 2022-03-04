@@ -1,7 +1,6 @@
 package co.makeu.up.lesson.web;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.lesson.service.LessonServiceImpl;
@@ -61,6 +61,13 @@ public class LessonController {
 		}	
 		vo = lessonDao.ajaxLessonSelect(lsnNo);
 		return vo;
+	}
+	
+	//수업 영상 관리 페이지
+	@RequestMapping("/creator/lesU")
+	public String lessonUpdatePage(int sendltno, Model model) {
+		model.addAttribute("lesinfo", lessonDao.lessonList(sendltno));
+		return "main/lecture/lesU";
 	}
 
 }

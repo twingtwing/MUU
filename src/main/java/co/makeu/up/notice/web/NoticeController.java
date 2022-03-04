@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class NoticeController {
 	@Autowired ProgressServiceImpl progressDao;
 	
 	@GetMapping("/creator/cLecNL")
-	public String cLecNL() {
+	public String cLecNL(NoticeVO vo, Model model, HttpServletRequest request) {
+//			model.addAttribute("nlists", noticeDao.NoticeList());
 		return "main/creator/cLecNL";
 	}
 	@GetMapping("/creator/cLecNS")
