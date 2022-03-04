@@ -1,13 +1,16 @@
 package co.makeu.up.report.web;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.makeu.up.common.view.PageVo;
 import co.makeu.up.report.service.ReportServiceImpl;
 import co.makeu.up.report.service.ReportVO;
 
@@ -29,13 +32,22 @@ public class ReportController {
 		
 	//리뷰 신고 리스트
 	@GetMapping("/admin/adRRepL")
-	public String adRRepL() {
+	public String adRRepL(ReportVO vo , Model model) {
+		List <ReportVO> list = reportDao.selectreport(vo);
+		model.addAttribute("list",list);
+		int length = 0;
+		if(list.size() != 0) {
+			length = list.get(0).getLength();
+		}
+		model.addAttribute("pageMaker",new PageVo(vo,length));
+		System.out.println(model.getAttribute("pageMaker"));
 		return "admin/report/adRRepL";
 	}
 		
 	//리뷰 신고 상세
 	@GetMapping("/admin/adRRepS")
-	public String adRRepS() {
+	public String adRRepS(ReportVO vo , Model model) {
+		model.addAttribute("report",reportDao.selectreports(vo));
 		return "admin/report/adRRepS";
 	}
 	
