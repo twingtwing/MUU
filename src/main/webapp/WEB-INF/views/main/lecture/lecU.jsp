@@ -223,25 +223,12 @@
             </div>
         </div>
     </section>
-    <form style="display:none" action="/creator/lecUpdate" id="frm" method="post" enctype="multipart/form-data">
-    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    	<input id="ltNo" name="ltNo" value="${lecinfo.ltNo }">
-    	<input id="pht1" name="pht" type="file" accept="image/*">
-    	<input id="pht2" name="pht" type="file" accept="image/*">
-    	<input id="pht3" name="pht" type="file" accept="image/*">
-    	<input id="thumb" name="pht" type="file" accept="image/*">
-    	<input id="ttl" name="ttl" value="">
-    	<input id="intro" name="intro" value="">
-    	<input id="upCtgr" name="upCtgr" value="">
-    	<input id="downCtgr" name="downCtgr" value="">
-    	<input id="tag1" name="tag1" value="null">
-    	<input id="tag2" name="tag2" value="null">
-    	<input id="tag3" name="tag3" value="null">
-    	
-    	<input id="pht1a" name="pht1a" value="${lecinfo.pht1 }">
-    	<input id="pht2a" name="pht2a" value="${lecinfo.pht2 }">
-    	<input id="pht3a" name="pht3a" value="${lecinfo.pht3 }">
-    </form>
+    	<div id="phtDiv" style="display:none">
+	    	<input id="pht1" name="pht1" type="file" accept="image/*">
+	    	<input id="pht2" name="pht2" type="file" accept="image/*">
+	    	<input id="pht3" name="pht3" type="file" accept="image/*">
+	    	<input id="thumb" name="thumb" type="file" accept="image/*">
+    	</div>
 </body>
 <script>
     //mouseover 이벤트 : 사이드바 css변경
@@ -315,17 +302,17 @@
                        { tagId : 'LT07', tagName :'스케치'},
                        { tagId : 'LT08', tagName :'감성'},
                        { tagId : 'LT09', tagName :'레트로'},
-                       { tagId : 'LT010', tagName :'인디'},
-                       { tagId : 'LT011', tagName :'오리엔탈'},
-                       { tagId : 'LT012', tagName :'SWAG'},
-                       { tagId : 'LT013', tagName :'자취생'},
-                       { tagId : 'LT014', tagName :'호텔'},
-                       { tagId : 'LT015', tagName :'집밥'},
-                       { tagId : 'LT016', tagName :'운동'},
-                       { tagId : 'LT017', tagName :'힐링'},
-                       { tagId : 'LT018', tagName :'감성샷'},
-                       { tagId : 'LT019', tagName :'인생샷'},
-                       { tagId : 'LT020', tagName :'여행'}
+                       { tagId : 'LT10', tagName :'인디'},
+                       { tagId : 'LT11', tagName :'오리엔탈'},
+                       { tagId : 'LT12', tagName :'SWAG'},
+                       { tagId : 'LT13', tagName :'자취생'},
+                       { tagId : 'LT14', tagName :'호텔'},
+                       { tagId : 'LT15', tagName :'집밥'},
+                       { tagId : 'LT16', tagName :'운동'},
+                       { tagId : 'LT17', tagName :'힐링'},
+                       { tagId : 'LT18', tagName :'감성샷'},
+                       { tagId : 'LT19', tagName :'인생샷'},
+                       { tagId : 'LT20', tagName :'여행'}
                     ]
    $(function(){
 	   		$.each(taglist, function(a,b){
@@ -450,6 +437,9 @@
         });
     }
     
+  	//시큐리티 토큰
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
     
     //수정버튼
     function updateBtn(){
@@ -457,17 +447,41 @@
     	$('input[type="checkbox"]:checked').each(function(ind,v){
     		tagchecklist.push($(v).val());
     	})
-    	$('#ttl').val($('#lecttl').val());
-    	$('#intro').val($('#lecintro').text());
-    	$('#upCtgr').val($('#ctgr option:selected').val());
-    	$('#downCtgr').val($('#downctgr option:selected').val());
-    	$('#tag1').val(tagchecklist[0]);
-    	$('#tag2').val(tagchecklist[1]);
-    	$('#tag3').val(tagchecklist[2]);
     	
-    	console.log($('#pht1'));
-    	console.log($('#pht1').val());
-    	$('#frm').submit();
+    	let form = new FormData();
+    	
+    	form.append("ltNo", ${lecinfo.ltNo});
+    	form.append("ttl", $('#lecttl').val());
+    	form.append("intro", $('#lecintro').val());
+    	form.append("upCtgr", $('#ctgr option:selected').val());
+    	form.append("downCtgr", $('#downctgr option:selected').val());
+    	form.append("tag1", tagchecklist[0]);
+    	form.append("tag2", tagchecklist[1]);
+    	form.append("tag3", tagchecklist[2]);
+    	
+    	form.append("pht11", $("input[name=pht1]")[0].files[0]);
+    	form.append("pht22", $("input[name=pht2]")[0].files[0]);
+    	form.append("pht33", $("input[name=pht3]")[0].files[0]);
+    	form.append("thumbb", $("input[name=thumb]")[0].files[0]);
+    	
+    	$.ajax({
+            url : "/creator/lecUpdate",
+          	method : "post",
+          	processData : false,
+            contentType : false,
+            async : false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+            data : form,
+            success:function() {
+              alert("강의가 수정되었습니다");
+              history.back();
+            },
+	         error: function () { 
+	           alert('실패'); 
+	         }
+        });
     }
                         
 </script>

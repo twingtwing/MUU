@@ -61,7 +61,7 @@
                                             <div class="row">
                                                 <div class="row mr-1">
                                                     <h6 class="mb-0">작성일자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${board.wrDate }</h6>
+                                                    <h6 class="mb-0 mr-3 ml-1" style="font-weight: 500;">${board.wrDate }</h6>
                                                 </div>
                                                 <div class="row mr-1">
                                                     <h6 class="mb-0">조회수</h6>
@@ -70,15 +70,12 @@
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">상태</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">
-                                                     <c:if test="${board.getBStCode() eq 'B01' }">
-		                                            	등록
-		                                            </c:if>
-		                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
-		                                        		삭제
-		                                            </c:if>
-                                                    
-                                                    
-                                                    
+	                                                     <c:if test="${board.getBStCode() eq 'B01' }">
+			                                            	등록
+			                                            </c:if>
+			                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
+			                                        		삭제
+			                                            </c:if>
                                                     </h6>
                                                 </div>
                                             </div>
@@ -93,14 +90,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-lg-12">
-                                        <div class="row p-2 w-100" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 1px solid black;">
-                                            <h6 class="mb-0"><i class="fa fa-download"></i></h6>
-                                            <h6 class="mb-0 ml-2" style="font-weight: 500;"><a href="" class="text-dark">첨부파일데스</a></h6>
-                                        </div>
-                                    </div>
-                                </div>
+	                                <div class="row mb-2">
+	                                    <div class="col-lg-12">
+	                                        <div class="row p-2 w-100" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 1px solid black;">
+                                				<c:if test="${not empty board.detaFileList }">
+		                                            <h6 class="mb-0"><i class="fa fa-download mx-1"></i></h6>
+		                                            <c:forEach items="${board.detaFileList }" var="file">
+		                                            	<h6 class="mb-0 ml-2" style="font-weight: 500;">
+		                                            		<a href="/download?phyPath=${file.phyPath}" class="text-dark">${file.filePath}</a>
+		                                            	</h6>
+		                                            </c:forEach>
+                                				</c:if>
+	                                        </div>
+	                                    </div>
+	                                </div>
                                 <div class="row d-flex justify-content-between">
                                     <div>
                                         <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
@@ -114,8 +117,7 @@
                         </div>
                     </div>
                 </div>
-                      
-                </div>
+             </div>
                 <!-- 내용 끝 -->
 
                 <!-- 바디 끝 -->
@@ -123,6 +125,7 @@
 
 
  <script>
+ console.log('${board}');
  function btn(){
 	 
 		let header = "${_csrf.headerName}";

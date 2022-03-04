@@ -139,7 +139,7 @@
                 <a class="list-link active" href="/user/userLectureList">내 강의리스트</a>
               </li>
               <li class="list-group-item border-bottom-0" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">위시 리스트</a>
+                <a class="list-link" href="/user/userWishList">위시 리스트</a>
               </li>
               <li class="list-group-item" style="height: 55px;">
                 <a class="list-link" href="/user/userPay">결제내역</a>

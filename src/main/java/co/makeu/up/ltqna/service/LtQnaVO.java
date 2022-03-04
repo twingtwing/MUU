@@ -16,8 +16,9 @@ public class LtQnaVO {
 	private String writer;
 	private String yn; // 답변 대기중/전 표시
 	
-	//나의 답변인지 확인 - 확장 vo 
-	private String myQna;//나의 답변
+	//확장 vo
+	private String name;
+	private String myQna;
 	
 	// page
 	private int page;
@@ -95,6 +96,12 @@ public class LtQnaVO {
 	}
 	public void setContentSearchKey(String contentSearchKey) {
 		this.contentSearchKey = contentSearchKey;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getMyQna() {
 		return myQna;

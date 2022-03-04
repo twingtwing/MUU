@@ -531,17 +531,17 @@
                        { tagId : 'LT07', tagName :'스케치'},
                        { tagId : 'LT08', tagName :'감성'},
                        { tagId : 'LT09', tagName :'레트로'},
-                       { tagId : 'LT010', tagName :'인디'},
-                       { tagId : 'LT011', tagName :'오리엔탈'},
-                       { tagId : 'LT012', tagName :'SWAG'},
-                       { tagId : 'LT013', tagName :'자취생'},
-                       { tagId : 'LT014', tagName :'호텔'},
-                       { tagId : 'LT015', tagName :'집밥'},
-                       { tagId : 'LT016', tagName :'운동'},
-                       { tagId : 'LT017', tagName :'힐링'},
-                       { tagId : 'LT018', tagName :'감성샷'},
-                       { tagId : 'LT019', tagName :'인생샷'},
-                       { tagId : 'LT020', tagName :'여행'}
+                       { tagId : 'LT10', tagName :'인디'},
+                       { tagId : 'LT11', tagName :'오리엔탈'},
+                       { tagId : 'LT12', tagName :'SWAG'},
+                       { tagId : 'LT13', tagName :'자취생'},
+                       { tagId : 'LT14', tagName :'호텔'},
+                       { tagId : 'LT15', tagName :'집밥'},
+                       { tagId : 'LT16', tagName :'운동'},
+                       { tagId : 'LT17', tagName :'힐링'},
+                       { tagId : 'LT18', tagName :'감성샷'},
+                       { tagId : 'LT19', tagName :'인생샷'},
+                       { tagId : 'LT20', tagName :'여행'}
                     ]
    $(function(){
 	   		$.each(taglist, function(a,b){
@@ -828,9 +828,9 @@
 			}
 		})
 		for(var i = 0; i < $('.classUp').length; i++){
-			form.append("classNo", $('.itemNum').eq(i).text());
+			form.append("lsnNo", $('.itemNum').eq(i).text());
 			form.append("classTtl", $('.classTtl').eq(i).val());
-			form.append("class", $('.classUp')[i].files[0]);
+			form.append("classMov", $('.classUp')[i].files[0]);
 		}
 			
 		
@@ -841,20 +841,20 @@
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
         
         //사진이외 값 
-        form.append("lecFile", upctgr);	// list 0
-        form.append("lecFile", downctgr); // list 1
-        form.append("lecFile", ttl); // list 2
-        form.append("lecFile", intro); // list 3
-        form.append("lecFile", openterm); // list 4
-        form.append("lecFile", tlsnterm); // list 5
-        form.append("lecFile", kitname); // list 6
-        form.append("lecFile", kitintro); // list 7
-        form.append("lecFile", kitprc); // list 8
-        form.append("lecFile", prc); // list 9
-        form.append("lecFile", tag1); // list 10
-        form.append("lecFile", tag2); // list 11
-        form.append("lecFile", tag3); // list 12
-        form.append("lecFile", creid); // list 13
+        form.append("upCtgr", upctgr);	// list 0
+        form.append("downCtgr", downctgr); // list 1
+        form.append("ttl", ttl); // list 2
+        form.append("intro", intro); // list 3
+        form.append("openTerm", openterm); // list 4
+        form.append("tlsnTerm", tlsnterm); // list 5
+        form.append("kitName", kitname); // list 6
+        form.append("kitIntro", kitintro); // list 7
+        form.append("kitPrc", kitprc); // list 8
+        form.append("prc", prc); // list 9
+        form.append("tag1", tag1); // list 10
+        form.append("tag2", tag2); // list 11
+        form.append("tag3", tag3); // list 12
+        form.append("creId", creid); // list 13
         
         //썸네일 값
         form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);

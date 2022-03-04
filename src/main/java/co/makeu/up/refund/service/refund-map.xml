@@ -36,6 +36,4 @@
 		AND RN <![CDATA[>=]]>(10*#{page})+1
 		AND rf_st_code LIKE'%'||#{rfStCode}||'%'
 	</select>
-	
-	
 </mapper>

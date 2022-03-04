@@ -16,11 +16,31 @@ public class UsersVO {
 	private String socialToken;
 	private String authCode;
 	private String uGrdCode;
-	private String u_grd_code;
+	private String[] uGrdCodeList;
 	private String pht;
 	private Date joinDate;
 	private Date pastDate;
 	private Date recentDate;
+	private Integer cnt;
+	
+	public Integer getCnt() {
+		return cnt;
+	}
+	public void setCnt(Integer cnt) {
+		this.cnt = cnt;
+	}
+	public String[] getuGrdCodeList() {
+		return uGrdCodeList;
+	}
+	public void setuGrdCodeList(String[] uGrdCodeList) {
+		this.uGrdCodeList = uGrdCodeList;
+	}
+	public Date getRecentDate() {
+		return recentDate;
+	}
+	public void setRecentDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
 	public Date getPastDate() {
 		return pastDate;
 	}
@@ -119,12 +139,7 @@ public class UsersVO {
 	public void setuGrdCode(String uGrdCode) {
 		this.uGrdCode = uGrdCode;
 	}
-	public String getU_grd_code() {
-		return u_grd_code;
-	}
-	public void setU_grd_code(String u_grd_code) {
-		this.u_grd_code = u_grd_code;
-	}
+
 	public String getPht() {
 		return pht;
 	}

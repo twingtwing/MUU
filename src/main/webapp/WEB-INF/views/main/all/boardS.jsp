@@ -13,6 +13,10 @@
 #pre:hover {
 	background-color: #dee2e6;
 }
+.download_link:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -73,12 +77,13 @@
 						</div>
 					</div>
 					<div class="border-bottom"></div>
-					<div class="d-flex justify-content-end mt-3 mr-2">
-						<div>
-							<i
-								class="fa fa-download text-dark"></i>
+					<div v-if="board.detaFileList != null" class="d-flex justify-content-end mt-3 mr-2">
+						<div class="mr-2">
+							<i class="fa fa-download text-dark"></i>
 						</div>
-						<p v-on:click="downloadDetail(index)" class="text-muted ml-2">{{board.detaFileList}}</p>
+						<div>
+							<p class="download_link mb-0" v-for="(file,index) in board.detaFileList" v-on:click="downloadDetail(index)" class="text-muted ml-2">{{file.filePath}}</p>
+						</div>
 					</div>
 					<div class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh">
 						<p class="mb-3"></p>{{board.content}}
@@ -114,19 +119,8 @@
             data(){
                 return {
                     board: [],
-                    download : [],
                     board : {}
                 }
-            },
-            computed: {
-                // remaining(){
-                //     return this.titles.filter(function(title){
-                //         if (titles.todoyn == 0) return 1
-                //     }).length;
-                // }
-
-                //변수 집합 가공시 사용
-                //ex> 오름차순,내림차순
             },
             methods: {
                 boardNext() {
@@ -138,8 +132,7 @@
                 	 location.href ="boardS?bNo="+this.board.prebno;
                 },
                 downloadDetail(index) {
-                    console.log(this.download[0].bNo);
-                    //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
+                    location.href ="/download?phyPath="+this.board.detaFileList[index].phyPath;
                 },
             },
             beforeCreate: function () {

@@ -30,6 +30,10 @@ public class SugangVO {
 	private String kitIntro;
 	private int kitPrc;
 	private String intro;
+	private String creId;
+	private Date reqDate;
+	private String rfStCode;
+	private String content;
 	
 	// progress
 	private int progPct;

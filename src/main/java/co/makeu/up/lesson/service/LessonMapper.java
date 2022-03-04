@@ -7,5 +7,6 @@ public interface LessonMapper {
 	LessonVO ajaxLessonSelect(int lsnNo);
 	int lessonInsert(LessonVO vo);
 	List<LessonVO> lessonWithProgress(LessonVO vo);
+	int lessonUpdate(LessonVO vo);
 
 }

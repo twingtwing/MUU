@@ -24,46 +24,52 @@
 	</update>
 	
 	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-		select * from (    
-            select rownum rn, w.*
-            from (
-            select b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no, b_st_code  ,COUNT(*) over() as length
-            from board
-            where 1=1
-            <if test="ttl !=null">
-            and	ttl like '%' || #{ttl}  || '%'
+		SELECT * FROM (    
+            SELECT ROWNUM RN, W.*
+            FROM (
+            SELECT B_NO, TTL, CONTENT, WR_DATE, HITS ,NVL(FILE_NO,-1) FILE_NO, B_ST_CODE  ,COUNT(*) OVER() AS LENGTH
+            FROM BOARD
+            WHERE 1=1
+            <if test="mix !=null and mix != ''">
+            AND	( TTL LIKE '%' || #{mix}  || '%' OR CONTENT LIKE '%' || #{mix}  || '%')
             </if>
-            <if test= "content != null">
-            and content like '%' || #{content}  || '%'
+            <if test="ttl !=null and ttl != ''">
+            AND	TTL LIKE '%' || #{ttl}  || '%'
             </if>
-            <if test="bStCode != null">
-           and b_st_code = #{bStCode}
+            <if test= "content != null and content !=''">
+            AND CONTENT LIKE '%' || #{content}  || '%'
             </if>
-             <if test="start != null">
+            <if test="bStCode != null and bStCode != ''">
+           	AND B_ST_CODE = #{bStCode}
+            </if>
+             <if test="start != null and start != ''">
              <![CDATA[
-             and TO_DATE(#{start}, 'YYYY-MM-DD') < #{wrDate}
+             AND TO_DATE(#{start}, 'YYYY-MM-DD') <  WR_DATE
              ]]>
             </if>
-            <if test="end != null">
+            <if test="end != null and end != ''">
             <![CDATA[
-             and TO_DATE(#{end}, 'YYYY-MM-DD')  > #{wrDate}
+             AND TO_DATE(#{end}, 'YYYY-MM-DD')  > WR_DATE
              ]]>
             </if>
-            order by b_no desc) w
+            ORDER BY B_NO DESC) W
         )
         <![CDATA[
-	    where rn > (#{pageNum}-1) * #{amount} 
-	    and rn <= #{pageNum} * #{amount}
+	    WHERE RN > (#{pageNum}-1) * #{amount} 
+	    AND RN <= #{pageNum} * #{amount}
 	      ]]>
 	</select>
 	
 	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">
-		insert into board (b_no,ttl,content,wr_date,B_ST_CODE)
-		values ((select NVL (max(b_no),0)+1 from board),#{ttl},#{content},SYSDATE,'B01')
+		<selectKey keyProperty="bNo" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(B_NO),0)+1 FROM BOARD
+		</selectKey>
+		insert into board (b_no,ttl,content,wr_date,B_ST_CODE,file_no)
+		values(#{bNo},#{ttl},#{content},SYSDATE,'B01',#{fileNo})
 	</insert>
 	
 	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-	select b_no , ttl,content ,wr_date,hits,b_st_code
+	select *
 	from board
 	where b_no = #{bNo}
 	</select>

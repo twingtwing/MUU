@@ -39,7 +39,19 @@
 	</select>
 	<update id="lectureUpdate" parameterType="co.makeu.up.lecture.service.LectureVO">
 		UPDATE LECTURE SET
-		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr}, PHT_1 = #{pht1}, PHT_2 = #{pht2}, PHT_3 = #{pht3}, THUMB = #{thumb},
+		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr},
+		<if test = "pht1 != null">
+			PHT_1 = #{pht1}, 
+		</if>
+		<if test = "pht2 != null">
+			PHT_2 = #{pht2}, 
+		</if>
+		<if test = "pht3 != null"> 
+			PHT_3 = #{pht3},
+		</if>
+		<if test = "thumb != null">
+			THUMB = #{thumb},
+		</if>
 		TTL = #{ttl}, INTRO = #{intro}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}
 		WHERE LT_NO = #{ltNo}
 	</update>

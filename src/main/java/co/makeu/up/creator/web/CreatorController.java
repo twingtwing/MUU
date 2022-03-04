@@ -49,10 +49,6 @@ public class CreatorController {
 	@PostMapping("/creator/creU")
 	@ResponseBody
 	public void creatorUpdate(CreatorVO vo, Model model, HttpServletRequest request) {
-			String id = request.getParameter("id");
-			String creIntro = request.getParameter("creIntro");
-			vo.setId(id);
-			vo.setCreIntro(creIntro);
 			creatorDao.creatorUpdate(vo);
 	}
 	
