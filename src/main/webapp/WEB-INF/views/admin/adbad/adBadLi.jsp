@@ -80,9 +80,9 @@
 	                                            <th style="width: 15%" class="align-middle">상태</th>
 	                                            <td style="width: 35%" class="align-middle">
 	                                                <div class="row align-items-center ml-1">
-	                                                    <input type="checkbox" name="bStCode" id="code_Y" class="mr-1">
+	                                                    <input type="radio" name="bStCode" value="B01" id="code_Y" class="mr-1" ondbclick="this.checked = false">
 	                                                    <label class="mb-0" for="code_Y" >등록</label>
-	                                                    <input type="checkbox" name="bStCode" id="code_N" class="ml-3 mr-1">
+	                                                    <input type="radio" name="bStCode" value="B02" id="code_N" class="ml-3 mr-1" ondbclick="this.checked = false">
 	                                                    <label class="mb-0" for="code_N">삭제</label>
 	                                                </div>
 	                                            </td>
@@ -118,33 +118,40 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items ="${list }" var="board">
-	                                        <tr>
-	                                            <td>${board.getBNo() }</td>
-	                                            <td>
-	                                          <a href="/admin/adBadS?bNo=${board.getBNo() }">
-	                                          ${board.ttl}
-	                                          </a></td>
-	                                            <td>관리자</td>
-	                                            <td>${board.wrDate }</td>
-	                                            <td>
-	                                            	<c:if test="${board.fileNo eq -1}">
-	                                            		<i class="fas fa-minus mr-0"></i>
-	                                            	</c:if>
-	                                            	<c:if test="${board.fileNo ne -1}">
-	                                            		<i class="fas fa-minus mr-0"></i>
-	                                            	</c:if>
-	                                            </td>
-		                                        <td >
-		                                            <c:if test="${board.getBStCode() eq 'B01' }">
-		                                            	등록
-		                                            </c:if>
-		                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
-		                                        		삭제
-		                                            </c:if>
-		                                        </td>
-	                                        </tr>
-	                                            </c:forEach>
+                                        <c:if test="${empty list }">
+                                        	<tr>
+                                        		<td colspan="6" class="py-5 font-weight-bold">검색 결과 데이터가 없습니다.</td>
+                                        	</tr>
+                                        </c:if>
+                                        <c:if test="${not empty list }">
+	                                        <c:forEach items ="${list }" var="board">
+		                                        <tr>
+		                                            <td>${board.getBNo() }</td>
+		                                            <td>
+		                                          <a href="/admin/adBadS?bNo=${board.getBNo() }">
+		                                          ${board.ttl}
+		                                          </a></td>
+		                                            <td>관리자</td>
+		                                            <td>${board.wrDate }</td>
+		                                            <td>
+		                                            	<c:if test="${board.fileNo eq -1}">
+		                                            		<i class="fas fa-minus mr-0"></i>
+		                                            	</c:if>
+		                                            	<c:if test="${board.fileNo ne -1}">
+		                                            		<i class="fas fa-minus mr-0"></i>
+		                                            	</c:if>
+		                                            </td>
+			                                        <td >
+			                                            <c:if test="${board.getBStCode() eq 'B01' }">
+			                                            	등록
+			                                            </c:if>
+			                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
+			                                        		삭제
+			                                            </c:if>
+			                                        </td>
+		                                        </tr>
+		                                    </c:forEach>
+                                        </c:if>
                                         </tbody>
                                     </table>
                                 </div>

@@ -77,7 +77,7 @@
 <body>
 
     <!-- 배너 시작-->
-    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img//normal-breadcrumb.jpg">
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -180,7 +180,7 @@
                                             <div v-on:click="heartClick(index)" v-bind:class="{'is-active' : lecture.wash == 'Y'}" class="heart"></div>
                                         </div>
                                         <!-- 사진 나중에 넣어야함 -->
-                                        <img v-on:click="lecDetail(index)" class="card-img-top" style="width: 250px; height: 300px;" src="/resources/img/trending/trend-1.jpg" alt="강의 이미지">
+                                        <img v-on:click="lecDetail(index)" class="card-img-top" style="width: 250px; height: 300px;" :src="lecture.thumb" alt="강의 이미지">
                                         <div class="card-body">
                                             <p class="card-subtitle mb-1 text-muted">{{lecture.name}}</p>
                                             <h5 v-on:click="lecDetail(index)" class="card-title mb-1 text-dark font-weight-bold">{{lecture.ttl}}</h5>
@@ -269,17 +269,17 @@
                     	{ tagId : 'LT07', tagName :'스케치'},
                     	{ tagId : 'LT08', tagName :'감성'},
                     	{ tagId : 'LT09', tagName :'레트로'},
-                    	{ tagId : 'LT010', tagName :'인디'},
-                    	{ tagId : 'LT011', tagName :'오리엔탈'},
-                    	{ tagId : 'LT012', tagName :'SWAG'},
-                    	{ tagId : 'LT013', tagName :'자취생'},
-                    	{ tagId : 'LT014', tagName :'호텔'},
-                    	{ tagId : 'LT015', tagName :'집밥'},
-                    	{ tagId : 'LT016', tagName :'운동'},
-                    	{ tagId : 'LT017', tagName :'힐링'},
-                    	{ tagId : 'LT018', tagName :'감성샷'},
-                    	{ tagId : 'LT019', tagName :'인생샷'},
-                    	{ tagId : 'LT020', tagName :'여행'}
+                    	{ tagId : 'LT10', tagName :'인디'},
+                    	{ tagId : 'LT11', tagName :'오리엔탈'},
+                    	{ tagId : 'LT12', tagName :'SWAG'},
+                    	{ tagId : 'LT13', tagName :'자취생'},
+                    	{ tagId : 'LT14', tagName :'호텔'},
+                    	{ tagId : 'LT15', tagName :'집밥'},
+                    	{ tagId : 'LT16', tagName :'운동'},
+                    	{ tagId : 'LT17', tagName :'힐링'},
+                    	{ tagId : 'LT18', tagName :'감성샷'},
+                    	{ tagId : 'LT19', tagName :'인생샷'},
+                    	{ tagId : 'LT20', tagName :'여행'}
                     ]
                 }
             },

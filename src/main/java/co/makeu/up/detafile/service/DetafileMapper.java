@@ -5,5 +5,6 @@ import java.util.List;
 public interface DetafileMapper {
 	
 	List<DetafileVO> detaFileList(int fileNo);
-
+	int detaFileInsert(DetafileVO vo);
+	
 }

@@ -20,18 +20,22 @@
 		AND QNA_ST_CODE NOT IN ('Q03')	 
 		ORDER BY Q_REG_DATE DESC
 	</select>
+	
 	<select id="qnaListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM LT_QNA
 		WHERE LT_NO = #{ltNo}
 	</select>
+	
 	<select id="selectQna" resultType="co.makeu.up.ltqna.service.LtQnaVO" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
 		SELECT * FROM LT_QNA WHERE QNA_NO = #{qnaNo}
 	</select>
+	
 	<insert id="insertQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
 		INSERT INTO LT_QNA VALUES(
 		NVL((SELECT MAX(QNA_NO) FROM LT_QNA)+1,1),NULL,#{qContent},#{ltNo},NULL,SYSDATE,'Q01',#{writer}
 		)
 	</insert>
+	
 	<update id="updateMyQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
 		UPDATE LT_QNA
 		SET Q_CONTENT = #{qContent}
