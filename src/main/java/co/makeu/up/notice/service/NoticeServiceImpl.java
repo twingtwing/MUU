@@ -29,5 +29,10 @@ public class NoticeServiceImpl implements NoticeMapper{
 		return map.updateHits(ntNo);
 	}
 
+	@Override
+	public int insertNotice(NoticeVO vo) {
+		return map.insertNotice(vo);
+	}
+
 	
 }

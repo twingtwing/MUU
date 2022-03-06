@@ -56,7 +56,6 @@
                   <div class="breadcrumb__links">
                       <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                       <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
-                      <span>상태에 따라 열렸는지 닫힌강의 열린강의 표시되어야함 </span>
                   </div>
               </div>
           </div>
@@ -75,29 +74,41 @@
                   <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 
                                                이때 상태에 따라서 열린강의인지 종료된강의인지 구별해야함-->
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                      <a class="list-link" href="#">크리에이터 정보</a>
+                      <a class="list-link" href="/creator/creS">크리에이터 정보</a>
                   </li>
                   <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                      <a class="list-link" href="#">&nbsp;&nbsp;- 신청한 강의</a>
+                      <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
+                  </li>
+                  <c:choose>
+                  <c:when test="${lecinfo.ltStCode eq 'L01' }">
+                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+                      <a class="list-link active" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                   </li>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                      <a class="list-link active" href="#">&nbsp;&nbsp;- 열린 강의</a>
+                      <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+                  </li>
+                  </c:when>
+                  <c:when test="${lecinfo.ltStCode eq 'L03' }">
+                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+                      <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                   </li>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                      <a class="list-link" href="#">&nbsp;&nbsp;- 종료된 강의</a>
+                      <a class="list-link active" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                   </li>
+                  </c:when>
+                  </c:choose>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                      <a class="list-link" href="#">&nbsp;&nbsp;- 신고된 강의</a>
+                      <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                   </li>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                      <a class="list-link" href="#">강의등록</a>
+                      <a class="list-link" href="/creator/lecI">강의등록</a>
                   </li>
                   <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                      <a class="list-link" href="#">매출내역</a>
+                      <a class="list-link" href="/creator/creSaleYear">매출내역</a>
                   </li>
                   <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                      <a class="list-link" href="#">환불 요청 내역</a>
+                      <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                   </li>
               </ul>
           </div>
@@ -107,14 +118,19 @@
           <div class="row ml-2">
             <h5 class="ml-1 mb-2 font-weight-bold">
                 <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
+                <c:if test="${lecinfo.ltStCode eq 'L01' }">
                 열린 강의 정보
+                </c:if>
+                <c:if test="${lecinfo.ltStCode eq 'L03' }">
+                닫힌 강의 정보
+                </c:if>
                 <!-- 상태에 따라 닫힌인지 열린인지 달라짐 -->
             </h5>
           </div>
           <hr class="font-weight-bold">
           <div class="row col-12 mb-5 ml-3">
                         <!-- 제목 입력 / 제목 가져오기-->
-              <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+              <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
 
               <div class="row col-12">
                 <div class="row col-12 mt-3 mb-3 justify-content-around">
@@ -156,79 +172,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${nlists }" var="list" varStatus="status">
                   <tr>
-                    <td>4</td>
-                    <td>강의 수정사항 및 교안 오탈자 공지 안내(필수)</td>
-                    
-                    <td>2022.01.30</td>
-                    <td>50</td>
+                    <td>${list.rn }</td>
+                    <td>${list.ttl }</td>
+                    <td>${list.wrDate }</td>
+                    <td>${list.hits }</td>
                   </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>안녕하세요! 크리에이터 최민용입니다.</td>
-                    
-                    <td>2022.01.12</td>
-                    <td>12</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>환불에 대한 이모저모</td>
-                   
-                    <td>2021.05.30</td>
-                    <td>5</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                   
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                   
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                    
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                    
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                    
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                    
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>반갑습니다.</td>
-                    
-                    <td>2021.02.22</td>
-                    <td>138</td>
-                  </tr>
+                 </c:forEach>
                 </tbody>
               </table>
           </div>
+          
           <div class="row col-12 justify-content-center mt-3">
             <div class="product__pagination">
               <a href="#"><i class="fa fa-angle-double-left"></i></a>
@@ -240,18 +195,20 @@
               <a href="#"><i class="fa fa-angle-double-right"></i></a>
             </div>
           </div>
-          <button id="but" class="btn btn-outline-secondary" onclick="location.href='dd'"> 글쓰기</button>
+          <button id="but" class="btn btn-outline-secondary" onclick="insertNotice(${lecinfo.ltNo})"> 글쓰기</button>
         </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- body 의 body 끝 -->
+  <form id="frm">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
+    </form>
 </body>
 <script>
-document.querySelector('tbody>tr').addEventListener('click',(e)=>{
+	$('tbody > tr').on('click',function(e){
     // 글 선택
-    console.log(e.target.value)
+    console.log(e.target.value);
     location.href='./크리에이터공지선택.html';
   })
 
@@ -267,5 +224,12 @@ document.querySelector('tbody>tr').addEventListener('click',(e)=>{
       $(this).find('.list-link').css('color','#000000');
       $(this).find('.list-link.active').css('color','#e53637');
   })
+  
+  //강의 공지사항 글쓰기
+  function insertNotice(e){
+	  $('.sendltno').val(e);
+  	  $('#frm').attr("action", "/creator/cLecNI");
+  	  $('#frm').submit();
+  }
   </script>
 </html>

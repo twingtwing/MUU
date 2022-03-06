@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +78,6 @@
                     <div class="breadcrumb__links">
                         <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
-                        <span>상태에 따라 열렸는지 닫힌강의 열린강의 표시되어야함 </span>
                     </div>
                 </div>
             </div>
@@ -96,39 +96,43 @@
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 
                              이때 상태에 따라서 열린강의인지 종료된강의인지 구별해야함
                             -->
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 55px;">
-                                <a class="list-link" href="#">크리에이터 정보</a>
-                            </li>
-                            <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록
-                            </p>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40"
-                                style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 신청한 강의</a>
-                            </li>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 35px;">
-                                <a class="list-link active" href="#">&nbsp;&nbsp;- 열린 강의</a>
-                            </li>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 종료된 강의</a>
-                            </li>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 35px;">
-                                <a class="list-link" href="#">&nbsp;&nbsp;- 신고된 강의</a>
-                            </li>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 55px;">
-                                <a class="list-link" href="#">강의등록</a>
-                            </li>
-                            <li class="list-group-item border-bottom-0 align-items-center d-flex"
-                                style="height: 55px;">
-                                <a class="list-link" href="#">매출내역</a>
-                            </li>
-                            <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="#">환불 요청 내역</a>
-                            </li>
+                              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+			                      <a class="list-link" href="/creator/creS">크리에이터 정보</a>
+			                  </li>
+			                  <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
+			                      <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
+			                  </li>
+			                  <c:choose>
+			                  <c:when test="${lecinfo.ltStCode eq 'L01' }">
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+			                      <a class="list-link active" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
+			                  </li>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+			                      <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+			                  </li>
+			                  </c:when>
+			                  <c:when test="${lecinfo.ltStCode eq 'L03' }">
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+			                      <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
+			                  </li>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+			                      <a class="list-link active" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+			                  </li>
+			                  </c:when>
+			                  </c:choose>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
+			                      <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
+			                  </li>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+			                      <a class="list-link" href="/creator/lecI">강의등록</a>
+			                  </li>
+			                  <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+			                      <a class="list-link" href="/creator/creSaleYear">매출내역</a>
+			                  </li>
+			                  <li class="list-group-item align-items-center d-flex" style="height: 55px;">
+			                      <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
+			                  </li>
                         </ul>
 
                     </div>                    
@@ -138,19 +142,24 @@
                     <div class="row ml-2">
                         <h5 class="ml-1 mb-2 font-weight-bold">
                             <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
-                            열린 강의 정보
+                            <c:if test="${lecinfo.ltStCode eq 'L01' }">
+			                열린 강의 정보
+			                </c:if>
+			                <c:if test="${lecinfo.ltStCode eq 'L03' }">
+			                닫힌 강의 정보
+			                </c:if>
                             <!-- 상태에 따라 닫힌인지 열린인지 달라짐 -->
                         </h5>
                     </div>
                     <hr class="font-weight-bold">
                     <!-- 강의 하나에 대한 상세정보페이지-->
                     <div class="row col-12 mb-2 ml-3">
-                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
 
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
                                 <!-- 선택 : active -->
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='rLecS.html'">강의정보</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="/creator/oLecS">강의정보</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
                                 <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="location.href='#'">공지사항</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
@@ -168,17 +177,17 @@
                                     <h5><strong>제목 : </strong></h5>
                                 </div>
                                 <div class="col-11 px-0">
-                                    <input class="w-100" type="text" name="" id="" spellcheck="false">
+                                    <input class="w-100" type="text" name="" id="ttl" spellcheck="false">
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <textarea name="" id="" cols="130" rows="10" spellcheck="false">ㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅁㄹㄴㅇㅁㄻ</textarea>
+                                <textarea name="" id="content" cols="130" rows="10" spellcheck="false"></textarea>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <div class="d-flex align-items-center">
                                     <i class="fa fa-download mr-2"></i>
                                 </div>
-                                <input type="file" name="" id="" spellcheck="false">
+                                <input type="file" name="" id="file" spellcheck="false">
                             </div>
                         </div>
                     </div>
@@ -187,8 +196,8 @@
                         <button onclick="history.back()" class="btn btn-outline-secondary">뒤로가기</button>
                         <div class="row mr-4">
                             <!-- 등록하면 list가 아니라 그 등록된 페이지로 이동해야함 -->
-                            <button class="btn btn-outline-secondary mr-2">등록</button>
-                            <button onclick="location.href='박용호_크리에이터공지사항.html'" class="btn btn-outline-secondary mr-2">취소</button>
+                            <button class="btn btn-outline-secondary mr-2" id="insertBtn">등록</button>
+                            <button onclick="history.back()" class="btn btn-outline-secondary mr-2">취소</button>
                         </div>
                     </div>
                 </div>
@@ -197,18 +206,49 @@
     </section>
 </body>
 <script>
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgy > .list-group-item:not(.mylist)').on('mouseover', function () {
+    $(this).css('background-color', '#e53637');
+    $(this).find('.list-link').css('color', '#ffffff');
+})
 
-                //mouseover 이벤트 : 사이드바 css변경
-        $('#cctgy > .list-group-item:not(.mylist)').on('mouseover', function () {
-            $(this).css('background-color', '#e53637');
-            $(this).find('.list-link').css('color', '#ffffff');
-        })
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgy > .list-group-item:not(.mylist)').on('mouseout', function () {
+    $(this).css('background-color', '#ffffff');
+    $(this).find('.list-link').css('color', '#000000');
+    $(this).find('.list-link.active').css('color', '#e53637');
+})
 
-        //mouseover 이벤트 : 사이드바 css변경
-        $('#cctgy > .list-group-item:not(.mylist)').on('mouseout', function () {
-            $(this).css('background-color', '#ffffff');
-            $(this).find('.list-link').css('color', '#000000');
-            $(this).find('.list-link.active').css('color', '#e53637');
-        })
-    </script>
+//시큐리티 토큰
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+//글 등록
+$('#insertBtn').on('click', function(){
+	let form = new FormData();
+	form.append('ltNo', ${lecinfo.ltNo});
+	form.append('ttl', $('#ttl').val());
+	form.append('content', $('#content').val());
+		
+	$.ajax({
+        url : "/creator/cLecNInsert",
+      	method : "post",
+      	processData : false,
+        contentType : false,
+        async : false,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+         },
+        data : form,
+        success:function() {
+          alert("글이 등록되었습니다");
+          location.href = "/creator/cLecNL";
+        },
+         error: function (jqXHR) { 
+           alert(jqXHR.responseText); 
+         }
+    });
+})
+
+</script>
 </html>

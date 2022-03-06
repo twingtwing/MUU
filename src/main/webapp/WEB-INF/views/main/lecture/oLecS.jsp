@@ -141,7 +141,7 @@
                                 <!-- 선택 : active -->
                                 <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="#">강의정보</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${olist.ltNo})">공지사항</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${olists.ltNo })">공지사항</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">수강생</button>
                             </div>
@@ -260,7 +260,7 @@
         </div>
     </section>
     <form id="frm">
-    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>
 
 </body>

@@ -9,7 +9,7 @@
 			AND LT_NO = #{ltNo}
 			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
 			AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
-			ORDER BY NT_NO DESC)
+			ORDER BY RN DESC)
 		WHERE RN <![CDATA[>=]]> (10*#{page})+1
 	</select>
   
@@ -27,4 +27,11 @@
 		UPDATE NOTICE
 		SET HITS = HITS + 1
 	</update>
+	<insert id="insertNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
+		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO)
+		VALUES((SELECT NVL(MAX(NT_NO), 0)+1 FROM NOTICE), SYSDATE, #{ttl}, #{content}, 0, #{ltNo})
+		<!-- 
+		(SELECT NVL(MAX(FILE_NO), 0)+1 FROM NOTICE))	
+		 --> 
+	</insert>
 </mapper>
