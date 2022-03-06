@@ -55,5 +55,13 @@
 		TTL = #{ttl}, INTRO = #{intro}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}
 		WHERE LT_NO = #{ltNo}
 	</update>
-	
+	<select id="creLectureList" parameterType="String" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT L.*,NVL(P.SALES,0) SALES,NVL(P.CNT,0) CNT
+		FROM (SELECT LT_NO,SUM(PAY) SALES,COUNT(*) CNT 
+		      FROM SUGANG 
+		      GROUP BY LT_NO) P 
+		RIGHT OUTER JOIN LECTURE L 
+		ON P.LT_NO = L.LT_NO
+		WHERE L.CRE_ID = #{ID}
+	</select>
 </mapper>

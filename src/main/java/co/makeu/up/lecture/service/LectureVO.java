@@ -38,7 +38,21 @@ public class LectureVO {
 	private String pht;//크리에이터 사진
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
-	
+	private int cnt; // 수강인원
+	private int sales; // 강의별 매출액
+			
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getSales() {
+		return sales;
+	}
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
 	public int getLtNo() {
 		return ltNo;
 	}

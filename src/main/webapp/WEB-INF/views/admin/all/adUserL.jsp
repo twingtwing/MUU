@@ -58,35 +58,46 @@
                                                 <div class="d-flex">
                                                     <div class="col-3 d-flex align-items-center">
                                                         <select class="w-100 py-1 searchType border">
-                                                            <option value="id" selected>아이디</option>
-                                                            <option value="name">이름</option>
+                                                            <option value="id"<c:if test="${not empty search.id }"> selected="selected"</c:if>>아이디</option>
+                                                            <option value="name"<c:if test="${not empty search.name }"> selected="selected"</c:if>>이름</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-9">
-                                                        <input class="w-100 border py-1 selectBox" type="text" spellcheck="false">
+                                                        <input class="w-100 border py-1 selectBox" type="text" spellcheck="false"
+                                                        <c:if test="${not empty search.id }">value="${search.id }"</c:if>
+                                                        <c:if test="${not empty search.name }">value="${search.name }"</c:if>
+                                                        >
                                                     </div>
                                                 </div>
                                             </td>
                                             <th width="15%">전화번호</th>
                                             <td width="35%">
-                                                <input class="w-100 border py-1 tel" type="text" spellcheck="false">
+                                                <input class="w-100 border py-1 tel" type="text" spellcheck="false"
+                                                value="${search.tel }">
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>성별</th>
                                             <td class="text-left">
-                                            	<input type="radio" value="" class="ml-2" name="gender" id="code_all" spellcheck="false" checked="checked">
+                                            	<input type="radio" value="" class="ml-2" name="gender" id="code_all" spellcheck="false" 
+                                            	<c:if test="${empty search.gender}">checked="checked"</c:if>
+                                            	>
                                                 <label for="code_all" class="mr-3 mb-0 gender">모두</label>
-                                                <input type="radio" value="W" class="ml-2" name="gender" id="code_F" spellcheck="false">
+                                                <input type="radio" value="W" class="ml-2" name="gender" id="code_F" spellcheck="false"
+                                                <c:if test="${search.gender eq 'W'}">checked="checked"</c:if>
+                                                >
                                                 <label for="code_F" class="mr-3 mb-0 gender">여성</label>
-                                                <input type="radio" value="M" name="gender" id="code_M" spellcheck="false">
+                                                <input type="radio" value="M" name="gender" id="code_M" spellcheck="false"
+                                                <c:if test="${search.gender eq 'M'}">checked="checked"</c:if>
+                                                >
                                                 <label for="code_M" class="mb-0 mr-3 gender">남성</label>
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>등급</th>
                                             <td class="text-left">
-                                            	<input type="checkbox"id="normal" class="ml-2" spellcheck="false" value="일반" name="grd">
+                                            	<c:if test="${empty search.uGrdCodeList }">                                           	
+                                            	<input type="checkbox"id="normal" class="ml-2" spellcheck="false" value="일반" name="grd" >
                                                 <label for="normal" class="mr-3 mb-0">일반</label>
                                                 <input type="checkbox"id="sae" class="ml-2" value="새싹" spellcheck="false"name="grd">
                                                 <label for="sae" class="mr-3 mb-0">새싹</label>
@@ -94,21 +105,30 @@
                                                 <label for="namu" class="mb-0 mr-3">나무</label>
                                                 <input type="checkbox"id="kod"spellcheck="false"value="꽃"name="grd">
                                                 <label for="kod" class="mb-0">꽃</label>
+                                            	</c:if>
+                                            	<c:if test="${not empty search.uGrdCodeList }">
+                                            	<c:forEach items="${search.uGrdCodeList }" var="g">
+                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="grd" checked="checked">                                     	
+                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
+                                            	</c:forEach>      
+                                            	</c:if>
                                             </td>
                                             <th>상태</th>
                                             <td class="text-left">
-                                                <input type="radio" class="ml-2" value="1" name="uStCode" id="code_1" spellcheck="false" checked="checked">
+                                                <input type="radio" class="ml-2" value="1" name="uStCode" id="code_1" spellcheck="false" 
+                                                <c:if test="${search.uStCode eq 1 || empty search.uStCode}"> checked="checked"</c:if>>
                                                 <label for="code_1" class="mr-3 mb-0">활성</label>
-                                                <input type="radio" name="uStCode" id="code_2" spellcheck="false" value="0">
+                                                <input type="radio" name="uStCode" id="code_2" spellcheck="false" value="0"
+                                                <c:if test="${search.uStCode eq 0}"> checked="checked"</c:if>>
                                                 <label for="code_2" class="mb-0 mr-3">비활성</label>
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>가입날짜</th>
                                             <td class="d-flex border-0 align-items-center">
-                                                <input type="date" class="border py-1 pastDate">
+                                                <input type="date" class="border py-1 pastDate" value="${search.pastDate }">
                                                 <i class="fas fa-minus mx-2"></i>
-                                                <input type="date" class="border py-1 recentDate">
+                                                <input type="date" class="border py-1 recentDate" value="${search.recentDate }">
                                             </td>
                                         </tr>
                                     </table>
@@ -159,22 +179,22 @@
                                 <div class="row d-flex justify-content-center position-relative">
                                     <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
                                         <ul class="pagination">
-                                        	<c:if test="${pages.currPage ne 1 }">
-                                            <li class="paginate_button page-item previous"
-                                                id="zero_config_previous">
-                                            <a href="#" aria-controls="zero_config" data-dt-idx="0" tabindex="0" class="page-link">
-                                            <i class="mdi mdi-chevron-double-left"></i></a></li>
-                                        	</c:if>
-                                        	<c:forEach begin="${pages.startPage }" end="${pages.endPage }" var="page">
-                                            <li class="paginate_button page-item <c:if test="${pages.currPage eq page}">active</c:if>"><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                                    class="page-link">${page }</a></li>
-                                        	</c:forEach>
-                                        	<c:if test="${pages.currRange ne pages.pageCnt}">
-                                            <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
+                                        <c:if test="${pages.currPage ne 1 }">
+                                            <li class="paginate_button page-item previous" data-num="${pages.prevPage }"
+                                            id="zero_config_previous"><a href="#" aria-controls="zero_config"
+                                            data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
+                                        </c:if>
+                                        <c:forEach begin="${pages.startPage }" end="${pages.endPage }" var="p">
+                                            <li data-num=${p } class="paginate_button page-item <c:out value="${pages.currPage == p ? 'active' : '' }"/>"><a href="#"
+                                                    aria-controls="zero_config" 
+                                                    class="page-link">${p }</a></li>
+                                        </c:forEach>
+                                        <c:if test="${pages.currPage ne pages.pageCnt && pages.pageCnt >0 }">
+                                            <li class="paginate_button page-item next" id="zero_config_next" data-num="${pages.nextPage }">
+                                            <a href="#"
                                                     aria-controls="zero_config" data-dt-idx="7" tabindex="0"
                                                     class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
-                                        	</c:if>
+                                        </c:if>          
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
@@ -190,93 +210,62 @@
             </div>
             <!-- 내용 끝 -->
 <form action="/admin/userSelect" id="userSelectForm">
-<input type="text" name="id" id="userId">
+<input type="hidden" name="id" id="userId">
+</form>
+<form action="/admin/adUserLSearch" id="searchForm">
+<input type="hidden" name="id" value="">
+<input type="hidden" name="name" value="">
+<input type="hidden" name="gender" value="">
+<input type="hidden" name="pastDate" value=null>
+<input type="hidden" name="recentDate" value=null>
+<input type="hidden" name="uStCode" value="">
+<input type="hidden" name="page" value="">
+<input type="hidden" name="tel" value="">
 </form>
 <script type="text/javascript">
 	$('#usersSearch').click(()=>{
-		let data = makeSearchData(0);
-		ajaxsearch(data);
+		makeSearchData(1);
+		$('#searchForm').submit();
 	})
 	
 	const makeSearchData = (pageNum)=>{
-		let grd = [];		
 		for(let g of $('input[name=grd]:checked')){
-			grd.push(g.value)
+			$('#searchForm').append(
+				$('<input>').attr('type','hidden').attr('name','uGrdCodeList').val(g.value)		
+			)
+		}
+		if($('input[name=grd]:checked').length===0){
+			$('#searchForm').append(
+					$('<input>').attr('type','hidden').attr('name','uGrdCodeList').val('일반'),
+					$('<input>').attr('type','hidden').attr('name','uGrdCodeList').val('새싹'),
+					$('<input>').attr('type','hidden').attr('name','uGrdCodeList').val('꽃'),
+					$('<input>').attr('type','hidden').attr('name','uGrdCodeList').val('나무')
+				)
 		}
 		let gender = $('input[name=gender]:checked').val();
 		let ustcode = +$('input[name=uStCode]:checked').val();	
-		let data = {
-			id: '',
-			name: '',
-			gender:gender,
-			pastDate:$('.pastDate').val(),
-			recentDate:$('.recentDate').val(),
-			uGrdCodeList: grd,
-			uStCode : ustcode,
-			page : pageNum,
-			tel : $('.tel').val()
-		}
 		if($('.searchType').val()==='id'){
-			data.id = $('.selectBox').val()
+			$('#searchForm>input[name=id]').val($('.selectBox').val());
 		} else {
-			data.name = $('.selectBox').val();
+			$('#searchForm>input[name=name]').val($('.selectBox').val());
 		}
-		return data;
+		$('#searchForm>input[name=gender]').val(gender)
+		let future = new Date();
+		future = new Date(future.setDate(future.getDate()+1)).toISOString().slice(0,10);
+		!$('.pastDate').val() ? $('#searchForm>input[name=pastDate]').val('2016-01-01') : $('#searchForm>input[name=pastDate]').val($('.pastDate').val())
+		!$('.recentDate').val() ? $('#searchForm>input[name=recentDate]').val(future) : $('#searchForm>input[name=recentDate]').val($('.recentDate').val())
+		$('#searchForm>input[name=uStCode]').val(ustcode);
+		$('#searchForm>input[name=page]').val(pageNum)
+		$('#searchForm>input[name=tel]').val($('.tel').val())
 	}
 	
-	const ajaxsearch = (d) =>{
-		console.log(d);
-		$.ajax({
-			url:'/admin/userSearch',
-			data : JSON.stringify(d),
-			contentType : 'application/json;charset=utf-8',
-			method : 'POST',
-				beforeSend : (xhr) =>{
-				      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-				  },
-		})
-		.done((r)=>{
-			removeAll();
-			makeRow(r)
-		})
-	}
+	
 	// pagination
-	$('.page-link').click((e)=>{
-		let pageNum = +e.target.textContent-1;
-		let data = makeSearchData(pageNum);
-		$('.active').removeClass('active');
-		$(e.target).parent().addClass('active');
-		ajaxsearch(data);
+	$('.page-item').click((e)=>{
+		let pageNum = e.currentTarget.dataset.num;
+		makeSearchData(pageNum);
+		$('#searchForm').submit();
 	})
-	
-	const makeRow = (list)=>{
-		list.forEach((v)=>{
-			let tr = $('<tr>')
-			if(v.uStCode===0){
-				v.uStCode = '비활성'
-			} else {
-				v.uStCode = '활성'
-			}
-			if(v.gender==='M'){
-				v.gender = '남성'
-			} else{
-				v.gender = '여성'
-			}
-			tr.append(
-				$('<td>').text(v.id),
-				$('<td>').text(v.uStCode),
-				$('<td>').text(v.name),
-				$('<td>').text(v.gender),
-				$('<td>').text(v.tel),
-				$('<td>').text(v.uGrdCode),
-				$('<td>').text(new Date(v.joinDate).toISOString().slice(0,10))
-			)
-			$('.userListBoard').append(tr);
-		})
-	}
-	const removeAll = ()=>{
-		$('.userListBoard').children().remove();
-	}
 	
 	// select
 	$('.userListBoard').click((e)=>{	

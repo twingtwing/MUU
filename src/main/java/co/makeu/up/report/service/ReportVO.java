@@ -19,7 +19,7 @@ public class ReportVO {
 	private String recontent; // 리부내용
 	private String creid; // 크리에이터 아디
 	private int star; // 별점
-	
+	private int cnt; // 신고횟수
 	private int length;
 	private String start;
 	private String end;

@@ -44,4 +44,9 @@ public class RefundServiceImpl implements RefundMapper {
 	public int adRefCancleUpdate(RefundVO vo) {
 		return map.adRefCancleUpdate(vo);
 	}
+
+	@Override
+	public List<RefundVO> RefundListByCreator(String id) {
+		return map.RefundListByCreator(id);
+	}
 }
