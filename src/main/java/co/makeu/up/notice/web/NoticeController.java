@@ -70,7 +70,7 @@ public class NoticeController {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			model.addAttribute("sugang",checkvo);
 		}		
-		vo.setPage(0);
+		vo.setPage(1);
 		int listCnt = noticeDao.NoticeListCnt(vo.getLtNo());
 		Pagination pagination = new Pagination(listCnt,1);
 		model.addAttribute("ltno",vo.getLtNo());

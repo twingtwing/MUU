@@ -246,7 +246,7 @@
   
   // 페이지네이션
 	$('.paging').click((e)=>{
-		let pageNum = +e.currentTarget.textContent-1;
+		let pageNum = +e.currentTarget.textContent;
 		const data = {ltNo : ${ltno} , page : pageNum};
 		if(!$('#noticeSearchKey').val()){
 			normalPageAjax(data);			

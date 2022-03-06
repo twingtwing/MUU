@@ -10,4 +10,5 @@ public interface LectureMapper {
 	List<LectureVO> closeLecture(LectureVO vo);
 	List<LectureVO> reportLecture(LectureVO vo);
 	int lectureUpdate(LectureVO vo);
+	List<LectureVO> creLectureList(String id);
 }

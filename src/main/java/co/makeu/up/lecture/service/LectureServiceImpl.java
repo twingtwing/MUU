@@ -46,4 +46,9 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.lectureUpdate(vo);
 	}
 
+	@Override
+	public List<LectureVO> creLectureList(String id) {
+		return map.creLectureList(id);
+	}
+
 }

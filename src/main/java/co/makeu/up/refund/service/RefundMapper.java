@@ -10,4 +10,5 @@ public interface RefundMapper {
 	List<RefundVO> adminRefundListSearch(RefundVO vo);
 	int updateRefund(RefundVO vo);
 	int adRefCancleUpdate(RefundVO vo);
+	List<RefundVO> RefundListByCreator(String id);
 }

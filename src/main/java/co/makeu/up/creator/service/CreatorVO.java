@@ -24,6 +24,7 @@ public class CreatorVO {
 	private int point;
 	private String creIntro;
 	private String creGrdCode;
+
 	private String socialCode;
 
 }
