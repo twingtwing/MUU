@@ -5,12 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-
-
 <style>
-        table tr,
+        table th,
         table td {
             text-align: center;
             vertical-align: middle;
@@ -64,9 +60,7 @@
 	                                            <td style="width: 35%">
 	                                                <div class="row">
 	                                                    <div class="col-3">
-	                                                        <select class="custom-select text-center px-0" 
-	                                                        id="sel" onchange="chsel()"
-	                                                        style="width: 100px;">
+	                                                        <select class="custom-select text-center p-0" id="sel" onchange="chsel()" style="height: 27px;width: 100px;">
 	                                                            <option value ="ttl">제목</option>
 	                                                            <option value = "content">내용</option>
 	                                                            <option value = "mix">제목 + 내용</option>
@@ -88,21 +82,19 @@
 	                                            </td>
 	                                        </tr>
 	                                        <tr height="38">
-	                                            <th>등록일</th>
+	                                            <th class="align-middle">등록일</th>
 	                                            <td colspan="3" class="text-left align-middle">
 	                                                <div class="row pl-4 d-flex justify-content-start">
-	                                                    <div><input type="date" name = "start"></div>
-	                                                    <div class="ml-3 mr-3 align-self-center"><i class="fa fa-minus"></i></div>
-	                                                    <div><input type="date" name = 'end'></div>
-	                                                    
-	                                                     <!-- 여기까지ㅇ-->
+	                                                    <input type="date" name = "start">
+	                                                    <div class="mx-2 d-flex align-self-center justify-content-center"><i class="fa fa-minus m-0"></i></div>
+	                                                    <input type="date" name = 'end'>
 	                                                </div>
 	                                            </td>
 	                                        </tr>
 	                                    </table>
 	                                    
 	                                    <button id="but"  type = "submit" class="btn btn-secondary position-absolute"
-	                                        style="width: 75px; height: 33px; right: 5px; bottom: 23px;">검색</button>
+	                                        style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
 	                                </div>
                                 </form>
                                 <div class="row">

@@ -58,11 +58,11 @@
                                     <p v-on:click="delAll" class="mb-0 bocket_delete text-muted">전체삭제</p>
                                 </div>
                                 <div class="card-body pb-1">
-                                    <div v-if="payObject.lecList.length == 0">
+                                    <div v-if="lectureList.length == 0">
                                         <p class="text-center">선택한 강의가 없습니다.</p>
                                     </div>
                                     <!-- 반복 -->
-                                    <div v-for="(lec,index) in payObject.lecList" class="card mb-4" style="border-radius: 20px; border: 2px solid #070720;">
+                                    <div v-for="(lec,index) in lectureList" class="card mb-4" style="border-radius: 20px; border: 2px solid #070720;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-4">
@@ -114,19 +114,19 @@
                                                 <table class="table mb-0">
                                                     <tr height= 55>
                                                         <th width="130px" class="text-center align-middle border-top-0">전화번호</th>
-                                                        <td class="border-top-0 align-middle">{{payObject.tel}}</td>
+                                                        <td class="border-top-0 align-middle">{{userAddr.tel}}</td>
                                                     </tr>
                                                     <tr height= 55>
                                                         <th class="text-center align-middle">우편번호</th>
-                                                        <td class="align-middle">{{payObject.zip}}</td>
+                                                        <td class="align-middle">{{userAddr.zip}}</td>
                                                     </tr>
                                                     <tr height= 55>
                                                         <th class="text-center align-middle">주소</th>
-                                                        <td class="align-middle">{{payObject.addr}}</td>
+                                                        <td class="align-middle">{{userAddr.addr}}</td>
                                                     </tr>
                                                     <tr height= 55>
                                                         <th class="text-center align-middle">상세주소</th>
-                                                        <td class="align-middle">{{payObject.detaAddr}}</td>
+                                                        <td class="align-middle">{{userAddr.detaAddr}}</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -183,7 +183,7 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <div class="mx-3 mt-2">
-                                            <div v-for="lec in payObject.lecList" class="row justify-content-between">
+                                            <div v-for="lec in lecDetails" class="row justify-content-between">
                                                 <p class="font-weight-bold">{{lec.ttl}}</p>
                                                 <p class="font-weight-bold">+ {{lec.kitPrc + lec.prc}}원</p>
                                             </div>
@@ -193,14 +193,14 @@
                                                     <p class="mb-0">-&nbsp;&nbsp;</p>
                                                     <div class="blog__details__form pt-0 w-100">
                                                         <form onsubmit="return false"> 
-                                                            <input v-model="payPoint" v-on:change="usePoint" type="number" :max="payObject.point" min="0" step="100" spellcheck="false" class="text-right border mb-0" style="height: 30px; width: 150px;">
+                                                            <input v-model="payPoint" v-on:change="usePoint" type="number" :max="userAddr.point" min="0" step="100" spellcheck="false" class="text-right border mb-0" style="height: 30px; width: 150px;">
                                                         </form>
                                                     </div> 
                                                     <p class="mb-0">원</p>
                                                 </div>
                                             </div>
                                             <div class="row justify-content-end">
-                                                <p class="text-muted">(현재 적립금 : {{payObject.point}}원)</p>
+                                                <p class="text-muted">(현재 적립금 : {{userAddr.point}}원)</p>
                                             </div>
                                             <!-- 수수료는 크리에이터 등급에 따라 다르므로 총계+수수료가 아니라
                                             총계 - 수수료 = 매출이 되어야함
@@ -282,12 +282,13 @@
             data(){
                 return{
                     payPoint : 0,
-                    payObject : {}
+                    lecDetails : [],
+                    userAddr : {}
                 }
             },
             computed :{
                 prcSum : function(){
-                    const ary = this.payObject.lecList;
+                    const ary = this.lecDetails;
                     let sum = 0;
                     for(val of ary){
                         sum += val.prc + val.kitPrc;
@@ -296,13 +297,13 @@
                     return sum;
                 },
                 grade : function(){
-                    let uGrdCode = this.payObject.uGrdCode;
+                    let uGrdCode = this.userAddr.uGrdCode;
                     if(uGrdCode ==='ao1'){
                         return '나무';
                     }
                 },
                 gradePer : function(){
-                    let uGrdCode = this.payObject.uGrdCode;
+                    let uGrdCode = this.userAddr.uGrdCode;
                     if(uGrdCode ==='ao1'){
                         return 10 ;
                     }
@@ -353,8 +354,8 @@
 
                 },
                 usePoint(){
-                    if(this.payPoint > this.payObject.point){
-                        this.payPoint = this.payObject.point;
+                    if(this.payPoint > this.userAddr.point){
+                        this.payPoint = this.userAddr.point;
                     }else if( this.payPoint < 0){
                         this.payPoint = 0;
                     }
@@ -372,13 +373,19 @@
                     $('#checkModal').modal('hide');
                 }
             },
-            beforeMount : function(){
-                /*
-                beforeCreate
+            beforeCreate : function(){
+            	console.log('${lecList}');
 
-                fetch("../전부가져오기")
+            	fetch("/user/lecturePay?lecList="+'${lecList}')
                 .then(response => response.json())
-                .then(result => {this.lecDetails = result;})
+                .then(result => {
+                	this.lecDetails = result.lectureList;
+					this.userAddr = result.userAddr;                
+                })
+				
+                /*
+            	beforeCreate
+
                 */
                this.payObject = {
                    lecList : [

@@ -141,7 +141,7 @@
                                                 <li><a href="#lec_review">후기</a></li>
                                                 <li><a href="#lec_kit">키트</a></li>
                                                 <li><a href="#lec_qna">질문&답변</a></li>
-                                                <li><a href="/lecN">공지사항</a></li>
+                                                <li><a :href="'/lecN?ltNo='+lecDetails.ltNo">공지사항</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -238,7 +238,8 @@
                                                                         <div id="revU" class="row mx-3 my-2 pt-1 d-none position-rel position-relative">
                                                                         	<h3 class="row text-center position-absolute" style="bottom: -40px; left: 15px;">
 																	        </h3>
-                                                                        	<textarea rows="3" cols="100">{{myReview.content}}</textarea>
+                                                                        	<textarea v-on:change="updateErr" rows="3" cols="100">{{myReview.content}}</textarea>
+                                                                        	<p class="w-100 text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                         	<input type="hidden" name="num" :value="myReview.rvNo">
                                                                         </div>
                                                                     </div>
@@ -272,13 +273,16 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mx-4 my-2 pt-1">
+                                                                        <div v-if="review.rvCode == 'RE01'" class="row mx-4 my-2 pt-1">
                                                                             {{review.content}}
+                                                                        </div>
+                                                                        <div v-if="review.rvCode == 'RE02'" class="row mx-4 my-2 pt-1 justify-content-center">
+                                                                        	<p class="text-danger font-weight-bold">관리자에 의해 신고 처리된 리뷰입니다.</p>
                                                                         </div>
                                                                         <input type="hidden" name="num" :value="review.rvNo">
                                                                     </div>
                                                                     <div class="row mx-0 d-flex justify-content-end">
-                                                                        <a id="rev_a" v-on:click="revCopy" data-toggle="modal" data-target="#revReport" class="text-muted rep_a" style="bottom: 45px; right: 12px;">신고</a>
+                                                                        <a id="rev_a" v-if="review.rvCode == 'RE01'" v-on:click="revCopy" data-toggle="modal" data-target="#revReport" class="text-muted rep_a" style="bottom: 45px; right: 12px;">신고</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -329,7 +333,8 @@
 	                                                                        	<span v-if="qna.qnaStCode == 'Q02'" class="text-danger mt-1 font-weight-bold">답변완료</span>
                                                                         	</div>
                                                                             <p class="mx-2 qnaP">{{qna.qContent}}</p>
-                                                                            <textarea class="d-none w-100" rows="3">{{qna.qContent}}</textarea>
+                                                                            <textarea v-on:change="updateErr" class="d-none w-100" rows="3">{{qna.qContent}}</textarea>
+                                                                            <p class="text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                             <div v-if="qna.myQna =='Y'" class="row mx-0 justify-content-end upDiv">
                                                                             	<button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary mr-1 px-2 py-1" v-on:click="qnaUpt(1)" style="bottom: 45px; right: 12px;">수정</button>
                                                                                 <button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary px-2 py-1" v-on:click="qnaDel(index)" style="bottom: 45px; right: 12px;">삭제</button>
@@ -383,7 +388,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <button onclick="location.href='/lecP'" class="btn btn-danger w-100">구매</button>
+                                                                <a :href="'/user/lecP?lecList='+payPath" class="btn btn-danger w-100">구매</a>
                                                             </div>
                                                             <div class="row mt-2 d-flex justify-content-end pr-2">
                                                                 <p class="heart"><i v-bind:class="[lecDetails.wash=='Y' ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> {{lecDetails.wCount}}</p>
@@ -483,6 +488,7 @@
                             <div class="modal_close" data-dismiss="modal"><i class="icon_close"></i></div>
                         </div>
                         <form id="revRepFrm">
+                        	<input type="hidden" name="ltNo" :value="lecDetails.ltNo">
 	                        <div class="modal-body border-bottom-0">
 	                            <div class="col-lg-12">
 	                                <p class="font-weight-bold">신고 대상</p>
@@ -546,7 +552,8 @@
                     qnaList :[],
                     myReview : null,
                     avgStar : 0,
-                    length : 0
+                    length : 0,
+                    payPath : []
                 }
             },
             computed:{
@@ -559,22 +566,36 @@
             	}
             },
             methods :{
+            	updateErr(){
+            		if($(event.target).val() ===''){
+                        $(event.target).closest('div').find('.errDiv').removeClass('d-none');
+                    }else{
+                        $(event.target).closest('div').find('.errDiv').addClass('d-none');
+                    }
+            	},
             	qnaUpdate(index){
-            		console.log($(event.target).closest('.qnaBox').find('textarea').val());
-            		console.log(this.qnaList[index].qnaNo)
-            		this.qnaList[index].qContent = $(event.target).closest('.qnaBox').find('textarea').val();
-            		qnaUpt(-1);
-            		/* $.ajax({
-            			url : '/user/updateMyqna',
-            			data : {qnaNo : this.qnaList[index].qnaNo, qContent : },
-            			type : 'post',
-            			beforeSend : (xhr) =>{
-            			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            			},
-            		})
-            		.done(()=>{
-            			
-            		}); */
+            		let path = $(event.target).closest('.qnaBox');
+            		let content = $(event.target).closest('.qnaBox').find('textarea').val();
+            		if(content == ''){
+            			$(event.target).closest('.qnaBox').find('.errDiv').removeClass('d-none');
+            		}else{
+            			$(event.target).closest('.qnaBox').find('.errDiv').addClass('d-none');
+	            		 $.ajax({
+	            			url : '/user/updateMyqna',
+	            			data : {qnaNo : this.qnaList[index].qnaNo, qContent : content },
+	            			type : 'post',
+	            			beforeSend : (xhr) =>{
+	            			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            			},
+	            		})
+	            		.done(()=>{
+		            		this.qnaList[index].qContent = content;
+		            		path.find('.qnaP').removeClass('d-none');
+		            		path.find('.upDiv').removeClass('d-none');
+		            		path.find('textarea').addClass('d-none');
+		            		path.find('.downDiv').addClass('d-none');
+	            		}); 
+            		}
             	},
             	qnaUpt(index){
             		if(index == 1){//text창 보여줌
@@ -659,30 +680,36 @@
             		}
             	},
             	revUpdate(){//리뷰수정
-            		$.ajax({
-            	  		url : '/user/updateReview',
-            	  		type : 'post',
-        	  	    	beforeSend : (xhr) =>{
-        	  			  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-        	  			},
-        	  			data : {
-        	  				rvNo : $('#revU input').val(), 
-        	  				content: $('#revU textarea').val(), 
-        	  				star: $('#revU h3 .text-warning').length
-        	  			}
-            	  	})
-            	  	.done(()=>{
-            	  		alert('해당 리뷰가 수정되었습니다.');
-            	  		this.avgStar = this.avgStar - this.myReview.star + $('#revU h3 .text-warning').length;
-            	  		this.myReview.content = $('#revU textarea').val();
-            	  		this.myReview.star = $('#revU h3 .text-warning').length;
-            	  		$('#revU').addClass('d-none');
-            			$('#revD').removeClass('d-none');
-            			$('#upBtn').addClass('d-none');
-            			$('#backBtn').removeClass('d-none');
-            			$('#revU h3').empty();
-            			$('#revU textarea').val();
-            	  	})
+            		let content = $('#revU textarea').val();
+            		if(content == ''){
+            			$('#revU .errDiv').removeClass('d-none');
+            		}else{
+            			$('#revU .errDiv').addClass('d-none');            			
+	            		$.ajax({
+	            	  		url : '/user/updateReview',
+	            	  		type : 'post',
+	        	  	    	beforeSend : (xhr) =>{
+	        	  			  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        	  			},
+	        	  			data : {
+	        	  				rvNo : $('#revU input').val(), 
+	        	  				content: content, 
+	        	  				star: $('#revU h3 .text-warning').length
+	        	  			}
+	            	  	})
+	            	  	.done(()=>{
+	            	  		alert('해당 리뷰가 수정되었습니다.');
+	            	  		this.avgStar = this.avgStar - this.myReview.star + $('#revU h3 .text-warning').length;
+	            	  		this.myReview.content = $('#revU textarea').val();
+	            	  		this.myReview.star = $('#revU h3 .text-warning').length;
+	            	  		$('#revU').addClass('d-none');
+	            			$('#revD').removeClass('d-none');
+	            			$('#upBtn').addClass('d-none');
+	            			$('#backBtn').removeClass('d-none');
+	            			$('#revU h3').empty();
+	            			$('#revU textarea').val();
+	            	  	})
+            		}
             	},
             	revDelete(){//리뷰삭제
             	 	$.ajax({
@@ -824,13 +851,12 @@
                     }
                 },
                 lecReport(){//강의신고
-                    //빈칸체크
                     let content = $('#lecReport textarea').val();
-                    if( content == ''){
+                    if( content == ''){//빈칸체크
                     	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
 
                     }else{
-                    	if(this.lecDetails.mySugang == 'N'){
+                    	if(this.lecDetails.mySugang == 'N'){//수강신청자 여부
                     		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
                     		$('#lecReport').modal('hide');
                     		$('#lecReport textarea').val('');
@@ -853,15 +879,14 @@
                     }
                 },
                 revReport(){//리뷰신고
-                    //빈칸체크
-                    if($('#revReport textarea').val() != ''){
+                    if($('#revReport textarea').val() != ''){//빈칸체크
                     	$.ajax({
                     		url : '/user/reportReview',
                     		data: $('#revRepFrm').serialize(),
-                    		type : 'post',
-                    		beforeSend : (xhr) =>{
-                  		      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-                  		  	},
+                    		method: 'post',
+                    		beforeSend: (xhr) => {
+                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            }
                     	})
                     	.done((r)=>{
                     		console.log(r);
@@ -925,6 +950,7 @@
                 .then(response => response.json())
                 .then(result => {
                  	console.log(result);
+                 	this.payPath.push('${ltNo}');
                 	this.lecDetails = result.lectureDetail;
                 	this.lessonList = result.lessonList;
                 	

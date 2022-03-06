@@ -156,12 +156,8 @@
                 <h5 class="font-weight-bold">수강 리뷰( <span class="fas fa-star"></span><span> ${starAvg}</span> / 5 )</h5>
               </div>            
               <div class="row col-12 justify-content-between mt-4 pr-4 mx-3">
-              <c:if test="${empty myReview }">
-                <button class="btn btn-warning py-2 px-4 font-weight-bold text-white" id="wr">작성</button>
-              </c:if>
-              <c:if test="${not empty myReview }">
-                <button class="btn btn-success py-2 px-4 font-weight-bold text-white" id="modify">내 리뷰 수정</button>
-              </c:if>
+             	<button class="btn btn-warning py-2 px-4 font-weight-bold text-white <c:if test="${not empty myReview }">d-none</c:if>" id="wr">작성</button>
+                <button class="btn btn-success py-2 px-4 font-weight-bold text-white <c:if test="${empty myReview }">d-none</c:if>" id="modify">내 리뷰 수정</button>
                 <div class="row mr-4">
                   <div>
                     <select class="border px-4 rvSearchType">
@@ -487,11 +483,9 @@
     		  	},
     	})
     	.done(()=>{
-    		$('#modify').parent().removeClass('justify-content-between')
     		$(e.target).parent().parent().parent().parent().remove();
-    		$('#modify').parent().addClass('justify-content-end')
     		$('#modify').addClass('d-none');
-    		$('#wr').addClass('d-block')
+    		$('#wr').removeClass('d-none')
     	})
     })
     

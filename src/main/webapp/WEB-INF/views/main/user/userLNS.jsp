@@ -144,6 +144,7 @@
               <div class="col-12 my-3" style="height: 45vh;">
                   <p class="px-2">${notice.content}</p>
               </div>
+              <!-- 다중파일 -->
               <div class="row col-12 bg-light px-3 py-0 m-0 bg-light py-2" style="border-top: 2px solid lightgray; border-bottom:2px solid lightgray;">
                   <div class="d-flex align-items-center">
                   <c:if test="${not empty notice.fileNo}">

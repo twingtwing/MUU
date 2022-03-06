@@ -8,15 +8,29 @@ import co.makeu.up.ctgr.service.CtgrVO;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonVO;
 import co.makeu.up.ltqna.service.LtQnaVO;
+import co.makeu.up.notice.service.NoticeVO;
 import co.makeu.up.review.service.ReviewVO;
+import co.makeu.up.users.service.UsersVO;
 
 public interface ExtendedLetureMapper {
 	
+	ExtendedLectureVO creatorDetail(ExtendedLectureVO vo);
+	
+	UsersVO userAddr(ExtendedLectureVO vo);
+	
 	LectureVO lectureDetail(ExtendedLectureVO vo);
 	List<LectureVO> lectureList(ExtendedLectureVO vo);
+	List<LectureVO> lecList(ExtendedLectureVO vo);
+	List<LectureVO> lecPay(ExtendedLectureVO vo);
+	
 	List<CtgrVO> ctgrList(ExtendedLectureVO vo);
 	List<CtgrVO> ctgrDetail(@Param("downCtgr") String downCtgr);
+	
 	List<LessonVO> lessonList(ExtendedLectureVO vo);
+	
 	List<ReviewVO> reviewList(ExtendedLectureVO vo);
+	
 	List<LtQnaVO> ltQnaList(ExtendedLectureVO vo);
+	
+	List<NoticeVO> noticeList(ExtendedLectureVO vo);
 }

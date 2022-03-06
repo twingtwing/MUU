@@ -75,4 +75,74 @@
 		ORDER BY Q.QNA_NO DESC
 	</select>
 	
+	<resultMap id="noticeFile" type="co.makeu.up.notice.service.NoticeVO">
+		<id property="ntNo" column="NT_NO"/>
+		<result property="wrDate" column="WR_DATE"/>
+		<result property="ttl" column="TTL"/>
+		<result property="content" column="CONTENT"/>
+		<result property="hits" column="HITS"/>
+		<result property="ltNo" column="LT_NO"/>
+		<result property="fileNo" column="FILE_NO"/>
+		<result property="modDate" column="MOD_DATE"/>
+		<result property="ntStCode" column="NT_ST_CODE"/>
+		<collection property="fileList" resultMap="fileList"/>
+	</resultMap>
+	
+	<resultMap type="co.makeu.up.detafile.service.DetafileVO" id="fileList">
+		<result property="detaNo" column="DETA_NO"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="phyPath" column="PHY_PATH"/>
+		<result property="fileNo" column="FILE_NO"/>
+	</resultMap>
+	
+	<select id="noticeList" resultMap="noticeFile" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.notice.service.NoticeVO">
+		SELECT N.* ,D.FILE_PATH ,D.PHY_PATH ,D.DETA_NO
+		FROM NOTICE N LEFT JOIN DETA_FILE D
+		ON N.FILE_NO = D.FILE_NO
+		WHERE LT_NO = #{ltNo}
+		AND NT_ST_CODE = 'B01'
+	</select>
+	
+	<select id="creatorDetail" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
+		SELECT * 
+		FROM ( SELECT U.ID CRE_ID, U.NAME, U.CRE_INTRO, L.LT_ST_CODE, #{id} id
+			   FROM USERS U JOIN LECTURE L
+			   ON U.ID = L.CRE_ID
+			   WHERE U.ID = #{creId})
+		PIVOT ( COUNT(*) FOR LT_ST_CODE IN('L01' OPEN_COUNT,'L03' CLOSE_COUNT,'L04' REPORT_COUNT) )
+	</select>
+	
+	<select id="lecList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+        WITH 
+        LEC_DETA AS(
+        SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
+		ON J.LT_NO = R.LT_NO
+		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
+		ON J.LT_NO = W.LT_NO
+		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
+		ON J.LT_NO = L.LT_NO
+		WHERE J.LT_ST_CODE = 'L01'
+        AND J.CRE_ID = #{creId}
+		ORDER BY J.LT_NO)
+        SELECT L.LT_NO,L.TTL,L.THUMB,L.PRC,L.KIT_PRC,L.STAR,L.R_COUNT,L.WASH,L.w_count,C.NAME DOWN_CTGR, C.UP_NAME UP_CTGR
+        FROM LEC_DETA L JOIN (SELECT C.* , U.NAME UP_NAME 
+                                FROM CTGR C JOIN CTGR U
+                                ON C.UP_CTGR = U.CTGR_ID) C
+        ON L.DOWN_CTGR = C.CTGR_ID
+	</select>
+	
+	<select id="lecPay" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE
+		WHERE LT_NO IN
+		<foreach collection="lecList" item="value" open="(" close=")" separator=",">
+			#{value}
+		</foreach>
+	</select>
+	
+	<select id="userAddr" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.users.service.UsersVO">
+		SELECT * FROM USERS
+		WHERE ID = #{id}
+	</select>
+	
 </mapper>
