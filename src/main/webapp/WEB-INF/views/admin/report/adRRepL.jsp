@@ -90,10 +90,10 @@
                                             </td>
                                             <th width="15%" id="ttt">신고유형</th>
                                             <td width="35%" class="text-left">
-                                                 <select name class="w-100" id="ct" >
-                                                    <option value="RPT01">부적절한콘텐츠</option>
-                                                    <option value="RPT02">피싱또는스펨</option>
-                                                    <option value="RPT03">기타</option>
+                                                 <select name="type" class="w-100" id="ct" >
+                                                    <option value="type">부적절한콘텐츠</option>
+                                                    <option value="type">피싱또는스펨</option>
+                                                    <option value="type">기타</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -105,11 +105,11 @@
                                             <th>처리상태</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
-                                                    <input type="radio" name="" spellcheck="false" ondblclick="this.checked=false">
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
                                                     <label for="t" class="mr-3 ml-1 mb-0">미처리</label>
-                                                    <input type="radio" name="RPS02" spellcheck="false" ondblclick="this.checked=false">
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
                                                     <label for="r" class="mr-3 ml-1 mb-0">삭제</label>
-                                                    <input type="radio" name="RPS03" spellcheck="false" ondblclick="this.checked=false">
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
                                                     <label for="a" class="mr-3 ml-1 mb-0">대기</label>
                                                 </div>
                                             </td>
