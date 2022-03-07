@@ -43,7 +43,7 @@ public class ExtendedLectureServiceImpl implements ExtendedLetureService{
 	@Override
 	public ExtendedLectureVO extenedPay(ExtendedLectureVO vo) {
 		vo.setUserAddr(map.userAddr(vo));
-		vo.setLectureList(map.lecPay(vo));
+		vo.setLectureDetail(map.lecPay(vo));
 		return vo;
 	}
 }

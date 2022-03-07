@@ -54,12 +54,8 @@ public class UsersServiceImpl implements UsersMapper {
 	}
 
 	@Override
-	public Integer usersCount() {
-		return map.usersCount();
+	public int userPointUpdate(UsersVO vo) {
+		return map.userPointUpdate(vo);
 	}
 
-	@Override
-	public Integer creatorsCount() {
-		return map.creatorsCount();
-	}
 }

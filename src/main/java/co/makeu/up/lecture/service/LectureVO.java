@@ -39,6 +39,59 @@ public class LectureVO {
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
 	
+	// 검색 시 사용
+	private Date pastDate;
+	private Date recentDate;
+	private int page;
+	private int count;
+	private String[] ltStCodeList;
+	
+
+	public String[] getLtStCodeList() {
+		return ltStCodeList;
+	}
+	public void setLtStCodeList(String[] ltStCodeList) {
+		this.ltStCodeList = ltStCodeList;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public Date getPastDate() {
+		return pastDate;
+	}
+	public void setPastDate(Date pastDate) {
+		this.pastDate = pastDate;
+	}
+	public Date getRecentDate() {
+		return recentDate;
+	}
+	public void setRecentDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
+	private int cnt; // 수강인원
+	private int sales; // 강의별 매출액
+			
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getSales() {
+		return sales;
+	}
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
 	public int getLtNo() {
 		return ltNo;
 	}
@@ -195,17 +248,17 @@ public class LectureVO {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	public String getWash() {
-		return wash;
-	}
-	public void setWash(String wash) {
-		this.wash = wash;
-	}
 	public int getrCount() {
 		return rCount;
 	}
 	public void setrCount(int rCount) {
 		this.rCount = rCount;
+	}
+	public String getWash() {
+		return wash;
+	}
+	public void setWash(String wash) {
+		this.wash = wash;
 	}
 	public int getwCount() {
 		return wCount;
@@ -219,6 +272,12 @@ public class LectureVO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPht() {
+		return pht;
+	}
+	public void setPht(String pht) {
+		this.pht = pht;
+	}
 	public String getCreIntro() {
 		return creIntro;
 	}
@@ -231,12 +290,7 @@ public class LectureVO {
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
 	}
-	public String getPht() {
-		return pht;
-	}
-	public void setPht(String pht) {
-		this.pht = pht;
-	}
 	
+
 	
 }

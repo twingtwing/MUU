@@ -3,15 +3,18 @@
 <mapper namespace="co.makeu.up.notice.service.NoticeMapper">
 	<select id="NoticeList" resultType="co.makeu.up.notice.service.NoticeVO" parameterType="co.makeu.up.notice.service.NoticeVO">	
 		SELECT * FROM(
-			SELECT  ROWNUM RN, NT_NO,WR_DATE,TTL,CONTENT,HITS,LT_NO,FILE_NO,MOD_DATE
-			FROM NOTICE 
-			WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
-			AND NT_ST_CODE = 'B01'
-			AND LT_NO = #{ltNo}
-			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
-			AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
-			ORDER BY NT_NO DESC)
-		WHERE RN <![CDATA[>=]]> (10*#{page})+1
+            select ROWNUM RN, w.* from(
+                select rownum noticeNo, q.* from
+                    (SELECT NT_NO,WR_DATE,TTL,CONTENT,HITS,LT_NO,FILE_NO,MOD_DATE, COUNT(*) OVER() AS COUNT
+                    FROM NOTICE 
+                    where NT_ST_CODE = 'B01'
+                    AND LT_NO = #{ltNo}
+                    AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
+                    AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
+                    ORDER BY NT_NO) q
+                order by noticeNo desc) w
+			WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}))
+		WHERE RN <![CDATA[>]]> (#{page}-1)*10
 	</select>
   
 	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">
@@ -29,7 +32,23 @@
 	
 	<update id="updateHits" parameterType="Integer">
 		UPDATE NOTICE
-		SET HITS = NVL(HITS,0) + 1
+		SET HITS = NVL(#{hits},0) + 1
+		WHERE NT_NO = #{ntNo}
 	</update>
-	
+	<insert id="insertNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
+		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO, NT_ST_CODE)
+		VALUES((SELECT NVL(MAX(NT_NO), 0)+1 FROM NOTICE), SYSDATE, #{ttl}, #{content}, 0, #{ltNo}, 'B01')
+		<!-- 
+		(SELECT NVL(MAX(FILE_NO), 0)+1 FROM NOTICE))	
+		 --> 
+	</insert>
+	<delete id="deleteNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
+		DELETE FROM NOTICE
+		WHERE NT_NO = #{ntNo}
+	</delete>
+	<select id="noticeFiles" parameterType="Integer" resultType="co.makeu.up.files.service.FilesVO">
+		SELECT F.*,D.FILE_PATH,D.PHY_PATH FROM FILES F JOIN DETA_FILE D
+        ON F.FILE_NO = D.FILE_NO
+        WHERE F.FILE_NO = #{ltNo}
+	</select>
 </mapper>

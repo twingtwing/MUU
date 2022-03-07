@@ -44,4 +44,9 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.userRefundList(id);
 	}
 
+	@Override
+	public int sugangInsert(SugangVO vo) {
+		return map.sugangInsert(vo);
+	}
+
 }

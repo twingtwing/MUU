@@ -40,6 +40,7 @@
 		ORDER BY S.REG_DATE) P LEFT OUTER JOIN REFUND R
         ON R.TLSN_NO = P.TLSN_NO
 	</select>
+	
 	<update id="updateSugangConfirm" parameterType="co.makeu.up.sugang.service.SugangVO">
 		UPDATE SUGANG 
 		SET SHIP_ST_CODE = #{shipStCode}
@@ -52,4 +53,9 @@
 		WHERE ID = #{id}) R JOIN LECTURE L
 		ON R.LT_NO = L.LT_NO
 	</select>
+	
+	<insert id="sugangInsert" parameterType="co.makeu.up.sugang.service.SugangVO">
+		INSERT INTO SUGANG(TLSN_NO,ID,LT_NO,REG_DATE,USE_POINT,TLSN_ST_CODE,SHIP_ST_CODE,PAY,ZIP,ADDR,DETA_ADDR,TEL,EXP_DATE)
+		VALUES((SELECT NVL(MAX(TLSN_NO), 0)+1 FROM SUGANG),#{id},#{ltNo},SYSDATE,${usePoint},'SU01',#{shipStCode},#{pay},#{zip},#{addr},#{detaAddr},#{tel},ADD_MONTHS(SYSDATE,#{num}))
+	</insert>
 </mapper>

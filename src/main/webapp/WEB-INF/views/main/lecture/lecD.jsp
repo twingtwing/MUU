@@ -153,8 +153,8 @@
                                                     <h5 class="font-weight-bold my-2">강의소개</h5>
                                                     <p class="mx-2 mt-3 px-2 py-3" style="border-left:4px solid #dc3545">{{lecDetails.intro}}</p>
                                                     <h6 class="font-weight-bold mb-2 mx-4">&lt; OT영상 &gt;</h6>
-                                                    <div class="row w-100">
-    	                                                <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
+                                                    <div v-if="lessonList.length !=0" class="row w-100">
+    	                                             	<video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
 		                                                    <source :src="lessonList[0].lsnFile" type="video/mp4">
 													    </video>
                                                     </div>
@@ -388,7 +388,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <a :href="'/user/lecP?lecList='+payPath" class="btn btn-danger w-100">구매</a>
+                                                                <a :href="'/user/lecP?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">구매</a>
                                                             </div>
                                                             <div class="row mt-2 d-flex justify-content-end pr-2">
                                                                 <p class="heart"><i v-bind:class="[lecDetails.wash=='Y' ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> {{lecDetails.wCount}}</p>
@@ -552,8 +552,7 @@
                     qnaList :[],
                     myReview : null,
                     avgStar : 0,
-                    length : 0,
-                    payPath : []
+                    length : 0
                 }
             },
             computed:{
@@ -949,8 +948,6 @@
                 fetch('/lectureDetail?ltNo='+'${ltNo}')
                 .then(response => response.json())
                 .then(result => {
-                 	console.log(result);
-                 	this.payPath.push('${ltNo}');
                 	this.lecDetails = result.lectureDetail;
                 	this.lessonList = result.lessonList;
                 	

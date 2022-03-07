@@ -285,10 +285,10 @@
                         <div class="col-6 ml-3 align-self-center" style="border-right:1px solid rgb(218, 218, 218)">
                             <form action="">
                                 <div class="mb-3">
-                                    <input type="text" id="lecTitle" maxlength="200" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요">
+                                    <input type="text" id="lecTitle" maxlength="200" style="width:-webkit-fill-available" value="${tempinfo.ttl }" placeholder="강의 제목을 적어주세요">
                                 </div>
                                 <div class="">
-                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요"></textarea>
+                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요">${tempinfo.intro }</textarea>
                                 </div>
                             </form>
                         </div>
@@ -428,10 +428,10 @@
                         <div class="row col-6 ml-3 justify-content-center align-items-center" style="height:400px; border-right:1px solid rgb(218, 218, 218);">
                             <form action="">
                                 <div class="row mb-3">
-                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요">
+                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" value="${tempinfo.kitName }" placeholder="수업 키트명을 입력해주세요">
                                 </div>
                                 <div class="row">
-                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요"></textarea>
+                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요">${tempinfo.kitIntro }</textarea>
                                 </div>
                             </form>
                         </div>
@@ -439,10 +439,10 @@
                         <!--수업키트 금액 및 강의금액 입력란 / input type을 바꾸거나 백단에서 제한 둘 것-->
                         <div class="col-5 ml-3 mt-5 mb-5 align-self-center periodselect">
                             <div class="mb-5">
-                                <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요">
+                                <input type="text" id="kitprc" style="width:-webkit-fill-available" value="${tempinfo.kitPrc }" placeholder="수업 키트 금액을 입력해주세요">
                             </div>
                             <div class="mb-2">
-                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" placeholder="강의 금액을 입력해주세요">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" value="${tempinfo.prc }" placeholder="강의 금액을 입력해주세요">
                             </div>
                             <h6 class="periodsub">*만원단위이며 10~500만원 사이 금액만 등록 가능합니다.</h6>
                         </div>
@@ -458,12 +458,6 @@
                                     <h6 class="mb-2 font-weight-bold">태그 선택</h6>
                                 </div>
                                 <div id="tagdiv">
-                                <!--
-                                    <label class="mr-2"><input type="checkbox" value="2">&nbsp;2번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="1">&nbsp;1번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="3">&nbsp;3번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="4">&nbsp;4번태그</label>
-                                  -->
                                 </div>
                             </form>
                         </div>
@@ -555,6 +549,77 @@
 	
 	
 	
+	
+		//기존 카테고리 가져오기
+		$(function(){
+			for(var i=0; i < $('#ctgr option').length; i++){
+				if($('#ctgr option').eq(i).text() == '${tempinfo.upCtgr}'){
+					$('#ctgr option').eq(i).attr('selected', 'selected');
+					$('#downctgr>option').remove();
+					let upper = $('#ctgr option:selected').text();
+					Tcategory[upper].forEach((a)=>{
+						$('#downctgr').append(
+						$('<option>').val(a[Object.keys(a)[0]]).text(Object.keys(a)[0])
+						)
+					})
+				}
+			}
+			for(var i=0; i < $('#downctgr option').length; i++){
+				if($('#downctgr option').eq(i).text() == '${tempinfo.downCtgr}'){
+					$('#downctgr option').eq(i).attr('selected', 'selected');
+				}
+			}
+		})
+		
+		//이미지 가져오기
+		$(function(){
+			$('#imgShow0').attr('src','${tempinfo.pht1}');
+			$('#imgShow1').attr('src','${tempinfo.pht2}');
+			$('#imgShow2').attr('src','${tempinfo.pht3}');
+			$('#thImgShow').attr('src','${tempinfo.thumb}');
+			
+		})
+		
+		
+		//강의 게시기간, 수강기간 가져오기
+		$(function(){
+			for(var i=0; i < $('#lecP option').length; i++){
+				if($('#lecP option').eq(i).val() == '${tempinfo.openTerm}'){
+					$('#lecP option').eq(i).attr('selected', 'selected');
+				}
+			}
+			for(var i=0; i < $('#coP option').length; i++){
+				if($('#coP option').eq(i).val() == '${tempinfo.tlsnTerm}'){
+					$('#coP option').eq(i).attr('selected', 'selected');
+				}
+			}
+		})
+		
+		//태그 가져오기
+		$(function(){
+	   		$.each(taglist, function(a,b){
+	   			let taglabel = $('<label>').addClass('mr-2').text(b.tagName).attr('for', a);
+	   			let taginput = $('<input>').attr('type','checkbox').attr('id',a).val(b.tagId);
+					   			
+			    taginput.appendTo($('#tagdiv'));
+			    taglabel.appendTo($('#tagdiv'));
+			    
+			    if(b.tagName=='${tempinfo.tag1}'
+			    || b.tagName=='${tempinfo.tag2}'
+			    || b.tagName=='${tempinfo.tag3}'){
+			    	taginput.attr('checked', 'checked');
+			    }
+	   		});
+	   		
+	   		$('#tagdiv').find('input[type="checkbox"]').on('click', function(e){
+		     	let tagcount = $('input:checked[type="checkbox"]').length;
+		     	if(tagcount > 3){
+		     		alert("태그는 최대 3개까지 선택가능합니다");
+		     		$(this).prop("checked", false);
+		     	}
+		    })
+   		});
+		
 	//강의게시기간/수강기간 선택불가
     $('#lecP').change(function(){
         let changeLecP = $('#lecP').find('option:selected').val();
@@ -806,72 +871,71 @@
 	     })
      })
     
-		//시큐리티 토큰
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
-	    
+	//시큐리티 토큰
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+    
+   	//강의 등록 / 이미지 업로드
     function lectureResisterF(){
-        //강의 등록 / 이미지 업로드
-	    let form = new FormData();
-	    
-		//변수 선언, lecture-map insert 순으로 data입력, parameter통일
-		let creid = '${id}';
-		let upctgr = $('#ctgr option:selected').val();
-		let downctgr = $('#downctgr option:selected').val();
-		let ttl = $('#lecTitle').val();
-		let intro = $('#lecIntro').val();
-		let openterm = $('#lecP option:selected').val();
-		let tlsnterm = $('#coP option:selected').val();
-		let kitname = $('#kitname').val();
-		let kitintro = $('#kitintro').val();
-		let kitprc = $('#kitprc').val();
-		let prc = $('#prc').val();
-		let tag1 = null;
-		let tag2 = null;
-		let tag3 = null;
-		$('input:checked[type="checkbox"]').each(function(a){
-			if(a == 0){
-				tag1 = $(this).val();
-			}
-			if(a == 1){
-				tag2 = $(this).val();
-			}
-			if(a == 2){
-				tag3 = $(this).val();
-			}
-		})
-		for(var i = 0; i < $('.classUp').length; i++){
-			form.append("lsnNo", $('.itemNum').eq(i).text());
-			form.append("classTtl", $('.classTtl').eq(i).val());
-			form.append("classMov", $('.classUp')[i].files[0]);
-		}
-			
-        //메인사진 값
-        form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
-        form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
-        form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
-        
-        //사진이외 값 
-        form.append("upCtgr", upctgr);
-        form.append("downCtgr", downctgr);
-        form.append("ttl", ttl);
-        form.append("intro", intro);
-        form.append("openTerm", openterm);
-        form.append("tlsnTerm", tlsnterm);
-        form.append("kitName", kitname);
-        form.append("kitIntro", kitintro);
-        form.append("kitPrc", kitprc);
-        form.append("prc", prc);
-        form.append("tag1", tag1);
-        form.append("tag2", tag2);
-        form.append("tag3", tag3);
-        form.append("creId", creid);
-        
-        //썸네일 값
-        form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
+        let form = new FormData();
+    	//변수 선언, lecture-map insert 순으로 data입력, parameter통일
+    	let creid = '${id}';
+    	let upctgr = $('#ctgr option:selected').val();
+    	let downctgr = $('#downctgr option:selected').val();
+    	let ttl = $('#lecTitle').val();
+    	let intro = $('#lecIntro').val();
+    	let openterm = $('#lecP option:selected').val();
+    	let tlsnterm = $('#coP option:selected').val();
+    	let kitname = $('#kitname').val();
+    	let kitintro = $('#kitintro').val();
+    	let kitprc = $('#kitprc').val();
+    	let prc = $('#prc').val();
+    	let tag1 = null;
+    	let tag2 = null;
+    	let tag3 = null;
+    	$('input:checked[type="checkbox"]').each(function(a){
+    		if(a == 0){
+    			tag1 = $(this).val();
+    		}
+    		if(a == 1){
+    			tag2 = $(this).val();
+    		}
+    		if(a == 2){
+    			tag3 = $(this).val();
+    		}
+    	})
+    	for(var i = 0; i < $('.classUp').length; i++){
+    		form.append("lsnNo", $('.itemNum').eq(i).text());
+    		form.append("classTtl", $('.classTtl').eq(i).val());
+    		form.append("classMov", $('.classUp')[i].files[0]);
+    	}
+    		
+           //메인사진 값
+           form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
+           form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
+           form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
+           
+           //사진이외 값 
+           form.append("upCtgr", upctgr);
+           form.append("downCtgr", downctgr);
+           form.append("ttl", ttl);
+           form.append("intro", intro);
+           form.append("openTerm", openterm);
+           form.append("tlsnTerm", tlsnterm);
+           form.append("kitName", kitname);
+           form.append("kitIntro", kitintro);
+           form.append("kitPrc", kitprc);
+           form.append("prc", prc);
+           form.append("tag1", tag1);
+           form.append("tag2", tag2);
+           form.append("tag3", tag3);
+           form.append("creId", creid);
+           
+           //썸네일 값
+           form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
     	
-        //강의신청코드 값
-        form.append("ltStCode", "L02");
+	       //강의신청코드 값
+	       form.append("ltStCode", "L02");
         
         //여기서부터 유효성검사 !!
         //카테고리 유효성 검사
@@ -923,73 +987,72 @@
 	         }
         });
     }
-        
+    
         //임시저장
         $('.tempsave').on('click', function(){
-            //강의 등록 / 이미지 업로드
-		    let form = new FormData();
-		    
-			//변수 선언, lecture-map insert 순으로 data입력, parameter통일
-			let creid = '${id}';
-			let upctgr = $('#ctgr option:selected').val();
-			let downctgr = $('#downctgr option:selected').val();
-			let ttl = $('#lecTitle').val();
-			let intro = $('#lecIntro').val();
-			let openterm = $('#lecP option:selected').val();
-			let tlsnterm = $('#coP option:selected').val();
-			let kitname = $('#kitname').val();
-			let kitintro = $('#kitintro').val();
-			let kitprc = $('#kitprc').val();
-			let prc = $('#prc').val();
-			let tag1 = null;
-			let tag2 = null;
-			let tag3 = null;
-			$('input:checked[type="checkbox"]').each(function(a){
-				if(a == 0){
-					tag1 = $(this).val();
-				}
-				if(a == 1){
-					tag2 = $(this).val();
-				}
-				if(a == 2){
-					tag3 = $(this).val();
-				}
-			})
-			for(var i = 0; i < $('.classUp').length; i++){
-				form.append("lsnNo", $('.itemNum').eq(i).text());
-				form.append("classTtl", $('.classTtl').eq(i).val());
-				form.append("classMov", $('.classUp')[i].files[0]);
-			}
-				
-	        //메인사진 값
-	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
-	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
-	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
-	        
-	        //사진이외 값 
-	        form.append("upCtgr", upctgr);
-	        form.append("downCtgr", downctgr);
-	        form.append("ttl", ttl);
-	        form.append("intro", intro);
-	        form.append("openTerm", openterm);
-	        form.append("tlsnTerm", tlsnterm);
-	        form.append("kitName", kitname);
-	        form.append("kitIntro", kitintro);
-	        form.append("kitPrc", kitprc);
-	        form.append("prc", prc);
-	        form.append("tag1", tag1);
-	        form.append("tag2", tag2);
-	        form.append("tag3", tag3);
-	        form.append("creId", creid);
-	        
-	        //썸네일 값
-	        form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
+        	//강의 등록 / 이미지 업로드
+            let form = new FormData();
+        	//변수 선언, lecture-map insert 순으로 data입력, parameter통일
+        	let creid = '${id}';
+        	let upctgr = $('#ctgr option:selected').val();
+        	let downctgr = $('#downctgr option:selected').val();
+        	let ttl = $('#lecTitle').val();
+        	let intro = $('#lecIntro').val();
+        	let openterm = $('#lecP option:selected').val();
+        	let tlsnterm = $('#coP option:selected').val();
+        	let kitname = $('#kitname').val();
+        	let kitintro = $('#kitintro').val();
+        	let kitprc = $('#kitprc').val();
+        	let prc = $('#prc').val();
+        	let tag1 = null;
+        	let tag2 = null;
+        	let tag3 = null;
+        	$('input:checked[type="checkbox"]').each(function(a){
+        		if(a == 0){
+        			tag1 = $(this).val();
+        		}
+        		if(a == 1){
+        			tag2 = $(this).val();
+        		}
+        		if(a == 2){
+        			tag3 = $(this).val();
+        		}
+        	})
+        	for(var i = 0; i < $('.classUp').length; i++){
+        		form.append("lsnNo", $('.itemNum').eq(i).text());
+        		form.append("classTtl", $('.classTtl').eq(i).val());
+        		form.append("classMov", $('.classUp')[i].files[0]);
+        	}
+        		
+               //메인사진 값
+               form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
+               form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
+               form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
+               
+               //사진이외 값 
+               form.append("upCtgr", upctgr);
+               form.append("downCtgr", downctgr);
+               form.append("ttl", ttl);
+               form.append("intro", intro);
+               form.append("openTerm", openterm);
+               form.append("tlsnTerm", tlsnterm);
+               form.append("kitName", kitname);
+               form.append("kitIntro", kitintro);
+               form.append("kitPrc", kitprc);
+               form.append("prc", prc);
+               form.append("tag1", tag1);
+               form.append("tag2", tag2);
+               form.append("tag3", tag3);
+               form.append("creId", creid);
+               
+               //썸네일 값
+               form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
         	
           	//강의신청코드 값
             form.append("ltStCode", "L05");
-            
+          	
             $.ajax({
-                url : "/creator/lectureResister",
+                url : "/creator/lectureTempUpdate",
               	method : "post",
               	processData : false,
                 contentType : false,
@@ -1007,10 +1070,6 @@
     	         }
             });
         })
-        
-        
-        
-         
-
+     
 </script>
 </html>

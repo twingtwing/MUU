@@ -150,7 +150,7 @@
 	                                                            	<small class="text-muted ml-1">{{lec.wCount}}</small>
 	                                                            </p>
                                                         	</div>
-                                                            <h6 class="mb-2">{{lec.prc + kitPrc}}원</h6>
+                                                            <h6 class="mb-2">{{lec.prc + lec.kitPrc}}원</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,40 +220,6 @@
                 .then(result => {
                 	this.creDetail = result;
                 })
-              /*    this.creDetail = {
-                    id:'id',
-                    name :'크리에이터 이름',
-                    creIntro : '크리에이터 소개',
-                    reportCount : 10,
-                    openCount : 3,
-                    count : 5,
-                    lectureList :[
-                        {   
-                            ltNo : 10,
-                            ttl:'강의이름들어감',
-                            upCtgr : '카테고리번호?',
-                            downCtgr : '상세번호?',
-                            prc : '총합 더해야함',
-                            reviewAvg : 3
-                        },
-                        {   
-                            ltNo : 11,
-                            ttl:'강의이름ㅇ',
-                            upCtgr : '상위',
-                            downCtgr : '하위',
-                            prc : '20,000',
-                            reviewAvg : 2
-                        },
-                        {   
-                            ltNo : 11,
-                            ttl:'강의이름ㅇ',
-                            upCtgr : '상위',
-                            downCtgr : '하위',
-                            prc : '20,000',
-                            reviewAvg : 2
-                        }
-                    ]
-                }; */
             }
         });
 

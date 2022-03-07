@@ -6,11 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.makeu.up.extendedLecture.service.ExtendedLectureVO;
 import co.makeu.up.extendedLecture.service.ExtendedLetureService;
-import co.makeu.up.lecture.service.LectureVO;
 
 @RestController
 public class RestLectureController {
@@ -50,8 +54,8 @@ public class RestLectureController {
 	}
 	
 	//결제
-	@RequestMapping(value = "/user/lecturePay", method =RequestMethod.GET)
-	public ExtendedLectureVO lecturePay(ExtendedLectureVO vo, Principal pri) {
+	@RequestMapping(value = "/user/lecturePay", method =RequestMethod.POST)
+	public ExtendedLectureVO lecturePay0(ExtendedLectureVO vo,Principal pri) {
 		vo.setId(pri.getName());
 		return extendedDao.extenedPay(vo);
 	}

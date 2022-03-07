@@ -6,7 +6,7 @@ import co.makeu.up.report.service.ReportVO;
 import lombok.Getter;
 import lombok.ToString;
 
-@Getter
+@Getter 
 @ToString
 public class PageVo {
 
@@ -16,11 +16,11 @@ public class PageVo {
 
 	private int total;
 
-	// vo에따라서 계속 만들어야함
-	// private Vo클래스 vo;
+	// vo�뿉�뵲�씪�꽌 怨꾩냽 留뚮뱾�뼱�빞�븿
+	// private Vo�겢�옒�뒪 vo;
 
 	/*
-	 * public PageVo(Vo클래스 vo , int total) { this.vo = vo; this.total = total;
+	 * public PageVo(Vo�겢�옒�뒪 vo , int total) { this.vo = vo; this.total = total;
 	 * this.endpage = (int) (Math.ceil(vo.getPageNum() / 5.0)) *5;
 	 * 
 	 * this.startpage = this.endpage - 4;
@@ -80,7 +80,5 @@ public class PageVo {
 		this.prev = this.startpage >1;
 		this.next = this .endpage < realEnd;
 	}
-	
-	
 	
 }

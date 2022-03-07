@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.makeu.up.files.service.FilesVO;
+
 @Repository("noticeDao")
 public class NoticeServiceImpl implements NoticeMapper{
 	@Autowired NoticeMapper map;
@@ -25,8 +27,23 @@ public class NoticeServiceImpl implements NoticeMapper{
 	}
 
 	@Override
-	public int updateHits(int ntNo) {
-		return map.updateHits(ntNo);
+	public int updateHits(NoticeVO vo) {
+		return map.updateHits(vo);
+	}
+
+	@Override
+	public int insertNotice(NoticeVO vo) {
+		return map.insertNotice(vo);
+	}
+
+	@Override
+	public int deleteNotice(NoticeVO vo) {
+		return map.deleteNotice(vo);
+  }
+   
+  @Override
+	public List<FilesVO> noticeFiles(int ltNo) {
+		return map.noticeFiles(ltNo);
 	}
 
 	

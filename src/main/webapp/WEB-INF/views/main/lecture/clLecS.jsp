@@ -169,7 +169,7 @@
                                 <!-- 선택 : active -->
                                 <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="location.href='clLecS.html'">강의정보</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">공지사항</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${cllists.ltNo})">공지사항</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
                                 <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">수강생</button>
                             </div>
@@ -320,7 +320,7 @@
         </div>
     </section>
     <form id="frm">
-    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>
 
 </body>
@@ -362,6 +362,12 @@
     function lessonInfo(e){
     	$('.sendltno').val(e);
     	$('#frm').attr("action", "/creator/lesU");
+    	$('#frm').submit();
+    }
+   //공지사항 페이지 이동
+    function goNotice(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecNL");
     	$('#frm').submit();
     }
     

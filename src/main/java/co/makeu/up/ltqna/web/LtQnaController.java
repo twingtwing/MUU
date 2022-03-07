@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.Pagination;
@@ -90,5 +91,12 @@ public class LtQnaController {
 	@ResponseBody
 	public void deleteMyqna(LtQnaVO vo) {
 		ltqnaDao.deleteMyQna(vo.getQnaNo());
+	}
+	
+	//강의 qna 페이지 이동
+	@RequestMapping("/creator/cLecQ")
+	public String cLecQPage() {
+		
+		return "main/lecture/cLecQ";
 	}
 }

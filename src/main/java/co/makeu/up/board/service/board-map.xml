@@ -69,9 +69,9 @@
 	</insert>
 	
 	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-	select *
-	from board
-	where b_no = #{bNo}
+		SELECT *
+		FROM BOARD
+		WHERE B_NO = #{bNo}
 	</select>
 	
 	<update id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
