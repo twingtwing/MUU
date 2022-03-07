@@ -159,7 +159,7 @@
                 <div class="card-body">
                   <!-- 수강 중인 강의 -->
                   <div class="row col-lg-12 mt-3 ml-1">
-                    <h5 class="font-weight-bold "><i class="fa fa-hashtag text-danger"></i> 수강 중인 강의</h5>
+                    <h5 class="font-weight-bold "><i class="fa fa-hashtag text-danger"></i> 수강 중인 강의 ( ${listCnt } 건 )</h5>
                   </div>
 
                   <div class="row col-lg-12 m-0">
@@ -289,10 +289,9 @@
   <security:authorize access="isAuthenticated()">
 <security:authentication property="principal.username" var="username"/>
 </security:authorize>
-  <form action="/user/userLectureSelect" method="post" id="lectureSelectForm">
+  <form action="/user/userLectureSelect" id="lectureSelectForm">
   	<input type="hidden" name="id" value="${username}">
   	<input type="hidden" id="lectureNo" name="ltNo">
-  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
   </form>
   
   <script>

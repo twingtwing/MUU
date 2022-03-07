@@ -38,7 +38,45 @@ public class LectureVO {
 	private String pht;//크리에이터 사진
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
+	
+	// 검색 시 사용
+	private Date pastDate;
+	private Date recentDate;
+	private int page;
+	private int count;
+	private String[] ltStCodeList;
+	
 
+	public String[] getLtStCodeList() {
+		return ltStCodeList;
+	}
+	public void setLtStCodeList(String[] ltStCodeList) {
+		this.ltStCodeList = ltStCodeList;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public Date getPastDate() {
+		return pastDate;
+	}
+	public void setPastDate(Date pastDate) {
+		this.pastDate = pastDate;
+	}
+	public Date getRecentDate() {
+		return recentDate;
+	}
+	public void setRecentDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
 	private int cnt; // 수강인원
 	private int sales; // 강의별 매출액
 			

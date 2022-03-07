@@ -22,6 +22,9 @@
     .admin_search th {
         background-color: #eeeeee;
     }
+    .qstList tr{
+    	cursor: pointer;
+    }
 </style>
 </head>
 <body>

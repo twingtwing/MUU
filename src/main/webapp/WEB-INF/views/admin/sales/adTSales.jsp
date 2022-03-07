@@ -300,7 +300,6 @@
         </div>
       </div>
       <!-- 내용 끝 -->
-<form action=""></form>  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
   // 연도별 회사 매출
@@ -384,8 +383,6 @@
     });
     // 값변화
     $('#monthBox').change(()=>{
-    	location.href='/admin/adTSales?selectYear='+$('#monthBox').val()
-    	/*
     	$.ajax({
     		url : '/admin/tsales/monthChange',
     		data : {selectYear: $('#monthBox').val()}
@@ -397,9 +394,12 @@
     			monthCnt.push(obj.cnt===null ? 0 : obj.cnt)
     			monthPay.push(obj.pay===null ? 0 : obj.pay)
     		})
-    		console.log('차트에 바로 반영이 안되네 ?')
+    		myChart2.reset();
+    		myChart2.data.datasets[0].data = monthCnt;
+    		myChart2.data.datasets[1].data = monthPay;
+    		myChart2.update();
+    		// 테이블값도 바꾸기.
     	})
-    	*/
     })
     
     

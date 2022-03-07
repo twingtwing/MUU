@@ -35,6 +35,9 @@
     tbody>tr {
       cursor: pointer;
     }
+    .qstboard, .qstboard button, .qstboard td{
+   	font-size: 0.9rem;
+   }
   </style>
 </head>
 
@@ -75,6 +78,9 @@
                     </div>
                   </div>
                 </div>
+              </li>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/lecD" style="height: 55px;">
+                <div class="list-link">강의 상세정보</div>
               </li>
               <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu"
                 data-url="/user/userLectureSelect" style="height: 55px;">
@@ -151,7 +157,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody class="qstboard myQstBoard" style="font-size: 0.9rem;">
+                <tbody class="qstboard myQstBoard">
                   <c:forEach items="${myList}" var="list">
                     <tr data-qnano="${list.qnaNo}">
                       <td>${list.qContent }</td>
@@ -196,7 +202,7 @@
                   </tr>
                 </thead>
 
-                <tbody class="qstboard" id="qstList" style="font-size: 0.9rem;">
+                <tbody class="qstboard" id="qstList">
                   <c:forEach items="${qnaList}" var="list">
                     <tr data-qnano=${list.qnaNo}>
                       <td>${list.qContent }</td>
@@ -246,17 +252,11 @@
     <input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">
   </form>
   <script>
-    $('.listmenu').click((e) => {
-      let url = e.currentTarget.dataset.url;
-      $('#move').attr('action', url);
-      if (url === '/user/userLectureSelect') {
-        $('#move').attr('method', 'post');
-        $('#move').append(
-          $('<input>').attr('type', 'hidden').attr('name', '${_csrf.parameterName}').val('${_csrf.token}')
-        )
-      }
-      $('#move').submit();
-    })
+  $('.listmenu').click((e)=>{
+	  let url = e.currentTarget.dataset.url;
+	  $('#move').attr('action',url);
+	  $('#move').submit();
+  })
     // 질문박스
     $('#qst').click((e) => {
       if ($('#qst').text() === '질문하기') {
@@ -293,7 +293,10 @@
             $('.qstboard').first().before(
               $('<tr>').append($('<td>').text(r.qContent),
                 $('<td>').text(today),
-                $('<td>').text('답변 대기 중').addClass('font-weight-bold text-danger'))
+                $('<td>').text('답변 대기 중').addClass('font-weight-bold text-danger'),
+                $('<td>').append(
+                	$('<button>').text('수정').addClass('modify border p-1 px-2'),$('<button>').text('삭제').addClass('delete border p-1 px-2 mx-1')	
+                )).css('fontSize','0.9rem')
             )
           })
       } else if($('#wr').text() === '수정'){
@@ -422,6 +425,7 @@
 
     // 수정버튼 클릭시
     $('.myQstBoard .modify').click((e) => {
+    console.log(e.target)
       if(e.target.textContent === '수정'){
     	  e.target.textContent = '닫기'
       } else {
@@ -455,6 +459,9 @@
 
 	// 삭제버튼 클릭시
 	$('.myQstBoard .delete').click((e)=>{
+		if(!window.confirm('정말로 삭제하시겠습니까?')){
+			return;
+		}
 		let qnaNo = $(e.target).parent().parent().data('qnano');
 		$.ajax({
 			url : '/user/deleteMyqna',
