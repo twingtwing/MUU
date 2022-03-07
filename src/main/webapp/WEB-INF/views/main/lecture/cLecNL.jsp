@@ -156,14 +156,14 @@
                 <form name="sere" method="post" action="">
                     <div class="row mr-1">
                         <div>
-                            <select name="sea">
+                            <select id="toc">
                                 <option value="제목">제목</option>
                                 <option value="내용">내용</option>
                             </select>
                         </div>
-                        <input class="border mb-0 ml-1" style="height: 37px; width: 170px" type="text"
+                        <input class="border mb-0 ml-1" id="tocval" style="height: 37px; width: 170px" type="text"
                             placeholder="검색..." spellcheck=false>
-                        <a href="" class="btn btn-outline-secondary search-a"><i class="icon_search"></i></a>
+                        <a class="btn btn-outline-secondary search-a" onclick="tocSearch()"><i class="icon_search"></i></a>
 
                     </div>
                 </form>
@@ -303,6 +303,42 @@ $('.paging').on('click', function(){
 	  $('.sendhits').val(b);
 	  $('#noticeSelectFrm').attr("action", "/creator/cLecNS");
 	  $('#noticeSelectFrm').submit();
+  }
+  
+  //시큐리티 토큰
+  let header = "${_csrf.headerName}";
+  let token = "${_csrf.token}";
+  
+  //공지사항 검색 조회
+  function tocSearch(){
+	  let ttlSearchKey;
+	  let contentSearchKey;
+	  if($('#toc option:selected').val() == '제목'){
+		  ttlSearchKey = $('#tocval').val();
+	  } else if($('#toc option:selected').val() == '내용'){
+		  contentSearchKey = $('#tocval').val();
+	  }
+	  $.ajax({
+		  url : '/creator/cLecNLsearch',
+		  method : 'post',
+		  processData : false,
+	      contentType : false,
+	      async : false,
+	      beforeSend: function(xhr) {
+	          xhr.setRequestHeader(header, token);
+	      },
+	      datatype:'text',
+		  data : {
+			  ttlSearchKey : ttlSearchKey,
+			  contentSearchKey : contentSearchKey,
+			  ltNo : ${lecinfo.ltNo}
+		  }, 
+		  success : function() {
+			  
+		  }
+		  
+		  
+	  })
   }
   </script>
 </html>
