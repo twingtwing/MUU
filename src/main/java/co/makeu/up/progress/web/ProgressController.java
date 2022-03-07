@@ -20,6 +20,10 @@ public class ProgressController {
 		vo.setId(pri.getName());
 		ProgressVO existingPrg = new ProgressVO();
 		existingPrg = progressDao.selectProgress(vo);
+		if(existingPrg==null) {
+			progressDao.insertProgress(vo);
+			return "없음 ㅇㅅㅇ";
+		}
 		if(existingPrg.getProgPct()>=vo.getProgPct()) {
 			return "기존 진도율이 더 큼 ㅇㅅㅇ";
 		} else if(progressDao.updateProgress(vo)!=0) {

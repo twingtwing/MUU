@@ -123,6 +123,7 @@ public class NoticeController {
 		checkvo.setProgPct(progressDao.wholeProgress(prvo));
 		model.addAttribute("sugang",checkvo);
 		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(vo.getLtNo()));
 		noticeDao.updateHits(vo.getNtNo());
 		return "main/user/userLNS";
 	}

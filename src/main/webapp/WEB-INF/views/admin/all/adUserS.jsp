@@ -208,7 +208,8 @@
                                         </tr>
                                         </c:forEach>
                                     </table>
-                                    <a href="javscript:history.back()" class="btn btn-secondary">뒤로가기</a>
+                                    <button type="button" class="btn btn-secondary mr-5"
+                                                                onclick="history.go(-1);">뒤로가기</button>
                                 </div>
    
                             </div>
