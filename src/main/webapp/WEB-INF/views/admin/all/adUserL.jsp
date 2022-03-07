@@ -19,6 +19,9 @@
         .admin_search th{
             background-color: #eeeeee;
         }
+        .userListBoard>tr{
+        	cursor: pointer;
+        }
     </style>
 </head>
 <body>

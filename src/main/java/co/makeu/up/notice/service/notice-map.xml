@@ -46,4 +46,9 @@
 		DELETE FROM NOTICE
 		WHERE NT_NO = #{ntNo}
 	</delete>
+	<select id="noticeFiles" parameterType="Integer" resultType="co.makeu.up.files.service.FilesVO">
+		SELECT F.*,D.FILE_PATH,D.PHY_PATH FROM FILES F JOIN DETA_FILE D
+        ON F.FILE_NO = D.FILE_NO
+        WHERE F.FILE_NO = #{ltNo}
+	</select>
 </mapper>

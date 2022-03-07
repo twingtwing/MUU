@@ -156,6 +156,7 @@ public class NoticeController {
 		model.addAttribute("sugang",checkvo);
 		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
 		noticeDao.updateHits(vo);
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(vo.getLtNo()));
 		return "main/user/userLNS";
 	}
 }

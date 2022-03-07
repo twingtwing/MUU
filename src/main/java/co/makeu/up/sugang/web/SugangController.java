@@ -46,13 +46,13 @@ public class SugangController {
 				sugangOff.add(sugang);
 			}
 		}
-		// progress 상태도 list에 담아서 넘기자
+		model.addAttribute("listCnt",sugangOn.size());
 		model.addAttribute("sugangList",sugangOn);
 		model.addAttribute("sugangEndList",sugangOff);
 		return "main/user/userLL";
 	}
 	
-	@PostMapping("/user/userLectureSelect")
+	@GetMapping("/user/userLectureSelect")
 	public String userLectureSelect(SugangVO vo, Model model,LessonVO lessonvo, Principal pri) {
 		ProgressVO prvo = new ProgressVO();
 		prvo.setId(pri.getName());
@@ -110,6 +110,7 @@ public class SugangController {
 				listDelivery.add(list);
 			}
 		}
+		model.addAttribute("payCnt",listAll.size());
 		model.addAttribute("payInfo",listAll);
 		model.addAttribute("delInfo",listDelivery);
 		return "main/user/userP";

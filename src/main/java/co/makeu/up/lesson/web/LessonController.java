@@ -25,18 +25,17 @@ public class LessonController {
 	@PostMapping("/user/userLW")
 	public String userLessonWatch(LessonVO vo, Model model, Principal pri) {
 		vo.setId(pri.getName());
-		model.addAttribute("firstLesson",lessonDao.ajaxLessonSelect(vo.getLsnNo()));
+		model.addAttribute("firstLesson",lessonDao.ajaxLessonSelect(vo.getSerialNo()));
 		model.addAttribute("lessons",lessonDao.lessonList(vo.getLtNo()));
-		
 		ProgressVO progressvo = new ProgressVO();
 		progressvo.setId(pri.getName());
-		progressvo.setLsnNo(vo.getLsnNo());
+		progressvo.setSerialNo(vo.getSerialNo());
 		progressvo = progressDao.selectProgress(progressvo);
 		if(progressvo==null) {
 			logger.info("null값입니다! ");
 			ProgressVO pgrvo = new ProgressVO();
 			pgrvo.setId(pri.getName());
-			pgrvo.setLsnNo(vo.getLsnNo());
+			pgrvo.setSerialNo(vo.getSerialNo());
 			pgrvo.setProgPct(0);
 			progressDao.insertProgress(pgrvo);
 		}
@@ -46,20 +45,20 @@ public class LessonController {
 	// 수업 누르면 영상바뀌게
 	@ResponseBody
 	@GetMapping("/user/userLWselect")
-	public LessonVO userLWselect(int lsnNo, LessonVO vo, Principal pri) {
+	public LessonVO userLWselect(int serialNo, LessonVO vo, Principal pri) {
 		ProgressVO progressvo = new ProgressVO();
 		progressvo.setId(pri.getName());
-		progressvo.setLsnNo(vo.getLsnNo());
+		progressvo.setSerialNo(serialNo);
 		progressvo = progressDao.selectProgress(progressvo);
 		System.out.println(progressvo);
 		if(progressvo==null) {
 			ProgressVO pgrvo = new ProgressVO();
 			pgrvo.setId(pri.getName());
-			pgrvo.setLsnNo(vo.getLsnNo());
+			pgrvo.setSerialNo(vo.getSerialNo());
 			pgrvo.setProgPct(0);
 			progressDao.insertProgress(pgrvo);
 		}	
-		vo = lessonDao.ajaxLessonSelect(lsnNo);
+		vo = lessonDao.ajaxLessonSelect(serialNo);
 		return vo;
 	}
 	

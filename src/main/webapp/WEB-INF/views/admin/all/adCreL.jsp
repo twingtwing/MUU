@@ -22,6 +22,9 @@
             
             width:200px;
         }
+        .creatorListBoard tr{
+        cursor: pointer;
+        }
     </style>
 </head>
 <body>
