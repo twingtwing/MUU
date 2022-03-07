@@ -82,4 +82,32 @@
 		ON P.LT_NO = L.LT_NO
 		WHERE L.CRE_ID = #{ID}
 	</select>
+	
+	<select id="adminLectureList" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM(SELECT ROWNUM RN, L.LT_NO,L.UP_CTGR,L.DOWN_CTGR,
+		L.CRE_ID,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+		FROM LECTURE L JOIN USERS U
+		ON L.CRE_ID =  U.ID 
+		WHERE L.LT_ST_CODE = 'L02'
+		<if test="name != null and name != ''">
+		and u.name like '%' || #{name}  || '%'
+		</if>
+		<if test="creId != null and creId != ''">
+		and L.CRE_ID like '%' || #{creId}  || '%'
+		</if>
+		<if test="ttl != null and ttl != ''">
+		and l.ttl like '%' || #{ttl} || '%'
+		</if>
+		<if test="start != null and start !=''">
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
+        </if>
+        <if test="end != null and end !=''" >
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > l.req_Date ]]>
+        </if>
+		ORDER BY L.LT_NO DESC)
+		<![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	    ]]>
+	</select>
 </mapper>

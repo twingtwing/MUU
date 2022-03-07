@@ -54,8 +54,15 @@ public class LectureServiceImpl implements LectureMapper {
 	@Override
 	public int lectureUpdateTemp(LectureVO vo) {
 		return map.lectureUpdateTemp(vo);
+	}
 	public List<LectureVO> creLectureList(String id) {
 		return map.creLectureList(id);
+	}
+	
+	//관리자 강의관리 관련입니다.
+	@Override
+	public List<LectureVO> adminLectureList(LectureVO vo) {
+		return map.adminLectureList(vo);
 	}
 
 }

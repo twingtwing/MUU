@@ -66,73 +66,83 @@ table tr, table td {
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
 						<form action='/admin/adRefSearch' id='ser' method='get'>
-						<div class="row position-relative">
-							<table class="admin_search table table-bordered">
-								<tr height="38">
-									<th width="15%">검색분류</th>
-									<td width="35%">
-										<div class="d-flex col-12 px-0">
-											<div class="col-3 px-0">
-												<select class="ml-2 custom-select w-100" id="searchType" onchange="changeSelect()">
-													<option selected="selected" value="">전체</option>
-													<option value="name">이름</option>
-													<option value="id">아이디</option>
-												</select>
+							<div class="row position-relative">
+								<table class="admin_search table table-bordered">
+									<tr height="38">
+										<th width="15%">검색분류</th>
+										<td width="35%">
+											<div class="d-flex col-12 px-0">
+												<div class="col-3 px-0">
+													<select class="ml-2 custom-select w-100" id="searchType"
+														onchange="changeSelect()">
+														<option selected="selected" value="">전체</option>
+														<option value="name">이름</option>
+														<option value="id">아이디</option>
+													</select>
+												</div>
+												<div class="col-9 d-flex align-items-center">
+													<input id=input name="searchKey" class="w-100" type="text"
+														spellcheck="false">
+												</div>
 											</div>
-											<div class="col-9 d-flex align-items-center">
-												<input id=input name="searchKey" class="w-100" type="text" spellcheck="false">
+										</td>
+										<th width="15%">환불처리상태</th>
+										<td width="35%" class="text-left" colspan="3">
+											<div
+												class="row d-flex justify-content-start align-middle ml-3 mt-1">
+												<input type="radio" ondblclick="this.checked=false"
+													class="ml-2" name="rfStCode" value="RF01" id="t"
+													spellcheck="false"> <label for="t"
+													class="mr-3 mb-0">환불신청대기</label> <input type="radio"
+													ondblclick="this.checked=false" name="rfStCode"
+													value="RF02" id="r" spellcheck="false"> <label
+													for="r" class="mr-3 mb-0">환불완료</label> <input type="radio"
+													ondblclick="this.checked=false" name="rfStCode"
+													value="RF03" id="w" spellcheck="false"> <label
+													for="w" class="mb-0">환불거부</label>
 											</div>
-										</div>
-									</td>
-									<th width="15%">환불처리상태</th>
-									<td width="35%" class="text-left" colspan="3">
-										<div class="row d-flex justify-content-start align-middle ml-3 mt-1">
-											<input type="radio" ondblclick="this.checked=false" class="ml-2" name="rfStCode" value="RF01" id="t" spellcheck="false"> 
-											<label for="t" class="mr-3 mb-0">환불신청대기</label> 
-											<input type="radio" ondblclick="this.checked=false" name="rfStCode" value="RF02" id="r" spellcheck="false"> 
-											<label for="r" class="mr-3 mb-0">환불완료</label>
-											<input type="radio" ondblclick="this.checked=false" name="rfStCode" value="RF03" id="w" spellcheck="false"> 
-											<label for="w" class="mb-0">환불거부</label>
-										</div>
-									</td>
-								</tr>
-								<tr height="38">
-									<th>강의명</th>
-									<td>
-									<input id="ttl" name="ttl" class="w-100" style="vertical-align: middle;" type="text" spellcheck="false"></td>
-									<th>환불사유</th>
-									<td>
-									<select class="ml-2 custom-select w-100" id="searchTypeRefund" onchange="changeSelectRefund()">
-										<option selected="selected" value="">전체</option>
-										<option value="강의가 만족스럽지 못함">강의가 만족스럽지 못함</option>
-										<option value="터무니 없는 가격">터무니 없는 가격</option>
-										<option value="결제 실수">결제 실수</option>
-										<option value="단순 변심">단순 변심</option>
-										<option value="친구나 가족 구성원이 내 동의 없이 결제함">친구나 가족 구성원이 내 동의 없이 결제함</option>
-										<option value="">기타</option>
-									</select>
-										<input id=hiddeninput name="content" class="w-100" type="hidden" value=''>
-									</td>
-								</tr>
-								<tr height="38">
-									<th>작성일</th>
-									<td colspan="3" class="justify-content-start row border-0">
-										<div class="row pl-4 d-flex justify-content-center">
-											<div>
-												<input type="date" name="start" class="w-100">
+										</td>
+									</tr>
+									<tr height="38">
+										<th>강의명</th>
+										<td><input id="ttl" name="ttl" class="w-100"
+											style="vertical-align: middle;" type="text"
+											spellcheck="false"></td>
+										<th>환불사유</th>
+										<td><select class="ml-2 custom-select w-100"
+											id="searchTypeRefund" onchange="changeSelectRefund()">
+												<option selected="selected" value="">전체</option>
+												<option value="강의가 만족스럽지 못함">강의가 만족스럽지 못함</option>
+												<option value="터무니 없는 가격">터무니 없는 가격</option>
+												<option value="결제 실수">결제 실수</option>
+												<option value="단순 변심">단순 변심</option>
+												<option value="친구나 가족 구성원이 내 동의 없이 결제함">친구나 가족 구성원이
+													내 동의 없이 결제함</option>
+												<option value="">기타</option>
+										</select> <input id=hiddeninput name="content" class="w-100"
+											type="hidden" value=''></td>
+									</tr>
+									<tr height="38">
+										<th>작성일</th>
+										<td colspan="3" class="justify-content-start row border-0">
+											<div class="row pl-4 d-flex justify-content-center">
+												<div>
+													<input type="date" name="start" class="w-100">
+												</div>
+												<div class="ml-3 mr-3">
+													<i class="fa fa-minus"></i>
+												</div>
+												<div>
+													<input type="date" name="end" class="w-100">
+												</div>
 											</div>
-											<div class="ml-3 mr-3">
-												<i class="fa fa-minus"></i>
-											</div>
-											<div>
-												<input type="date" name="end" class="w-100">
-											</div>
-										</div>
-									</td>
-								</tr>
-							</table>
-							<button class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;" id="but" type="submit">검색</button>
-						</div>
+										</td>
+									</tr>
+								</table>
+								<button class="btn btn-secondary position-absolute"
+									style="width: 75px; height: 33px; right: 5px; bottom: 19px;"
+									id="but" type="submit">검색</button>
+							</div>
 						</form>
 						<div class="row">
 							<table class="table table-bordered table-hover">
@@ -148,223 +158,292 @@ table tr, table td {
 									</tr>
 								</thead>
 								<tbody>
-								<c:if test="${empty adminRefundLists }">
-								<tr>
-									<td colspan="7"><div>지정된 값을 가진 데이터가 없습니다.</div></td>
-								</tr>
-								</c:if> 
-								<c:if test="${not empty adminRefundLists }">
-									<c:forEach items="${adminRefundLists }" var="adminRefundList">
+									<c:if test="${empty adminRefundLists }">
 										<tr>
-											<td>${adminRefundList.tlsnNo }</td>
-											<td>${adminRefundList.id }</td>
-											<td>${adminRefundList.name }</td>
-											<td style="display: none;">${adminRefundList.addr }</td>
-											<td>
-												<div class="name">
-													<a class="text-secondary text-reset" id="amodal" data-toggle="modal" href="#exampleModalCenter">${adminRefundList.ttl }</a>
-												</div>
-											</td>
-											<td style="display: none;">${adminRefundList.reqDate }</td>
-											<c:if test="${adminRefundList.rfStCode eq 'RF01'}">
-											<td style="display: none;">환불신청대기</td>
-											</c:if>
-											<c:if test="${adminRefundList.rfStCode eq 'RF02'}">
-											<td style="display: none;">환불허가</td>
-											</c:if>
-											<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
-											<td style="display: none;">환불불가</td>
-											</c:if>
-											<td style="display: none;">${adminRefundList.pay }</td>
-											<td>
-												<div class="name">${adminRefundList.content }</div>
-											</td>
-											<td style="display: none;">${adminRefundList.addr }</td>
-											<td>${adminRefundList.reqDate }</td>
-											<c:if test="${adminRefundList.rfStCode eq 'RF01'}">
-											<td>환불신청대기</td>
-											</c:if>
-											<c:if test="${adminRefundList.rfStCode eq 'RF02'}">
-											<td>환불허가</td>
-											</c:if>
-											<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
-											<td>환불불가</td>
-											</c:if>
+											<td colspan="7"><div>지정된 값을 가진 데이터가 없습니다.</div></td>
 										</tr>
-									</c:forEach>
-								</c:if>	
+									</c:if>
+									<c:if test="${not empty adminRefundLists }">
+										<c:forEach items="${adminRefundLists }" var="adminRefundList">
+											<tr>
+												<td>${adminRefundList.tlsnNo }</td>
+												<td>${adminRefundList.id }</td>
+												<td>${adminRefundList.name }</td>
+												<td style="display: none;">${adminRefundList.addr }</td>
+												<td>
+													<div class="name">
+														<a class="text-secondary text-reset" id="amodal"
+															data-toggle="modal" href="#exampleModalCenter">${adminRefundList.ttl }</a>
+													</div>
+												</td>
+												<td style="display: none;">${adminRefundList.reqDate }</td>
+												<c:if test="${adminRefundList.rfStCode eq 'RF01'}">
+													<td style="display: none;">환불신청대기</td>
+												</c:if>
+												<c:if test="${adminRefundList.rfStCode eq 'RF02'}">
+													<td style="display: none;">환불허가</td>
+												</c:if>
+												<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
+													<td style="display: none;">환불불가</td>
+												</c:if>
+												<td style="display: none;">${adminRefundList.pay }</td>
+												<td>
+													<div class="name">${adminRefundList.content }</div>
+												</td>
+												<td style="display: none;">${adminRefundList.addr }</td>
+												<td>${adminRefundList.reqDate }</td>
+												<c:if test="${adminRefundList.rfStCode eq 'RF01'}">
+													<td>환불신청대기</td>
+												</c:if>
+												<c:if test="${adminRefundList.rfStCode eq 'RF02'}">
+													<td>환불허가</td>
+												</c:if>
+												<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
+													<td>환불불가</td>
+												</c:if>
+												<td style="display: none;">${adminRefundList.point }</td>
+												<td style="display: none;">${adminRefundList.usePoint }</td>
+											</tr>
+										</c:forEach>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
 						<div class="row d-flex justify-content-center position-relative">
-							<div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
+							<div class="dataTables_paginate paging_simple_numbers"
+								id="zero_config_paginate">
 								<ul class="pagination">
 									<c:if test="${pageMaker.prev }">
-										<li class="paginate_button page-item previous" id="zero_config_previous">
-											<a href=" ${pageMaker.startpage -1 }" 
-											aria-controls="zero_config" data-dt-idx="0" tabindex="0" class="page-link">
-											<i class="mdi mdi-chevron-double-left"></i>previous</a></li>
+										<li class="paginate_button page-item previous"
+											id="zero_config_previous"><a
+											href=" ${pageMaker.startpage -1 }"
+											aria-controls="zero_config" data-dt-idx="0" tabindex="0"
+											class="page-link"> <i class="mdi mdi-chevron-double-left"></i>previous
+										</a></li>
 									</c:if>
-									<c:forEach var="num" begin="${pageMaker.startpage }" end="${pageMaker.endpage }">
-										<li class="paginate_button page-item  ${pageMaker.rvo.pageNum == num? 'active':'' }">
+									<c:forEach var="num" begin="${pageMaker.startpage }"
+										end="${pageMaker.endpage }">
+										<li
+											class="paginate_button page-item  ${pageMaker.rvo.pageNum == num? 'active':'' }">
 											<a href="${num}" aria-controls="zero_config"
 											data-dt-idx="${num}" tabindex="0" class="page-link">${num}</a>
 										</li>
 									</c:forEach>
 									<c:if test="${pageMaker.next }">
-										<li class="paginate_button page-item next" id="zero_config_next">
-											<a href="${pageMaker.endPage +1 }" aria-controls="zero_config" data-dt-idx="6" tabindex="0"
+										<li class="paginate_button page-item next"
+											id="zero_config_next"><a href="${pageMaker.endPage +1 }"
+											aria-controls="zero_config" data-dt-idx="6" tabindex="0"
 											class="page-link"><i class="mdi mdi-chevron-double-right"></i>next</a></li>
 									</c:if>
 								</ul>
 							</div>
-					</div>		
-							<form id='actionFrom' method='get' action='/admin/adRef'>
-								<input type='hidden' name='pageNum' value='${pageMaker.rvo.pageNum }'> 
-								<input type='hidden' name='amount' value='${pageMaker.rvo.amount }'>
-							</form>
-							<div class="position-absolute" style="right: 1px;">
-								<button class="btn btn-danger">PDF다운</button>
-								<button class="btn btn-success">EXCEL다운</button>
-							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 내용 끝 -->
-
-			<!-- 바디 끝 -->
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog">
-				<div class="modal-dialog modal-lg modal-dialog-centered"
-					role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">환불관리</h5>
-							<button type="button" class="close" data-dismiss="modal"aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<table class="table">
-								<tr>
-									<th>번호</th>
-									<th>아이디</th>
-									<th>이름</th>
-									<th>주소</th>
-								</tr>
-								<tr id="trIndex">
-									<td>번호안들어옴</td>
-									<td>아이디안들어옴</td>
-									<td>번호안들어옴</td>
-									<td>주소안들어옴</td>
-								</tr>
-								<tr>
-									<th>강의제목</th>
-									<th>환불요청날짜</th>
-									<th>환불상태</th>
-									<th>금액</th>
-								</tr>
-								<tr id=trtwo>	
-									<td>제목안들어옴</td>
-									<td>환불요청날짜안들어옴</td>
-									<td>환불상태안들어옴</td>
-									<td>금액안들어옴</td>
-								</tr>
-								<tr>
-									<th colspan="4" class="font-weight-bold" style="">환불요청사유</th>
-								</tr>
-								<tr id="reason">
-									<td colspan="4">이거 안들어오고있음</td>
-								</tr>
-							</table>
-						<div class="modal-footer">
-							<button id="agree" type="button" class="btn btn-primary">승인</button>
-							<button id="disagree" type="button" class="btn btn-secondary" >거부</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로가기</button>
+						<form id='actionFrom' method='get' action='/admin/adRef'>
+							<input type='hidden' name='pageNum'
+								value='${pageMaker.rvo.pageNum }'> <input type='hidden'
+								name='amount' value='${pageMaker.rvo.amount }'>
+						</form>
+						<div class="position-absolute" style="right: 1px;">
+							<button class="btn btn-danger">PDF다운</button>
+							<button class="btn btn-success">EXCEL다운</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<!-- 내용 끝 -->
+
+	<!-- 바디 끝 -->
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">환불관리</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<tr>
+							<th>번호</th>
+							<th>아이디</th>
+							<th>이름</th>
+							<th>주소</th>
+						</tr>
+						<tr id="trIndex">
+							<td>번호안들어옴</td>
+							<td>아이디안들어옴</td>
+							<td>번호안들어옴</td>
+							<td>주소안들어옴</td>
+						</tr>
+						<tr>
+							<th>강의제목</th>
+							<th>환불요청날짜</th>
+							<th>환불상태</th>
+							<th>금액</th>
+						</tr>
+						<tr id=trtwo>
+							<td>제목안들어옴</td>
+							<td>환불요청날짜안들어옴</td>
+							<td>환불상태안들어옴</td>
+							<td>금액안들어옴</td>
+						</tr>
+						<tr>
+							<th colspan="4" class="font-weight-bold" style="">환불요청사유</th>
+						</tr>
+						<tr id="reason">
+							<td colspan="4">이거 안들어오고있음</td>
+						</tr>
+						<tr id="hidden" style="display: none;">
+							<td style="display: none;">이거 안들어오고있음</td>
+							<td style="display: none;">이거 안들어오고있음</td>
+							<td style="display: none;">이거 안들어오고있음</td>
+						</tr>
+					</table>
+					<div class="modal-footer">
+						<button id="agree" type="button" class="btn btn-primary">승인</button>
+						<button id="disagree" type="button" class="btn btn-secondary">거부</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">뒤로가기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
-//페이징 처리
-$(".paginate_button a").on("click" , function(e) {
-	e.preventDefault();
-	console.log('click');
-	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
-	$('#actionFrom').submit();
-});
+	//페이징 처리
+	$(".paginate_button a").on(
+			"click",
+			function(e) {
+				e.preventDefault();
+				console.log('click');
+				$('#actionFrom').find("input[name='pageNum']").val(
+						$(this).attr("href"));
+				$('#actionFrom').submit();
+			});
 
-//select value값 처리 함수
-	function changeSelect(){
+	//select value값 처리 함수
+	function changeSelect() {
 		var searchType = $("#searchType option:selected").val();
 		console.log(searchType)
-		document.getElementById( 'input' ).setAttribute( 'name', searchType);
+		document.getElementById('input').setAttribute('name', searchType);
 	}
-//환불이유 select value값 처리 함수	
-	function changeSelectRefund(){
+	//환불이유 select value값 처리 함수	
+	function changeSelectRefund() {
 		var searchTypeRefund = $("#searchTypeRefund option:selected").val();
 		console.log(searchTypeRefund)
-		document.getElementById( 'hiddeninput' ).setAttribute( 'value', searchTypeRefund);
+		document.getElementById('hiddeninput').setAttribute('value',
+				searchTypeRefund);
 	}
-//모달 자리 넣는 함수
-	$('#exampleModalCenter').on('show.bs.modal', function (e) {
-	    for(let i=0; i<$('#trIndex').children().length; i++){
-	    	var prevData = $(e.relatedTarget).closest('tr').children().eq(i).text();
-	    	if(i < 4){
-	    		$('#trIndex').children().eq(i).text(prevData);
-	    	}
-	    }
-	    for(let i=0; i<$('#trtwo').children().length; i++){
-	    	let prevData = $(e.relatedTarget).closest('tr').children().eq(i+4).text();
-	    	if(i < 4){
-		    	$('#trtwo').children().eq(i).text(prevData);
-		    }
-	    }
-	    for(let i=0; i<$('#trtwo').children().length; i++){
-	    	let prevData = $(e.relatedTarget).closest('tr').children().eq(i+8).text();
-	    	if(i<4){
-		    	$('#reason').children().eq(i).text(prevData);
-		    }
-	    }
-	});
-	
-//모달 승인 아작스
-	$('#agree').on('click',function(){
+	//모달 자리 넣는 함수
+	$('#exampleModalCenter').on(
+			'show.bs.modal',
+			function(e) {
+				for (let i = 0; i < $('#trIndex').children().length; i++) {
+					var prevData = $(e.relatedTarget).closest('tr').children()
+							.eq(i).text();
+					if (i < 4) {
+						$('#trIndex').children().eq(i).text(prevData);
+					}
+				}
+				for (let i = 0; i < $('#trtwo').children().length; i++) {
+					let prevData = $(e.relatedTarget).closest('tr').children()
+							.eq(i + 4).text();
+					if (i < 4) {
+						$('#trtwo').children().eq(i).text(prevData);
+					}
+				}
+				for (let i = 0; i < $('#reason').children().length; i++) {
+					let prevData = $(e.relatedTarget).closest('tr').children()
+							.eq(i + 8).text();
+					if (i < 4) {
+						$('#reason').children().eq(i).text(prevData);
+					}
+				}
+				for (let i = 0; i < $('#hidden').children().length; i++) {
+					let prevData = $(e.relatedTarget).closest('tr').children()
+							.eq(i + 12).text();
+					if (i < 4) {
+						$('#hidden').children().eq(i).text(prevData);
+					}
+				}
+				$('#agree').attr('click', function() {
+					let code = $('#trtwo').children().eq(2).text();
+					console.log(code)
+					if (code == '환불신청대기') {
+						$('#agree').removeAttr("disabled");
+					} else {
+						$('#agree').attr("disabled", true);
+					}
+				})
+				$('#disagree').attr('click', function() {
+					let code = $('#trtwo').children().eq(2).text();
+					if (code == '환불신청대기') {
+						$('#disagree').removeAttr("disabled");
+					} else {
+						$('#disagree').attr("disabled", true);
+					}
+				})
+			});
+
+	//모달 버튼 활성화 
+
+	//모달 승인 아작스
+	$('#agree').on(
+			'click',
+			function() {
+				let header = "${_csrf.headerName}";
+				let token = "${_csrf.token}";
+				let pk = $('#trIndex').children().first().text();
+				let id = $('#trIndex').children().eq(1).text();
+				let point = $('#hidden').children().eq(0).text();
+				let usePoint = $('#hidden').children().eq(1).text();
+				console.log("p값 : " + pk, "사용한 포인트 : " + usePoint,
+						"가지고있는 포인트 : " + point, "아이디 : " + id);
+				$.ajax({
+					type : "post",
+					url : "/admin/adRefUpdate",
+					data : {
+						tlsnNo : pk,
+						usePoint : usePoint,
+						Point : point,
+						Id : id,
+					},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(map) {
+						console.log("성공")
+						location.reload();
+					}
+				})
+			})
+
+	$('#disagree').on('click', function() {
 		let header = "${_csrf.headerName}";
 		let token = "${_csrf.token}";
 		let pk = $('#trIndex').children().first().text()
+		let code = $('#trtwo').children().eq(2).text();
 		$.ajax({
-            type : "post",          
-            url : "/admin/adRefUpdate",     
-            data : { tlsnNo : pk},
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success : function(result){
-            	console.log("성공")
-            	location.reload();
-            }
-		})
-	})
-	
-	$('#disagree').on('click',function(){
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
-		let pk = $('#trIndex').children().first().text()
-		$.ajax({
-            type : "post",          
-            url : "/admin/adRefCancleUpdate",     
-            data : { tlsnNo : pk},
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success : function(result){
-            	console.log("성공")
-            	location.reload();
-            }
+			type : "post",
+			url : "/admin/adRefCancleUpdate",
+			data : {
+				tlsnNo : pk
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				console.log("성공")
+				location.reload();
+			}
 		})
 	})
 </script>
