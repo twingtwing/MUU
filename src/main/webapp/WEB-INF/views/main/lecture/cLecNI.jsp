@@ -159,11 +159,16 @@
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
                                 <!-- 선택 : active -->
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="/creator/oLecS">강의정보</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
-                                <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="location.href='#'">공지사항</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">수강생</button>
+                                <c:if test="${lecinfo.ltStCode eq 'L01' }">
+				                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
+					            </c:if>
+					            <c:if test="${lecinfo.ltStCode eq 'L03' }">
+					            <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goclLecture(${lecinfo.ltNo })">강의정보</button>
+					            </c:if>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goQna(${lecinfo.ltNo })">질문&답변</button>
+                                <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="goNotice(${lecinfo.ltNo })">공지사항</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goReview(${lecinfo.ltNo })">리뷰</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goStudent(${lecinfo.ltNo })">수강생</button>
                             </div>
                         </div>  
 
@@ -204,6 +209,9 @@
             </div>
         </div>
     </section>
+    <form id="frm">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
+    </form>
 </body>
 <script>
 //mouseover 이벤트 : 사이드바 css변경
@@ -242,6 +250,7 @@ $('#insertBtn').on('click', function(){
         data : form,
         success:function() {
           alert("글이 등록되었습니다");
+          
           location.href = "/creator/cLecNL";
         },
          error: function (jqXHR) { 
@@ -249,6 +258,42 @@ $('#insertBtn').on('click', function(){
          }
     });
 })
+	  //열린강의정보 페이지 이동
+	  function gooLecture(e){
+	  	$('.sendltno').val(e);
+	  	$('#frm').attr("action", "/creator/oLecS");
+	  	$('#frm').submit();
+	  }
+	  //닫힌강의정보 페이지 이동
+	  function goclLecture(e){
+	  	$('.sendltno').val(e);
+	  	$('#frm').attr("action", "/creator/clLecS");
+	  	$('#frm').submit();
+	  }
+    //qna 페이지 이동
+    function goQna(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecQ");
+    	$('#frm').submit();
+    }
+    //공지사항 페이지 이동
+    function goNotice(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecNL");
+    	$('#frm').submit();
+    }
+    //리뷰 페이지 이동
+    function goReview(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecR");
+    	$('#frm').submit();
+    }
+    //수강생 리스트 페이지 이동
+    function goStudent(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecSt");
+    	$('#frm').submit();
+    }
 
 </script>
 </html>

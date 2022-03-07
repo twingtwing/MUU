@@ -304,8 +304,8 @@ public class LectureController {
 	
 	//강의 수정 페이지
 	@RequestMapping("/creator/lecU")
-	public String lectureUpdatePage(int sendltno, Model model) {
-			model.addAttribute("lecinfo", lectureDao.lectureSelect(sendltno));
+	public String lectureUpdatePage(LectureVO vo, Model model) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/lecU";
 	}
 	

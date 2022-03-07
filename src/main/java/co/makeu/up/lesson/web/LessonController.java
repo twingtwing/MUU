@@ -65,8 +65,8 @@ public class LessonController {
 	
 	//수업 영상 관리 페이지
 	@RequestMapping("/creator/lesU")
-	public String lessonUpdatePage(int sendltno, Model model) {
-		model.addAttribute("lesinfo", lessonDao.lessonList(sendltno));
+	public String lessonUpdatePage(LessonVO vo, Model model) {
+		model.addAttribute("lesinfo", lessonDao.lessonList(vo.getLtNo()));
 		return "main/lecture/lesU";
 	}
 
