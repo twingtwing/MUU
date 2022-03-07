@@ -26,7 +26,10 @@ public class SugangVO {
 	private String tel;
 	private Date expDate;
 	
-	// for join
+	//for extended
+	private int num;
+	
+	//for join
 	private String ttl;
 	private String thumb;
 	private int cnt;

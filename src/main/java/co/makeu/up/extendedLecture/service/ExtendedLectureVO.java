@@ -29,8 +29,6 @@ public class ExtendedLectureVO {
 	private int closeCount;
 	private int reportCount;
 	
-	private List<Integer> lecList;
-	
 	private UsersVO userAddr;
 	private LectureVO lectureDetail;//강의 단건
 	private List<LectureVO> lectureList;//강의 리스트

@@ -8,7 +8,6 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
 td, th {
 	padding: 0.5rem;
@@ -36,10 +35,8 @@ i.fa-heart-o {
 	transform-origin: 50% 50%;
 }
 
-@
-keyframes rotate_image { 100% {
+@keyframes rotate_image { 100% {
 	transform: rotate(360deg);
-}
 }
 </style>
 </head>
@@ -306,22 +303,20 @@ keyframes rotate_image { 100% {
 			
 			//each/for 구문 돌려서 for var i of ary $(i).closest('tr').children().last().text() == '불가';
 			console.log(ary);
-			for(var obj of ary){
-			let check = $(obj).closest('tr').children().last().text();
-			if(check == "불가"){
-					alert($(obj).closest('tr').children().eq(2).text() + " 는 결제 불가능한 강의입니다.");
-					obj.checked=false;
-					return ;
-				}
+			if(ary.length > 1){
+				alert("워시리스트에서 결제는 1개씨만 가능합니다.");
+				ary[0].checked=false;
+				return;
 			}
-			$("input[name=checkbox]:checked").each(function(){
-				let check = $(this).val();
-				checkboxArr.push(check)
-				console.log(checkboxArr)
-			})
+			
+			if($(ary[0]).closest('tr').children().last().text() == "불가"){
+				alert($(obj).closest('tr').children().eq(2).text() + " 는 결제 불가능한 강의입니다.");
+				obj.checked=false;
+				return ;
+			}
 			
 			//잘 도착하는지 테스트
-			location.href="/user/lecP?lecList="+checkboxArr;
+			location.href="/user/lecP?ltNo="+$(ary[0]).val();
 		}
 
 		//mouseover 이벤트 : 사이드바 css변경

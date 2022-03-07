@@ -21,7 +21,7 @@ public interface ExtendedLetureMapper {
 	LectureVO lectureDetail(ExtendedLectureVO vo);
 	List<LectureVO> lectureList(ExtendedLectureVO vo);
 	List<LectureVO> lecList(ExtendedLectureVO vo);
-	List<LectureVO> lecPay(ExtendedLectureVO vo);
+	LectureVO lecPay(ExtendedLectureVO vo);
 	
 	List<CtgrVO> ctgrList(ExtendedLectureVO vo);
 	List<CtgrVO> ctgrDetail(@Param("downCtgr") String downCtgr);
@@ -33,4 +33,5 @@ public interface ExtendedLetureMapper {
 	List<LtQnaVO> ltQnaList(ExtendedLectureVO vo);
 	
 	List<NoticeVO> noticeList(ExtendedLectureVO vo);
+	
 }

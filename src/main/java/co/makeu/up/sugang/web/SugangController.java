@@ -22,6 +22,8 @@ import co.makeu.up.progress.service.ProgressServiceImpl;
 import co.makeu.up.progress.service.ProgressVO;
 import co.makeu.up.sugang.service.SugangServiceImpl;
 import co.makeu.up.sugang.service.SugangVO;
+import co.makeu.up.users.service.UsersServiceImpl;
+import co.makeu.up.users.service.UsersVO;
 
 @Controller
 public class SugangController {
@@ -30,6 +32,7 @@ public class SugangController {
 	@Autowired LectureServiceImpl lectureDao;
 	@Autowired LessonServiceImpl lessonDao;
 	@Autowired ProgressServiceImpl progressDao;
+	@Autowired UsersServiceImpl userDao;
 	
 	@GetMapping("/user/userLectureList")
 	public String mySugangList(Principal pri, Model model) {
@@ -125,8 +128,6 @@ public class SugangController {
 		return sugangDao.sugangPay(vo);
 	}
 	
-	
-	
 	// 구매확정
 	@ResponseBody
 	@PostMapping("/user/userSugangConfirm")
@@ -134,6 +135,20 @@ public class SugangController {
 		sugangDao.updateSugangConfirm(vo);
 	}
 	
+	//수강 결제
+	@PostMapping("/user/sugangInsert")
+	public String sugangInsert(SugangVO vo,Principal pri) {
+		vo.setId(pri.getName());
+		sugangDao.sugangInsert(vo);
+		if(vo.getUsePoint()!=0) {
+			UsersVO user = new UsersVO();
+			user.setId(pri.getName());
+			user.setPoint(vo.getUsePoint());
+			userDao.userPointUpdate(user);
+		}
+		return "main/all/home";
+  }
+  
 	//강의 수강생 리스트 페이지 이동
 	@RequestMapping("/creator/cLecSt")
 	public String cLecStPage() {

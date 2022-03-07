@@ -13,6 +13,8 @@ public interface UsersMapper {
 	Date chkCreFarewell(String creId);
 	int deleteUsers(String id);
 	
+	int userPointUpdate(UsersVO vo);
+	
 	// admin
 	List<UsersVO> usersList(UsersVO vo);
 }

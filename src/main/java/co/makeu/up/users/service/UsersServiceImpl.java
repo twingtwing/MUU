@@ -53,4 +53,8 @@ public class UsersServiceImpl implements UsersMapper {
 		return map.usersList(vo);
 	}
 
+	@Override
+	public int userPointUpdate(UsersVO vo) {
+		return map.userPointUpdate(vo);
+	}
 }

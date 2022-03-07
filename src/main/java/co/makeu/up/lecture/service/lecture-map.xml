@@ -83,8 +83,7 @@
 		WHERE L.CRE_ID = #{ID}
 	</select>
 
-	
-	<select id="adminLectureList" resultType="co.makeu.up.lecture.service.LectureVO">
+	<select id="adminLectureList" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM(SELECT ROWNUM RN, L.LT_NO,L.UP_CTGR,L.DOWN_CTGR,
 		L.CRE_ID,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
 		FROM LECTURE L JOIN USERS U

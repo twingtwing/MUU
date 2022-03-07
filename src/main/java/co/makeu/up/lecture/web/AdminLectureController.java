@@ -18,11 +18,13 @@ import co.makeu.up.common.view.Pagination;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 
+import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
+
 @Controller
 public class AdminLectureController {
-	@Autowired
-	private LectureServiceImpl lectureDao;
-
+	@Autowired LectureServiceImpl lectureDao;
 	
 	//강의리스트
 	@GetMapping("/admin/adLecL")
