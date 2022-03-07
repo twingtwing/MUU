@@ -32,18 +32,18 @@ public class AdminLectureController {
 		if(vo.getPage()==0) {
 			vo.setPage(1);			
 		}
-		System.out.println(vo.getLtStCodeList());
-		System.out.println(vo.getStar());
-		List<LectureVO> list = lectureDao.adminLectureList(vo);
-		Pagination pagination = new Pagination(list.get(0).getCount()==0 ? 1 : list.get(0).getCount(), vo.getPage());
+		List<LectureVO> list = lectureDao.adminLectureTable(vo);
+		Pagination pagination = new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), vo.getPage());
 		model.addAttribute("lectures",list);
 		model.addAttribute("pages",pagination);
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecL";
 	}
 	
 	//강의상세-강의소개
 	@GetMapping("/admin/adLecI")
-	public String adLecI() {
+	public String adLecI(Model model,int ltNo) {
+		model.addAttribute("lectureInfo",lectureDao.lectureSelect(ltNo));
 		return "admin/lecture/adLecI";
 	}
 	

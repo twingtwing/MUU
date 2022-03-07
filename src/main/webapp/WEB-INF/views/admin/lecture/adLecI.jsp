@@ -70,7 +70,7 @@
                                         <tr height="38">
                                             <th>강의이름</th>
                                             <td>
-                                                adsf
+                                                ${lectureInfo.ttl }
                                             </td>
                                             <th>강의별점</th>
                                             <td>
@@ -155,7 +155,7 @@
                                 </div>
                                 
                                 <div class="row">
-                                    <button class="btn btn-light">목록가기</button>
+                                    <button class="btn btn-light" onclick="location.href='/admin/adLecL'">목록가기</button>
                                 </div>
                             </div>
                         </div>

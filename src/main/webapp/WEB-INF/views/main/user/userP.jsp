@@ -16,9 +16,7 @@
       background-color: lightgray;
     }
 
-    tbody>tr {
-      cursor: pointer;
-    }
+
 
     .list-link {
       color: black;
@@ -206,7 +204,7 @@
                         <tr>
                           <th class="text-center align-middle" style="width:200px">강의사진</th>
                           <th class="text-center align-middle">강의제목</th>
-                          <th class="text-center align-middle">수강료<br><span class="small">(키트 가격은 수강료에 포함됨)</span></th>
+                          <th class="text-center align-middle">수강료<br><span class="small">(키트 가격은 지불액에 포함됨)</span></th>
                           <th class="text-center align-middle">구매날짜</th>
                           <th class="text-center align-middle">만료날짜</th>
                           <th class="text-center align-middle">상태</th>
