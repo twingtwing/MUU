@@ -20,13 +20,22 @@ public class ReportController {
   
 	//강의 신고 리스트
 	@GetMapping("/admin/adLRepL")
-	public String adLRepL() {
+	public String adLRepL(ReportVO vo , Model model) {
+		List <ReportVO> list = reportDao.selectreport(vo);
+		model.addAttribute("list",list);
+		int length = 0;
+		if(list.size() != 0) {
+			length = list.get(0).getLength();
+		}
+		model.addAttribute("pageMaker",new PageVo(vo,length));
+		System.out.println(model.getAttribute("pageMaker"));
 		return "admin/report/adLRepL";
 	}
 	
 	//강의 신고 상세
 	@GetMapping("/admin/adLRepS")
-	public String adLRepS() {
+	public String adLRepS(ReportVO vo , Model model) {
+		model.addAttribute("report",reportDao.selectreports(vo));
 		return "admin/report/adLRepS";
 	}
 		
@@ -66,5 +75,7 @@ public class ReportController {
 		vo.setReporter(pri.getName());
 		reportDao.insertLecReport(vo);
 	}
+	
+	
 
 }
