@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.notice.service.NoticeServiceImpl;
 import co.makeu.up.notice.service.NoticeVO;
 import co.makeu.up.progress.service.ProgressServiceImpl;
@@ -28,28 +32,41 @@ public class NoticeController {
 	@Autowired NoticeServiceImpl noticeDao;
 	@Autowired SugangServiceImpl sugangDao;
 	@Autowired ProgressServiceImpl progressDao;
+	@Autowired LectureServiceImpl lectureDao;
 	
-	@GetMapping("/creator/cLecNL")
-	public String cLecNL(NoticeVO vo, Model model, HttpServletRequest request) {
-//			model.addAttribute("nlists", noticeDao.NoticeList());
-		return "main/creator/cLecNL";
+	//공지사항 리스트 페이지
+	@RequestMapping("/creator/cLecNL")
+	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("nlists", noticeDao.NoticeList(nvo));
+		return "main/lecture/cLecNL";
 	}
 	@GetMapping("/creator/cLecNS")
 	public String cLecNS() {
-		return "main/creator/cLecNS";
+		return "main/lecture/cLecNS";
 	}
 	
+	//공지사항 글 등록 페이지
 	@GetMapping("/creator/cLecNI")
-	public String cLecNI() {
-		return "main/creator/cLecNI";
+	public String cLecNI(LectureVO vo, Model model, HttpServletRequest request) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		return "main/lecture/cLecNI";
 	}
+	
+	//공지사항 글 insert
+	@PostMapping("/creator/cLecNInsert")
+	@ResponseBody
+	public void cLecNInsert(NoticeVO vo) {
+		noticeDao.insertNotice(vo);
+	}
+	
 	@GetMapping("/creator/cLecNU")
 	public String cLecNU() {
-		return "main/creator/cLecNU";
+		return "main/lecture/cLecNU";
 	}
 	@GetMapping("/creator/cLecQ")
 	public String cLecQ() {
-		return "main/creator/cLecQ";
+		return "main/lecture/cLecQ";
 	}
 	
 	// 공지 리스트
@@ -70,7 +87,7 @@ public class NoticeController {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			model.addAttribute("sugang",checkvo);
 		}		
-		vo.setPage(0);
+		vo.setPage(1);
 		int listCnt = noticeDao.NoticeListCnt(vo.getLtNo());
 		Pagination pagination = new Pagination(listCnt,1);
 		model.addAttribute("ltno",vo.getLtNo());

@@ -18,7 +18,7 @@ public class LectureVO {
 	private int prc;
 	private String kitName;
 	private String kitIntro;
-	private int kitPrc;
+	private String kitPrc;
 	private String tag1;
 	private String tag2;
 	private String tag3;
@@ -38,7 +38,22 @@ public class LectureVO {
 	private String pht;//크리에이터 사진
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
-	
+
+	private int cnt; // 수강인원
+	private int sales; // 강의별 매출액
+			
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getSales() {
+		return sales;
+	}
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
 	public int getLtNo() {
 		return ltNo;
 	}
@@ -129,10 +144,10 @@ public class LectureVO {
 	public void setKitIntro(String kitIntro) {
 		this.kitIntro = kitIntro;
 	}
-	public int getKitPrc() {
+	public String getKitPrc() {
 		return kitPrc;
 	}
-	public void setKitPrc(int kitPrc) {
+	public void setKitPrc(String kitPrc) {
 		this.kitPrc = kitPrc;
 	}
 	public String getTag1() {
@@ -195,17 +210,17 @@ public class LectureVO {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	public String getWash() {
-		return wash;
-	}
-	public void setWash(String wash) {
-		this.wash = wash;
-	}
 	public int getrCount() {
 		return rCount;
 	}
 	public void setrCount(int rCount) {
 		this.rCount = rCount;
+	}
+	public String getWash() {
+		return wash;
+	}
+	public void setWash(String wash) {
+		this.wash = wash;
 	}
 	public int getwCount() {
 		return wCount;
@@ -219,6 +234,12 @@ public class LectureVO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPht() {
+		return pht;
+	}
+	public void setPht(String pht) {
+		this.pht = pht;
+	}
 	public String getCreIntro() {
 		return creIntro;
 	}
@@ -231,12 +252,7 @@ public class LectureVO {
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
 	}
-	public String getPht() {
-		return pht;
-	}
-	public void setPht(String pht) {
-		this.pht = pht;
-	}
 	
+
 	
 }

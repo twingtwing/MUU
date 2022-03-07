@@ -222,7 +222,7 @@
         </div>
     </section>
     <form id="frm" action="/creator/oLecS">
-    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>
 
 </body>

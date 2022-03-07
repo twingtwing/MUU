@@ -33,6 +33,11 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.selectreports(vo);
 	}
 
+	@Override
+	public List<ReportVO> reportLectureList(String creid) {
+		return map.reportLectureList(creid);
+	}
+
 	
 	
 }

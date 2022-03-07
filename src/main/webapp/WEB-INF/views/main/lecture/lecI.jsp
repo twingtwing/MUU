@@ -703,7 +703,7 @@
     
     //강의등록 나가기(저장 안하는 버튼)
     $('.exit').on('click', function(){
-    	location.href = "/creator/creS"; 									//페이지 어디로 갈지 ??
+    	location.href = "/creator/rLecL";						//페이지 어디로 갈지 ?? 일단 신청강의리스트로
     })
     
     //이미지 미리보기(사진 1,2,3)
@@ -744,7 +744,7 @@
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
         filesArr.forEach(function(f,i) {
             if (!f.type.match(reg)) {
-                alert("확장자는 이미지 확장자만 가능합니다.");
+                alert("확장자는 이미지 확장자만 가능합니다");
                 return;
             }
             sel_file = f;
@@ -758,13 +758,26 @@
     }
     
     //4페이지 유효성 검사(키트 null 가능)
-    ////키트금액 체크
+    //키트금액 체크
      $('#kitprc').on('keyup', function() {
-		if (/\D/.test(this.value)) {
+    	if ($('#kitname').val() == null || $('#kitname').val() == ''){
+    		this.value = this.value.replace(this.value,'');
+    		alert('키트에 대한 설명을 먼저 입력해주세요');
+    	} else if (/\D/.test(this.value)) {
 			this.value = this.value.replace(/\D/g, '');
 			alert('숫자만 입력가능합니다.');
 		}		
-	}); 
+	});
+    
+    //키트 설명란 체크
+    $('#kitintro').on('keyup', function() {
+    	if ($('#kitname').val() == null || $('#kitname').val() == ''){
+    		this.value = this.value.replace(this.value,'');
+    		alert('키트명을 먼저 입력해주세요');
+    	} else {
+    		$('#kitprc').val('1000');
+    	}
+	});
     
 	//강의금액 체크
      $('#prc').on('keyup', function() {
@@ -793,14 +806,14 @@
 	     })
      })
     
-	//시큐리티 토큰
-	let header = "${_csrf.headerName}";
-	let token = "${_csrf.token}";
-    
-    //강의 등록 / 이미지 업로드
+		//시큐리티 토큰
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+	    
     function lectureResisterF(){
-    	let form = new FormData();
-    	
+        //강의 등록 / 이미지 업로드
+	    let form = new FormData();
+	    
 		//변수 선언, lecture-map insert 순으로 data입력, parameter통일
 		let creid = '${id}';
 		let upctgr = $('#ctgr option:selected').val();
@@ -833,66 +846,60 @@
 			form.append("classMov", $('.classUp')[i].files[0]);
 		}
 			
-		
-		
         //메인사진 값
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
         
         //사진이외 값 
-        form.append("upCtgr", upctgr);	// list 0
-        form.append("downCtgr", downctgr); // list 1
-        form.append("ttl", ttl); // list 2
-        form.append("intro", intro); // list 3
-        form.append("openTerm", openterm); // list 4
-        form.append("tlsnTerm", tlsnterm); // list 5
-        form.append("kitName", kitname); // list 6
-        form.append("kitIntro", kitintro); // list 7
-        form.append("kitPrc", kitprc); // list 8
-        form.append("prc", prc); // list 9
-        form.append("tag1", tag1); // list 10
-        form.append("tag2", tag2); // list 11
-        form.append("tag3", tag3); // list 12
-        form.append("creId", creid); // list 13
+        form.append("upCtgr", upctgr);
+        form.append("downCtgr", downctgr);
+        form.append("ttl", ttl);
+        form.append("intro", intro);
+        form.append("openTerm", openterm);
+        form.append("tlsnTerm", tlsnterm);
+        form.append("kitName", kitname);
+        form.append("kitIntro", kitintro);
+        form.append("kitPrc", kitprc);
+        form.append("prc", prc);
+        form.append("tag1", tag1);
+        form.append("tag2", tag2);
+        form.append("tag3", tag3);
+        form.append("creId", creid);
         
         //썸네일 값
         form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
-        
+    	
+        //강의신청코드 값
+        form.append("ltStCode", "L02");
         
         //여기서부터 유효성검사 !!
         //카테고리 유효성 검사
-		if(upctgr == null || upctgr == '전체(상위 카테고리)'){
+		if(upctgr == null || upctgr == '' || upctgr == '전체(상위 카테고리)'){
 			alert('상위 카테고리를 선택해주세요');
 			return false;
-		} 
-		if(downctgr == null || downctgr == '전체(하위 카테고리)'){
+		} else if (downctgr == null || downctgr == '' || downctgr == '전체(하위 카테고리)'){
 			alert('하위 카테고리를 선택해주세요');
 			return false;
 		}
-		
 		//메인사진 유효성 검사
-		if($("#mainPhtUp")[0].files.length < 3){
+		else if($("#mainPhtUp")[0].files.length < 3){
 			alert('대표 사진은 3장 업로드 해야합니다');
 			return false;
-		}
-		if($("#mainPhtUp")[0].files.length > 3){
+		} else if($("#mainPhtUp")[0].files.length > 3){
 			alert('선택한 사진이 3장이 넘습니다');
 			return false;
 		}
-        
         //썸네일 유효성 검사
-        if($("#thPhtUp")[0].files.length < 1){
+        else if($("#thPhtUp")[0].files.length < 1){
 			alert('썸네일 사진을 등록해주세요');
 			return false;
 		}
-        
         //2페이지 유효성 검사
-        if(lecTitle == null){
+        else if(ttl == null || ttl == ''){
         	alert('강의 제목을 입력해주세요');
 			return false;	
-        }
-        if(lecIntro == null){
+        } else if(intro == null || intro == ''){
         	alert('강의 소개를 입력해주세요');
 			return false;	
         }
@@ -909,16 +916,101 @@
             data : form,
             success:function() {
               alert("강의 등록 신청되었습니다");
-              //console.log(response);
-              //강의 리스트 페이지로 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!
-              location.href = "/creator/creS";
+              location.href = "/creator/rLecL";
             },
 	         error: function (jqXHR) { 
 	           alert(jqXHR.responseText); 
 	         }
         });
+    }
+        
+        //임시저장
+        $('.tempsave').on('click', function(){
+            //강의 등록 / 이미지 업로드
+		    let form = new FormData();
+		    
+			//변수 선언, lecture-map insert 순으로 data입력, parameter통일
+			let creid = '${id}';
+			let upctgr = $('#ctgr option:selected').val();
+			let downctgr = $('#downctgr option:selected').val();
+			let ttl = $('#lecTitle').val();
+			let intro = $('#lecIntro').val();
+			let openterm = $('#lecP option:selected').val();
+			let tlsnterm = $('#coP option:selected').val();
+			let kitname = $('#kitname').val();
+			let kitintro = $('#kitintro').val();
+			let kitprc = $('#kitprc').val();
+			let prc = $('#prc').val();
+			let tag1 = null;
+			let tag2 = null;
+			let tag3 = null;
+			$('input:checked[type="checkbox"]').each(function(a){
+				if(a == 0){
+					tag1 = $(this).val();
+				}
+				if(a == 1){
+					tag2 = $(this).val();
+				}
+				if(a == 2){
+					tag3 = $(this).val();
+				}
+			})
+			for(var i = 0; i < $('.classUp').length; i++){
+				form.append("lsnNo", $('.itemNum').eq(i).text());
+				form.append("classTtl", $('.classTtl').eq(i).val());
+				form.append("classMov", $('.classUp')[i].files[0]);
+			}
+				
+	        //메인사진 값
+	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[0]);
+	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[1]);
+	        form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
+	        
+	        //사진이외 값 
+	        form.append("upCtgr", upctgr);
+	        form.append("downCtgr", downctgr);
+	        form.append("ttl", ttl);
+	        form.append("intro", intro);
+	        form.append("openTerm", openterm);
+	        form.append("tlsnTerm", tlsnterm);
+	        form.append("kitName", kitname);
+	        form.append("kitIntro", kitintro);
+	        form.append("kitPrc", kitprc);
+	        form.append("prc", prc);
+	        form.append("tag1", tag1);
+	        form.append("tag2", tag2);
+	        form.append("tag3", tag3);
+	        form.append("creId", creid);
+	        
+	        //썸네일 값
+	        form.append("mainPhtUp", $("#thPhtUp")[0].files[0]);
+        	
+          	//강의신청코드 값
+            form.append("ltStCode", "L05");
+            
+            $.ajax({
+                url : "/creator/lectureResister",
+              	method : "post",
+              	processData : false,
+                contentType : false,
+                async : false,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+                data : form,
+                success:function() {
+                  alert("강의가 임시저장되었습니다");
+                  location.href = "/creator/rLecL";
+                },
+    	         error: function (jqXHR) { 
+    	           alert(jqXHR.responseText); 
+    	         }
+            });
+        })
+        
+        
         
          
-}
+
 </script>
 </html>

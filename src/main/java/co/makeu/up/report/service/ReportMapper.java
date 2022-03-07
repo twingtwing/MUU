@@ -7,4 +7,5 @@ public interface ReportMapper {
 	int insertLecReport(ReportVO vo);
 	List <ReportVO> selectreport( ReportVO vo);
 	ReportVO selectreports(ReportVO vo);
+	List<ReportVO> reportLectureList(String creid);
 }

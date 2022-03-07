@@ -66,6 +66,12 @@
 			where RP_NO = #{rpNo}
 	
 	</select>
-	
+	<select id="reportLectureList" parameterType="String" resultType="co.makeu.up.report.service.ReportVO">
+		SELECT R.LT_NO,L.TTL,COUNT(*) CNT FROM REPORT R JOIN LECTURE L
+		ON R.LT_NO = L.LT_NO
+		WHERE L.CRE_ID = #{creid}
+		AND R.CTGR = 'RP02'
+		GROUP BY R.LT_NO, L.TTL
+	</select>
 </mapper>
 
