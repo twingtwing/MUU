@@ -25,6 +25,8 @@ import co.makeu.up.detafile.service.DetafileVO;
 public class BoardController {
 	@Autowired private BoardService boardDao;
 	
+	@Autowired private String saveDir;
+	
 	//공지사항 리스트 - MAIN
 	@GetMapping("/boardL")
 	public String boardL() {
@@ -82,10 +84,9 @@ public class BoardController {
 				DetafileVO fileVo = new DetafileVO();
 				String oriFileName = fileList.get(i).getOriginalFilename();
 				String safeFile = UUID.randomUUID().toString() + oriFileName;
-				
 
 				try {
-					fileList.get(i).transferTo(new File(safeFile));
+					fileList.get(i).transferTo(new File(saveDir + safeFile));
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -100,6 +101,36 @@ public class BoardController {
 		}
 		boardDao.insertBoard(vo);
 		return vo;
+	}
+	
+	@PostMapping("/admin/upadbad")
+	@ResponseBody
+	public int upadbad(BoardVO vo,@RequestParam(value="files", required = false) MultipartFile file, MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("files");
+		if(fileList.size() != 0) {
+			List<DetafileVO> list = new ArrayList<DetafileVO>();
+			for (int i = 0; i < fileList.size(); i++) {
+				DetafileVO fileVo = new DetafileVO();
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = UUID.randomUUID().toString() + oriFileName;
+
+				try {
+					fileList.get(i).transferTo(new File(saveDir + safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				fileVo.setFilePath(oriFileName);
+				fileVo.setPhyPath(safeFile);
+				list.add(fileVo);
+			}
+			vo.setDetaFileList(list);
+		}
+		int dd =boardDao.upadbad(vo);
+		return dd;
+		
 	}
 	
 	@GetMapping("/admin/adBadS")
@@ -121,14 +152,5 @@ public class BoardController {
 	public String adBadU(BoardVO vo , Model model) {
 		model.addAttribute("board",boardDao.selectadbads(vo));
 		return "admin/adbad/adBadU";
-	}
-	
-	@PostMapping("/admin/upadbad")
-	@ResponseBody
-	public int upadbad(BoardVO vo) {
-		System.out.println("제발");
-		int dd =boardDao.upadbad(vo);
-		return dd;
-		
 	}
 }

@@ -4,4 +4,6 @@ import co.makeu.up.board.service.BoardVO;
 
 public interface FileMapper {
 	int insertFile(BoardVO vo);
+	
+	int delFile(int fileNo);
 }

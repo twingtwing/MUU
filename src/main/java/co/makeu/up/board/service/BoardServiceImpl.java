@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int insertBoard(BoardVO vo) {
-		if(vo.getDetaFileList().size() !=0) {
+		if(vo.getDetaFileList() != null) {
 			fileMap.insertFile(vo);
 			for (DetafileVO detaVO : vo.getDetaFileList()) {
 				detaVO.setFileNo(vo.getFileNo());
@@ -63,13 +63,17 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int upadbad(BoardVO vo) {
+		if(vo.getDetaFileList() != null) {
+			fileMap.delFile(vo.getFileNo());
+			fileMap.insertFile(vo);
+			for (DetafileVO detaVO : vo.getDetaFileList()) {
+				detaVO.setFileNo(vo.getFileNo());
+				detafileMap.detaFileInsert(detaVO);
+			}
+		}
 		return map.upadbad(vo);
 	}
 
-	@Override
-	public List<BoardVO> seradbad(BoardVO vo) {
-		return map.seradbad(vo);
-	}
 	
 	
 }

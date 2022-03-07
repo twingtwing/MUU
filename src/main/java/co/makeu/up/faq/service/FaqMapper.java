@@ -5,5 +5,5 @@ import java.util.List;
 public interface FaqMapper {
 	List<FaqVO> faqSelectList();
 	
-	List<FaqVO> faqList(); //admin - faq list
+	List<FaqVO> faqList(FaqVO vo); //admin - faq list
 }

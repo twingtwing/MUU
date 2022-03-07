@@ -11,6 +11,11 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        table td a:hover{
+        	cursor: pointer;
+        	text-decoration: underline;
+        }
 
         .admin_search td,
         .admin_search th {
@@ -119,10 +124,9 @@
 	                                        <c:forEach items ="${list }" var="board">
 		                                        <tr>
 		                                            <td>${board.getBNo() }</td>
-		                                            <td>
-		                                          <a href="/admin/adBadS?bNo=${board.getBNo() }">
-		                                          ${board.ttl}
-		                                          </a></td>
+		                                            <td class="text-left">
+			                                          <a href="/admin/adBadS?bNo=${board.getBNo() }" class="text-dark">${board.ttl}</a>
+		                                          	</td>
 		                                            <td>관리자</td>
 		                                            <td>${board.wrDate }</td>
 		                                            <td>
@@ -130,7 +134,7 @@
 		                                            		<i class="fas fa-minus mr-0"></i>
 		                                            	</c:if>
 		                                            	<c:if test="${board.fileNo ne -1}">
-		                                            		<i class="fas fa-minus mr-0"></i>
+		                                            		<i class="fas fa-download mr-0"></i>
 		                                            	</c:if>
 		                                            </td>
 			                                        <td >
