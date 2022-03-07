@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class NoticeVO {
+	private String rn;
 	private int ntNo;
 	private Date wrDate;
 	private String ttl;
@@ -14,6 +15,7 @@ public class NoticeVO {
 	private int ltNo;
 	private int fileNo;
 	private Date modDate;
+	private String ntStCode;
 	
 	// for pagination
 	private int page;
