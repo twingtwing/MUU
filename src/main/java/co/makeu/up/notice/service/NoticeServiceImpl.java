@@ -27,8 +27,8 @@ public class NoticeServiceImpl implements NoticeMapper{
 	}
 
 	@Override
-	public int updateHits(int ntNo) {
-		return map.updateHits(ntNo);
+	public int updateHits(NoticeVO vo) {
+		return map.updateHits(vo);
 	}
 
 	@Override
@@ -37,6 +37,11 @@ public class NoticeServiceImpl implements NoticeMapper{
 	}
 
 	@Override
+	public int deleteNotice(NoticeVO vo) {
+		return map.deleteNotice(vo);
+  }
+   
+  @Override
 	public List<FilesVO> noticeFiles(int ltNo) {
 		return map.noticeFiles(ltNo);
 	}

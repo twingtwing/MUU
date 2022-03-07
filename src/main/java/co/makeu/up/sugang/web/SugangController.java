@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
@@ -131,5 +132,11 @@ public class SugangController {
 	@PostMapping("/user/userSugangConfirm")
 	public void userSugangConfirm(SugangVO vo) {
 		sugangDao.updateSugangConfirm(vo);
+	}
+	
+	//강의 수강생 리스트 페이지 이동
+	@RequestMapping("/creator/cLecSt")
+	public String cLecStPage() {
+		return "main/lecture/cLecSt";
 	}
 }
