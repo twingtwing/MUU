@@ -36,11 +36,11 @@
 		WHERE NT_NO = #{ntNo}
 	</update>
 	<insert id="insertNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
-		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO, NT_ST_CODE)
-		VALUES((SELECT NVL(MAX(NT_NO), 0)+1 FROM NOTICE), SYSDATE, #{ttl}, #{content}, 0, #{ltNo}, 'B01')
-		<!-- 
-		(SELECT NVL(MAX(FILE_NO), 0)+1 FROM NOTICE))	
-		 --> 
+		<selectKey keyProperty="ntNo" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(NT_NO), 0)+1 FROM NOTICE
+		</selectKey>
+		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO, FILE_NO, NT_ST_CODE)
+		VALUES(#{ntNo}, SYSDATE, #{ttl}, #{content}, 0, #{ltNo}, null, 'B01')
 	</insert>
 	<delete id="deleteNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
 		DELETE FROM NOTICE

@@ -192,7 +192,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fa fa-download mr-2"></i>
                                 </div>
-                                <input type="file" name="" id="file" spellcheck="false">
+                                <input type="file" id="multiFile" name="multiFile" multiple="multiple">
                             </div>
                         </div>
                     </div>
@@ -237,7 +237,11 @@ $('#insertBtn').on('click', function(){
 	form.append('ltNo', ${lecinfo.ltNo});
 	form.append('ttl', $('#ttl').val());
 	form.append('content', $('#content').val());
-		
+	
+	for(obj of $('#multiFile')[0].files){
+		 form.append("files",obj);
+	}
+	
 	$.ajax({
         url : "/creator/cLecNInsert",
       	method : "post",
@@ -250,13 +254,14 @@ $('#insertBtn').on('click', function(){
         data : form,
         success:function() {
           alert("글이 등록되었습니다");
-          
-          location.href = "/creator/cLecNL";
         },
          error: function (jqXHR) { 
            alert(jqXHR.responseText); 
          }
-    });
+    })
+    .done(function(e){
+        location.href = "/creator/cLecNS?ntNo="+e.ntNo;
+	});
 })
 	  //열린강의정보 페이지 이동
 	  function gooLecture(e){

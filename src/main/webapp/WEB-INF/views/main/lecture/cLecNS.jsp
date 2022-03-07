@@ -206,7 +206,7 @@
                     </div>
                     
                     <div class="row col-12 ml-1 justify-content-between">
-                        <button class="btn btn-outline-secondary" onclick="history.go(-1)">뒤로가기</button>
+                        <button class="btn btn-outline-secondary" onclick="location.href='/creator/cLecNL?ltNo='+${noinfo.ltNo}">뒤로가기</button>
                         <div class="row mr-4">
                             <button id="up" onclick="" class="btn btn-outline-secondary mr-2">수정</button>
                             <button id="del" class="btn btn-outline-secondary mr-2">삭제</button>
@@ -234,6 +234,7 @@
     	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>
     <form id="deleteFrm">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
     	<input class="sendntno" type="hidden" name="ntNo" value="">
     </form>
 </body>
@@ -354,6 +355,7 @@ function goStudent(e){
 
 //공지사항 삭제
 $('#deleteNotice').on('click', function(){
+	$('.sendltno').val(${noinfo.ltNo});
 	$('.sendntno').val(${noinfo.ntNo});
 	$('#deleteFrm').attr("action", "/creator/cLecNdelete");
 	$('#deleteFrm').submit();

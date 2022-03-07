@@ -23,6 +23,8 @@ public class NoticeVO {
 	private Date modDate;
 	private String ntStCode;
 	
+	private List<DetafileVO> detaFileList;
+	
 	// for pagination
 	private int page;
 	private int count;
