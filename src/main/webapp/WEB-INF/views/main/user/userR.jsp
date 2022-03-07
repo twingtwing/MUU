@@ -78,6 +78,9 @@
                   </div>
                 </div>
               </li>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/lecD" style="height: 55px;">
+                <div class="list-link">강의 상세정보</div>
+              </li>
               <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/user/userLectureSelect" style="height: 55px;">
                 <div class="list-link">수업 목록</div>
               </li>
@@ -198,12 +201,6 @@
   $('.listmenu').click((e)=>{
 	  let url = e.currentTarget.dataset.url;
 	  $('#move').attr('action',url);
-	  if(url ==='/user/userLectureSelect'){
-		  $('#move').attr('method','post');
-		  $('#move').append(
-			$('<input>').attr('type','hidden').attr('name','${_csrf.parameterName}').val('${_csrf.token}')
-		  )
-	  }
 	  $('#move').submit();
   })
     $('#refund').click(() => {
@@ -239,7 +236,7 @@
 			},
     	})
     	.done((res)=>{
-    		window.alert('환불이 완료되었습니다.')
+    		window.alert('환불 신청이 완료되었습니다.')
     		location.href='/user/userLectureList';
     	})
     })

@@ -47,7 +47,7 @@
       <video controls width="100%" controlsList="nodownload" id="player">
         <source src="${firstLesson.lsnFile}" type="video/mp4" id="vd">
       </video>    
-      <h2 style="font-weight: bold; color:white;" id="title">${firstLesson.ttl}</h2>
+      <h2 style="font-weight: bold; color:white;" id="title" data-serialno="${firstLesson.serialNo }">${firstLesson.ttl}</h2>
       <div>
         <div style="text-align: right;" id="regdate">${firstLesson.regDate}</div>    
       </div>
@@ -56,31 +56,32 @@
       <h4 class="text-white mb-4">커리큘럼</h4>
       <ol id="curr">
       <c:forEach items="${lessons}" var="lesson">
-      <!--  for each 돌리되 .. ajax 사용해서 영상 src, 제목, 내용, 날짜만 바꿔주면 될듯함 -->
-        <li class="${lesson.lsnNo}">${lesson.ttl}</li>
+        <li class="${lesson.serialNo}">${lesson.ttl}</li>
       </c:forEach>
       </ol>
     </div>
 </div>
 <script type="text/javascript">
-const changeVideo = (ttl, regDate, filepath)=>{
+const changeVideo = (ttl, regDate, filepath,no)=>{
 	console.log(ttl,regDate,filepath)
 	$('#title').text(ttl);
+	$('#title').data('serialno',no);
 	$('#regdate').text(regDate);
 	$('#vd').attr('src',filepath);
 	$('video')[0].load();
+	console.log($('#title').data('serialno'))
 }
 
 $('#curr>li').click((e)=>{
 	let no = e.currentTarget.className;
-	let data = {lsnNo : no};
+	let data = {serialNo : no};
 	$.ajax({
 		url : '/user/userLWselect',
 		data : data,
 		contentType : 'application/json; charset=utf-8',
 	})
 	.done((e)=>{
-		changeVideo(e.ttl,new Date(e.regDate).toISOString().slice(0,10),e.lsnFile)
+		changeVideo(e.ttl,new Date(e.regDate).toISOString().slice(0,10),e.lsnFile,e.serialNo)
 	})
 })
 
@@ -90,7 +91,6 @@ document.querySelector('#player').addEventListener('timeupdate',(e)=>{
 	let duration = document.querySelector('#player').duration;
 	let currTime = document.querySelector('#player').currentTime;
 	record = currTime/duration;
-	console.log(duration)
 })
 
 const recordUpdate = ()=>{
@@ -100,7 +100,7 @@ const recordUpdate = ()=>{
 		beforeSend : (xhr) =>{
 		  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
-		data : {id:'',lsnNo : ${firstLesson.lsnNo}, progPct : Math.floor(record*100)}
+		data : {id:'',serialNo : $('#title').data('serialno'), progPct : Math.floor(record*100)}
 	})
 	.done((e)=>{
 		console.log(e)

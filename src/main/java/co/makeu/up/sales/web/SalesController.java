@@ -22,7 +22,7 @@ public class SalesController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Calendar c1 = Calendar.getInstance();
 		
-		model.addAttribute("thisyear",selectYear==null ? sdf.format(c1.getTime()) : selectYear);
+		model.addAttribute("thisyear",sdf.format(c1.getTime()));
 		model.addAttribute("years",salesDao.salesByYear());
 		model.addAttribute("months", salesDao.salesByMonth(selectYear==null ? sdf.format(c1.getTime()) : selectYear));
 		model.addAttribute("monthsYear", selectYear);

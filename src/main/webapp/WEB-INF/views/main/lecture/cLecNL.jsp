@@ -31,6 +31,9 @@
       right: 60px;
       bottom: 1px;
     }
+    a{
+    	cursor:pointer;
+    }
   </style>
 </head>
 <body>
@@ -135,11 +138,16 @@
               <div class="row col-12">
                 <div class="row col-12 mt-3 mb-3 justify-content-around">
                   <!-- 선택 : active -->
-                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='rLecS.html'">강의정보</button>
-                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
-                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="location.href='#'">공지사항</button>
-                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
-                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">수강생</button>
+                  <c:if test="${lecinfo.ltStCode eq 'L01' }">
+                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
+	              </c:if>
+	              <c:if test="${lecinfo.ltStCode eq 'L03' }">
+	              <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goclLecture(${lecinfo.ltNo })">강의정보</button>
+	              </c:if>
+                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goQna(${lecinfo.ltNo })">질문&답변</button>
+                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="#">공지사항</button>
+                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goReview(${lecinfo.ltNo })">리뷰</button>
+                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goStudent(${lecinfo.ltNo })">수강생</button>
                 </div>
               </div>  
                  
@@ -173,8 +181,8 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${nlists }" var="list" varStatus="status">
-                  <tr>
-                    <td>${list.rn }</td>
+                  <tr onclick="noticeSelect(${list.ntNo}, ${list.hits})">
+                    <td>${list.noticeNo }</td>
                     <td>${list.ttl }</td>
                     <td>${list.wrDate }</td>
                     <td>${list.hits }</td>
@@ -186,13 +194,22 @@
           
           <div class="row col-12 justify-content-center mt-3">
             <div class="product__pagination">
-              <a href="#"><i class="fa fa-angle-double-left"></i></a>
-              <a href="#" class="current-page">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-              <a href="#"><i class="fa fa-angle-double-right"></i></a>
+                <c:if test="${pagination.currRange ne 1}">
+					<a><i class="fa fa-angle-double-left"></i></a>
+				</c:if>
+				<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
+					<c:choose>
+						<c:when test="${page eq pagination.currPage}">
+							<a class="current-page paging">${page}</a>
+						</c:when>
+						<c:otherwise>
+							<a class="paging">${page}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
+					<a><i class="fa fa-angle-double-right"></i></a>
+				</c:if>
             </div>
           </div>
           <button id="but" class="btn btn-outline-secondary" onclick="insertNotice(${lecinfo.ltNo})"> 글쓰기</button>
@@ -202,18 +219,29 @@
     </div>
   </section>
   <form id="frm">
-    	<input class="sendltno" type="hidden" name="ltNo" value="">
-    </form>
+   	<input class="sendltno" type="hidden" name="ltNo" value="">
+  </form>
+  <form id="pageFrm">
+   	<input class="sendltno" type="hidden" name="ltNo" value="">
+   	<input class="spage" type="hidden" name="page" value="">
+  </form>
+  <form id="noticeSelectFrm">
+  	<input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo}">
+   	<input class="sendntno" type="hidden" name="ntNo" value="">
+   	<input class="sendhits" type="hidden" name="hits" value="">
+  </form>
+  
 </body>
 <script>
-	$('tbody > tr').on('click',function(e){
-    // 글 선택
-    console.log(e.target.value);
-    location.href='./크리에이터공지선택.html';
-  })
+$('.paging').on('click', function(){
+	$('.sendltno').val(${lecinfo.ltNo});
+	$('.spage').val($(this).text());
+  	$('#pageFrm').attr('action', '/creator/cLecNLpage');
+  	$('#pageFrm').submit();
+})
 
-    //mouseover 이벤트 : 사이드바 css변경
-    $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+   //mouseover 이벤트 : 사이드바 css변경
+   $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
       $(this).css('background-color','#e53637');
       $(this).find('.list-link').css('color','#ffffff');
   })
@@ -230,6 +258,51 @@
 	  $('.sendltno').val(e);
   	  $('#frm').attr("action", "/creator/cLecNI");
   	  $('#frm').submit();
+  }
+  
+  //열린강의정보 페이지 이동
+  function gooLecture(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/oLecS");
+  	$('#frm').submit();
+  }
+  //닫힌강의정보 페이지 이동
+  function goclLecture(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/clLecS");
+  	$('#frm').submit();
+  }
+  //qna 페이지 이동
+  function goQna(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/cLecQ");
+  	$('#frm').submit();
+  }
+  //공지사항 페이지 이동
+  function goNotice(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/cLecNL");
+  	$('#frm').submit();
+  }
+  //리뷰 페이지 이동
+  function goReview(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/cLecR");
+  	$('#frm').submit();
+  }
+  //수강생 리스트 페이지 이동
+  function goStudent(e){
+  	$('.sendltno').val(e);
+  	$('#frm').attr("action", "/creator/cLecSt");
+  	$('#frm').submit();
+  }
+  
+  //공지사항 한건 조회
+  function noticeSelect(a, b){
+	  $('.sendntno').val(a);
+	  $('.sendhits').val(b);
+	  $('#noticeSelectFrm').attr("action", "/creator/cLecNS");
+	  $('#noticeSelectFrm').submit();
   }
   </script>
 </html>

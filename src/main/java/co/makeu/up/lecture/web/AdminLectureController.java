@@ -14,14 +14,28 @@ import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.refund.service.RefundVO;
 
+import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
+
 @Controller
 public class AdminLectureController {
 	@Autowired
 	private LectureServiceImpl lectureDao;
+
 	
 	//강의리스트
 	@GetMapping("/admin/adLecL")
-	public String adLecL() {
+	public String adLecL(Model model, LectureVO vo) {
+		if(vo.getPage()==0) {
+			vo.setPage(1);			
+		}
+		System.out.println(vo.getLtStCodeList());
+		System.out.println(vo.getStar());
+		List<LectureVO> list = lectureDao.adminLectureList(vo);
+		Pagination pagination = new Pagination(list.get(0).getCount()==0 ? 1 : list.get(0).getCount(), vo.getPage());
+		model.addAttribute("lectures",list);
+		model.addAttribute("pages",pagination);
 		return "admin/lecture/adLecL";
 	}
 	

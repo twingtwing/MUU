@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
@@ -45,13 +46,13 @@ public class SugangController {
 				sugangOff.add(sugang);
 			}
 		}
-		// progress 상태도 list에 담아서 넘기자
+		model.addAttribute("listCnt",sugangOn.size());
 		model.addAttribute("sugangList",sugangOn);
 		model.addAttribute("sugangEndList",sugangOff);
 		return "main/user/userLL";
 	}
 	
-	@PostMapping("/user/userLectureSelect")
+	@GetMapping("/user/userLectureSelect")
 	public String userLectureSelect(SugangVO vo, Model model,LessonVO lessonvo, Principal pri) {
 		ProgressVO prvo = new ProgressVO();
 		prvo.setId(pri.getName());
@@ -109,6 +110,7 @@ public class SugangController {
 				listDelivery.add(list);
 			}
 		}
+		model.addAttribute("payCnt",listAll.size());
 		model.addAttribute("payInfo",listAll);
 		model.addAttribute("delInfo",listDelivery);
 		return "main/user/userP";
@@ -130,5 +132,11 @@ public class SugangController {
 	@PostMapping("/user/userSugangConfirm")
 	public void userSugangConfirm(SugangVO vo) {
 		sugangDao.updateSugangConfirm(vo);
+	}
+	
+	//강의 수강생 리스트 페이지 이동
+	@RequestMapping("/creator/cLecSt")
+	public String cLecStPage() {
+		return "main/lecture/cLecSt";
 	}
 }

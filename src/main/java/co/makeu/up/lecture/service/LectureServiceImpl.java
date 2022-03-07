@@ -55,6 +55,8 @@ public class LectureServiceImpl implements LectureMapper {
 	public int lectureUpdateTemp(LectureVO vo) {
 		return map.lectureUpdateTemp(vo);
 	}
+
+	@Override
 	public List<LectureVO> creLectureList(String id) {
 		return map.creLectureList(id);
 	}
@@ -63,6 +65,11 @@ public class LectureServiceImpl implements LectureMapper {
 	@Override
 	public List<LectureVO> adminLectureList(LectureVO vo) {
 		return map.adminLectureList(vo);
+	}
+
+	@Override
+	public List<LectureVO> adminLectureTable(LectureVO vo) {
+		return map.adminLectureTable(vo);
 	}
 
 }

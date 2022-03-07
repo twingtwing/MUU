@@ -36,14 +36,46 @@ public class NoticeController {
 	
 	//공지사항 리스트 페이지
 	@RequestMapping("/creator/cLecNL")
-	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model) {
+		nvo.setPage(1);
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
-		model.addAttribute("nlists", noticeDao.NoticeList(nvo));
+		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
 	}
+	//공지사항 리스트 페이지(번호클릭시)
+	@RequestMapping("/creator/cLecNLpage")
+	public String cLecNLpage(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("nlists", nlists);
+		return "main/lecture/cLecNL";
+	}
+	
+	//공지사항 한건 읽기
 	@GetMapping("/creator/cLecNS")
-	public String cLecNS() {
+	public String cLecNS(LectureVO lvo, NoticeVO nvo, Model model) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("noinfo", noticeDao.NoticeSelect(nvo));
+		noticeDao.updateHits(nvo);
 		return "main/lecture/cLecNS";
+	}
+	//공지사항 수정
+	
+	//공지사항 삭제
+	@RequestMapping("/creator/cLecNdelete")
+	public String cLecNdelete(NoticeVO vo, Model model) {
+		noticeDao.deleteNotice(vo);
+		return "redirect:/lecture/cLecNL";
 	}
 	
 	//공지사항 글 등록 페이지
@@ -123,7 +155,8 @@ public class NoticeController {
 		checkvo.setProgPct(progressDao.wholeProgress(prvo));
 		model.addAttribute("sugang",checkvo);
 		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
-		noticeDao.updateHits(vo.getNtNo());
+		noticeDao.updateHits(vo);
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(vo.getLtNo()));
 		return "main/user/userLNS";
 	}
 }

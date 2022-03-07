@@ -197,8 +197,7 @@ th, td {
 							<c:if test="${pagination.currRange ne 1}">
 								<a><i class="fa fa-angle-double-left"></i></a>
 							</c:if>
-							<c:forEach begin="${pagination.startPage }"
-								end="${pagination.endPage }" var="page">
+							<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
 								<c:choose>
 									<c:when test="${page eq pagination.currPage}">
 										<a class="current-page paging">${page}</a>
@@ -208,8 +207,7 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-							<c:if
-								test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
+							<c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
 								<a><i class="fa fa-angle-double-right"></i></a>
 							</c:if>
 						</div>
