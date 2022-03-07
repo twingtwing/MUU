@@ -22,6 +22,7 @@ public class RefundVO {
 	private String name;
 	private String start;
 	private String end;
+	private String creId;
 	
 	private String addr;
 	private int zip;

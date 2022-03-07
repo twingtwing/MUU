@@ -15,6 +15,4 @@ public interface UsersMapper {
 	
 	// admin
 	List<UsersVO> usersList(UsersVO vo);
-	Integer usersCount();
-	Integer creatorsCount();
 }

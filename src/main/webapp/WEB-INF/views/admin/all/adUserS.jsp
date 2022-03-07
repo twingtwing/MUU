@@ -93,12 +93,11 @@
                                             <th>적립금</th>
                                         </tr>
                                         <tr>
-                                        	<td>${userInfo.zip }</td>
+                                        	<td><c:if test="${userInfo.zip ne 0}">${userInfo.zip }</c:if></td>
                                             <td colspan="3">${userInfo.addr } ${userInfo.detaAddr }</td>
                                             <td>
                                             	<c:if test="${ not empty userInfo.creGrdCode }">
-                                            		<a href="#">${userInfo.creGrdCode }</a><br>
-                                            		<span class="small">크리에이터 상세보기로 이동</span>
+                                            		<a href="/admin/creatorSelect?id=${userInfo.id }">${userInfo.creGrdCode } (크리에이터 정보로 이동)</a>
                                             	</c:if>
                                             	<c:if test="${empty userInfo.creGrdCode }">
                                             		-
@@ -119,6 +118,9 @@
                                             <th>수강만료일</th>
                                             <th>금액</th>
                                         </tr>
+                                        <c:if test="${empty sugang }">
+                                        <tr><td colspan="8">신청한 강의가 없습니다.</td></tr>
+                                        </c:if>
                                         <c:forEach items="${sugang }" var="s">
                                         <tr>
                                             <td>${s.tlsnNo }</td>
@@ -141,6 +143,9 @@
                                             <th>환불날짜</th>
                                             <th>환불상태</th>
                                         </tr>
+                                        <c:if test="${empty refund }">
+                                        <tr><td colspan="8">환불 내역이 없습니다.</td></tr>
+                                        </c:if>
                                         <c:forEach items="${refund }" var="r">
                                         <tr>
                                             <td>${r.tlsnNo }</td>
@@ -173,6 +178,9 @@
                                             <th>운송장번호</th>
                                             <th>배송상태</th>
                                         </tr>
+                                        <c:if test="${empty deliver }">
+                                        <tr><td colspan="8">배송 내역이 없습니다.</td></tr>
+                                        </c:if>
                                         <c:forEach items="${deliver }" var="d">
                                         <tr>
                                             <td>${d.tlsnNo }</td>

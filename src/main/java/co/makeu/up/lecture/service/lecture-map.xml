@@ -72,5 +72,14 @@
 			   #{kitName}, #{kitIntro}, #{kitPrc}, #{tag1}, #{tag2}, #{tag3}, 
 			   SYSDATE, #{ltStCode}, (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), SYSDATE)
 	</update>
-	
+
+	<select id="creLectureList" parameterType="String" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT L.*,NVL(P.SALES,0) SALES,NVL(P.CNT,0) CNT
+		FROM (SELECT LT_NO,SUM(PAY) SALES,COUNT(*) CNT 
+		      FROM SUGANG 
+		      GROUP BY LT_NO) P 
+		RIGHT OUTER JOIN LECTURE L 
+		ON P.LT_NO = L.LT_NO
+		WHERE L.CRE_ID = #{ID}
+	</select>
 </mapper>
