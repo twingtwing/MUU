@@ -57,5 +57,4 @@ public class UsersServiceImpl implements UsersMapper {
 	public int userPointUpdate(UsersVO vo) {
 		return map.userPointUpdate(vo);
 	}
-
 }

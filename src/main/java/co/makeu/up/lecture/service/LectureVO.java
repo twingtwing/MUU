@@ -18,7 +18,7 @@ public class LectureVO {
 	private int prc;
 	private String kitName;
 	private String kitIntro;
-	private int kitPrc;
+	private String kitPrc;
 	private String tag1;
 	private String tag2;
 	private String tag3;
@@ -79,6 +79,59 @@ public class LectureVO {
 	}
 	private int cnt; // 수강인원
 	private int sales; // 강의별 매출액
+	
+	//관리자 강의 관리를 위한 VO객체 선언 - 문의는 박정욱에게
+	private int page;
+	private int pageNum;
+	private int amount;
+	private int length;
+	private String start;
+	private String end;
+	
+	public LectureVO(){
+		this (1,10);
+	}
+	public LectureVO(int pageNum , int amount) {
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
+	
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getPageNum() {
+		return pageNum;
+	}
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
 			
 	public int getCnt() {
 		return cnt;
@@ -182,10 +235,10 @@ public class LectureVO {
 	public void setKitIntro(String kitIntro) {
 		this.kitIntro = kitIntro;
 	}
-	public int getKitPrc() {
+	public String getKitPrc() {
 		return kitPrc;
 	}
-	public void setKitPrc(int kitPrc) {
+	public void setKitPrc(String kitPrc) {
 		this.kitPrc = kitPrc;
 	}
 	public String getTag1() {

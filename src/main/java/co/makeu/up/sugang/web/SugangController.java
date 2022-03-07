@@ -147,11 +147,11 @@ public class SugangController {
 			userDao.userPointUpdate(user);
 		}
 		return "main/all/home";
-=======
+  }
+  
 	//강의 수강생 리스트 페이지 이동
 	@RequestMapping("/creator/cLecSt")
 	public String cLecStPage() {
 		return "main/lecture/cLecSt";
->>>>>>> 2975c04adf342451043dbff64744c0e5f5fa2308
 	}
 }

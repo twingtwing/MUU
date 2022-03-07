@@ -6,6 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import co.makeu.up.common.view.PageVo;
+import co.makeu.up.ctgr.service.CtgrVO;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.refund.service.RefundVO;
+
+import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
 
 import co.makeu.up.common.view.Pagination;
 import co.makeu.up.lecture.service.LectureServiceImpl;
@@ -80,7 +91,14 @@ public class AdminLectureController {
 	
 	//강의등록 조회
 	@GetMapping("/admin/adLecAL")
-	public String adLecAL() {
+	public String adLecAL(LectureVO vo, Model model) {
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/lecture/adLecAL";
 	}
 	

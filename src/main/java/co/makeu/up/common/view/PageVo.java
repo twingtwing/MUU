@@ -1,6 +1,7 @@
 package co.makeu.up.common.view;
 
 import co.makeu.up.board.service.BoardVO;
+import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.report.service.ReportVO;
 import lombok.Getter;
@@ -81,4 +82,20 @@ public class PageVo {
 		this.next = this .endpage < realEnd;
 	}
 	
+	private LectureVO lvo;
+
+	public PageVo(LectureVO lvo, int total) {
+		this.lvo = lvo;
+		this.total = total;
+		this.endpage = (int) (Math.ceil(lvo.getPageNum() / 5.0)) * 5;
+
+		this.startpage = this.endpage - 4;
+		int realEnd = (int) (Math.ceil((total * 1.0) / lvo.getAmount()));
+
+		if (realEnd < this.endpage) {
+			this.endpage = realEnd;
+		}
+		this.prev = this.startpage > 1;
+		this.next = this.endpage < realEnd;
+	}
 }
