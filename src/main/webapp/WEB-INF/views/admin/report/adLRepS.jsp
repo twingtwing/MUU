@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +55,7 @@
                                                 <div class="row mx-2">
                                                     <div class="row">
                                                         <h6 class="mb-0 ml-2 pl-1">신고 대상자</h6>
-                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">익명으</h6>
+                                                        <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.creid }</h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -65,7 +67,7 @@
                                                 <h6 class="mb-0 ml-2 pl-1">수업 번호</h6>
                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
                                                 <h6 class="mb-0 ml-2 pl-1">수업 제목</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄹㅇㄹ</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.ttl }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
@@ -96,12 +98,23 @@
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">신고</h6>
                                                 <h6 class="mb-0 ml-2 pl-1">신고유형</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">??</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">
+                                                <c:if test="${report.type eq 'RPT01' }">
+                                                부적절한 컨텐츠
+                                                </c:if>
+                                                <c:if test="${report.type eq 'RPT02' }">
+                                                피싱또는 스팸
+                                                </c:if>
+                                                <c:if test="${report.type eq 'RPT03' }">
+                                                기타
+                                                </c:if>
+                                                
+                                                </h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0 ml-2 pl-1">신고자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">익명의</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.reporter }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,12 +122,12 @@
                                             style="background-color: #eeeeee; border-bottom: 2px solid black;">
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">신고번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.rpNo }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">신고 일자</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.rpdate }</h6>
                                                 </div>
                                             </div>
                                         </div>

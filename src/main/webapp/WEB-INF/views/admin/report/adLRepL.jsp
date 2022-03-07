@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,6 +65,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
+                                <form action = '/admin/adLRepL' id='ser' method= 'get'>
                                 <div class="row position-relative">
                                     <table class="admin_search table table-bordered">
                                         <tr height="38">
@@ -110,6 +112,7 @@
                                     </table>
                                     <button class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;">검색</button>
                                 </div>
+                                </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                         <thead>
@@ -125,49 +128,71 @@
                                                 
                                             </tr>
                                         </thead>
-                                    <tbody id="mo" onclick="location.href='강의신고상세.html'">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>부적절한 콘텐츠</td>
-                                            <td>짭이커</td>
-                                            <td>너도 할수있다 첼린저</td>
-                                            <td>박ㅇㅇ</td>
-                                            <td>2022-02-23</td>
-                                            <td>처리</td>
+                                    <tbody id="mo">
+                                   		<c:forEach items = "${list }" var = "list">
+                                        <tr  onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
+                                            <td>${list.rpNo }</td>
+                                            <td>
+                                                   <c:if test="${list.type eq 'RPT01' }">
+                                                부적절한 컨텐츠
+                                                </c:if>
+                                                <c:if test="${list.type eq 'RPT02' }">
+                                                피싱또는 스팸
+                                                </c:if>
+                                                <c:if test="${list.type eq 'RPT03' }">
+                                                기타
+                                                </c:if>
+                                            <td>${list.creid }</td>
+                                            <td>${list.ttl }</td>
+                                            <td>${list.reporter }</td>
+                                            <td>${list.rpdate }</td>
+                                            <td>
+                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
+	                                            	대기중
+	                                            </c:if>
+	                                            <c:if test="${list.rpStCode eq 'RPS02' }">
+	                                            	 신고 처리함
+	                                            </c:if>
+	                                            <c:if test="${list.rpStCode eq 'RPS03' }">
+	                                            	 신고 반려
+	                                            </c:if>
+                                                
+                                                </td>
                                         </tr>
+                                          </c:forEach>
                                     </tbody>
                                     </table>
                                 </div>
-                                <div class="row d-flex justify-content-center position-relative">
+                               <div class="row d-flex justify-content-center position-relative">
                                     <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
                                         <ul class="pagination">
+                                        <c:if test = "${pageMaker.prev }">
                                             <li class="paginate_button page-item previous"
-                                                id="zero_config_previous"><a href="#" aria-controls="zero_config"
-                                                    data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                                    class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="2" tabindex="0"
-                                                    class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="3" tabindex="0"
-                                                    class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="4" tabindex="0"
-                                                    class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="5" tabindex="0"
-                                                    class="page-link">5</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
+                                                id="zero_config_previous"><a href=" ${pageMaker.startpage }" aria-controls="zero_config"
+                                                    data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i>previous</a></li>
+												                                         
+                                          </c:if>
+                                            
+                                     	<c:forEach var = "num" begin = "${pageMaker.startpage }" end = "${pageMaker.endpage}">
+                                     	<li class = "paginate_button page-item  ${pageMaker.vot.pageNum == num? 'active':'' }">
+                                     	<a href="${num}"aria-controls="zero_config" data-dt-idx="${num}" tabindex="0"class="page-link">${num}</a>
+                                     	</li>
+                                     	</c:forEach>
+                                            
+                                            
+                                            <c:if test = "${pageMaker.next }">
+                                            <li class="paginate_button page-item next" id="zero_config_next"><a href="${pageMaker.endPage +1 }"
                                                     aria-controls="zero_config" data-dt-idx="6" tabindex="0"
-                                                    class="page-link">6</a></li>
-                                            <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
-                                                    aria-controls="zero_config" data-dt-idx="7" tabindex="0"
-                                                    class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
+                                                    class="page-link"><i class="mdi mdi-chevron-double-right"></i>next</a></li>
+                                        	</c:if>
                                         </ul>
                                     </div>
+                                    <form id='actionFrom' method = 'get' action = '/admin/adRRepL'>
+	                                    <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vot.pageNum }'>
+	                                    <input type = 'hidden' name = 'amount' value = '${pageMaker.vot.amount }'>
+                                    </form>
                                     <div class="position-absolute" style="right: 1px;">
+                                        
                                         <button class="btn btn-danger">PDF다운</button>
                                         <button class="btn btn-success">EXCEL다운</button>
                                     </div>
@@ -180,4 +205,15 @@
             <!-- 내용 끝 -->
            
 </body>
+
+<script type="text/javascript">
+$(".paginate_button a").on("click" , function(e) {
+	e.preventDefault();
+	console.log('click');
+	
+	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
+	$('#actionFrom').submit();
+});
+
+</script>
 </html>

@@ -41,12 +41,12 @@
 				</if>
 			<if test="start != null  and start != ''">
              <![CDATA[
-             and TO_DATE(#{start}, 'YYYY-MM-DD') < rpdate  <!-- 컬럼명 -->
+             and TO_DATE(#{start}, 'YYYY-MM-DD') < RP_DATE  <!-- 컬럼명 -->
              ]]>
             </if>
             <if test="end != null and end != ''">
             <![CDATA[
-             and TO_DATE(#{end}, 'YYYY-MM-DD')  > #{rpdate}  <!-- 컬럼명 -->
+             and TO_DATE(#{end}, 'YYYY-MM-DD')  > RP_DATE  <!-- 컬럼명 -->
              ]]>
              </if>
     order by rp_no desc) w
@@ -66,6 +66,12 @@
 			where RP_NO = #{rpNo}
 	
 	</select>
-	
+	<select id="reportLectureList" parameterType="String" resultType="co.makeu.up.report.service.ReportVO">
+		SELECT R.LT_NO,L.TTL,COUNT(*) CNT FROM REPORT R JOIN LECTURE L
+		ON R.LT_NO = L.LT_NO
+		WHERE L.CRE_ID = #{creid}
+		AND R.CTGR = 'RP02'
+		GROUP BY R.LT_NO, L.TTL
+	</select>
 </mapper>
 

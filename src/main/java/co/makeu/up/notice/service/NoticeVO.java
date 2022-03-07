@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class NoticeVO {
+	private String rn;
 	private int ntNo;
 	private Date wrDate;
 	private String ttl;

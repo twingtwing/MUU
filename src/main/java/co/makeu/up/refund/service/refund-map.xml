@@ -11,7 +11,7 @@
 
 	<select id="RefundList" resultType="co.makeu.up.refund.service.RefundVO">
 		SELECT * FROM(SELECT ROWNUM RN,
-		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no ,COUNT(*) OVER() COUNT
+		r.TLSN_NO,S.ID,S.PAY,S.REG_DATE,R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,L.TTL, L.LT_NO ,COUNT(*) OVER() COUNT
 		FROM SUGANG S JOIN REFUND R
 		ON S.TLSN_NO = R.TLSN_NO
 		JOIN LECTURE L
@@ -40,7 +40,7 @@
 	
 	<select id="adminRefundList" resultType="co.makeu.up.refund.service.RefundVO">
 		SELECT * FROM(SELECT ROWNUM RN,
-		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no,u.name,s.addr,s.zip,s.deta_addr,COUNT(*) OVER() length
+		r.TLSN_NO,S.ID,S.PAY,S.REG_DATE,R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,L.TTL, L.LT_NO,U.NAME,S.ADDR,S.ZIP,S.DETA_ADDR,COUNT(*) OVER() length
 		FROM SUGANG S JOIN REFUND R
 		ON S.TLSN_NO = R.TLSN_NO
 		JOIN LECTURE L
@@ -102,4 +102,12 @@
 		update refund set rf_st_code = 'RF03'
 		where TLSN_NO = #{tlsnNo}
 	</update>
+	
+	<select id="RefundListByCreator" parameterType="String" resultType="co.makeu.up.refund.service.RefundVO">
+		SELECT R.*,S.ID,S.TTL,S.REG_DATE,S.PAY
+		FROM REFUND R JOIN (SELECT * FROM SUGANG S JOIN LECTURE L
+	                        ON S.LT_NO = L.LT_NO
+	                        WHERE CRE_ID = #{creId}) S
+		ON R.TLSN_NO = S.TLSN_NO
+	</select>
 </mapper>

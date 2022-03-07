@@ -248,7 +248,7 @@
         </div>
     </section>
     <form id="frm" action="/creator/rpLecS">
-    	<input class="sendltno" type="hidden" name="sendltno" value="">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>
 
 </body>

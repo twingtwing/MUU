@@ -17,7 +17,7 @@ i{
 </style>
 </head>
 <body>
-<aside class="left-sidebar" data-sidebarbg="skin5">
+<aside class="left-sidebar h-100" data-sidebarbg="skin5">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->

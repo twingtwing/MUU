@@ -25,16 +25,29 @@ public class AdminUserController {
 	@GetMapping("/admin/adUserL")
 	public String adUserL(Model model,UsersVO vo) {
 		String[] grd = {"일반","새싹","꽃","나무"};
-		vo.setId("");
-		vo.setName("");
 		vo.setuGrdCodeList(grd);
-		vo.setPage(0);
+		vo.setId("");			
+		vo.setName("");			
+		vo.setPage(1);
 		List<UsersVO> list = usersDao.usersList(vo);
-		Pagination pagination = new Pagination(usersDao.usersCount(), 1);
+		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage());
 		model.addAttribute("pages",pagination);
 		model.addAttribute("users", list);
+		return "admin/all/adUserL";		
+	}
+	
+	@GetMapping("/admin/adUserLSearch")
+	public String adUserLSearch(UsersVO vo,Model model) {
+		if(vo.getuGrdCodeList()==null) {
+			String[] grd = {"일반","새싹","꽃","나무"};
+			vo.setuGrdCodeList(grd);
+		}
+		List<UsersVO> list = usersDao.usersList(vo);
+		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage());
+		model.addAttribute("pages",pagination);
+		model.addAttribute("users", list);
+		model.addAttribute("search",vo);
 		return "admin/all/adUserL";
-		
 	}
 	
 	@GetMapping("/admin/userSelect")

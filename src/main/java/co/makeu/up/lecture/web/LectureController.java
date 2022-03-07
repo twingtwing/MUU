@@ -36,10 +36,21 @@ public class LectureController {
 	@Autowired
 	private String saveDir;
 	
+	//강의등록 페이지 이동 / 임시저장 불러오는 페이지 이동
 	@GetMapping("/creator/lecI")
-	public String lectureInsertPage(Model model, Principal principal) {
+	public String lectureInsertPage(LectureVO vo, Model model, Principal principal) {
 		model.addAttribute("id", principal.getName());
-		return "main/lecture/lecI";
+		
+		//임시저장페이지에서 이용, 해당 아이디에 임시저장파일이 있으면 lecItemp로 이동
+		vo.setCreId(principal.getName());
+		LectureVO volist = lectureDao.lectureInsertTemp(vo);
+		model.addAttribute("tempinfo", volist);
+		
+		if(volist != null) {
+			return "main/lecture/lecItemp";
+		} else {
+			return "main/lecture/lecI";
+		}
 	}
 	
 	//강의검색
@@ -57,12 +68,67 @@ public class LectureController {
 		return "main/lecture/lecD";
 	}
 	
-	//강의임시저장
-	@PostMapping("/creator/lectureTempResister")
-	public String lectureTempResister(LectureVO vo, @RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
-			@RequestParam(value="lecFile", required = false) String[] lecList) {
-		
-		return null;
+	//강의임시저장 업데이트
+	@PostMapping("/creator/lectureTempUpdate")
+	@ResponseBody
+	public void lectureTempUpdate(LectureVO vo, LessonVO lvo,
+			MultipartHttpServletRequest multi,
+			@RequestParam(value="lsnNo", required = false) int[] lsnNo,
+			@RequestParam(value="classTtl", required = false) String[] classTitle) {
+	
+			// 대표사진, 썸네일 등록
+			List<MultipartFile> fileList = multi.getFiles("mainPhtUp");
+					
+			for (int i = 0; i < fileList.size(); i++) {
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				if(i == 0) {
+					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 1) {
+					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 2) {
+					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
+				} else if(i == 3) {
+	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
+	            }
+
+				try {
+					fileList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			lectureDao.lectureUpdateTemp(vo);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			
+			// 수업 등록
+//			List<MultipartFile> classList = multi.getFiles("classMov");
+//			
+//			for(int i = 0; i < classList.size(); i++) {
+//				String oriFileName = classList.get(i).getOriginalFilename();
+//				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+//				
+//				lvo.setLsnNo(lsnNo[i]);
+//				lvo.setTtl(classTitle[i]); 
+//				lvo.setLsnFile("/upload/" + safeFile.substring(saveDir.length()));
+//				
+//				try {
+//					classList.get(i).transferTo(new File(safeFile));
+//				} catch (IllegalStateException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				lessonDao.lessonInsert(lvo);
+//			}
 	}
 	
 	//강의상세-공지사항
@@ -120,9 +186,6 @@ public class LectureController {
 			MultipartHttpServletRequest multi,
 			@RequestParam(value="lsnNo", required = false) int[] lsnNo,
 			@RequestParam(value="classTtl", required = false) String[] classTitle) {
-			
-			//임시 바꿔야함 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//vo.setStartDate(null);
 	
 			// 대표사진, 썸네일 등록
 			List<MultipartFile> fileList = multi.getFiles("mainPhtUp");
@@ -152,7 +215,7 @@ public class LectureController {
 			lectureDao.lectureInsert(vo);
 			
 			try {
-				Thread.sleep(1500);
+				Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -175,10 +238,8 @@ public class LectureController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
 				lessonDao.lessonInsert(lvo);
 			}
-			
 	}
 	
 	//신청 강의 리스트 페이지
@@ -215,29 +276,29 @@ public class LectureController {
 	
 	//신청 강의 상세 페이지
 	@RequestMapping("/creator/rLecS")
-	public String requestLecSelect(int sendltno, Model model) {
-			model.addAttribute("rlists", lectureDao.lectureSelect(sendltno));
+	public String requestLecSelect(LectureVO vo, Model model) {
+			model.addAttribute("rlists", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/rLecS";
 	}
 	
 	//열린 강의 상세 페이지
 	@RequestMapping("/creator/oLecS")
-	public String openLecSelect(int sendltno, Model model) {
-			model.addAttribute("olists", lectureDao.lectureSelect(sendltno));
+	public String openLecSelect(LectureVO vo, Model model) {
+			model.addAttribute("olists", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/oLecS";
 	}
 	
 	//닫힌 강의 상세 페이지
 	@RequestMapping("/creator/clLecS")
-	public String closeLecSelect(int sendltno, Model model) {
-			model.addAttribute("cllists", lectureDao.lectureSelect(sendltno));
+	public String closeLecSelect(LectureVO vo, Model model) {
+			model.addAttribute("cllists", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/clLecS";
 	}
 		
 	//신고된 강의 상세 페이지
 	@RequestMapping("/creator/rpLecS")
-	public String reportLecSelect(int sendltno, Model model) {
-			model.addAttribute("rplists", lectureDao.lectureSelect(sendltno));
+	public String reportLecSelect(LectureVO vo, Model model) {
+			model.addAttribute("rplists", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/rpLecS";
 	}
 	

@@ -17,12 +17,20 @@ public class UsersVO {
 	private String authCode;
 	private String uGrdCode;
 	private String[] uGrdCodeList;
+	private String[] creGrdCodeList;
 	private String pht;
 	private Date joinDate;
 	private Date pastDate;
 	private Date recentDate;
 	private Integer cnt;
 	
+	
+	public String[] getCreGrdCodeList() {
+		return creGrdCodeList;
+	}
+	public void setCreGrdCodeList(String[] creGrdCodeList) {
+		this.creGrdCodeList = creGrdCodeList;
+	}
 	public Integer getCnt() {
 		return cnt;
 	}
@@ -53,6 +61,8 @@ public class UsersVO {
 	public void setLastDate(Date recentDate) {
 		this.recentDate = recentDate;
 	}
+	
+	
 	private String uStCode;
 	private int point;
 	private String creIntro;
@@ -60,7 +70,9 @@ public class UsersVO {
 	private String socialCode;
 	private int age;
 	
-	private int page; // for pagination
+	// for pagination
+	private int page;
+
 	public int getPage() {
 		return page;
 	}
