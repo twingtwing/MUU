@@ -42,7 +42,6 @@ public class LectureVO {
 	// 검색 시 사용
 	private Date pastDate;
 	private Date recentDate;
-	private int page;
 	private int count;
 	private String[] ltStCodeList;
 	
@@ -107,12 +106,6 @@ public class LectureVO {
 	}
 	public void setEnd(String end) {
 		this.end = end;
-	}
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
 	}
 	public int getPageNum() {
 		return pageNum;

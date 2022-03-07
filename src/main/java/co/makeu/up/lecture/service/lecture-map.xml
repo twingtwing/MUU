@@ -93,10 +93,10 @@
 		and u.name like '%' || #{name}  || '%'
 		</if>
 		<if test="creId != null and creId != ''">
-		and L.CRE_ID like '%' || #{creId}  || '%'
+		and L.CRE_ID like '%'||#{creId}||'%'
 		</if>
 		<if test="ttl != null and ttl != ''">
-		and l.ttl like '%' || #{ttl} || '%'
+		and l.ttl like '%'||#{ttl}||'%'
 		</if>
 		<if test="start != null and start !=''">
         	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
@@ -114,12 +114,12 @@
 	<select id="adminLectureTable" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM (
         SELECT ROWNUM RN, W.*
-        FROM ( SELECT L.LT_NO,L.CRE_ID,U.NAME,  c.code_name lt_st_Code,L.TTL,(L.PRC + L.KIT_PRC) PRC,L.REQ_DATE, R.STAR ,C.DOWN_CTGR, C.UP_CTGR,COUNT(*) OVER() COUNT 
+        FROM ( SELECT L.LT_NO,L.CRE_ID,U.NAME,  c.code_name lt_st_Code,L.TTL,(L.PRC + L.KIT_PRC) PRC,L.REQ_DATE, R.AVGSTAR ,C.DOWN_CTGR, C.UP_CTGR,COUNT(*) OVER() COUNT 
                 FROM LECTURE L JOIN (SELECT C.CTGR_ID , C.NAME DOWN_CTGR, U.NAME UP_CTGR
                                                 FROM CTGR C JOIN CTGR U
                                                 ON C.UP_CTGR = U.CTGR_ID) C
                 ON L.DOWN_CTGR = C.CTGR_ID 
-                LEFT JOIN (SELECT LT_NO, NVL(ROUND(AVG(STAR)),0) STAR  FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
+                LEFT JOIN (SELECT LT_NO, TRUNC(AVG(STAR),1) AVGSTAR  FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
                 ON L.LT_NO = R.LT_NO
                 JOIN USERS U
                 ON L.CRE_ID = U.ID
@@ -127,21 +127,27 @@
                 ON LT_ST_CODE = C.CODE_ID
                 WHERE L.TTL LIKE '%'||#{ttl}||'%'
                 <if test="creId != null and !creId.equals('')">
-				AND L.CRE_ID = #{creId}
+				AND L.CRE_ID LIKE '%'||#{creId}||'%'
 				</if>
 				<if test="name != null and !name.equals('')">
-				AND NAME = #{name}
+				AND NAME LIKE '%'||#{name}||'%'
 				</if>
 				<if test="upCtgr != null and !upCtgr.equals('')">
 				AND L.UP_CTGR = #{upCtgr}
 				</if>
 				<if test="downCtgr != null and !downCtgr.equals('')">
-				AND L.DOWN_CTGR = #{downCtgr}
+				AND C.DOWN_CTGR = #{downCtgr}
 				</if>
 				<if test="star != 0">
-				AND STAR = #{star}
+				AND TRUNC(AVGSTAR,0) = #{star}
 				</if>
-				<if test="ltStCodeList != null and !ltStCodeList.length != 0">
+				<if test="pastDate != null and !pastDate.equals('')">
+			    AND #{pastDate} <![CDATA[<]]> REQ_DATE
+			    </if>
+			    <if test="recentDate !=null and !recentDate.equals('')">
+			    AND REQ_DATE <![CDATA[<]]> #{recentDate}
+			    </if>
+				<if test="ltStCodeList != null and ltStCodeList.length != 0">
 				AND LT_ST_CODE IN
 				<foreach collection="ltStCodeList" item="ltStCodeList" open="(" close=")" separator=",">
 			    		#{ltStCodeList}
