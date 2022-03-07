@@ -388,7 +388,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <a :href="'/user/lecP?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">구매</a>
+                                                            	<div class="col-lg-12">
+                                                            		<div class="row">
+	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
+                                                            		</div>
+                                                            		<div class="row justify-content-end mt-1">
+	                                                                	<small v-if="lecDetails.mySugang == 'Y'" class="font-weight-bold text-muted">해당 강의는 이미 수강중입니다.</small>
+                                                            		</div>
+                                                            	</div>
                                                             </div>
                                                             <div class="row mt-2 d-flex justify-content-end pr-2">
                                                                 <p class="heart"><i v-bind:class="[lecDetails.wash=='Y' ? 'text-danger':'text-muted']" v-on:click="heartClick" class="fa fa-heart mr-1"></i> {{lecDetails.wCount}}</p>

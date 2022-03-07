@@ -16,8 +16,8 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public List<FaqVO> faqList() {
-		return map.faqList();
+	public List<FaqVO> faqList(FaqVO vo) {
+		return map.faqList(vo);
 	}
 
 }

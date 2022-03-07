@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item"><a href="#">공지사항</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">공지사항수정</li>
                                 </ol>
@@ -72,8 +72,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                            <input type="file" name="" id="" spellcheck="false" >
+                                        <div class="row p-2 position-relative" style="background-color: #eeeeee; border-bottom: 2px solid black; border-top: 2px solid black;">
+                                            <input type="file" id="multiFile" name="multiFile" multiple="multiple" onchange="fileChange()">
+                                        	<c:if test="${ not empty board.detaFileList}">
+	                                        	<div id="fileDiv" class="row align-items-center position-absolute" style="background-color: #eeeeee; left: 99px; top: 12px; padding-right: 100px;">
+		                                        	<c:forEach items="${ board.detaFileList }" var = "file">
+			                                        	<p class="mb-0">${file.filePath}</p>
+		                                        	</c:forEach>
+	                                        	</div>
+                                        	</c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -93,18 +100,23 @@
                 <!-- 내용 끝 -->
 
                 <!-- 바디 끝 -->
-                <script type="text/javascript">
-                
-                
-                $('#ttli').keyup(function(){
+             <script type="text/javascript">
+
+             	$('#ttli').keyup(function(){
                 	console.log("4번 테스트")
-               	 btnDisabled()
+               	 	btnDisabled()
                 })
                 
                 $('#cont').keyup(function(){
                 	console.log("9번 테스트")
-               	 btnDisabled()
+               	 	btnDisabled()
                 })
+                
+                function fileChange(){
+                	if($('#multiFile')[0].files.length !=0){
+                		$('#fileDiv').addClass('d-none');
+                	}
+                }
                 
                 function btnDisabled() {
                	 var ttli = document.getElementById('ttli').value;
@@ -118,33 +130,45 @@
                 
                 
                 function btn() {
-                	console.log("1번 테스트")
-                	let header = "${_csrf.headerName}";
-            		let token = "${_csrf.token}";
-            		var bNo = "${board.getBNo()}";
-            		var ttl = $('#ttli').val();
-            		var content = $('#cont').val();
-              	 $.ajax ({
-                   	 url:'/admin/upadbad',
-                   	 type:'post',
-                   	 data:{bNo:bNo ,ttl:ttl, content:content},
-                   	 beforeSend: function(xhr) {
-                			xhr.setRequestHeader(header, token);
-                		},
-                   	 success:function(result){
-                   		 console.log(result)
-                   		 if(result == 1){
-                   			 alert("성공적으로 수정완료.")
-                   		  location.href = "/admin/adBadS?bNo="+bNo;
-                   			 
-                   		 }else{
-                   			 alert("수정도중에 에러 발생하여중단합니다.")
-                   		 }
-                   	 }
-                    }) 
+                	event.preventDefault();
+                    
+                	let fileNo = '${board.fileNo}';
+                	let bNo = '${board.getBNo()}';
+                    let form  = new FormData();
+                    form.append('bNo',bNo);
+	            	form.append("ttl",document.getElementById('ttli').value);
+	            	form.append("content",document.getElementById('cont').value);
+	            	if(fileNo!=''){
+	            		form.append('fileNo',fileNo);
+	            	}
+	            	
+	            	for(obj of $('#multiFile')[0].files){
+	            		form.append("files",obj);
+	            	}
+	            	 
+	            	 $.ajax({
+	            		url:'/admin/upadbad',
+	                   	type:'post',
+	                   	processData : false,
+	                    contentType : false,
+	                    async : false,
+	                    beforeSend: function(xhr) {
+	                         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	                    },
+	                    data : form,
+	                 })
+	                 .done((result)=>{
+	                	 console.log(result)
+	               		 if(result == 1){
+	               			 alert("글이 성공적으로 수정되었습니다.")
+	               		  	location.href = "/admin/adBadS?bNo="+ bNo;
+	               		 }else{
+	               			 alert("수정도중에 에러 발생하여중단합니다.");
+	               		 }
+	                 });
                 }
                 
-                </script>
+             </script>
                 
 </body>
 </html>

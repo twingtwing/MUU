@@ -65,7 +65,9 @@
 			SELECT NVL(MAX(B_NO),0)+1 FROM BOARD
 		</selectKey>
 		insert into board (b_no,ttl,content,wr_date,B_ST_CODE,file_no)
-		values(#{bNo},#{ttl},#{content},SYSDATE,'B01',#{fileNo})
+		values(#{bNo},#{ttl},#{content},SYSDATE,'B01',
+		<if test="fileNo != 0">#{fileNo}</if>
+		<if test="fileNo == 0">NULL</if> )
 	</insert>
 	
 	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
@@ -77,18 +79,15 @@
 	<update id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
 		update board set b_st_code = 'B02'
 		where b_no = #{bNo}
-	
 	</update>
 	
 	<update id="upadbad" parameterType="co.makeu.up.board.service.BoardVO">
-	 update board
-    set ttl = #{ttl} , content = #{content}
-    where b_no = #{bNo}
+	    UPDATE BOARD
+	    SET TTL = #{ttl} , CONTENT = #{content}
+	    <if test="fileNo != 0">
+	    , FILE_NO = #{fileNo}
+	    </if>
+	    WHERE B_NO = #{bNo}
 	</update>
-	
-	<select id="seradbad">
-	
-	</select>
-	
 	
 </mapper>

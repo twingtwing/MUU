@@ -1,17 +1,11 @@
 package co.makeu.up.extendedLecture.web;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.makeu.up.extendedLecture.service.ExtendedLectureVO;
 import co.makeu.up.extendedLecture.service.ExtendedLetureService;
@@ -40,7 +34,10 @@ public class RestLectureController {
 	
 	//강의 상세 - 공지사항
 	@RequestMapping(value = "/lectureNotice", method = RequestMethod.GET)
-	public ExtendedLectureVO lectureNotice(ExtendedLectureVO vo) {
+	public ExtendedLectureVO lectureNotice(ExtendedLectureVO vo, Principal pri) {
+		if(pri != null) {
+			vo.setId(pri.getName());
+		}
 		return extendedDao.extendedNotice(vo);
 	}
 	
