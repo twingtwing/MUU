@@ -319,6 +319,9 @@ keyframes rotate_image { 100% {
 				checkboxArr.push(check)
 				console.log(checkboxArr)
 			})
+			
+			//잘 도착하는지 테스트
+			location.href="/user/lecP?lecList="+checkboxArr;
 		}
 
 		//mouseover 이벤트 : 사이드바 css변경

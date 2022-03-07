@@ -133,13 +133,15 @@ public class LectureController {
 	
 	//강의상세-공지사항
 	@GetMapping("/lecN")
-	public String lecN() {
+	public String lecN(LectureVO vo, Model model) {
+		model.addAttribute("ltNo",vo.getLtNo());
 		return "main/lecture/lecN";
 	}
 	
 	//강의 결제
-	@GetMapping("/lecP")
-	public String lecP() {
+	@GetMapping("/user/lecP")
+	public String lecP(@RequestParam(value="lecList") List<Integer> lecList,Model model) {
+		model.addAttribute("lecList",lecList);
 		return "main/lecture/lecP";
 	}
 	

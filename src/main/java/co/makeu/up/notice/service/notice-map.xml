@@ -6,6 +6,7 @@
 			SELECT  ROWNUM RN, NT_NO,WR_DATE,TTL,CONTENT,HITS,LT_NO,FILE_NO,MOD_DATE
 			FROM NOTICE 
 			WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}+1)
+			AND NT_ST_CODE = 'B01'
 			AND LT_NO = #{ltNo}
 			AND (TTL LIKE '%'||#{ttlSearchKey}||'%'
 			AND CONTENT LIKE '%'||#{contentSearchKey}||'%')
@@ -16,16 +17,19 @@
 	<select id="NoticeListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM NOTICE
 		WHERE LT_NO = #{ltNo}
+		AND NT_ST_CODE = 'B01'
 	</select>
+	
 	<select id="NoticeSelect" resultType="co.makeu.up.notice.service.NoticeVO" parameterType="co.makeu.up.notice.service.NoticeVO">
 		SELECT N.* FROM 
-		NOTICE N LEFT OUTER JOIN FILES F
+		NOTICE N LEFT OUTER JOIN DETA_FILE F
 		ON N.FILE_NO = F.FILE_NO
 		WHERE NT_NO = #{ntNo}
 	</select>
+	
 	<update id="updateHits" parameterType="Integer">
 		UPDATE NOTICE
-		SET HITS = HITS + 1
+		SET HITS = NVL(HITS,0) + 1
 	</update>
 	<insert id="insertNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
 		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO)

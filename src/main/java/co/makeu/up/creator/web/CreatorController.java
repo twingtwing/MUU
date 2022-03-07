@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.creator.service.CreatorServiceImpl;
@@ -72,7 +73,8 @@ public class CreatorController {
 	
 	//강의상세-크리에이터정보
 	@GetMapping("/creD")
-	public String creD() {
+	public String creD(@RequestParam("creId") String id, Model model) {
+		model.addAttribute("id",id);
 		return "main/creator/creD";
 	}
 	
