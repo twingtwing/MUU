@@ -19,11 +19,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import co.makeu.up.board.service.BoardService;
 import co.makeu.up.board.service.BoardVO;
 import co.makeu.up.common.view.PageVo;
+import co.makeu.up.detafile.service.DetafileService;
 import co.makeu.up.detafile.service.DetafileVO;
 
 @Controller
 public class BoardController {
 	@Autowired private BoardService boardDao;
+	@Autowired private DetafileService detafileDao;
 	
 	@Autowired private String saveDir;
 	
@@ -141,10 +143,16 @@ public class BoardController {
 	
 	@PostMapping("/admin/deladbad")
 	@ResponseBody
-	public int deladbad (BoardVO vo ) {
-		System.out.println("dddddd");
+	public int deladbad (BoardVO vo) {
+		if(vo.getFileNo()!=0) {
+			for(DetafileVO detaVO : detafileDao.detaFileList(vo.getFileNo())) {
+				File file = new File(saveDir+detaVO.getPhyPath());
+				if(file.exists()) {
+					file.delete();
+				}
+			}
+		}
 		int r = boardDao.deladbad(vo);
-		System.out.println("");
 		return r;
 	}
 	

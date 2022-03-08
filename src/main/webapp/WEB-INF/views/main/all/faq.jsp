@@ -98,7 +98,7 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
+                        <div v-if="faqs[0] != null" class="row justify-content-center mt-3">
                         	<div class="more_link" v-if="faqs[0].length != 0" v-on:click="more(0)">더보기</div>
                         </div>
                      </div>
@@ -117,8 +117,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
-                        	<a href="" class="more_link" v-if="faqs[1].length != 0" v-on:click="more(1)">더보기</a>
+                        <div v-if="faqs[1]" class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[1].length != 0" v-on:click="more(1)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="payment" role="tabpanel" aria-labelledby="payment-tab">
@@ -136,8 +136,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
-                        	<div href="" class="more_link" v-if="faqs[2].length != 0" v-on:click="more(2)">더보기</div>
+                        <div v-if="faqs[2] != null" class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[2].length != 0" v-on:click="more(2)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="infomation" role="tabpanel" aria-labelledby="infomation-tab">
@@ -155,8 +155,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
-                        	<div href="" class="more_link" v-if="faqs[3].length != 0" v-on:click="more(3)">더보기</div>
+                        <div v-if="faqs[3] != null" class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[3].length != 0" v-on:click="more(3)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="bug" role="tabpanel" aria-labelledby="bug-tab">
@@ -174,8 +174,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
-                        	<div href="" class="more_link" v-if="faqs[4].length != 0" v-on:click="more(4)">더보기</div>
+                        <div v-if="faqs[4] != null" class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[4].length != 0" v-on:click="more(4)">더보기</div>
                         </div>
                      </div>
                      <div class="tab-pane" id="event" role="tabpanel" aria-labelledby="event-tab">
@@ -193,8 +193,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="row justify-content-center mt-3">
-                        	<div href="" class="more_link" v-if="faqs[5].length != 0" v-on:click="more(5)">더보기</div>
+                        <div v-if="faqs[5] != null" class="row justify-content-center mt-3">
+                        	<div class="more_link" v-if="faqs[5].length != 0" v-on:click="more(5)">더보기</div>
                         </div>
                      </div>
                   </div>

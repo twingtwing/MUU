@@ -69,10 +69,10 @@
                                                 <div class="row mr-2">
                                                     <h6 class="mb-0">처리상태</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">
-                                                    <c:if test="${qst.qstStCode eq 'Q01'}">
+                                                    <c:if test="${qst.qstStCode eq 'QS01'}">
                                                     	답변 대기중
                                                     </c:if> 
-                                                    <c:if test="${qst.qstStCode eq 'Q02'}">
+                                                    <c:if test="${qst.qstStCode eq 'QS02'}">
                                                     	답변 완료
                                                     </c:if>
                                                     </h6>

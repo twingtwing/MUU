@@ -3,8 +3,8 @@
 <mapper namespace="co.makeu.up.extendedLecture.service.ExtendedLetureMapper">
 	
 	<select id="lectureList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
-		SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
-		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
+		SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, L.w_count
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
 		ON J.LT_NO = R.LT_NO
 		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
 		ON J.LT_NO = W.LT_NO
@@ -12,9 +12,9 @@
 		ON J.LT_NO = L.LT_NO
 		WHERE J.LT_ST_CODE = 'L01'
 		AND EXP_DATE &gt;= SYSDATE
-		<if test="upCtgr != ''">AND J.UP_CTGR = #{upCtgr}</if>
-		<if test="downCtgr != ''">AND J.DOWN_CTGR = #{downCtgr}</if>
-		ORDER BY J.LT_NO
+		<if test="upCtgr != '' and upCtgr != null">AND J.UP_CTGR = #{upCtgr}</if>
+		<if test="downCtgr != '' and downCtgr != null">AND J.DOWN_CTGR = #{downCtgr}</if>
+		ORDER BY J.LT_NO DESC
 	</select>
 	
 	<select id="ctgrList" resultType="co.makeu.up.ctgr.service.CtgrVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
@@ -60,8 +60,7 @@
 		 ELSE 'N' END MY_REVIEW
 		FROM REVIEW R JOIN USERS U
 		ON R.WRITER = U.ID
-		WHERE R.LT_NO = #{ltNo}	
-		AND R.RV_CODE != 'RE03'
+		WHERE R.LT_NO = #{ltNo}
 		ORDER BY R.RV_NO DESC
 	</select>
 	
@@ -72,7 +71,6 @@
 		FROM LT_QNA Q JOIN USERS U
         ON Q.WRITER = U.ID
 		WHERE Q.LT_NO = #{ltNo}
-		AND Q.QNA_ST_CODE != 'Q03'
 		ORDER BY Q.QNA_NO DESC
 	</select>
 	
@@ -101,7 +99,6 @@
 		FROM NOTICE N LEFT JOIN DETA_FILE D
 		ON N.FILE_NO = D.FILE_NO
 		WHERE LT_NO = #{ltNo}
-		AND NT_ST_CODE = 'B01'
 	</select>
 	
 	<select id="creatorDetail" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
@@ -117,7 +114,7 @@
         WITH 
         LEC_DETA AS(
         SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
-		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
 		ON J.LT_NO = R.LT_NO
 		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
 		ON J.LT_NO = W.LT_NO

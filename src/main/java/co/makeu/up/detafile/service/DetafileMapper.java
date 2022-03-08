@@ -6,5 +6,5 @@ public interface DetafileMapper {
 	
 	List<DetafileVO> detaFileList(int fileNo);
 	int detaFileInsert(DetafileVO vo);
-	
+	int delFeilDelete(int fileNo);
 }

@@ -108,7 +108,6 @@ background-color:#f5f5f5;
                                             <th>처리상태</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
-                                                	
                                                     <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS03">
                                                     <label for="t" class="mr-3 ml-1 mb-0">반려</label>
                                                     <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false "value="RPS02">
@@ -214,18 +213,16 @@ background-color:#f5f5f5;
 	                                                <td>${list.recontent }</td>
 	                                                <td>${list.rpdate }</td>
 	                                                <td>
-	                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
-		                                            	대기중
-		                                            </c:if>
-		                                            <c:if test="${list.rpStCode eq 'RPS02' }">
-		                                            	 신고 처리
-		                                            </c:if>
-		                                            <c:if test="${list.rpStCode eq 'RPS03' }">
-		                                            	 신고 반려
-		                                            </c:if>
-	                                                
+		                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
+			                                            	대기중
+			                                            </c:if>
+			                                            <c:if test="${list.rpStCode eq 'RPS02' }">
+			                                            	 신고 처리
+			                                            </c:if>
+			                                            <c:if test="${list.rpStCode eq 'RPS03' }">
+			                                            	 신고 반려
+			                                            </c:if>
 	                                                </td>
-	                                                
 	                                            </tr>
 	                                        </c:forEach>
                                         </c:if>

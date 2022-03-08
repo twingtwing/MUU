@@ -11,4 +11,13 @@ public class SalesVO {
 	private int month;
 	private int mon;
 	private String upCtgr;
+	
+	private String ctgr;
+	private int hc01;
+	private int hc02;
+	private int hc03;
+	private int hc04;
+	private int hc05;
+	private int hc06;
+	private int hc07;
 }

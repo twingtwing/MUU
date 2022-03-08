@@ -26,7 +26,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">공지사항</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adBadLi">공지사항</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">공지사항상세페이지</li>
                                 </ol>
                             </nav>
@@ -63,20 +63,9 @@
                                                     <h6 class="mb-0">작성일자</h6>
                                                     <h6 class="mb-0 mr-3 ml-1" style="font-weight: 500;">${board.wrDate }</h6>
                                                 </div>
-                                                <div class="row mr-1">
+                                                <div class="row mx-2">
                                                     <h6 class="mb-0">조회수</h6>
                                                     <h6 class="mb-0 ml-2" style="font-weight: 500;">${board.hits }</h6>
-                                                </div>
-                                                <div class="row mx-2">
-                                                    <h6 class="mb-0">상태</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">
-	                                                     <c:if test="${board.getBStCode() eq 'B01' }">
-			                                            	등록
-			                                            </c:if>
-			                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
-			                                        		삭제
-			                                            </c:if>
-                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +123,7 @@
         	 $.ajax ({
             	 url:'/admin/deladbad',
             	 type:'post',
-            	 data:{bNo:bNo},
+            	 data:{bNo:bNo,fileNo : '${board.fileNo}'},
             	 beforeSend: function(xhr) {
          			xhr.setRequestHeader(header, token);
          		},

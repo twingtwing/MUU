@@ -17,4 +17,9 @@
 		INSERT INTO DETA_FILE(DETA_NO,FILE_PATH,PHY_PATH,FILE_NO)
 		VALUES(#{detaNo},#{filePath},#{phyPath},#{fileNo})
 	</insert>
+	
+	<delete id="delFeilDelete">
+		DELETE FROM DETA_FILE
+		WHERE FILE_NO = #{fileNo}
+	</delete>
 </mapper>

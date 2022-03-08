@@ -4,7 +4,6 @@
 	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO">
 		SELECT B_NO,TTL,CONTENT,B_ST_CODE,WR_DATE,HITS, NVL(FILE_NO,-1) FILE_NO
 		FROM BOARD
-		WHERE b_st_code = 'B01'
 		ORDER BY b_no DESC
 	</select>
 	
@@ -39,10 +38,7 @@
             <if test= "content != null and content !=''">
             AND CONTENT LIKE '%' || #{content}  || '%'
             </if>
-            <if test="bStCode != null and bStCode != ''">
-           	AND B_ST_CODE = #{bStCode}
-            </if>
-             <if test="start != null and start != ''">
+            <if test="start != null and start != ''">
              <![CDATA[
              AND TO_DATE(#{start}, 'YYYY-MM-DD') <  WR_DATE
              ]]>
@@ -76,10 +72,10 @@
 		WHERE B_NO = #{bNo}
 	</select>
 	
-	<update id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
-		update board set b_st_code = 'B02'
-		where b_no = #{bNo}
-	</update>
+	<delete id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
+		DELETE FROM BOARD
+		WHERE b_no = #{bNo}
+	</delete>
 	
 	<update id="upadbad" parameterType="co.makeu.up.board.service.BoardVO">
 	    UPDATE BOARD

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
             <div class="ml-auto text-right">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">home</a></li>
+                  <li class="breadcrumb-item"><a href="/admin/home">home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">기간별 매출 통계</li>
                 </ol>
               </nav>
@@ -47,46 +48,34 @@
                     <div class="col-lg-10">
                       <table class="w-100 text-center border mt-4" border="1">
                         <tr>
-                          <th></th>
+                          <th width="11%"></th>
                           <c:forEach items="${years }" var="y">
-                          <c:if test="${y.year ne 0 }">
-                          <th class="yearLabel">${y.year }</th>
-                          </c:if>
-                          <c:if test="${y.year eq 0 }">
-                          <th>총 합</th>
-                          </c:if>
+	                          <c:if test="${y.year ne 0 }">
+	                          	<th width="11%" class="yearLabel">${y.year }</th>
+	                          </c:if>
+	                          <c:if test="${y.year eq 0 }">
+	                          	<th width="12%">총 합</th>
+	                          </c:if>
                           </c:forEach>
                         </tr>
                         <tr>
                           <td>판매량</td>
                           <c:forEach items="${years }" var="y">
-                          <c:if test="${y.year ne 0 }">
-                          <td class="yearCnt">
-	                          	${y.cnt }
-	                       </td>
-                          </c:if>
-                          <c:if test="${y.year eq 0 || empty y.year}">
-							<td>
-                          	${y.cnt }
-                          </td>
-                          </c:if>
+		                      <td>
+		                      	<span <c:if test="${y.year ne 0 }">class="yearCnt"</c:if>>
+		                      	${y.cnt }
+		                      	</span> 개
+		                      </td>
                           </c:forEach>
                         </tr>
                         <tr>
                           <td>매출액</td>
                           <c:forEach items="${years }" var="y">
-                          <td>
-                          <c:if test="${y.year ne 0 }">
-	                          <span class="yearPay">
-	                          	<fmt:formatNumber>${y.pay }</fmt:formatNumber>
-	                          </span>원
-                          </c:if>
-                          <c:if test="${y.year eq 0 || empty y.year}">
-                          	<span>
-                          	<fmt:formatNumber>${y.pay }</fmt:formatNumber>
-                          	</span>원
-                          </c:if>
-                          </td>
+	                          <td>
+		                          <span <c:if test="${y.year ne 0 }">class="yearPay"</c:if>>
+		                          	<fmt:formatNumber>${y.pay }</fmt:formatNumber>
+		                          </span>만 원
+	                          </td>
                           </c:forEach>
                         </tr>
                       </table>
@@ -128,33 +117,30 @@
                         <tr>
                           <th></th>
                           <c:forEach items="${months }" var="mon">
-                          <c:if test="${mon.month ne 0 }">
-                          	<th width="7%" class="monthLabel">${mon.month }월</th>
-                          </c:if>
+	                          <c:if test="${mon.month ne 0 }">
+	                          	<th width="7%" class="monthLabel">${mon.month }월</th>
+	                          </c:if>
                           </c:forEach>
                           <th width="7%">총 합</th>
                         </tr>
                         <tr>
                           <td>판매량</td>
                           <c:forEach items="${months }" var="mon">
-                          <td <c:if test="${mon.month ne 0 }">class="monthCnt"</c:if>>${mon.cnt }</td>
+                          	<td>
+		                      	<span <c:if test="${mon.month ne 0 }">class="monthCnt"</c:if>>
+		                      	${mon.cnt }
+		                      	</span> 개
+		                    </td>
                           </c:forEach>
                         </tr>
                         <tr>
                           <td>매출액</td>
                           <c:forEach items="${months }" var="mon">
-                          <td>
-                          <c:if test="${mon.month ne 0 }">
-	                          <span class="monthPay">
-	                          	<fmt:formatNumber>${mon.pay }</fmt:formatNumber>
-	                          </span>원
-                          </c:if>
-                          <c:if test="${mon.month eq 0 || empty mon.month}">
-                          	<span>
-                          	<fmt:formatNumber>${mon.pay }</fmt:formatNumber>
-                          	</span>원
-                          </c:if>
-                          </td>
+                          	<td>
+		                    	<span <c:if test="${mon.month ne 0 }">class="monthPay"</c:if>>
+		                        	<fmt:formatNumber>${mon.pay }</fmt:formatNumber>
+		                        </span>만 원
+	                        </td>
                           </c:forEach>
                         </tr>
                       </table>
@@ -182,26 +168,20 @@
                     <div class="col-lg-10">
                       <table class="w-100 mt-4 text-center border" border="1">
                         <tr>
-                          <th>판매량/연도</th>
-                          <c:forEach items="${years }" var="y">
-                          <c:if test="${y.year ne 0 }">
-                          <th>${y.year }</th>
-                          </c:if>
+                          <th>매출</th>
+                          <c:forEach items="${ctgrYear}" var="ctgr">
+                          	<c:if test="${ctgr.year ne 'ALL'}">
+	                          	<th>${ctgr.year}</th>
+                          	</c:if>
                           </c:forEach>
                           <th>총 합</th>
                         </tr>
-                        <c:forEach items="${ctgrYear }" var="c">
                         <tr>
-                        	<td>
-                        	<c:if test="${not empty c.upCtgr && empty c.year }">
-                        		${c.upCtgr }
-                        	</c:if>
-                        	</td>
-                        	<td>
-                        	모르겠다 ..
-                        	</td>
+                        	<td>음악</td>
+                        	<c:forEach items="${ctgrYear}" var="ctgr">
+                          		<th>${ctgr.hc01}</th>
+                          	</c:forEach>
                         </tr>
-                        </c:forEach>
                       </table>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
