@@ -22,6 +22,9 @@
         .userListBoard>tr{
         	cursor: pointer;
         }
+        #ho:hover{
+        background-color:#f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +39,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">유저 관리</li>
                                 </ol>
                             </nav>
@@ -152,7 +155,7 @@
                                     </thead>
                                     <tbody class="userListBoard">
                                         <c:forEach items="${users}" var="user">
-	                                        <tr>
+	                                        <tr id="ho">
 	                                            <td>${user.id }</td>
 	                                            <td>
 	                                            	<c:if test="${user.uStCode eq 1 }">

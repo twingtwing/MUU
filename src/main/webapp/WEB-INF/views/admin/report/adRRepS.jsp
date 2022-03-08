@@ -24,7 +24,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item"><a href="/admin/adRRepL">리뷰신고</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">리뷰신고상세페이지</li>
                                 </ol>
