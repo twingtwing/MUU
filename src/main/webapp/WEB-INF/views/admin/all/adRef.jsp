@@ -48,7 +48,7 @@ table tr, table td {
 				<div class="ml-auto text-right">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">환불관리</li>
 						</ol>
 					</nav>

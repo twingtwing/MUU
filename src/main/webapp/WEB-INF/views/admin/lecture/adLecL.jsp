@@ -45,6 +45,9 @@
         .lectureList tr{
         	cursor: pointer;
         }
+        #ho:hover{
+        background-color:#f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +62,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의 관리</li>
                                 </ol>
                             </nav>
@@ -207,7 +210,7 @@
                                         <!--강의 정보 가져와서 데이터 뿌리기 / 기본 강의소개페이지로 이동-->
                                        <tbody class="lectureList">
                                         <c:forEach items="${lectures}" var="l">
-                                        <tr data-ltno = "${l.ltNo}">
+                                        <tr data-ltno = "${l.ltNo}" id="ho">
                                         	<td>${l.ltNo }</td>
                                         	<td>${l.upCtgr } > ${l.downCtgr }</td>	
                                         	<td>${l.ttl }</td>

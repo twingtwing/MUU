@@ -10,10 +10,8 @@
 	<select id="faqList" resultType="co.makeu.up.faq.service.FaqVO" parameterType="co.makeu.up.faq.service.FaqVO">
 		SELECT * 
 		FROM (SELECT ROWNUM RN, W.*
-		      FROM(SELECT F.F_NO,F.CTGR, CT.CODE_NAME CTGR_NAME, F.Q_CONTENT,F.F_ST_CODE,C.CODE_NAME F_ST_NAME, F.WR_DATE, F.A_CONTENT,COUNT(*) OVER() length
-			  	  FROM FAQ F JOIN COMM_CODE C
-				  ON F.F_ST_CODE = C.CODE_ID
-				  JOIN COMM_CODE CT
+		      FROM(SELECT F.F_NO,F.CTGR, CT.CODE_NAME CTGR_NAME, F.Q_CONTENT,F.WR_DATE, F.A_CONTENT,COUNT(*) OVER() length
+			  	  from FAQ f JOIN COMM_CODE CT
 				  ON F.CTGR = CT.CODE_ID
 				  WHERE 1 = 1
 				  <if test="qcontent != null and qcontent != ''">
@@ -32,13 +30,26 @@
 		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  > F.WR_DATE
 		          ]]>
 		          </if>
-				  <if test="fstcode != null and fstcode != ''">
-				  AND F.F_ST_CODE = #{fstcode}
-				  </if>
 				  ORDER BY F.F_NO DESC) W)
 		 <![CDATA[
 	    WHERE RN > (#{pageNum}-1) * #{amount} 
 	    AND RN <= #{pageNum} * #{amount}
 	    ]]>
 	</select>
+	
+	<insert id="insertfaq" parameterType="co.makeu.up.faq.service.FaqVO">
+	insert into FAQ
+	values((SELECT NVL(MAX(F_NO),0)+1 FROM FAQ) ,#{ctgr},#{qcontent},'F01',sysdate,#{acontent})
+	</insert>
+	
+	<update id="upfaq" parameterType="co.makeu.up.faq.service.FaqVO">
+	update FAQ set CTGR = #{ctgr} , Q_CONTENT = #{qcontent} , A_CONTENT = #{acontent}
+	
+	where F_NO = #{fno}
+	</update>
+	<delete id="delfaq" parameterType="co.makeu.up.faq.service.FaqVO">
+	
+                delete from FAQ
+                where F_NO = #{fno}
+	</delete>
 </mapper>

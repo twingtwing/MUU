@@ -47,7 +47,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item"><a href="강의관리.html">강의관리</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의소개</li>
                                 </ol>

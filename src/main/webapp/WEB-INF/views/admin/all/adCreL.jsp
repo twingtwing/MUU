@@ -25,6 +25,9 @@
         .creatorListBoard tr{
         cursor: pointer;
         }
+        #ho:hover{
+        background-color:#f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +42,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">크리에이터 관리</li>
                                 </ol>
                             </nav>
@@ -148,7 +151,7 @@
                                         <!--크리에이터 정보 가져오기-->
                                         <tbody class="creatorListBoard">
                                         <c:forEach items="${creators }" var="c">
-                                        <tr>
+                                        <tr id="ho">
                                             <td>${c.id }</td>
                                             <td>
                                             <c:if test="${c.uStCode eq 1}">

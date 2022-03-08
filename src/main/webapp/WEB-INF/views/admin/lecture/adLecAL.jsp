@@ -22,6 +22,9 @@ table tr, table td {
 .admin_search th {
 	background-color: #eeeeee;
 }
+#ho:hover{
+        background-color:#f5f5f5;
+        }
 </style>
 </head>
 <body>
@@ -36,7 +39,7 @@ table tr, table td {
 				<div class="ml-auto text-right">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#">강의관리</a></li>
+							<li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">강의등록</li>
 						</ol>
 					</nav>
@@ -120,7 +123,7 @@ table tr, table td {
 									<th width="100px">처리상태</th>
 								</tr>
 								<c:forEach items="${llists }" var="llist">
-									<tr>
+									<tr id="ho">
 										<td>${llist.ltNo }</td>
 										<td>
 										<span>${llist.upCtgr }</span>
