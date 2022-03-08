@@ -8,4 +8,7 @@ public interface ReviewMapper {
 	ReviewVO selectMyReview(ReviewVO vo);
 	int deleteMyReveiw(int rvNo);
 	int updateMyReview(ReviewVO vo);
+	
+	//admin
+	List<ReviewVO> adminReviewList(ReviewVO vo);
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,9 @@
         }
         .tableTab th{
             border:none !important;
+        }
+        .tableTab {
+        	cursor: pointer;
         }
     </style>
 </head>
@@ -70,25 +74,31 @@
                                         <tr height="38">
                                             <th>강의이름</th>
                                             <td>
-                                                ${lectureInfo.ttl }
+                                                ${lecInfo.ttl }
                                             </td>
                                             <th>강의별점</th>
                                             <td>
-                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i> 
+                                                <c:if test="${lecInfo.avgStar eq 0 }">
+                                                	리뷰없음
+                                                </c:if>
+                                                <c:if test="${lecInfo.avgStar ne 0 }">
+                                                	${lecInfo.avgStar }
+                                                </c:if>
                                             </td>
                                             <th rowspan="2" >
-                                                <img src="assets/images/big/img1.jpg" style="width:70px; height:70px;" alt="">
+                                                <img src="${lecInfo.thumb }" style="width:70px; height:70px;" alt="">
                                             </th>
                                         </tr>
 
                                         <tr height="38">
                                             <th>강사정보</th>
                                             <td>
-                                                asdf
+                                                <a href="/admin/creatorSelect?id=${lecInfo.creId }">${lecInfo.creId }</a> (크리에이터 정보로 이동)
                                             </td>
-                                            <th>위반횟수</th>
+                                            <th>규정위반횟수</th>
                                             <td>
-                                                2
+                                                ${lecInfo.cnt }회
                                             </td>
                                         </tr>
                                     </table>
@@ -97,41 +107,47 @@
                                 <hr class="font-weight-bold">
                                 
                                 <div class="row" style="margin-top:40px; margin-bottom:0px;">
-                                    <table class="table  tableTab">
+                                    <table class="table tableTab w-100">
                                         <tr style="background-color: #FCF8E3;">
-                                            <th><a class="crTab active" href="강의관리.html" onclick="">강의소개</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">유저</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">커리큘럼</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">키트</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">후기</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">질문/답변</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">공지사항</a></th>
+                                            <th><a class="crTab active" href="#">강의소개</a></th>
+                                            <th><a class="crTab" href="/admin/adLecU?ltNo=${lecInfo.ltNo }">수강생</a></th>
+                                            <th><a class="crTab" href="/admin/adLecC?ltNo=${lecInfo.ltNo }">커리큘럼</a></th>
+                                            <th><a class="crTab" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>
+                                            <th><a class="crTab" href="/admin/adLecR?ltNo=${lecInfo.ltNo }">후기</a></th>
+                                            <th><a class="crTab" href="/admin/adLecQ?ltNo=${lecInfo.ltNo }">질문/답변</a></th>
+                                            <th><a class="crTab" href="/admin/adLecN?ltNo=${lecInfo.ltNo }">공지사항</a></th>
                                         </tr>
                                     </table>
                                 </div>
-
-                                <hr class="font-weight-bold">
-
                                 <div class="row">
                                     <table class="table table-bordered">
                                         <tr style="background-color: #eeeeee;">
                                             <th style="width: 90px;">강의번호</th>
                                             <th>카테고리</th>
-                                            <th style="width: 90px;">신고유무</th>
+                                            <th style="width: 90px;">상태</th>
                                             <th style="width: 90px;">키트유무</th>
-                                            <th style="width: 130px;">강의등록날짜</th>
-                                            <th style="width: 130px;">강의종료기간</th>
-                                            <th style="width: 130px;">수업종료기간</th>
+                                            <th style="width: 130px;">강의등록신청일</th>
+                                            <th style="width: 250px;">강의등록기간</th>
+                                            <th style="width: 130px;">수강종료일</th>
                                         </tr>
                                         
                                         <tr>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
-                                            <td>2021.10.21</td>
-                                            <td>dfdsf</td>
-                                            <td>dfdsf</td>
+                                            <td>${lecInfo.ltNo }</td>
+                                            <td>${lecInfo.upCtgr } > ${lecInfo.downCtgr }</td>
+                                            <td>
+                                            ${lecInfo.ltStCodeName}
+                                            </td>
+                                            <td>
+                                            <c:if test="${not empty lecInfo.kitName }">
+	                                            O
+                                            </c:if>
+    										<c:if test="${empty lecInfo.kitName }">
+    											X
+    										</c:if>                                        
+                                            </td>
+                                            <td>${lecInfo.reqDate }</td>
+                                            <td>${lecInfo.startDate } ~ ${lecInfo.expDate }</td>
+                                            <td>${lecInfo.endDate}</td>
                                         </tr>
                                     </table>
                                     <table class="table table-bordered">
@@ -139,7 +155,7 @@
                                             <th>강의소개</th>
                                         </tr>
                                         <tr>
-                                            <td>강의소개입니다.</td>
+                                            <td>${lecInfo.intro}</td>
                                         </tr>
                                         <tr style="background-color: #eeeeee;">
                                             <th>OT영상</th>
@@ -147,7 +163,7 @@
                                         <tr>
                                             <td>
                                                 <video controls height="240">
-                                                    <source src="assets/multimedia/bear.mp4" type="video/mp4">
+                                                    <source src="${ot.lsnFile }" type="video/mp4">
                                                 </video>
                                             </td>
                                         </tr>
