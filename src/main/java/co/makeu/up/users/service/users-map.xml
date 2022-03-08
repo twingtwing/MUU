@@ -57,7 +57,7 @@
 			    AND AUTH_CODE = 'A03'
 			    </if>
 			    <if test="tel != null and !tel.equals('')" >
-			    AND TEL = #{tel}
+			    AND TEL like '%'||#{tel}||'%'
 			    </if>
 			    <if test="gender != null and !gender.equals('')" >
 			    AND GENDER = #{gender}

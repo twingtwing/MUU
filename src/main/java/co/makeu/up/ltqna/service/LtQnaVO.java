@@ -19,7 +19,14 @@ public class LtQnaVO {
 	//확장 vo
 	private String name;
 	private String myQna;
+	private int cnt;
 	
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	// page
 	private int page;
 	// search

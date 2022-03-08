@@ -12,4 +12,7 @@ public interface NoticeMapper {
 	int insertNotice(NoticeVO vo);
 	int deleteNotice(NoticeVO vo);
 	List<FilesVO> noticeFiles(int ltNo);
+	
+	// admin
+	List<NoticeVO> adminNoticeList(NoticeVO vo);
 }

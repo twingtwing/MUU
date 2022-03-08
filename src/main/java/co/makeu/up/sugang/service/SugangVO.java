@@ -41,6 +41,14 @@ public class SugangVO {
 	private Date reqDate;
 	private String rfStCode;
 	private String content;
+	private int ok;
+	private int end;
+	private String name;
+	
+	// for Search
+	private Date startDate;
+	private Date endDate;
+	private int page;
 	
 	// progress
 	private int progPct;

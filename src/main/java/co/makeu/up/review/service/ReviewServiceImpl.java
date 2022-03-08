@@ -34,4 +34,9 @@ public class ReviewServiceImpl implements ReviewMapper {
 		return map.updateMyReview(vo);
 	}
 
+	@Override
+	public List<ReviewVO> adminReviewList(ReviewVO vo) {
+		return map.adminReviewList(vo);
+	}
+
 }

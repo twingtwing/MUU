@@ -58,4 +58,66 @@
 		INSERT INTO SUGANG(TLSN_NO,ID,LT_NO,REG_DATE,USE_POINT,TLSN_ST_CODE,SHIP_ST_CODE,PAY,ZIP,ADDR,DETA_ADDR,TEL,EXP_DATE)
 		VALUES((SELECT NVL(MAX(TLSN_NO), 0)+1 FROM SUGANG),#{id},#{ltNo},SYSDATE,${usePoint},'SU01',#{shipStCode},#{pay},#{zip},#{addr},#{detaAddr},#{tel},ADD_MONTHS(SYSDATE,#{num}))
 	</insert>
+	
+	<select id="adminSugangList" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM SUGANG
+		WHERE LT_NO = #{ltNo}
+	</select>
+	<select id="adminSugangCount" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM (SELECT COUNT(*) OK FROM SUGANG
+						WHERE EXP_DATE <![CDATA[>=]]> SYSDATE) 
+		CROSS JOIN (SELECT COUNT(*) END FROM SUGANG
+		WHERE EXP_DATE <![CDATA[<]]> SYSDATE)
+	</select>
+	<select id="adminLecUserList" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM (SELECT ROWNUM RN ,U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT
+		FROM SUGANG S JOIN USERS U
+		ON S.ID = U.ID
+		WHERE S.LT_NO = #{ltNo}
+		<if test="name != null and !name.equals('')">
+        	AND U.NAME LIKE '%'||#{name}||'%'
+		</if>
+		<if test="id != null and !id.equals('')">
+	        AND S.ID LIKE '%'||#{id}||'%'
+		</if>
+		<if test="tlsnStCode != null and !tlsnStCode.equals('')">
+	        AND S.TLSN_ST_CODE = #{tlsnStCode}
+		</if>
+		<if test="startDate != null and !startDate.equals('')">
+        	AND REG_DATE BETWEEN #{startDate} AND #{endDate}
+        </if>
+        ) 
+        <![CDATA[ 
+		WHERE RN > (#{page}-1) * 10
+		AND RN <= #{page} * 10
+		]]>
+		ORDER BY 1
+	</select>
+	<select id="adminLecDeliver" resultType="co.makeu.up.sugang.service.SugangVO" parameterType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM (SELECT ROWNUM RN,S.TLSN_NO,S.ID,S.PAY,
+		FINDLTCODE(S.SHIP_ST_CODE) SHIP_ST_CODE, 
+		S.SHIP_NUM,
+		S.REG_DATE,
+		COUNT(*)OVER() CNT
+		FROM SUGANG S
+		WHERE S.LT_NO = #{ltNo}
+		<if test="id != null and !id.equals('')">
+		AND S.ID LIKE '%'||#{id}||'%'
+		</if>
+		<if test="shipNum != null and !shipNum.equals('')">
+		AND S.SHIP_NUM LIKE '%'||#{shipNum}||'%'
+		</if>
+		<if test="shipStCode != null and !shipStCode.equals('')">
+		AND S.SHIP_ST_CODE = #{shipStCode}
+		</if>
+		<if test="startDate != null and !startDate.equals('')">
+		AND REG_DATE BETWEEN #{startDate} AND #{endDate}
+		</if>
+		ORDER BY TLSN_NO
+		)
+		<![CDATA[ 
+		WHERE RN > (#{page}-1) * 10
+		AND RN <= #{page} * 10
+		]]>
+	</select>
 </mapper>

@@ -123,7 +123,10 @@
                                                     <div class="col-9">
                                                         <input class="w-100 searchKey border" type="text" spellcheck="false"
                                                         <c:if test="${not empty search.creId }">
-                                                        	value = "${search.creId }${search.name }"
+                                                        	value = "${search.creId }"
+                                                        </c:if>
+                                                        <c:if test="${not empty search.name }">
+                                                        	value = "${search.name }"
                                                         </c:if>
                                                         >
                                                     </div>
@@ -201,7 +204,7 @@
                                             <th style="width:120px;">강의등록(신청)날짜</th>
                                             <th style="width:110px;">수강료</th>
                                             <th style="width:130px;">강의별점</th>
-                                            <th style="width:130px;">상태</th>
+                                            <th style="width:180px;">상태</th>
                                         </tr>
                                     </thead>
                                         <!--강의 정보 가져와서 데이터 뿌리기 / 기본 강의소개페이지로 이동-->

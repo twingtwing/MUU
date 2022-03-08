@@ -14,4 +14,8 @@ public interface SugangMapper {
 	
 	// admin
 	List<SugangVO> userRefundList(String id);
+	List<SugangVO> adminSugangList(int ltNo);
+	SugangVO adminSugangCount(int ltNo);
+	List<SugangVO> adminLecUserList(SugangVO vo);
+	List<SugangVO> adminLecDeliver(SugangVO vo);
 }
