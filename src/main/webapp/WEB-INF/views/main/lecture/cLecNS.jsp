@@ -196,11 +196,17 @@
                                 <p> ${noinfo.content }</p>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
-                                <div class="d-flex align-items-center">
-                                    <i class="fa fa-download mr-2"></i>
-                                </div>
-                                <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
-                                <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
+                                <c:if test="${not empty noinfo.fileList }">
+	                                 <h6 class="mb-0"><i class="fa fa-download mx-1"></i></h6>
+	                                 <c:forEach items="${noinfo.fileList }" var="file">
+	                                 	<h6 class="mb-0 ml-2" style="font-weight: 500;">
+	                                 		<a href="/download?phyPath=${file.phyPath}" class="text-dark">${file.filePath}</a>
+	                                 	</h6>
+	                                 </c:forEach>
+                   				</c:if>
+                   				<c:if test="${empty noinfo.fileList }">
+									<h6 class="mb-0"><i class="fa fa-download mx-1"></i>첨부파일 없음</h6>
+                   				</c:if>
                             </div>
                         </div>
                     </div>
@@ -208,7 +214,7 @@
                     <div class="row col-12 ml-1 justify-content-between">
                         <button class="btn btn-outline-secondary" onclick="location.href='/creator/cLecNL?ltNo='+${noinfo.ltNo}">뒤로가기</button>
                         <div class="row mr-4">
-                            <button id="up" onclick="" class="btn btn-outline-secondary mr-2">수정</button>
+                            <button id="up" class="btn btn-outline-secondary mr-2">수정</button>
                             <button id="del" class="btn btn-outline-secondary mr-2">삭제</button>
                         </div>
                     </div>
@@ -232,10 +238,13 @@
     </div>
     <form id="frm">
     	<input class="sendltno" type="hidden" name="ltNo" value="">
+    	<input class="sendntno" type="hidden" name="ntNo" value="">
+    	<input class="sendnoticeno" type="hidden" name="noticeNo" value="">
     </form>
     <form id="deleteFrm">
     	<input class="sendltno" type="hidden" name="ltNo" value="">
     	<input class="sendntno" type="hidden" name="ntNo" value="">
+    	<input class="sendfileno" type="hidden" name="fileNo" value="">
     </form>
 </body>
 <script>
@@ -351,14 +360,22 @@ function goStudent(e){
 	$('#frm').submit();
 }
 //공지사항 수정
-
+$('#up').on('click', function(){
+	$('.sendltno').val(${noinfo.ltNo});
+	$('.sendntno').val(${noinfo.ntNo});
+	$('.sendnoticeno').val(${noinfo.noticeNo});
+	$('#frm').attr("action", "/creator/cLecNU");
+	$('#frm').submit();
+})
 
 //공지사항 삭제
 $('#deleteNotice').on('click', function(){
 	$('.sendltno').val(${noinfo.ltNo});
 	$('.sendntno').val(${noinfo.ntNo});
+	$('.sendfileno').val(${noinfo.fileNo});
 	$('#deleteFrm').attr("action", "/creator/cLecNdelete");
 	$('#deleteFrm').submit();
 })
+
 </script>
 </html>

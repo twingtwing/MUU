@@ -23,27 +23,49 @@
 		AND NT_ST_CODE = 'B01'
 	</select>
 	
-	<select id="NoticeSelect" resultType="co.makeu.up.notice.service.NoticeVO" parameterType="co.makeu.up.notice.service.NoticeVO">
-		SELECT N.* FROM 
-		NOTICE N LEFT OUTER JOIN DETA_FILE F
-		ON N.FILE_NO = F.FILE_NO
-		WHERE NT_NO = #{ntNo}
+		<resultMap id="noticeFile" type="co.makeu.up.notice.service.NoticeVO">
+		<id property="ntNo" column="NT_NO"/>
+		<result property="wrDate" column="WR_DATE"/>
+		<result property="ttl" column="TTL"/>
+		<result property="content" column="CONTENT"/>
+		<result property="hits" column="HITS"/>
+		<result property="ltNo" column="LT_NO"/>
+		<result property="fileNo" column="FILE_NO"/>
+		<result property="modDate" column="MOD_DATE"/>
+		<result property="ntStCode" column="NT_ST_CODE"/>
+		<collection property="fileList" resultMap="fileList"/>
+	</resultMap>
+	
+	<resultMap type="co.makeu.up.detafile.service.DetafileVO" id="fileList">
+		<result property="detaNo" column="DETA_NO"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="phyPath" column="PHY_PATH"/>
+		<result property="fileNo" column="FILE_NO"/>
+	</resultMap>
+	
+	<select id="NoticeSelect" resultMap="noticeFile" parameterType="co.makeu.up.notice.service.NoticeVO">
+		SELECT N.*, D.FILE_PATH ,D.PHY_PATH ,D.DETA_NO
+		FROM NOTICE N LEFT OUTER JOIN DETA_FILE D
+		ON N.FILE_NO = D.FILE_NO
+		WHERE N.NT_NO = #{ntNo}
 	</select>
 	
 	<update id="updateHits" parameterType="Integer">
 		UPDATE NOTICE
-		SET HITS = NVL(#{hits},0) + 1
+		SET HITS = NVL(HITS,0) + 1
 		WHERE NT_NO = #{ntNo}
 	</update>
 	<insert id="insertNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
 		<selectKey keyProperty="ntNo" order="BEFORE" resultType="int">
 			SELECT NVL(MAX(NT_NO), 0)+1 FROM NOTICE
 		</selectKey>
-		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO, FILE_NO, NT_ST_CODE)
-		VALUES(#{ntNo}, SYSDATE, #{ttl}, #{content}, 0, #{ltNo}, null, 'B01')
+		INSERT INTO NOTICE(NT_NO, WR_DATE, TTL, CONTENT, HITS, LT_NO, NT_ST_CODE, FILE_NO)
+		VALUES(#{ntNo}, SYSDATE, #{ttl}, #{content}, 0, #{ltNo}, 'B01',
+		<if test="fileNo != 0">#{fileNo}</if>
+		<if test="fileNo == 0">NULL</if>)
 	</insert>
 	<delete id="deleteNotice" parameterType="co.makeu.up.notice.service.NoticeVO">
-		DELETE FROM NOTICE
+		DELETE FROM NOTICE 
 		WHERE NT_NO = #{ntNo}
 	</delete>
 	<select id="noticeFiles" parameterType="Integer" resultType="co.makeu.up.files.service.FilesVO">
@@ -51,4 +73,17 @@
         ON F.FILE_NO = D.FILE_NO
         WHERE F.FILE_NO = #{ltNo}
 	</select>
+	<select id="NoticeSelects" parameterType="co.makeu.up.notice.service.NoticeVO" resultType="co.makeu.up.notice.service.NoticeVO">
+		SELECT *
+		FROM NOTICE
+		WHERE NT_NO = #{ntNo}
+	</select>
+	<update id="NoticeUpdate" parameterType="co.makeu.up.notice.service.NoticeVO">
+		UPDATE NOTICE
+		SET TTL = #{ttl}, CONTENT = #{content}
+		<if test="fileNo != 0">
+	    , FILE_NO = #{fileNo}
+	    </if>
+		WHERE NT_NO = #{ntNo}
+	</update>
 </mapper>

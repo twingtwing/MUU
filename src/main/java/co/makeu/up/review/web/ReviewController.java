@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.progress.service.ProgressServiceImpl;
 import co.makeu.up.progress.service.ProgressVO;
 import co.makeu.up.review.service.ReviewServiceImpl;
@@ -27,6 +29,7 @@ public class ReviewController {
 	@Autowired SugangServiceImpl sugangDao;
 	@Autowired ProgressServiceImpl progressDao;
 	Logger logger = LoggerFactory.getLogger(ReviewController.class);
+	@Autowired LectureServiceImpl lectureDao;
 	
 	@GetMapping("/user/userLR")
 	public String userLecReview(ReviewVO vo, Model model, SugangVO sugangvo, Principal pri) {
@@ -100,8 +103,9 @@ public class ReviewController {
 	
 	//강의 리뷰 페이지 이동
 	@RequestMapping("/creator/cLecR")
-	public String cLecRpage() {
-		
+	public String cLecR(ReviewVO rvo, Model model) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(rvo.getLtNo()));
+		model.addAttribute("rvlist", reviewDao.reviewSelectList(rvo));
 		return "main/lecture/cLecR";
 	}
 }

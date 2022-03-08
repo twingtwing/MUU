@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.makeu.up.common.view.Pagination;
 import co.makeu.up.detafile.service.DetafileVO;
+import co.makeu.up.files.service.FileMapper;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.notice.service.NoticeServiceImpl;
@@ -41,6 +42,8 @@ public class NoticeController {
 	@Autowired SugangServiceImpl sugangDao;
 	@Autowired ProgressServiceImpl progressDao;
 	@Autowired LectureServiceImpl lectureDao;
+	@Autowired private String saveDir;
+	@Autowired FileMapper fileDao;
 	
 	//공지사항 리스트 페이지
 	@RequestMapping("/creator/cLecNL")
@@ -68,15 +71,17 @@ public class NoticeController {
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
 	}
-	//공지사항 리스트 페이지(검색)
-	@PostMapping("/creator/cLecNLsearch")
-	@ResponseBody
-	public String cLecNLsearch(LectureVO lvo, NoticeVO nvo, Model model,
-			@RequestParam(value="ttlSearchKey", required=false) String ttlSearchKey, 
-			@RequestParam(value="contentSearchKey", required=false) String contentSearchKey, 
-			@RequestParam(value="ltNo", required=false) int ltNo) {
-		System.out.println(ttlSearchKey);
-		System.out.println(contentSearchKey);
+	
+	//공지사항 리스트 페이지(검색시)
+	@RequestMapping("/creator/cLecNLsearch")
+	public String cLecNLsearch(LectureVO lvo, NoticeVO nvo, Model model) {
+		String inputTtl = nvo.getTtlSearchKey();
+		String inputContent = nvo.getContentSearchKey();
+		if(inputTtl != null) {
+			model.addAttribute("inputTtl", inputTtl);
+		} else if (inputContent != null) {
+			model.addAttribute("inputContent", inputContent);
+		}
 		nvo.setPage(1);
 		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
 		int listCnt = nlists.get(0).getCount();
@@ -87,24 +92,83 @@ public class NoticeController {
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
 	}
+	//공지사항 리스트 페이지(검색후번호클릭시)
+	@RequestMapping("/creator/cLecNLpagesearch")
+	public String cLecNLpagesearch(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+		String inputTtl = nvo.getTtlSearchKey();
+		String inputContent = nvo.getContentSearchKey();
+		if(inputTtl != null) {
+			model.addAttribute("inputTtl", inputTtl);
+		} else if (inputContent != null) {
+			model.addAttribute("inputContent", inputContent);
+		}
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("nlists", nlists);
+		return "main/lecture/cLecNL";
+	}
+	
 	
 	//공지사항 한건 읽기
 	@GetMapping("/creator/cLecNS")
-	public String cLecNS(LectureVO lvo, NoticeVO nvo, Model model) {
-		System.out.println("=======================");
-		System.out.println(nvo.getNtNo());
+	public String cLecNS(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
 		nvo = noticeDao.NoticeSelect(nvo);
+//		model.addAttribute("noticenNo", request.getParameter("noticeNo"));
 		model.addAttribute("noinfo", nvo);
-		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(nvo.getLtNo()));
 		noticeDao.updateHits(nvo);
 		return "main/lecture/cLecNS";
 	}
+	//공지사항 수정 페이지 이동
+	@RequestMapping("/creator/cLecNU")
+	public String cLecNU(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+//		model.addAttribute("noticeNo", request.getParameter("noticeNo"));
+		model.addAttribute("noinfo", noticeDao.NoticeSelects(nvo));
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		return "main/lecture/cLecNU";
+	}
+	
 	//공지사항 수정
+	@PostMapping("/creator/cLecNUpdate")
+	@ResponseBody
+	public NoticeVO cLecNUpdate(NoticeVO vo, @RequestParam(value="files", required = false) MultipartFile file,
+			MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("files");
+		if(fileList.size() != 0) {
+			List<DetafileVO> list = new ArrayList<DetafileVO>();
+			for (int i = 0; i < fileList.size(); i++) {
+				DetafileVO fileVo = new DetafileVO();
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = UUID.randomUUID().toString() + oriFileName;
+
+				try {
+					fileList.get(i).transferTo(new File(saveDir + safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				fileVo.setFilePath(oriFileName);
+				fileVo.setPhyPath(safeFile);
+				list.add(fileVo);
+			}
+			vo.setDetaFileList(list);
+		}
+		noticeDao.NoticeUpdate(vo);
+		return vo;
+	}
 	
 	//공지사항 삭제
 	@RequestMapping("/creator/cLecNdelete")
 	public String cLecNdelete(NoticeVO nvo, Model model) {
 		noticeDao.deleteNotice(nvo);
+		fileDao.delFile(nvo.getFileNo());
 		return "redirect:/creator/cLecNL?ltNo="+nvo.getLtNo();
 	}
 	
@@ -131,7 +195,7 @@ public class NoticeController {
 				
 
 				try {
-					fileList.get(i).transferTo(new File(safeFile));
+					fileList.get(i).transferTo(new File(saveDir + safeFile));
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -148,10 +212,6 @@ public class NoticeController {
 		return vo;
 	}
 	
-	@GetMapping("/creator/cLecNU")
-	public String cLecNU() {
-		return "main/lecture/cLecNU";
-	}
 	@GetMapping("/creator/cLecQ")
 	public String cLecQ() {
 		return "main/lecture/cLecQ";
