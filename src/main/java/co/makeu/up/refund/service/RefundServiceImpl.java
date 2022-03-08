@@ -1,6 +1,7 @@
 package co.makeu.up.refund.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,8 +37,8 @@ public class RefundServiceImpl implements RefundMapper {
 	}
 
 	@Override
-	public int updateRefund(RefundVO vo) {
-		return map.updateRefund(vo);
+	public void updateRefund(Map map1) {
+		map.updateRefund(map1);
 	}
 
 	@Override

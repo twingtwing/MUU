@@ -8,7 +8,11 @@ import lombok.Data;
 
 @Data
 public class NoticeVO {
+	//list뿌려주기 위해 추가한 값
 	private String rn;
+	private String noticeNo;
+	
+	//기본값
 	private int ntNo;
 	private Date wrDate;
 	private String ttl;
@@ -19,12 +23,17 @@ public class NoticeVO {
 	private Date modDate;
 	private String ntStCode;
 	
+	private List<DetafileVO> detaFileList;
+	
 	// for pagination
 	private int page;
+	private int count;
+	
 	// for search
 	private String ttlSearchKey;
 	private String contentSearchKey;
 	
 	//for deta_file
 	private List<DetafileVO> fileList;
+	
 }

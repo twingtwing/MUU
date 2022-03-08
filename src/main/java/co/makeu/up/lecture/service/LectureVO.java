@@ -38,9 +38,92 @@ public class LectureVO {
 	private String pht;//크리에이터 사진
 	private String creIntro;//크리에이터 소개
 	private String mySugang;//내 수강 영부
-
+	
+	// 검색 시 사용
+	private Date pastDate;
+	private Date recentDate;
+	private int count;
+	private String[] ltStCodeList;
+	
 	private int cnt; // 수강인원
 	private int sales; // 강의별 매출액
+	
+	//관리자 강의 관리를 위한 VO객체 선언 - 문의는 박정욱에게
+	private int page;
+	private int pageNum;
+	private int amount;
+	private int length;
+	private String start;
+	private String end;
+	
+	public LectureVO(){
+		this (1,10);
+	}
+	public LectureVO(int pageNum , int amount) {
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public String[] getLtStCodeList() {
+		return ltStCodeList;
+	}
+	public void setLtStCodeList(String[] ltStCodeList) {
+		this.ltStCodeList = ltStCodeList;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public Date getPastDate() {
+		return pastDate;
+	}
+	public void setPastDate(Date pastDate) {
+		this.pastDate = pastDate;
+	}
+	public Date getRecentDate() {
+		return recentDate;
+	}
+	public void setRecentDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
 			
 	public int getCnt() {
 		return cnt;

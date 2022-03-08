@@ -1,7 +1,6 @@
 package co.makeu.up.extendedLecture.web;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.makeu.up.extendedLecture.service.ExtendedLectureVO;
 import co.makeu.up.extendedLecture.service.ExtendedLetureService;
-import co.makeu.up.lecture.service.LectureVO;
 
 @RestController
 public class RestLectureController {
@@ -36,7 +34,10 @@ public class RestLectureController {
 	
 	//강의 상세 - 공지사항
 	@RequestMapping(value = "/lectureNotice", method = RequestMethod.GET)
-	public ExtendedLectureVO lectureNotice(ExtendedLectureVO vo) {
+	public ExtendedLectureVO lectureNotice(ExtendedLectureVO vo, Principal pri) {
+		if(pri != null) {
+			vo.setId(pri.getName());
+		}
 		return extendedDao.extendedNotice(vo);
 	}
 	
@@ -50,8 +51,8 @@ public class RestLectureController {
 	}
 	
 	//결제
-	@RequestMapping(value = "/user/lecturePay", method =RequestMethod.GET)
-	public ExtendedLectureVO lecturePay(ExtendedLectureVO vo, Principal pri) {
+	@RequestMapping(value = "/user/lecturePay", method =RequestMethod.POST)
+	public ExtendedLectureVO lecturePay0(ExtendedLectureVO vo,Principal pri) {
 		vo.setId(pri.getName());
 		return extendedDao.extenedPay(vo);
 	}

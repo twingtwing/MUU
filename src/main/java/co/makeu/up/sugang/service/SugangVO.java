@@ -1,6 +1,10 @@
 package co.makeu.up.sugang.service;
 
+
+
+//import java.util.Date;
 import java.sql.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -22,7 +26,10 @@ public class SugangVO {
 	private String tel;
 	private Date expDate;
 	
-	// for join
+	//for extended
+	private int num;
+	
+	//for join
 	private String ttl;
 	private String thumb;
 	private int cnt;
@@ -39,6 +46,8 @@ public class SugangVO {
 	private int progPct;
 	
 	// for search
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDateSearch;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expDateSearch;
 }

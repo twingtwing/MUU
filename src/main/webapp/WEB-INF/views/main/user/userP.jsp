@@ -16,9 +16,7 @@
       background-color: lightgray;
     }
 
-    tbody>tr {
-      cursor: pointer;
-    }
+
 
     .list-link {
       color: black;
@@ -93,7 +91,7 @@
                 </div>
         <div class="col-lg-10">
           <div class="row ml-2">
-            <h3 class="font-weight-bold"><i class="fa fa-money text-danger" aria-hidden="true"></i>&nbsp;결제내역</h3>
+            <h3 class="font-weight-bold"><i class="fa fa-money text-danger" aria-hidden="true"></i>&nbsp;결제내역 ( 총 ${payCnt }건 )</h3>
           </div>
           <hr class="font-weight-bold">
           <div class="row py-3">
@@ -206,7 +204,7 @@
                         <tr>
                           <th class="text-center align-middle" style="width:200px">강의사진</th>
                           <th class="text-center align-middle">강의제목</th>
-                          <th class="text-center align-middle">강의가격<br><span class="small">(키트 가격은 강의 가격에 포함됨)</span></th>
+                          <th class="text-center align-middle">수강료<br><span class="small">(키트 가격은 지불액에 포함됨)</span></th>
                           <th class="text-center align-middle">구매날짜</th>
                           <th class="text-center align-middle">만료날짜</th>
                           <th class="text-center align-middle">상태</th>
@@ -265,10 +263,10 @@
   <script type="text/javascript">
     $(function () {
       $('#datetimepicker1').datetimepicker({
-        format: 'L'
+        format: 'yy-mm-dd'
       });
       $('#datetimepicker2').datetimepicker({
-    	format: 'L',
+    	format: 'yy-mm-dd',
         useCurrent: false
       });
       $("#datetimepicker1").on("change.datetimepicker", function (e) {

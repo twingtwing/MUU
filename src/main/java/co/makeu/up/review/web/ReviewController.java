@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.progress.service.ProgressServiceImpl;
@@ -95,5 +96,12 @@ public class ReviewController {
 	@PostMapping("/user/updateReview")
 	public void updateReview(ReviewVO vo) {
 		reviewDao.updateMyReview(vo);
+	}
+	
+	//강의 리뷰 페이지 이동
+	@RequestMapping("/creator/cLecR")
+	public String cLecRpage() {
+		
+		return "main/lecture/cLecR";
 	}
 }

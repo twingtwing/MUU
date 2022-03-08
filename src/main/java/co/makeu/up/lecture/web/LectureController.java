@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -140,8 +141,8 @@ public class LectureController {
 	
 	//강의 결제
 	@GetMapping("/user/lecP")
-	public String lecP(@RequestParam(value="lecList") List<Integer> lecList,Model model) {
-		model.addAttribute("lecList",lecList);
+	public String lecP(Model model,@Param("ltNo") int ltNo) {
+		model.addAttribute("ltNo",ltNo);
 		return "main/lecture/lecP";
 	}
 	
@@ -304,8 +305,8 @@ public class LectureController {
 	
 	//강의 수정 페이지
 	@RequestMapping("/creator/lecU")
-	public String lectureUpdatePage(int sendltno, Model model) {
-			model.addAttribute("lecinfo", lectureDao.lectureSelect(sendltno));
+	public String lectureUpdatePage(LectureVO vo, Model model) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
 		return "main/lecture/lecU";
 	}
 	

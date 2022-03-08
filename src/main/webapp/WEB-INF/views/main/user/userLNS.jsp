@@ -79,6 +79,9 @@
                   </div>
                 </div>
               </li>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/lecD" style="height: 55px;">
+                <div class="list-link">강의 상세정보</div>
+              </li>
               <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/user/userLectureSelect" style="height: 55px;">
                 <div class="list-link">수업 목록</div>
               </li>
@@ -147,13 +150,15 @@
               <!-- 다중파일 -->
               <div class="row col-12 bg-light px-3 py-0 m-0 bg-light py-2" style="border-top: 2px solid lightgray; border-bottom:2px solid lightgray;">
                   <div class="d-flex align-items-center">
-                  <c:if test="${not empty notice.fileNo}">
-                      <i class="fa fa-download mr-2"></i>
+	                  <span class="mb-0 mr-2">　
+                  <c:if test="${notice.fileNo ne 0}">
+                  <c:forEach items="${noticeFiles }" var="f">
+	                      <i class="fa fa-download mr-2"></i>
+		                  <a href="/download?phyPath=${f.phyPath}" class="text-muted file_download">${f.filePath }</a>
+                  </c:forEach>
                   </c:if>
+		               </span>
                   </div>
-                  <span class="mb-0 mr-2">
-	                  <a href="" class="text-muted file_download">${notice.fileNo }</a>
-               </span>
               </div>
             </div>
           </div>
@@ -175,14 +180,9 @@
   $('.listmenu').click((e)=>{
 	  let url = e.currentTarget.dataset.url;
 	  $('#move').attr('action',url);
-	  if(url ==='/user/userLectureSelect'){
-		  $('#move').attr('method','post');
-		  $('#move').append(
-			$('<input>').attr('type','hidden').attr('name','${_csrf.parameterName}').val('${_csrf.token}')
-		  )
-	  }
 	  $('#move').submit();
   })
+  
     $('#back').click(()=>{
       location.href = '/user/userLNL?ltNo=${notice.ltNo}';
     })

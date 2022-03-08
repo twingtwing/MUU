@@ -40,7 +40,8 @@
 	
 	<select id="adminRefundList" resultType="co.makeu.up.refund.service.RefundVO">
 		SELECT * FROM(SELECT ROWNUM RN,
-		r.TLSN_NO,S.ID,S.PAY,S.REG_DATE,R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,L.TTL, L.LT_NO,U.NAME,S.ADDR,S.ZIP,S.DETA_ADDR,COUNT(*) OVER() length
+		R.TLSN_NO,S.ID,S.PAY,S.REG_DATE,R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,S.USE_POINT,
+		L.TTL, L.LT_NO,U.NAME,U.POINT,S.ADDR,S.ZIP,S.DETA_ADDR,COUNT(*) OVER() length
 		FROM SUGANG S JOIN REFUND R
 		ON S.TLSN_NO = R.TLSN_NO
 		JOIN LECTURE L
@@ -57,14 +58,15 @@
 	
 	<select id="adminRefundListSearch" resultType="co.makeu.up.refund.service.RefundVO">
 		SELECT * FROM(SELECT ROWNUM RN,
-		r.TLSN_NO,s.id,s.pay,s.reg_date,r.req_date,r.content,r.rf_st_code,l.ttl, l.lt_no,u.name,s.addr,s.zip,s.deta_addr,COUNT(*) OVER() length
+		R.TLSN_NO,S.ID,S.PAY,S.REG_DATE,R.REQ_DATE,R.CONTENT,R.RF_ST_CODE,S.USE_POINT,
+		L.TTL, L.LT_NO,U.NAME,U.POINT,S.ADDR,S.ZIP,S.DETA_ADDR,COUNT(*) OVER() length
 		FROM SUGANG S JOIN REFUND R
 		ON S.TLSN_NO = R.TLSN_NO
 		JOIN LECTURE L
 		ON L.LT_NO = S.LT_NO
         JOIN USERS U
         ON U.ID = S.ID
-		where 1=1
+        where 1=1
 		<if test="name != null and name != ''">
 		and u.name like '%' || #{name}  || '%'
 		</if>
@@ -93,9 +95,10 @@
 	    ]]>
 	</select>
 	
-	<update id="updateRefund" parameterType="co.makeu.up.refund.service.RefundVO">
-		update refund set rf_st_code = 'RF02'
-		where TLSN_NO = #{tlsnNo}
+	<update id="updateRefund" parameterType="HashMap" statementType="CALLABLE">
+		{call 
+		update_refund(#{tlsnNo},#{usePoint},#{Point},#{Id})
+		}
 	</update>
 	
 	<update id="adRefCancleUpdate" parameterType="co.makeu.up.refund.service.RefundVO">

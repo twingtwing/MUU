@@ -1,20 +1,49 @@
 package co.makeu.up.lecture.web;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import co.makeu.up.common.view.PageVo;
+import co.makeu.up.ctgr.service.CtgrVO;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.refund.service.RefundVO;
+
+import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
+
+import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
 
 @Controller
 public class AdminLectureController {
-
+	@Autowired LectureServiceImpl lectureDao;
+	
 	//강의리스트
 	@GetMapping("/admin/adLecL")
-	public String adLecL() {
+	public String adLecL(Model model, LectureVO vo) {
+		if(vo.getPage()==0) {
+			vo.setPage(1);			
+		}
+		List<LectureVO> list = lectureDao.adminLectureTable(vo);
+		Pagination pagination = new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), vo.getPage());
+		model.addAttribute("lectures",list);
+		model.addAttribute("pages",pagination);
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecL";
 	}
 	
 	//강의상세-강의소개
 	@GetMapping("/admin/adLecI")
-	public String adLecI() {
+	public String adLecI(Model model,int ltNo) {
+		model.addAttribute("lectureInfo",lectureDao.lectureSelect(ltNo));
 		return "admin/lecture/adLecI";
 	}
 	
@@ -62,7 +91,14 @@ public class AdminLectureController {
 	
 	//강의등록 조회
 	@GetMapping("/admin/adLecAL")
-	public String adLecAL() {
+	public String adLecAL(LectureVO vo, Model model) {
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/lecture/adLecAL";
 	}
 	

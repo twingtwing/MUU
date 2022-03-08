@@ -64,6 +64,7 @@ public Pagination(int listCnt, int currPage){
         
         /** DB 질의를 위한 startIndex 설정 **/
         setStartIndex(currPage);
+        
     }
  
     public void setPageCnt(int listCnt) {

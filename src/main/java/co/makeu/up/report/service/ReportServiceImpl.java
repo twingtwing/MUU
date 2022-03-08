@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.makeu.up.review.service.ReviewVO;
+import co.makeu.up.extendedLecture.service.ExtendedLetureMapper;
 
 @Repository("reportDao")
 public class ReportServiceImpl implements ReportMapper{
 	@Autowired ReportMapper map;
+	@Autowired ExtendedLetureMapper mapper;
 	
 	@Override
 	public int insertReviewReport(ReportVO vo) {
@@ -23,13 +24,11 @@ public class ReportServiceImpl implements ReportMapper{
 
 	@Override
 	public List<ReportVO> selectreport(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.selectreport(vo);
 	}
 
 	@Override
 	public ReportVO selectreports(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.selectreports(vo);
 	}
 

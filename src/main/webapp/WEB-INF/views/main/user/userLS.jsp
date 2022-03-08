@@ -96,6 +96,9 @@
                   </div>
                 </div>
               </li>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/lecD" style="height: 55px;">
+                <div class="list-link">강의 상세정보</div>
+              </li>
               <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/user/userLectureSelect" style="height: 55px;">
                 <div class="list-link active">수업 목록</div>
               </li>
@@ -152,7 +155,7 @@
                 <div class="bg-light w-75 p-3 d-flex justify-content-between align-items-center">
                   <ol class="ml-5" id="lsnlist">
                     <c:forEach items="${lessonList}" var="lesson" varStatus="st">
-                    <li class="${lesson.lsnNo}">${lesson.ttl}
+                    <li class="${lesson.serialNo}">${lesson.ttl}
 	                    <c:if test="${st.index eq 0 }">                    
 	                    <span class="bg-primary text-white small p-1 rounded mx-3">무료 (OT)</span>
 	                    </c:if>
@@ -167,11 +170,11 @@
                 </div>
                 <div class="bg-light w-25 p-3">
                   <ul>
-                  <c:forEach items="${lessonList}" var="lesson" varStatus="st">
-	                 <li class="position-relative h-100" style="background-color: lightgray;">　
-	                  <c:if test="${lesson.lsnNo eq progress[st.index].lsnNo}">
-		                 <div class="bg-success h-100 position-absolute" style="top:0; left:0; width:${progress[st.index].progPct}%"></div>
-	                  </c:if>
+                  <c:forEach items="${progress}" var="p">
+	                 <li class="position-relative h-100" style="background-color: lightgray;">&nbsp;　
+	                 <c:if test="${p.progPct ne 0}">
+		                 <div class="bg-success h-100 position-absolute" style="top:0; left:0; width:${p.progPct}%"></div>
+	                 </c:if>
 	               </li>                  
                   </c:forEach>
                   </ul>
@@ -188,7 +191,7 @@
   <!-- body 의 body 끝 -->
   <form action="/user/userLW" method="post" id="watchForm" target="_blank">
   	<input type="hidden" name="ltNo" class="ltnoInput">
-  	<input type="hidden" name="lsnNo" class="lsnnoInput">
+  	<input type="hidden" name="serialNo" class="lsnnoInput">
   	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
   </form>
   <form action="" id="move" method="get">
@@ -201,12 +204,6 @@
   $('.listmenu').click((e)=>{
 	  let url = e.currentTarget.dataset.url;
 	  $('#move').attr('action',url);
-	  if(url ==='/user/userLectureSelect'){
-		  $('#move').attr('method','post');
-		  $('#move').append(
-			$('<input>').attr('type','hidden').attr('name','${_csrf.parameterName}').val('${_csrf.token}')
-		  )
-	  }
 	  $('#move').submit();
   })
   

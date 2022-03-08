@@ -88,4 +88,10 @@
 		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
 		AND RN <![CDATA[<=]]> #{page} * 10
 	</select>
+	
+	<update id="userPointUpdate" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS 
+		SET POINT = POINT - #{point}
+		WHERE ID = #{id}
+	</update>
 </mapper>

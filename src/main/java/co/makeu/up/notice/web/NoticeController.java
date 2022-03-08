@@ -1,8 +1,12 @@
 package co.makeu.up.notice.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.makeu.up.common.view.Pagination;
+import co.makeu.up.detafile.service.DetafileVO;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.notice.service.NoticeServiceImpl;
@@ -36,28 +44,108 @@ public class NoticeController {
 	
 	//공지사항 리스트 페이지
 	@RequestMapping("/creator/cLecNL")
-	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model) {
+		nvo.setPage(1);
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
-		model.addAttribute("nlists", noticeDao.NoticeList(nvo));
+		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
 	}
+	//공지사항 리스트 페이지(번호클릭시)
+	@RequestMapping("/creator/cLecNLpage")
+	public String cLecNLpage(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("nlists", nlists);
+		return "main/lecture/cLecNL";
+	}
+	//공지사항 리스트 페이지(검색)
+	@PostMapping("/creator/cLecNLsearch")
+	@ResponseBody
+	public String cLecNLsearch(LectureVO lvo, NoticeVO nvo, Model model,
+			@RequestParam(value="ttlSearchKey", required=false) String ttlSearchKey, 
+			@RequestParam(value="contentSearchKey", required=false) String contentSearchKey, 
+			@RequestParam(value="ltNo", required=false) int ltNo) {
+		System.out.println(ttlSearchKey);
+		System.out.println(contentSearchKey);
+		nvo.setPage(1);
+		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
+		int listCnt = nlists.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		model.addAttribute("nlists", nlists);
+		return "main/lecture/cLecNL";
+	}
+	
+	//공지사항 한건 읽기
 	@GetMapping("/creator/cLecNS")
-	public String cLecNS() {
+	public String cLecNS(LectureVO lvo, NoticeVO nvo, Model model) {
+		System.out.println("=======================");
+		System.out.println(nvo.getNtNo());
+		nvo = noticeDao.NoticeSelect(nvo);
+		model.addAttribute("noinfo", nvo);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		noticeDao.updateHits(nvo);
 		return "main/lecture/cLecNS";
+	}
+	//공지사항 수정
+	
+	//공지사항 삭제
+	@RequestMapping("/creator/cLecNdelete")
+	public String cLecNdelete(NoticeVO nvo, Model model) {
+		noticeDao.deleteNotice(nvo);
+		return "redirect:/creator/cLecNL?ltNo="+nvo.getLtNo();
 	}
 	
 	//공지사항 글 등록 페이지
 	@GetMapping("/creator/cLecNI")
-	public String cLecNI(LectureVO vo, Model model, HttpServletRequest request) {
-		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+	public String cLecNI(NoticeVO nvo, LectureVO lvo, Model model, HttpServletRequest request) {
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
+		nvo = noticeDao.NoticeSelect(nvo);
 		return "main/lecture/cLecNI";
 	}
 	
 	//공지사항 글 insert
 	@PostMapping("/creator/cLecNInsert")
 	@ResponseBody
-	public void cLecNInsert(NoticeVO vo) {
+	public NoticeVO cLecNInsert(NoticeVO vo, @RequestParam(value="files", required = false) MultipartFile file, 
+			MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("files");
+		if(fileList.size() != 0) {
+			List<DetafileVO> list = new ArrayList<DetafileVO>();
+			for (int i = 0; i < fileList.size(); i++) {
+				DetafileVO fileVo = new DetafileVO();
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = UUID.randomUUID().toString() + oriFileName;
+				
+
+				try {
+					fileList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				fileVo.setFilePath(oriFileName);
+				fileVo.setPhyPath(safeFile);
+				list.add(fileVo);
+			}
+			vo.setDetaFileList(list);
+		}
 		noticeDao.insertNotice(vo);
+		return vo;
 	}
 	
 	@GetMapping("/creator/cLecNU")
@@ -123,7 +211,8 @@ public class NoticeController {
 		checkvo.setProgPct(progressDao.wholeProgress(prvo));
 		model.addAttribute("sugang",checkvo);
 		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
-		noticeDao.updateHits(vo.getNtNo());
+		noticeDao.updateHits(vo);
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(vo.getLtNo()));
 		return "main/user/userLNS";
 	}
 }

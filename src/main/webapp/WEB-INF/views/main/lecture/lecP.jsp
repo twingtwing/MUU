@@ -53,33 +53,31 @@
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="card">
-                                <div class="card-header d-flex justify-content-between">
+                                <div class="card-header d-flex justify-content-start">
                                     <h5>강의정보</h5>
-                                    <p v-on:click="delAll" class="mb-0 bocket_delete text-muted">전체삭제</p>
                                 </div>
                                 <div class="card-body pb-1">
-                                    <div v-if="lectureList.length == 0">
+                                    <div v-if="lectureDetail == null">
                                         <p class="text-center">선택한 강의가 없습니다.</p>
                                     </div>
                                     <!-- 반복 -->
-                                    <div v-for="(lec,index) in lectureList" class="card mb-4" style="border-radius: 20px; border: 2px solid #070720;">
+                                    <div v-if="lectureDetail != null" class="card mb-4" style="border-radius: 20px; border: 2px solid #070720;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-4">
-                                                    <img src="/resources/img/blog/blog-1.jpg" style="height: 200px; width: 200px; border-radius: 17px;" alt="강의 이미지">
+                                                    <img :src="lectureDetail.thumb" style="height: 200px; width: 200px; border-radius: 17px;" alt="강의 이미지">
                                                 </div>
                                                 <div class="col-lg-8">
                                                     <div class="row h-100 mx-2 d-flex align-content-between flex-wrap">
                                                         <div class="w-100 mt-3">
-                                                            <h5 class="font-weight-bold">{{lec.ttl}}</h5>
-                                                            <p class="text-right mr-2">( 수강기간 : {{lec.tlsnTerm}}개월 )</p>
+                                                            <h5 class="font-weight-bold">{{lectureDetail.ttl}}</h5>
+                                                            <p class="text-right mr-2">( 수강기간 : {{lectureDetail.tlsnTerm}}개월 )</p>
                                                         </div>
                                                         <div class="w-100 mb-1">
-                                                            <p class="text-right mr-2">키트 : {{lec.kitPrc}}원</p>
-                                                            <p class="text-right mr-2">강의 : {{lec.prc}}원</p>
-                                                            <div class="row d-flex justify-content-between">
-                                                                <small v-on:click="delSelect(index)" class="bocket_delete text-muted ml-2">장바구니에서 삭제</small>
-                                                                <h5 class="mr-4 font-weight-bold">총합 : {{lec.prc + lec.kitPrc}}원</h5>
+                                                            <p class="text-right mr-2">키트 : {{lectureDetail.kitPrc}}원</p>
+                                                            <p class="text-right mr-2">강의 : {{lectureDetail.prc}}원</p>
+                                                            <div class="row d-flex justify-content-end">
+                                                                <h5 class="mr-4 font-weight-bold">총합 : {{lectureDetail.kitPrc + lectureDetail.prc}}원</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,7 +89,7 @@
                             </div>
                             <div class="row d-flex justify-content-between mx-1 mt-2">
                                 <button onclick="history.back()" class="btn btn-outline-secondary"><i class="arrow_left"></i>뒤로가기</button>
-                                <button class="btn btn-outline-secondary">워시리스트로 이동</button>
+                                <a href="/user/userWishList" class="btn btn-outline-secondary">워시리스트로 이동</a>
                             </div>
                         </div>
                         <div class="col-lg-5">
@@ -144,6 +142,7 @@
                                                                     <input maxlength="11" v-on:change="valiTel" class="border mb-0 tel" type="text" spellcheck="false" style="height: 30px;">
                                                                     <div class="d-flex justify-content-end">
                                                                         <small id="telErr" class="d-none text-danger">숫자를 입력해주세요.</small>
+                                                                        <small class="valErr d-none text-danger">값을 입력해주세요.</small>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -151,6 +150,9 @@
                                                                 <th class="text-center align-middle">우편번호</th>
                                                                 <td>
                                                                     <input v-on:click="addrSearch" id="searchZip" class="border mb-0" type="text" spellcheck="false" style="height: 30px;">
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <small class="valErr d-none text-danger">값을 입력해주세요.</small>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <button v-on:click="addrSearch" class="border mb-0" class="btn btn-light"><strong class="text-muted">주소검색</strong></button>
@@ -166,6 +168,9 @@
                                                                 <th class="text-center align-middle">상세주소</th>
                                                                 <td colspan="2">
                                                                     <input class="border mb-0" type="text" spellcheck="false" style="height: 30px;">
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <small class="valErr d-none text-danger">값을 입력해주세요.</small>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -183,9 +188,9 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <div class="mx-3 mt-2">
-                                            <div v-for="lec in lecDetails" class="row justify-content-between">
-                                                <p class="font-weight-bold">{{lec.ttl}}</p>
-                                                <p class="font-weight-bold">+ {{lec.kitPrc + lec.prc}}원</p>
+                                            <div class="row justify-content-between">
+                                                <p class="font-weight-bold">{{lectureDetail.ttl}}</p>
+                                                <p class="font-weight-bold">+ {{lectureDetail.kitPrc + lectureDetail.prc}}원</p>
                                             </div>
                                             <div class="row justify-content-between">
                                                 <p class="mb-0">사용할 적립금</p>
@@ -211,10 +216,13 @@
                                             </div>
                                             <div class="row justify-content-between">
                                                 <p class="mb-0">적립 예정 적립금</p>
-                                                <p class="mb-0">+ {{prcSum/gradePer}}원</p>
+                                                <p class="mb-0">+ {{Math.round(prcSum*gradePer)}}원</p>
                                             </div>
                                             <div class="row justify-content-end">
-                                                <p class="text-muted">현재 등급 {{grade}} ({{gradePer}}%)</p>
+                                                <p class="text-muted mb-0">현재 등급 <strong>{{grade}}</strong> ({{gradePer * 100}}%)</p>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <small class="text-muted">적립금은 7일이후에 적립됩니다.</small>
                                             </div>
                                         </div>
                                         <hr>
@@ -230,7 +238,7 @@
                                                 <small class="text-danger">구매조건 및 결제대행 서비스 약관 동의하여야 합니다.</small>
                                             </div>
                                             <div class="row mt-3">
-                                                <button id="payBtn" class="btn btn-danger w-100 font-weight-bold" disabled>결제</button>
+                                                <button id="payBtn" v-on:click="payAjax" class="btn btn-danger w-100 font-weight-bold" disabled>결제</button>
                                             </div>
                                         </div>
                                     </div>
@@ -275,47 +283,136 @@
                 </div>
             </div>
         </section>
+        <form action="/user/sugangInsert" method="post" id="frm">
+        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+        	<input type="hidden" name ="ltNo" id="ltNo">
+        	<input type="hidden" name ="tel" id="tel">
+        	<input type="hidden" name ="zip" id="zip">
+        	<input type="hidden" name ="addr" id="addr">
+        	<input type="hidden" name ="detaAddr" id="detaAddr">
+        	<input type="hidden" name ="usePoint" id="usePoint">
+        	<input type="hidden" name ="pay" id="pay">
+        	<input type="hidden" name ="shipStCode" id="shipStCode">
+        	<input type="hidden" name ="num" id="num">
+        </form>
         <!-- body 의 body 끝 -->
     </div>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script>
         const pay = Vue.createApp({
             data(){
                 return{
                     payPoint : 0,
-                    lecDetails : [],
+                    lectureDetail : {},
                     userAddr : {}
                 }
             },
             computed :{
                 prcSum : function(){
-                    const ary = this.lecDetails;
-                    let sum = 0;
-                    for(val of ary){
-                        sum += val.prc + val.kitPrc;
-                    }
-                    sum -= this.payPoint;
-                    return sum;
+                    return this.lectureDetail.prc + this.lectureDetail.kitPrc - this.payPoint;
                 },
                 grade : function(){
                     let uGrdCode = this.userAddr.uGrdCode;
-                    if(uGrdCode ==='ao1'){
-                        return '나무';
+                    if(uGrdCode ==='U01'){
+                        return '일반';
+                    }else if(uGrdCode ==='U02'){
+                        return '새싹';
+                    }else if(uGrdCode ==='U03'){
+                        return '꽃';
+                    }else{
+                    	return '나무';
                     }
                 },
                 gradePer : function(){
                     let uGrdCode = this.userAddr.uGrdCode;
-                    if(uGrdCode ==='ao1'){
-                        return 10 ;
+                    if(uGrdCode ==='U01'){
+                        return 0.01;
+                    }else if(uGrdCode ==='U02'){
+                        return 0.03;
+                    }else if(uGrdCode ==='U03'){
+                        return 0.05;
+                    }else{
+                    	return 0.1;
                     }
                 }
             },
             methods : {
-                delAll(){
-                    this.payObject.lecList=[];
-                },
-                delSelect(index){
-                    this.payObject.lecList.splice(index,1);
-                },
+            	payAjax(){
+            		let tag =  $('.tab-pane.fade.active.show')
+            		let tel, zip, addr, detaAddr;
+            		if(tag.attr('id') == 'another'){
+            			this.valForm();
+            			const input = tag.find('input');
+            			tel = input[0].value;
+            			zip = input[1].value;
+            			addr =input[2].value;
+            			detaAddr =input[3].value;
+            		}else{
+            			const td = tag.find('td');
+            			tel = td[0].innerText;
+            			zip = td[1].innerText;
+            			addr =td[2].innerText;
+            			detaAddr =td[3].innerText;
+            		}
+            		$('#frm #ltNo').val(this.lectureDetail.ltNo);
+            		$('#frm #tel').val(tel);
+            		$('#frm #zip').val(zip);
+            		$('#frm #addr').val(addr);
+            		$('#frm #detaAddr').val(detaAddr);
+            		$('#frm #usePoint').val(this.payPoint);
+            		$('#frm #pay').val(this.prcSum);
+            		if(this.lectureDetail.kitName != null){
+            			$('#frm #shipStCode').val('D01');
+            		}
+            		$('#frm #num').val(this.lectureDetail.tlsnTerm);
+            		
+            		var IMP = window.IMP;
+        			IMP.init('imp47910912');
+        			 IMP.request_pay({
+        				   pg : 'html5_inicis', // 결제방식
+        			       pay_method : 'card',	// 결제 수단
+        			       merchant_uid : 'merchant_' + new Date().getTime(),
+        			       name : '결제 테스트용',	// order 테이블에 들어갈 주문명 혹은 주문 번호
+        			       amount : '100',	// 결제 금액
+        			       //amount : $('#total').val(),
+        			       buyer_email : this.userAddr.id,	// 구매자 email
+        			       buyer_name :  this.userAddr.name,	// 구매자 이름
+        			       buyer_tel : tel,	// 구매자 전화번호
+        			       buyer_addr :  addr + ' ' +detaAddr,	// 구매자 주소
+        			       buyer_postcode :  zip,	// 구매자 우편번호
+        			       m_redirect_url : '/home'	// 결제 완료 후 보낼 컨트롤러의 메소드명
+        			 }, function(rsp){
+        				 if ( rsp.success ) { // 성공시
+        						var msg = '결제가 완료되었습니다.';
+//        						msg += '고유ID : ' + rsp.imp_uid;
+//        						msg += '상점 거래ID : ' + rsp.merchant_uid;
+//        						msg += '결제 금액 : ' + rsp.paid_amount;
+//        						msg += '카드 승인번호 : ' + rsp.apply_num;
+        						console.log('결제가 성공적으로 마무리되었습니다.');
+        						window.alert(msg);
+        						$('#frm').submit();
+        					} else { // 실패시
+        						var msg = '결제에 실패하였습니다.';
+        						msg += '에러내용 : ' + rsp.error_msg;
+        						console.log('실패');
+        						window.alert(msg);
+        					}
+        			 
+        			 });
+            		
+            	},
+            	valForm(){
+            		const ary = $('#another input');
+            		for(var input of ary){
+            			if(input.value ==''){
+            				$(input).closest('td').find('.valErr').removeClass('d-none');
+            				return;
+            			}else{
+            				$(input).closest('td').find('.valErr').addClass('d-none');
+            			}
+            		}
+            	},
                 valiTel(){
                     if(/[^0-9]/g.test(event.target.value)){
                         event.target.value = event.target.value.replaceAll(/[^0-9]/g, "");
@@ -364,57 +461,36 @@
                 checkClick(){
                     if(event.target.checked){
                         $('#payBtn').removeAttr('disabled');
+                        agreeModal.checked = true;
                     }else{
                         $('#payBtn').attr('disabled','false');
+                        agreeModal.checked = false;
                     }
                 },
                 checkModalClick(){
-                    agree.checked = true;
-                    $('#checkModal').modal('hide');
+                	if(!agree.checked){
+	                    $('#payBtn').removeAttr('disabled');
+	                    $('#checkModal').modal('hide');
+                	}else if(agree.checked){
+	                    $('#payBtn').attr('disabled','false');
+                	}
                 }
             },
             beforeCreate : function(){
-            	console.log('${lecList}');
-
-            	fetch("/user/lecturePay?lecList="+'${lecList}')
-                .then(response => response.json())
-                .then(result => {
-                	this.lecDetails = result.lectureList;
+            	$.ajax({
+        			url : '/user/lecturePay',
+        			data : {ltNo : '${ltNo}' },
+        			dataType: 'JSON',
+        			type : 'post',
+        			beforeSend : (xhr) =>{
+        			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        			},
+        		})
+        		.done(result=>{
+                	this.lectureDetail = result.lectureDetail;
 					this.userAddr = result.userAddr;                
-                })
+        		})
 				
-                /*
-            	beforeCreate
-
-                */
-               this.payObject = {
-                   lecList : [
-                       {
-                           ttl:'제목1',
-                           tlsnTerm : 3,
-                           kitPrc : 4000,
-                           prc : 30000,//키트 + 가 된 가격으로 와야함
-                        },
-                        {
-                           ttl:'제목2',
-                           tlsnTerm : 3,
-                           kitPrc : 6000,
-                           prc : 46000,//키트 + 가 된 가격으로 와야함
-                        },
-                        {
-                           ttl:'제목3',
-                           tlsnTerm : 12,
-                           kitPrc : 16000,
-                           prc : 66000,//키트 + 가 된 가격으로 와야함
-                        }
-                   ],
-                   tel : '02020',
-                   zip : 1233,
-                   addr : '서성구',
-                   detaAddr : '하양동',
-                   point : 10000,
-                   uGrdCode : 'ao1'
-               }
             }
         });
 

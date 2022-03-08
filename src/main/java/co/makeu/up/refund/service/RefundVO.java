@@ -23,6 +23,8 @@ public class RefundVO {
 	private String start;
 	private String end;
 	private String creId;
+	private int usePoint;
+	private int point;
 	
 	private String addr;
 	private int zip;

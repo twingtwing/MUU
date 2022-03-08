@@ -9,4 +9,10 @@
 		INSERT INTO FILES(FILE_NO,WR_DATE,USE_YN)
 		VALUES(${fileNo},SYSDATE,'y')
 	</insert>
+	
+	<update id="delFile" parameterType="int">
+		UPDATE FILES
+		SET USE_YN = 'n'
+		WHERE FILE_NO = #{fileNo}
+	</update>
 </mapper>
