@@ -37,7 +37,9 @@
             margin-right: 5%;
             
         }
-
+	#mod:hover{
+background-color:#f5f5f5;
+}
     </style>
 </head>
 <body>
@@ -52,7 +54,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">리뷰신고</li>
                                 </ol>
                             </nav>
@@ -186,13 +188,13 @@
                                         </thead>
                                         <tbody id="mo"  onmouseover = "setCursor(this,'pointer')">
                                         <c:if test="${empty list }">
-                                        	<tr>
+                                        	<tr >
                                         		<td class="font-weight-bold py-4" colspan="8">데이터가 없습니다.</td>
                                         	</tr>
                                         </c:if>
                                         <c:if test="${ not empty list }">
 	                                        <c:forEach items = "${list }" var = "list">
-	                                            <tr onclick="location.href='/admin/adRRepS?rpNo=${list.rpNo }'">
+	                                            <tr id="mod" onclick="location.href='/admin/adRRepS?rpNo=${list.rpNo }'">
 	                                                <td>${list.rpNo }</td>
 	                                                <td>
 	                                                   <c:if test="${list.type eq 'RPT01' }">
