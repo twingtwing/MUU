@@ -23,6 +23,11 @@ public class ReportVO {
 	private int length;
 	private String start;
 	private String end;
+	private String lsnttl; // 수업 제목
+	private int serialno; //강의번호
+	private String lsnfile; //물리적파일 이름
+	private String ltStCode;
+	private String rvcode;
 
 	private int pageNum;
 	private int amount;

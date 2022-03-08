@@ -15,23 +15,27 @@
 	 select* from (
     select rownum rn , w.*
     from(
-    SELECT R.*,L.CRE_ID, L.TTL,V.CONTENT RECONTENT , v.star, count(*) over() length
+    SELECT R.*,L.CRE_ID, L.TTL,L.LT_ST_CODE,V.CONTENT RECONTENT , v.star, count(*) over() length 
 				FROM REPORT R JOIN LECTURE L
 				ON R.LT_NO = L.LT_NO
-				JOIN REVIEW V
+				LEFT JOIN REVIEW V
 				ON R.NUM = V.RV_NO
 				where 1=1
+				AND R.CTGR = #{ctgr}
 				<if test="reporter != null and reporter != ''" >
 				and reporter like '%' || #{reporter}  || '%'
+				</if>
+				<if test="creid != null and creid != ''" >
+				and L.CRE_ID like '%' || #{creid}  || '%'
 				</if>
 				<if test="type != null and type != ''">
 				and type = #{type}
 				</if>
 				<if test="recontent != null and recontent != ''">
-				and recontent like '%' || #{recontent}  || '%'
+				and v.CONTENT like '%' || #{recontent}  || '%'
 				</if>
 				<if test="rpStCode != null  and rpStCode != ''">
-				and RP_ST_CODE = #{rpStCode}
+				and R.RP_ST_CODE = #{rpStCode}
 				</if>
 				<if test="ttl != null and ttl != ''">
 				and ttl like '%' || #{ttl}  || '%'
@@ -41,12 +45,12 @@
 				</if>
 			<if test="start != null  and start != ''">
              <![CDATA[
-             and TO_DATE(#{start}, 'YYYY-MM-DD') < RP_DATE  <!-- 컬럼명 -->
+             and TO_DATE(#{start}, 'YYYY-MM-DD') < RP_DATE  
              ]]>
             </if>
             <if test="end != null and end != ''">
             <![CDATA[
-             and TO_DATE(#{end}, 'YYYY-MM-DD')  > RP_DATE  <!-- 컬럼명 -->
+             and TO_DATE(#{end}, 'YYYY-MM-DD')  > RP_DATE 
              ]]>
              </if>
     order by rp_no desc) w
@@ -56,16 +60,28 @@
 	    and rn <= #{pageNum} * #{amount}
 	      ]]>
 	</select>
+	
 	<select id="selectreports" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
 	 SELECT R.*,L.CRE_ID, L.TTL,V.CONTENT RECONTENT, v.star
 			FROM REPORT R JOIN LECTURE L
 			ON R.LT_NO = L.LT_NO
-			JOIN REVIEW V
+			LEFT JOIN REVIEW V
 			ON R.NUM = V.RV_NO
+			
+			where RP_NO = #{rpNo}
+	</select>
+	
+	<select id="selectrespss" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
+		SELECT R.*,L.CRE_ID, L.TTL, L.LT_ST_CODE,O.ttl as lsnTtl,O.*
+			FROM REPORT R JOIN LECTURE L
+			ON R.LT_NO = L.LT_NO
+			LEFT JOIN LESSON O
+			ON R.NUM = O.SERIAL_NO
 			
 			where RP_NO = #{rpNo}
 	
 	</select>
+	
 	<select id="reportLectureList" parameterType="String" resultType="co.makeu.up.report.service.ReportVO">
 		SELECT R.LT_NO,L.TTL,COUNT(*) CNT FROM REPORT R JOIN LECTURE L
 		ON R.LT_NO = L.LT_NO
@@ -73,5 +89,28 @@
 		AND R.CTGR = 'RP02'
 		GROUP BY R.LT_NO, L.TTL
 	</select>
+	
+	<update id="upreport" parameterType="co.makeu.up.report.service.ReportVO">
+	update report set RP_ST_CODE = 'RPS02'
+	where RP_NO = #{rpNo}
+	</update>
+	
+	<update id="uprepor" parameterType="co.makeu.up.report.service.ReportVO">
+	update review set RV_CODE = 'RE02'
+	where  Rv_NO = #{num}
+	</update>
+	
+	<update id="rerepor" parameterType="co.makeu.up.report.service.ReportVO">
+	update report set RP_ST_CODE =  'RPS03'
+	where RP_NO = #{rpNo}
+	</update>
+	<update id="upcode" parameterType="co.makeu.up.report.service.ReportVO">
+	update lecture set LT_ST_CODE = 'L04'
+	where LT_NO = #{ltNo}
+	</update>
+	<update id="succode" parameterType="co.makeu.up.report.service.ReportVO">
+	update lecture set LT_ST_CODE = 'L01'
+	where LT_NO = #{ltNo}
+	</update>
 </mapper>
 

@@ -3,6 +3,11 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
+<style>
+#mod:hover{
+background-color:#f5f5f5;
+}
+</style>
 <head>
 <meta charset="UTF-8">
     <style>
@@ -48,7 +53,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의신고</li>
                                 </ol>
                             </nav>
@@ -71,25 +76,27 @@
                                         <tr height="38">
                                             <th width = "15%">신고자 ID</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false"> 
+                                                <input class="w-100" type="text" name = "reporter" spellcheck="false" ondblclick="this.checked=false"> 
                                             </td>
+                                            
                                             <th width = "15%">크리에이터</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
+                                                <input class="w-100" type="text"  name="creid" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             
                                         </tr>
                                         <tr height="38">
                                             <th>강의명</th>
                                             <td>
-                                                <input class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
+                                                <input name="ttl" class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             <th>신고유형</th>
                                             <td>
-                                                <select name="카테" id="ct">
-                                                    <option value="부적절">부적절한콘텐츠</option>
-                                                    <option value="피싱">피싱또는스펨</option>
-                                                    <option value="기타">기타</option>
+                                                <select name="type" id="ct">
+                                                	<option value="">전체</option>
+                                                    <option value="RPT01">부적절한콘텐츠</option>
+                                                    <option value="RPT02">피싱또는스펨</option>
+                                                    <option value="RPT03">기타</option>
                                                 </select>
                                             </td>
                                             
@@ -97,16 +104,18 @@
                                         <tr height="38">
                                             <th>신고날짜</th>
                                             <td class="text-left">
-                                                <input class="w-30" type="date" spellcheck="false" id="haq" ondblclick="this.checked=false">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq" name="start" ondblclick="this.checked=false" >
                                                 <i class="fas fa-minus mx-1"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="haq1" ondblclick="this.checked=false">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq1" name="end" ondblclick="this.checked=false">
                                             </td>
                                             <th>처리상태</th>
                                             <td class="text-left">
-                                                <input type="radio" class="ml-2" name="" id="t" spellcheck="false" ondblclick="this.checked=false">
+                                                <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02">
                                                 <label for="t" class="mr-3 mb-0">처리</label>
-                                                <input type="radio" name="" id="r" spellcheck="false" ondblclick="this.checked=false">
+                                                <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01">
                                                 <label for="r" class="mb-0">미처리</label>
+                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03">
+                                                <label for="r" class="mb-0">반려</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -128,9 +137,9 @@
                                                 
                                             </tr>
                                         </thead>
-                                    <tbody id="mo">
+                                    <tbody id="mo" onmouseover = "setCursor(this,'pointer')">
                                    		<c:forEach items = "${list }" var = "list">
-                                        <tr  onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
+                                        <tr id="mod" onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
                                             <td>${list.rpNo }</td>
                                             <td>
                                                    <c:if test="${list.type eq 'RPT01' }">
@@ -148,16 +157,23 @@
                                             <td>${list.rpdate }</td>
                                             <td>
                                                 <c:if test = "${list.rpStCode eq 'RPS01' }">
-	                                            	대기중
+	                                            	미처리
 	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS02' }">
-	                                            	 신고 처리함
+	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L04' }">
+	                                            	 처리 - 신고
 	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS03' }">
-	                                            	 신고 반려
+	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L06' }">
+	                                            	 처리 - 수정완료
 	                                            </c:if>
+	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode ne 'L04' && list.ltStCode ne 'L06'}">
+	                                            	 처리 - 정상처리
+	                                            </c:if>
+	                                             <c:if test="${list.rpStCode eq 'RPS03' }">
+	                                            	 반려
+	                                            </c:if>
+	                                            
                                                 
-                                                </td>
+                                           </td>
                                         </tr>
                                           </c:forEach>
                                     </tbody>
@@ -214,6 +230,10 @@ $(".paginate_button a").on("click" , function(e) {
 	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
 	$('#actionFrom').submit();
 });
+
+function setCursor(str,str2){
+    str.style.cursor = str2;
+}
 
 </script>
 </html>

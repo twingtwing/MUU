@@ -37,7 +37,9 @@
             margin-right: 5%;
             
         }
-
+	#mod:hover{
+background-color:#f5f5f5;
+}
     </style>
 </head>
 <body>
@@ -52,7 +54,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">리뷰신고</li>
                                 </ol>
                             </nav>
@@ -91,9 +93,10 @@
                                             <th width="15%" id="ttt">신고유형</th>
                                             <td width="35%" class="text-left">
                                                  <select name="type" class="w-100" id="ct" >
-                                                    <option value="type">부적절한콘텐츠</option>
-                                                    <option value="type">피싱또는스펨</option>
-                                                    <option value="type">기타</option>
+                                                 	<option value="">전체</option>
+                                                    <option value="RPT01">부적절한콘텐츠</option>
+                                                    <option value="RPT02">피싱또는스펨</option>
+                                                    <option value="RPT03">기타</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -105,11 +108,12 @@
                                             <th>처리상태</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
-                                                    <label for="t" class="mr-3 ml-1 mb-0">미처리</label>
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
-                                                    <label for="r" class="mr-3 ml-1 mb-0">삭제</label>
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false">
+                                                	
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS03">
+                                                    <label for="t" class="mr-3 ml-1 mb-0">반려</label>
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false "value="RPS02">
+                                                    <label for="r" class="mr-3 ml-1 mb-0">처리</label>
+                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false"value="RPS01">
                                                     <label for="a" class="mr-3 ml-1 mb-0">대기</label>
                                                 </div>
                                             </td>
@@ -168,7 +172,7 @@
                                 </div>
                                     </form>
                                 <div class="row">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" >
                                         <thead>
 
                                             <tr style="background-color: #eeeeee;">
@@ -182,42 +186,49 @@
                                                 <th  style="width: 5%;">상태</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="mo" >
-                                        <c:forEach items = "${list }" var = "list">
-                                            <tr onclick="location.href='/admin/adRRepS?rpNo=${list.rpNo }'">
-                                                <td>${list.rpNo }</td>
-                                                <td>
-                                                   <c:if test="${list.type eq 'RPT01' }">
-                                                부적절한 컨텐츠
-                                                </c:if>
-                                                <c:if test="${list.type eq 'RPT02' }">
-                                                피싱또는 스팸
-                                                </c:if>
-                                                <c:if test="${list.type eq 'RPT03' }">
-                                                기타
-                                                </c:if>
-                                                
-                                                </td>
-                                                <td>${list.creid }</td>
-                                                <td>${list.ttl }</td>
-                                                <td>${list.reporter }</td>
-                                                <td>${list.recontent }</td>
-                                                <td>${list.rpdate }</td>
-                                                <td>
-                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
-	                                            	대기중
-	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS02' }">
-	                                            	 신고 처리함
-	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS03' }">
-	                                            	 신고 반려
-	                                            </c:if>
-                                                
-                                                </td>
-                                                
-                                            </tr>
-                                        </c:forEach>
+                                        <tbody id="mo"  onmouseover = "setCursor(this,'pointer')">
+                                        <c:if test="${empty list }">
+                                        	<tr >
+                                        		<td class="font-weight-bold py-4" colspan="8">데이터가 없습니다.</td>
+                                        	</tr>
+                                        </c:if>
+                                        <c:if test="${ not empty list }">
+	                                        <c:forEach items = "${list }" var = "list">
+	                                            <tr id="mod" onclick="location.href='/admin/adRRepS?rpNo=${list.rpNo }'">
+	                                                <td>${list.rpNo }</td>
+	                                                <td>
+	                                                   <c:if test="${list.type eq 'RPT01' }">
+	                                                부적절한 컨텐츠
+	                                                </c:if>
+	                                                <c:if test="${list.type eq 'RPT02' }">
+	                                                피싱또는 스팸
+	                                                </c:if>
+	                                                <c:if test="${list.type eq 'RPT03' }">
+	                                                기타
+	                                                </c:if>
+	                                                
+	                                                </td>
+	                                                <td>${list.creid }</td>
+	                                                <td>${list.ttl }</td>
+	                                                <td>${list.reporter }</td>
+	                                                <td>${list.recontent }</td>
+	                                                <td>${list.rpdate }</td>
+	                                                <td>
+	                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
+		                                            	대기중
+		                                            </c:if>
+		                                            <c:if test="${list.rpStCode eq 'RPS02' }">
+		                                            	 신고 처리
+		                                            </c:if>
+		                                            <c:if test="${list.rpStCode eq 'RPS03' }">
+		                                            	 신고 반려
+		                                            </c:if>
+	                                                
+	                                                </td>
+	                                                
+	                                            </tr>
+	                                        </c:forEach>
+                                        </c:if>
                                         </tbody>
                                     </table>
                                 </div>
@@ -278,5 +289,9 @@ $(".paginate_button a").on("click" , function(e) {
 		var sel = $("#sel option:selected").val();
 		document.getElementById('inp').setAttribute('name',sel);
 	}
+	
+    function setCursor(str,str2){
+        str.style.cursor = str2;
+    }
 </script>
 </html>

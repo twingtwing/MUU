@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="row">
-                                            <table class="table table-bordered">
+                                            <table id="faq_Table" class="table table-bordered">
                                                 <tr style="background-color: #eeeeee;">
                                                     <th>번호</th>
                                                     <th>카테고리</th>
@@ -123,12 +123,14 @@
                                                 </c:if>
                                                 <c:if test="${not empty list}">
                                                 	<c:forEach items="${list}" var="faq" varStatus="val">
-		                                                <tr data-no="${val.index}">
-		                                                    <td>${faq.fno}</td>
-		                                                    <td>${faq.ctgr}</td>
-		                                                    <td class="faq_chg">${faq.qcontent}</td>
+		                                                <tr data-no="${val.count}">
+		                                                    <td class="fno">${faq.fno}</td>
+		                                                    <td class="ctgr" data-code="${faq.ctgr}">${faq.ctgrName}</td>
+		                                                    <td class="faq_chg qcontent">${faq.qcontent}</td>
 		                                                    <td>관리자</td>
-		                                                    <td><fmt:formatDate value="${faq.wrdate}" pattern="yyyy-MM-dd"/></td>
+		                                                    <td class="wrdate"><fmt:formatDate value="${faq.wrdate}" pattern="yyyy-MM-dd"/></td>
+		                                                	<td class="d-none acontent">${faq.acontent}</td>
+		                                                	<td class="d-none fstcode" data-code="${faq.fstcode}">${faq.fstName}</td>
 		                                                </tr>
                                                 	</c:forEach>
                                                 </c:if>
@@ -165,6 +167,7 @@
 		                                    </div>
 		                                </div>
                                     </div>
+                                    
                                     <div class="col-4 px-3">
                                         <div id="faq_none" class="faq_tab col-12" style="border: 2px solid #eeeeee">
                                             <div class="row justify-content-center align-items-center position-relative" style="height: 30vh;">
@@ -172,128 +175,176 @@
                                                 <h4 class="font-weight-bold">선택한 정보가 없습니다.</h4>
                                             </div>
                                         </div>
+                                        
                                         <div id="faq_select" class="faq_tab col-12 d-none" style="border: 2px solid #eeeeee">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <div class="row p-2"
-                                                        style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
-                                                        <h5 class="mb-0">제목</h5>
-                                                        <h5 class="mb-0 ml-2" style="font-weight: 500;">강의를 듣고 싶은데 어떻게 하나요</h5>
-                                                    </div>
                                                     <div class="row justify-content-between p-2"
-                                                        style="background-color: #eeeeee; border-bottom: 2px solid black;">
+                                                        style="background-color: #eeeeee; border-top: 2px solid black; border-bottom: 2px solid black;">
                                                         <div class="row">
-                                                            <h6 class="mb-0 ml-2 pl-1">번호</h6>
-                                                            <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                            <p class="mb-0 ml-2 pl-1">번호</p>
+                                                            <p class="mb-0 ml-2 fno" style="font-weight: 500;"></p>
                                                         </div>
                                                         <div class="row">
                                                             <div class="row mr-4">
-                                                                <h6 class="mb-0">카테고리</h6>
-                                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">강의</h6>
+                                                                <p class="mb-0">카테고리</p>
+                                                                <p class="mb-0 ml-2 ctgr" style="font-weight: 500;"></p>
                                                             </div>
                                                             <div class="row mr-4">
-                                                                <h6 class="mb-0">작성일자</h6>
-                                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">0000-00-00</h6>
+                                                                <p class="mb-0">작성일자</p>
+                                                                <p class="mb-0 ml-2 wrdate" style="font-weight: 500;"></p>
                                                             </div>
                                                             <div class="row mr-1">
-                                                                <h6 class="mb-0">상태</h6>
-                                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">삭제</h6>
+                                                                <p class="mb-0">상태</p>
+                                                                <p class="mb-0 ml-2 fstcode" style="font-weight: 500;"></p>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
+                                                <div class="card">
+                                                    <div class="card-body" style="height: 18vh;">
+                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
+                                                    	<p class="qcontent mb-0 mt-1"></p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="card">
-                                                    <div class="card-body" style="height: 20vh;">
-                                                        카드안에 카드바디가 존재하는거임
+                                                    <div class="card-body" style="height: 16vh;">
+                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
+                                                    	<p class="acontent mb-0 mt-1"></p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- 상태가 삭제면 보이면 안됨 -->
-                                            <div class="row d-flex justify-content-end mb-2">
-                                                <button type="button" class="btn btn-secondary">수정</button>
-                                                <button type="button" class="btn btn-secondary ml-1 mr-2">삭제</button>
+                                            <div id="faq_up_del">
+	                                            <div class="row d-flex justify-content-end mb-2">
+	                                                <button id="faqUpdate" type="button" class="btn btn-secondary">수정</button>
+	                                                <button id="faqDelete" type="button" class="btn btn-secondary ml-1 mr-2">삭제</button>
+	                                            </div>
                                             </div>
                                         </div>
+                                        
                                         <div id="faq_Insert" class="faq_tab col-12 d-none" style="border: 2px solid #eeeeee">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="row p-2" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
-                                                        <div class="col-1 pr-0 d-flex align-items-center">
-                                                            <h5 class="mb-0">제목</h5>
-                                                        </div>
-                                                        <div class="col-11 px-0">
-                                                            <input class="w-100" type="text" spellcheck="false" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
-                                                        <div class="col-2 pr-0 d-flex align-items-center">
-                                                            <h6 class="mb-0">카테고리</h6>
-                                                        </div>
-                                                        <div class="col-10 px-0">
-                                                            <select>
-                                                                <option selected>선택</option>
-                                                                <option value="1">강의</option>
-                                                                <option value="2">배송</option>
-                                                                <option value="3">결제</option>
-                                                                <option value="3">아이디정보/보안</option>
-                                                                <option value="3">오류</option>
-                                                                <option value="3">이벤트</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group pt-3 px-2">
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
-                                                    </div>
-                                                    <div class="row d-flex justify-content-end mb-2">
-                                                        <button type="button" class="btn btn-secondary">등록</button>
-                                                        <button type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        	<form id="faq_Insert_frm">
+	                                        	<div class="row">
+	                                                <div class="col-lg-12">
+	                                                    <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-top: 2px solid black; border-bottom: 2px solid black;">
+															<div class="align-self-center">
+																<h6 class="font-weight-bold mb-0">공지사항 등록</h6>
+															</div>
+															<div class="row mr-1">
+																<div class="align-self-center mr-1">
+																	<p class="font-weight-bold mb-0">카테고리</p>
+																</div>
+																<select class="ctgr text-center" name="ctgr">
+																	<option value="">전체</option>
+	                                                        		<option value="CQ01">결제</option>
+	                                                        		<option value="CQ02">배송</option>
+	                                                        		<option value="CQ03">강의</option>
+	                                                        		<option value="CQ04">회원정보/보안</option>
+	                                                        		<option value="CQ05">오류</option>
+	                                                        		<option value="CQ06">환불</option>
+																</select>
+															</div>
+														</div>
+			                                        	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
+			                                                <div class="card">
+			                                                    <div class="card-body" style="height: 18vh;">
+			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
+			                                                    	<div class="row form-group pt-3 px-2">
+			                                                        	<textarea class="form-control qcontent" name="qcontent" cols="80" rows="5"></textarea>
+			                                                    	</div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                            <div class="row form-group">
+			                                                <div class="card">
+			                                                    <div class="card-body" style="height: 16vh;">
+			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
+			                                                    	<div class="row form-group pt-3 px-2">
+			                                                        	<textarea class="form-control acontent" name="acontent" cols="80" rows="5"></textarea>
+			                                                    	</div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                            <div class="row d-flex justify-content-end mb-2">
+	                                                        <button id="faqInsertFrm" type="button" class="btn btn-secondary">등록</button>
+	                                                        <button type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+                                        	</form>
                                         </div>
+                                        
                                         <div id="faq_Update" class="faq_tab col-12 d-none" style="border: 2px solid #eeeeee">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="row p-2" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 2px solid black;">
-                                                        <div class="col-1 pr-0 d-flex align-items-center">
-                                                            <h5 class="mb-0">제목</h5>
-                                                        </div>
-                                                        <div class="col-11 px-0">
-                                                            <input class="w-100" type="text" spellcheck="false" value="자주묻는글 수정">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-bottom: 2px solid black;">
-                                                        <div class="row align-items-center">
-                                                            <h6 class="mb-0 ml-2 pl-1">번호</h6>
-                                                            <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <h6 class="mb-0 mr-2">카테고리</h6>
-                                                            <select>
-                                                                <option selected>선택</option>
-                                                                <option value="1">강의</option>
-                                                                <option value="2">배송</option>
-                                                                <option value="3">결제</option>
-                                                                <option value="3">아이디정보/보안</option>
-                                                                <option value="3">오류</option>
-                                                                <option value="3">이벤트</option>
-                                                            </select>
-                                                            <h6 class="mb-0 ml-2">작성일자</h6>
-                                                            <h6 class="mb-0 mx-2" style="font-weight: 500;">0000-00-00</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group pt-3 px-2">
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">수정수정</textarea>
-                                                    </div>
-                                                    <div class="row d-flex justify-content-end mb-2">
-                                                        <button type="button" class="btn btn-secondary">수정</button>
-                                                        <button type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        	<form id="faq_Update_frm">
+	                                            <div class="row">
+	                                                <div class="col-lg-12">
+	                                                	<div class="row justify-content-between p-2" style="background-color: #eeeeee; border-top: 2px solid black;">
+															<div class="align-self-center">
+																<h6 class="font-weight-bold mb-0">공지사항 수정</h6>
+															</div>
+															<div class="row mr-1">
+																<div class="align-self-center mr-1">
+																	<p class="font-weight-bold mb-0">카테고리</p>
+																</div>
+																<select class="ctgr text-center" name="ctgr">
+																	<option value="">전체</option>
+			                                                        <option value="CQ01">결제</option>
+			                                                        <option value="CQ02">배송</option>
+			                                                        <option value="CQ03">강의</option>
+			                                                        <option value="CQ04">회원정보/보안</option>
+			                                                        <option value="CQ05">오류</option>
+			                                                        <option value="CQ06">환불</option>
+																</select>
+															</div>
+														</div>
+	                                                    <div class="row justify-content-between p-2"
+	                                                        style="background-color: #eeeeee; border-top: 1px solid black; border-bottom: 2px solid black;">
+	                                                        <div class="row">
+	                                                            <p class="mb-0 ml-2 pl-1">번호</p>
+	                                                            <p class="mb-0 ml-2 fno" style="font-weight: 500;"></p>
+	                                                            <input type="hidden" class="fno" name="fno">
+	                                                        </div>
+	                                                        <div class="row">
+	                                                            <div class="row mr-4">
+	                                                                <p class="mb-0">작성일자</p>
+	                                                                <p class="mb-0 ml-2 wrdate" style="font-weight: 500;"></p>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+			                                        	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
+			                                                <div class="card">
+			                                                    <div class="card-body" style="height: 18vh;">
+			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
+			                                                    	<div class="row form-group pt-3 px-2">
+			                                                        	<textarea class="form-control qcontent" name="qcontent" cols="80" rows="5"></textarea>
+			                                                    	</div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                            <div class="row form-group">
+			                                                <div class="card">
+			                                                    <div class="card-body" style="height: 16vh;">
+			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
+			                                                    	<div class="row form-group pt-3 px-2">
+			                                                        	<textarea class="form-control acontent" name="acontent" cols="80" rows="5"></textarea>
+			                                                    	</div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                            <div class="row d-flex justify-content-end mb-2">
+	                                                        <button id="faqUpdateFrm" type="button" class="btn btn-secondary">수정</button>
+	                                                        <button id="faq_chg_Back" type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+                                        	</form>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -305,10 +356,55 @@
 
                 <!-- 바디 끝 -->
 	<script type="text/javascript">
+		$('#faqInsertFrm').on('click',function(){
+			event.stopPropagation()
+			//질문 답변 카테고리 유효성 검사가 필요
+			
+			//등록
+			$.ajax({
+				url : '',
+				type : 'post',
+				data : $('#faq_Insert_frm').serialize(),
+				beforeSend: function(xhr) {
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		        }
+			})
+			.done((res)=>{
+				//등록성공 -> 등록성공 alert창 나오고 location.href="/admin/adFaqL"; 실행  
+			})
+		})
+		
+		$('#faqUpdateFrm').on('click',function(){
+			event.stopPropagation()
+			//질문 답변 카테고리 유효성 검사가 필요
+			
+			//수정
+			$.ajax({
+				url : '',
+				type : 'post',
+				data : $('#faq_Update_frm').serialize(),
+				beforeSend: function(xhr) {
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		        }
+			})
+			.done((res)=>{
+				//수정성공 -> 수정성공 alert창 나오고 location.href="/admin/adFaqL"; 실행  
+			})
+			
+		})
+	
+		$('#faqDelete').on('click',function(){
+			//삭제
+			let fno = $('#faq_select .fno')[0].innerText;
+			
+			//삭제  -> 삭제 alert창 나오고 location.href="/admin/adFaqL"; 실행  
+		})
+	
 		$('.faq_chg').on('click',function(){
 			let index = $(event.target).closest('tr').attr('data-no');
 			$('.faq_tab').addClass('d-none');
 			$('#faq_select').removeClass('d-none');
+			changeTab(index);
 		});
 		
 		//insert input값 저장 금지 백업
@@ -319,16 +415,45 @@
 		});
 		
 		//update값 저장 금지 백업??
-		$('#faqInsert').on('click',function(){
-			let index = $(event.target).closest('tr').attr('data-no');
+		$('#faqUpdate').on('click',function(){
 			$('.faq_tab').addClass('d-none');
 			$('#faq_Update').removeClass('d-none');
 		});
 		
+		$('#faq_chg_Back').on('click',function(){
+			$('.faq_tab').addClass('d-none');
+			$('#faq_select').removeClass('d-none');
+		});
+		
+		function changeTab(index) {
+			let tr = $('#faq_Table tr')[index];
+			$('#faq_select .fno')[0].innerText = $(tr).find('.fno')[0].innerText;
+			$('#faq_Update .fno')[0].innerText = $(tr).find('.fno')[0].innerText;
+			
+			$('#faq_select .ctgr')[0].innerText = $(tr).find('.ctgr')[0].innerText;
+			$('#faq_Update .ctgr')[0].value = $($(tr).find('.ctgr')[0]).data('code');
+			
+			$('#faq_select .qcontent')[0].innerText = $(tr).find('.qcontent')[0].innerText;
+			$('#faq_Update .qcontent')[0].value = $(tr).find('.qcontent')[0].innerText;
+			
+			$('#faq_select .wrdate')[0].innerText = $(tr).find('.wrdate')[0].innerText;
+			$('#faq_Update .wrdate')[0].innerText = $(tr).find('.wrdate')[0].innerText;
+
+			$('#faq_select .acontent')[0].innerText = $(tr).find('.acontent')[0].innerText;
+			$('#faq_Update .acontent')[0].value = $(tr).find('.acontent')[0].innerText;
+			
+			$('#faq_select .fstcode')[0].innerText = $(tr).find('.fstcode')[0].innerText;
+			
+			if($($(tr).find('.fstcode')[0]).data('code') === 'F01'){
+				$('#faq_up_del').removeClass('d-none');
+			}else if($($(tr).find('.fstcode')[0]).data('code') === 'F02'){
+				$('#faq_up_del').addClass('d-none');
+			}
+		}
+		
 		$(".paginate_button a").on("click" , function(e) {
 			e.preventDefault();
 			console.log('click');
-			
 			$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
 			$('#actionFrom').submit();
 		});

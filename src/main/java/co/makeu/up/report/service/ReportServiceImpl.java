@@ -37,6 +37,36 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.reportLectureList(creid);
 	}
 
+	@Override
+	public ReportVO selectrespss(ReportVO vo) {
+		return map.selectrespss(vo);
+	}
+
+	@Override
+	public int upreport(ReportVO vo) {
+		return map.upreport(vo);
+	}
+
+	@Override
+	public int uprepor(ReportVO vo) {
+		return map.uprepor(vo);
+	}
+
+	@Override
+	public int rerepor(ReportVO vo) {
+		return map.rerepor(vo);
+	}
+
+	@Override
+	public int upcode(ReportVO vo) {
+		return map.upcode(vo);
+	}
+
+	@Override
+	public int succode(ReportVO vo) {
+		return map.succode(vo);
+	}
+
 	
 	
 }

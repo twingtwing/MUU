@@ -24,8 +24,8 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">리뷰신고</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adRRepL">리뷰신고</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">리뷰신고상세페이지</li>
                                 </ol>
                             </nav>
@@ -119,7 +119,7 @@
                                             style="background-color: #eeeeee; border-bottom: 2px solid black;">
                                             <div class="row">
                                                 <h6 class="mb-0 ml-2 pl-1">신고번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.rpNo }</h6>
+                                                <h6 id="rpNo" class="mb-0 ml-2" style="font-weight: 500;">${report.rpNo }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
@@ -134,7 +134,7 @@
                                 <div class="row form-group">
                                     <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
-                                            ㅋㅋㅋㅋㅋ
+                                            ${report.recontent }
                                         </div>
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
@@ -164,9 +164,11 @@
                                             onclick="history.back();">뒤로가기</button>
                                     </div>
                                     <div class="mr-4">
-                                        <button type="button" class="btn btn-secondary">반려</button>
-                                        <button type="button" class="btn btn-secondary"
-                                            onclick="javascript:btn();">삭제</button>
+                                    	<c:if test="${report.rpStCode eq 'RPS01' }">
+		                                	<button id="deleteBtn" type="button" class="btn btn-secondary" >삭제처리</button>
+		                                    <button id="retrunBtn" type="button" class="btn btn-secondary">반려</button>
+                                    	</c:if>
+                                    
                                     </div>
                                 </div>
 
@@ -178,11 +180,54 @@
             <!-- 내용 끝 -->
             <!-- 바디 끝 -->
 	<script>
+	
 		function btn() {
 			if (returnValue = true) {
 				location.href = "리뷰신고.html"
 			}
 		}
+		
+		$('#retrunBtn').on('click',function(){
+			event.stopPropagation()
+			
+			$.ajax({
+				url : '/admin/rerepor',
+				type : 'POST',
+				data : {rpNo:'${report.rpNo}'},
+				beforeSend: function(xhr) {
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		        },
+			success:function(result){
+				if(result == 't'){
+					alert("해당리뷰를 정상적으로 반려처리하였습니다.")
+					location.href ="/admin/adRRepS?rpNo="+'${report.rpNo}';
+				}
+			}
+			})
+	})
+
+		
+		
+		
+		$('#deleteBtn').on('click',function(){
+			event.stopPropagation()
+			// 삭제 처리 상태 변환 리뷰랑 리포트 신고 상태 변환
+			$.ajax({
+				url: '/admin/deladaRRepS' ,
+				type:'POST',
+				data:{rpNo:'${report.rpNo}',num: '${report.num }'},
+				beforeSend: function(xhr) {
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		        }
+			})
+			.done((result)=>{
+				if(result == 'Y'){
+					alert("해당리뷰를 정상적으로 삭제처리하였습니다.")
+					location.href ="/admin/adRRepS?rpNo="+'${report.rpNo}';
+				}
+			})
+			
+		})
 	</script>
 </body>
 </html>

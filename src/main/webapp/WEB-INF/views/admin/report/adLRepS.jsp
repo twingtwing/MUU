@@ -26,8 +26,8 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">강의신고</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adLRepL">강의신고</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의신고상세페이지</li>
                                 </ol>
                             </nav>
@@ -65,14 +65,14 @@
                                             <div class="row">
                                             <!-- 수업 있으면 -->
                                                 <h6 class="mb-0 ml-2 pl-1">수업 번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.serialno }</h6>
                                                 <h6 class="mb-0 ml-2 pl-1">수업 제목</h6>
                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.ttl }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">강의 제목</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄹㅇㄹㅇ</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.lsnttl }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,11 +81,16 @@
                                 <div class="row" >
                                     <div class="form-group col-lg-12"  >
 	                                    <div class="card d-felx justify-content-center">
-		                                    <div class="card-body">
-		                                    	<iframe id="youtube" src="https://www.youtube.com/embed/9d9Zdhpu0yc" frameborder="0" style="display:block; width:100%; height: 80vh"></iframe>
+		                                    <div class="card-body  row justify-content-end">
+		                                    
+		                                    <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
+                                                          <source src="lesson.lsnFile" type="video/mp4">
+                                           </video>
 		                                    </div>
+		                                    
+		                                    
 		                                    <div class="card-footer row justify-content-end" style="background-color: white;">
-			                                	<div>강의 상세 정보 가기</div>
+			                                	
 		                                	</div>
 	                                    </div>
 	                                </div>
@@ -137,11 +142,30 @@
                                 <div class="row form-group">
                                     <div class="card">
                                         <div class="card-body" style="height: 25vh;">
-                                        ㅇㄹㅇㄹ
+                                        ${report.content }
                                         </div>
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
-	                                            처리 상태 : <span class="text-danger font-weight-bold">처리</span>
+	                                            처리 상태 : <span class="text-danger font-weight-bold"> 
+	                                            
+	                                            
+	                                            
+	                                         <c:if test = "${report.rpStCode eq 'RPS01' }">
+	                                            	미처리
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L04' }">
+	                                            	 처리 - 신고
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L06' }">
+	                                            	 처리 - 수정완료
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode ne 'L04' && report.ltStCode ne 'L06'}">
+	                                            	 처리 - 정상처리
+	                                            </c:if>
+	                                             <c:if test="${report.rpStCode eq 'RPS03' }">
+	                                            	 반려
+	                                          </c:if>
+	                                            </span>
 	                                         </div>
                                         </div>
                                     </div>
@@ -157,8 +181,17 @@
                                             onclick="history.back();">뒤로가기</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-secondary">수정요청</button>
-                                        <button type="button" class="btn btn-secondary" onclick="javascript:btn();">반려</button>
+                                        <c:if test="${report.rpStCode eq 'RPS01' }">
+		                                    	<button id="upcode" type="button" class="btn btn-secondary">수정요청</button>
+		                                        <button type="button" class="btn btn-secondary"
+		                                            id="retrunBtn">반려</button>
+                                    	</c:if>			
+                                    	 <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L06'}">
+		                                    	<button id="reupcode" type="button" class="btn btn-secondary">수정 재요청</button>
+		                                        <button type="button" class="btn btn-secondary"
+		                                            id="succode">정상처리</button>
+                                    	</c:if>
+                                    	<input type = 'hidden' id='ltnoinput' value='${report.ltNo}' >
                                     </div>
                                 </div>
 
@@ -170,12 +203,86 @@
                         <!-- 내용 끝 -->
                         <!-- 바디 끝 -->
 	<script>
-		function btn() {
-			var returnValue = confirm('삭제하시겠습니까?');
-			if (returnValue = true) {
-				location.href = "강의신고.html"
+	$('#retrunBtn').on('click',function(){
+		event.stopPropagation()
+		
+		$.ajax({
+			url : '/admin/rerepor',
+			type : 'POST',
+			data : {rpNo:'${report.rpNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 't'){
+				alert("해당리뷰를 정상적으로 반려처리하였습니다.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
 			}
 		}
+		})
+})
+	 $('#succode').on('click',function(){
+		 event.stopPropagation()
+		 
+		$.ajax({
+			url:'/admin/succode',
+			type:'post',
+			data:{ltNo:'${report.ltNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 'S'){
+				alert("해당리뷰를 정상처리 하였습니다.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+			}
+		}
+		}) 
+		 
+	 })
+	 
+	$('#reupcode').on('click',function(){
+		event.stopPropagation()
+		
+		$.ajax({
+			url : '/admin/reupcode',
+			type : 'POST',
+			data : {ltNo:'${report.ltNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 'A'){
+				alert("해당리뷰를 정상적으로 수정 재요청.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+			}
+		}
+		})
+})
+
+
+
+
+
+$('#upcode').on('click',function(){
+	event.stopPropagation()
+	$.ajax({
+		url:'/admin/upcode',
+		type:'POST',
+		data : {rpNo:'${report.rpNo}' , ltNo:'${report.ltNo}'},
+		beforeSend: function(xhr) {
+        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+	success:function(result){
+		if(result == 'Y'){
+			
+			alert("해당리뷰를 정상적으로 수정요청하였습니다.");
+			location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+		}
+	}
+	})
+})
+
 	</script>
 </body>
 </html>
