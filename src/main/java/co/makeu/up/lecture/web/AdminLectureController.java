@@ -1,5 +1,7 @@
 package co.makeu.up.lecture.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.PageVo;
 import co.makeu.up.ctgr.service.CtgrVO;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.lesson.service.LessonServiceImpl;
+import co.makeu.up.lesson.service.LessonVO;
 import co.makeu.up.refund.service.RefundVO;
 
 import co.makeu.up.common.view.Pagination;
@@ -25,6 +30,8 @@ import co.makeu.up.lecture.service.LectureVO;
 @Controller
 public class AdminLectureController {
 	@Autowired LectureServiceImpl lectureDao;
+	
+	@Autowired LessonServiceImpl lessonDao;
 	
 	//강의리스트
 	@GetMapping("/admin/adLecL")
@@ -104,8 +111,26 @@ public class AdminLectureController {
 	
 	//강의등록 상세
 	@GetMapping("/admin/adLecAS")
-	public String adLecAS() {
+	public String adLecAS(LectureVO vo, LessonVO lessonvo, Model model) {
+		lessonvo.setLtNo(vo.getLtNo());
+		lessonvo.setId(vo.getCreId());
+		model.addAttribute("lessonList", lessonDao.lessonList(vo.getLtNo()));
+		model.addAttribute("adLecSel", lectureDao.AdminlectureSelect(vo));
 		return "admin/lecture/adLecAS";
 	}
+	
+	//강의등록 허가
+	@RequestMapping("/admin/adLecALOK")
+	public String adLecALOK(LectureVO vo) {
+		lectureDao.AdminlectureUpdateOK(vo);
+		return "admin/lecture/adLecAL";
+	}
+	
+	//강의등록 허가
+	@RequestMapping("/admin/adLecALReject")
+	public String adLecALReject(LectureVO vo) {
+		lectureDao.AdminlectureUpdateReject(vo);
+	return "admin/lecture/adLecAL";
+		}	
 	
 }

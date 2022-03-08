@@ -22,6 +22,10 @@ table tr, table td {
 .admin_search th {
 	background-color: #eeeeee;
 }
+.clickstyle:hover{
+	cursor: pointer;
+	text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -79,18 +83,21 @@ table tr, table td {
 									</tr>
 									<tr>
 										<th>카테고리</th>
-										<td class="d-flex border-0"><select name="" id="ctgr"
+										<td class="d-flex border-0"><select name="" id=upCtgrTypeLecture onchange="upCtgrChangeSelect()"
 											class="border w-100">
 												<option value="">전체(상위 카테고리)</option>
-												<option value="">요리</option>
-												<option value="">건강</option>
-												<option value="">아트</option>
-												<option value="">IT/컴퓨터</option>
-												<option value="">외국어</option>
-												<option value="">자기계발</option>
-										</select> <select name="" id="downctgr" class="border w-100">
+												<option value="요리">요리</option>
+												<option value="건강">건강</option>
+												<option value="아트">아트</option>
+												<option value="IT/컴퓨터">IT/컴퓨터</option>
+												<option value="외국어">외국어</option>
+												<option value="자기계발">자기계발</option>
+										</select> <select name="" id="downCtgrTypeLecture" onchange="downCtgrChangeSelect()" class="border w-100">
 												<option value="">전체(하위 카테고리)</option>
-										</select></td>
+										</select>
+										<input type="hidden" id=upCtgrCheck value='' name='upCtgr'>
+										<input type="hidden" id=downCtgrCheck value='' name='downCtgr'>
+										</td>
 									</tr>
 									<tr height="38">
 										<th>등록 신청 날짜</th>
@@ -119,22 +126,30 @@ table tr, table td {
 									<th width="120px">강의 등록일</th>
 									<th width="100px">처리상태</th>
 								</tr>
+								<c:if test="${empty llists }">
+								<td colspan="7" >
+									<div class="d-flex justify-content-center">해당되는 데이터가 존재하지 않습니다.</div>
+								</td>
+								</c:if>
+								<c:if test="${not empty llists }">
 								<c:forEach items="${llists }" var="llist">
 									<tr>
 										<td>${llist.ltNo }</td>
 										<td>
 										<span>${llist.upCtgr }</span>
+										<i class="fas fa-angle-right"></i>
 										<span>${llist.downCtgr }</span>
 										</td>
 										<td>${llist.creId }</td>
 										<td>${llist.name }</td>
-										<td>${llist.ttl }</td>
+										<td class="clickstyle" onclick="location.href='/admin/adLecAS?ltNo=${llist.ltNo }'">${llist.ttl }</td>
 										<td>${llist.reqDate }</td>
 										<c:if test="${llist.ltStCode eq 'L02'}">
 										<td>강의등록대기</td>
 										</c:if>
 									</tr>
 								</c:forEach>
+								</c:if>
 							</table>
 						</div>
 						<div class="row d-flex justify-content-center position-relative">
@@ -191,11 +206,11 @@ table tr, table td {
 		 '외국어': ['영어','일본어','중국어','스페인어','아랍어','러시아어','기타'],
 		 '자기계발': ['부동산','주식','면접/자소서','SNS/블로그','기타'],
 		 }
-		 $('#ctgr').change(()=>{
-		 $('#downctgr>option:not(:eq(0))').remove();
-		 let upper = $('#ctgr option:selected').text();
+		 $('#upCtgrTypeLecture').change(()=>{
+		 $('#downCtgrTypeLecture>option:not(:eq(0))').remove();
+		 let upper = $('#upCtgrTypeLecture option:selected').text();
 		 종류[upper].forEach((v)=>{
-		 $('#downctgr').append(
+		 $('#downCtgrTypeLecture').append(
 		 $('<option>').val(v).text(v)
 		 			)
 		 		})
@@ -214,6 +229,17 @@ table tr, table td {
 			let searchTypeLecture = $("#searchTypeLecture option:selected").val();
 			console.log(searchTypeLecture)
 			document.getElementById('incheck').setAttribute('name', searchTypeLecture);
+		}
+		
+		function upCtgrChangeSelect() {
+			let upCtgrTypeLecture = $("#upCtgrTypeLecture option:selected").val();
+			console.log(upCtgrTypeLecture)
+			document.getElementById('upCtgrCheck').setAttribute('value', upCtgrTypeLecture);
+		}
+		function downCtgrChangeSelect() {
+			let downCtgrTypeLecture = $("#downCtgrTypeLecture option:selected").val();
+			console.log(downCtgrTypeLecture)
+			document.getElementById('downCtgrCheck').setAttribute('value', downCtgrTypeLecture);
 		}
 	</script>
 </body>

@@ -84,19 +84,30 @@
 	</select>
 
 	<select id="adminLectureList" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
-		SELECT * FROM(SELECT ROWNUM RN, L.LT_NO,L.UP_CTGR,L.DOWN_CTGR,
-		L.CRE_ID,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
-		FROM LECTURE L JOIN USERS U
+		SELECT * FROM(
+        SELECT ROWNUM RN, W.*
+        FROM (SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+		FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                                from ctgr c join ctgr c2
+                                on c2.ctgr_id = c.up_ctgr) C
+        ON L.DOWN_CTGR = C.CTGR_ID 
+        JOIN USERS U
 		ON L.CRE_ID =  U.ID 
 		WHERE L.LT_ST_CODE = 'L02'
 		<if test="name != null and name != ''">
-		and u.name like '%' || #{name}  || '%'
+			and u.name like '%' || #{name}  || '%'
 		</if>
 		<if test="creId != null and creId != ''">
-		and L.CRE_ID like '%'||#{creId}||'%'
+			and L.CRE_ID like '%'||#{creId}||'%'
 		</if>
 		<if test="ttl != null and ttl != ''">
-		and l.ttl like '%'||#{ttl}||'%'
+			and l.ttl like '%'||#{ttl}||'%'
+		</if>
+		<if test="upCtgr != null and upCtgr !=''">
+			AND c.up_name = #{upCtgr}
+		</if>
+		<if test="downCtgr != null and downCtgr !=''">
+			AND c.name = #{downCtgr}
 		</if>
 		<if test="start != null and start !=''">
         	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
@@ -104,11 +115,21 @@
         <if test="end != null and end !=''" >
             <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > l.req_Date ]]>
         </if>
-		ORDER BY L.LT_NO DESC)
+		)W
+		ORDER BY LT_NO DESC)
 		<![CDATA[
 	    where rn > (#{pageNum}-1) * #{amount} 
 	    and rn <= #{pageNum} * #{amount}
 	    ]]>
+  </select>
+  
+  <select id="AdminlectureSelect" resultType="co.makeu.up.lecture.service.LectureVO">
+  	SELECT L.*, C.name down_ctgr, C.up_name up_ctgr
+	FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                        from ctgr c join ctgr c2
+                        on c2.ctgr_id = c.up_ctgr) C
+	ON L.DOWN_CTGR = C.CTGR_ID 
+	WHERE l.lt_no = #{ltNo}
   </select>
   
 	<select id="adminLectureTable" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
@@ -158,4 +179,15 @@
    	    WHERE RN <![CDATA[>]]> (#{page}-1) * 10
 		AND RN <![CDATA[<=]]> #{page} * 10	
 	</select>
+	
+	<update id="AdminlectureUpdateOK" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE lecture set LT_ST_CODE = 'L02'
+		where LT_NO = #{ltNo}
+	</update>
+	
+	<update id="AdminlectureUpdateReject" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE lecture set LT_ST_CODE = 'L07'
+		where LT_NO = #{ltNo}
+	</update>
+	
 </mapper>
