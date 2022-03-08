@@ -7,53 +7,45 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <style>
+<style>
+    #cctgy>li {
+        cursor: pointer;
 
-        #cctgy>li {
-            cursor: pointer;
+    }
+    .list-link {
+        color: black;
+    }
+    .list-link.active {
+        font-weight: bold;
+        color: #e53637;
 
-        }
-
-        .list-link {
-            color: black;
-        }
-
-        .list-link.active {
-            font-weight: bold;
-            color: #e53637;
-
-        }
-        #bu {
-            position: absolute;
-            left: 80%;
-            bottom: 8%;
-        }
-
-        td,
-        th {
-            padding: 0.5rem;
-        }
-
-        thead {
-            background-color: lightgray;
-        }
-
-        #my_modal {
-            text-align: center;
-            display: none;
-            width: 300px;
-            padding: 20px 60px;
-            background-color: #fefefe;
-            border: 1px solid #888;
-            border-radius: 3px;
-        }
-        
-        .modal_btn:hover{
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-    </style>
+    }
+    #bu {
+        position: absolute;
+        left: 80%;
+        bottom: 8%;
+    }
+    td,
+    th {
+        padding: 0.5rem;
+    }
+    thead {
+        background-color: lightgray;
+    }
+    #my_modal {
+        text-align: center;
+        display: none;
+        width: 300px;
+        padding: 20px 60px;
+        background-color: #fefefe;
+        border: 1px solid #888;
+        border-radius: 3px;
+    }
+    .modal_btn:hover{
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
 <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
@@ -182,26 +174,34 @@
                                     <h5><strong>제목 : </strong></h5>
                                 </div>
                                 <div class="col-11 px-0">
-                                    <input class="w-100" type="text" name="" id="" spellcheck="false">
+                                    <input class="w-100" type="text" id="ttl" spellcheck="false" value="${noinfo.ttl }">
                                 </div>
                             </div>
                             <div class="row col-12 justify-content-between bg-light py-2"  style="border-bottom: 2px solid black;">
-                                <p class="mb-0">글번호 : 1213</p>
+                                <p class="mb-0">글번호 : ${noinfo.ntNo }</p>
                                 <div class="row">
-                                    <p class="mb-0">조회수 : 8</p>
-                                    <p class="mb-0 ml-2">작성날짜 : 2022-05-05</p>
+                                    <p class="mb-0">조회수 : ${noinfo.hits }</p>
+                                    <p class="mb-0 ml-2">작성날짜 : ${noinfo.wrDate }</p>
                                     <!-- 수정안했으면 안해도됨 -->
-                                    <p class="mb-0 ml-2 mr-2">수정날짜 : 2022-05-09</p>
+                                    <c:if test="${noinfo.modDate != null }">
+                                    	<p class="mb-0 ml-2 mr-2">수정날짜 : ${noinfo.modDate }</p>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <textarea name="" id="" cols="130" rows="10" spellcheck="false">ㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅁㄹㄴㅇㅁㄻ</textarea>
+                                <textarea name="" id="content" cols="130" rows="10" spellcheck="false">${noinfo.content }</textarea>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <div class="d-flex align-items-center">
-                                    <i class="fa fa-download mr-2"></i>
+	                                <input type="file" id="multiFile" name="multiFile" multiple="multiple" onchange="fileChange()">
                                 </div>
-                                <input type="file" name="" id="" spellcheck="false">
+                                    <c:if test="${not empty noinfo.fileList}">
+                                    	<div id="fileDiv" class="row align-items-center position-absolute bg-light" style="left: 120px; top: 8px; padding-right: 100px;">
+	                                     	<c:forEach items="${noinfo.fileList }" var="file">
+	                                      		<p class="mb-0">${file.filePath}</p>&nbsp;&nbsp;&nbsp;
+	                                     	</c:forEach>
+                                    	</div>
+                                   	</c:if>
                             </div>
                         </div>
                     </div>
@@ -210,8 +210,8 @@
                         <button onclick="history.back()" class="btn btn-outline-secondary">뒤로가기</button>
                         <div class="row mr-4">
                             <!-- 등록하면 list가 아니라 그 수정된 페이지로 이동해야함 -->
-                            <button class="btn btn-outline-secondary mr-2">수정</button>
-                            <button onclick="location.href='박용호_크리에이터공지선택.html'" class="btn btn-outline-secondary mr-2">취소</button>
+                            <button class="btn btn-outline-secondary mr-2" onclick="noticeUpdate()">수정</button>
+                            <button onclick="history.back()" class="btn btn-outline-secondary mr-2">취소</button>
                         </div>
                     </div>
                 </div>
@@ -272,5 +272,44 @@ function goStudent(e){
 	$('#frm').attr("action", "/creator/cLecSt");
 	$('#frm').submit();
 }
+
+//파일 다운로드 불러오기(무늬)
+function fileChange(){
+	if($('#multiFile')[0].files.length !=0){
+		$('#fileDiv').addClass('d-none');
+	}
+}
+//공지사항 수정
+function noticeUpdate(){
+	let form = new FormData();
+	
+	form.append("ntNo", ${noinfo.ntNo});
+	form.append("ttl", $('#ttl').val());
+	form.append("content", $('#content').val());
+	if(${noinfo.fileNo}!=''){
+		form.append("fileNo",${noinfo.fileNo});
+	}
+	for(obj of $('#multiFile')[0].files){
+		form.append("files",obj);
+	}
+	
+	$.ajax({
+		url : "/creator/cLecNUpdate",
+		method : "post",
+		processData : false,
+        contentType : false,
+        async : false,
+        beforeSend: function(xhr) {
+             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		data : form,
+		success: function(e){
+			alert('글이 수정되었습니다');
+			location.href="/creator/cLecNS?ntNo="+e.ntNo;
+		}
+	})
+	
+}
+
 </script>
 </html>

@@ -48,7 +48,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item"><a href="강의관리.html">강의관리</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">공지사항</li>
                                 </ol>
@@ -66,30 +66,36 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 기본 크리에이터 정보 -->
-                                <div class="row position-relative">
-                                    <table class="admin_search table table-bordered">
+                                 <div class="row position-relative">
+                                   <table class="admin_search table table-bordered">
                                         <tr height="38">
                                             <th>강의이름</th>
                                             <td>
-                                                adsf
+                                                ${lecInfo.ttl }
                                             </td>
                                             <th>강의별점</th>
                                             <td>
-                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i> 
+                                                <c:if test="${lecInfo.avgStar eq 0 }">
+                                                	리뷰없음
+                                                </c:if>
+                                                <c:if test="${lecInfo.avgStar ne 0 }">
+                                                	${lecInfo.avgStar }
+                                                </c:if>
                                             </td>
                                             <th rowspan="2" >
-                                                <img src="assets/images/big/img1.jpg" style="width:70px; height:70px;" alt="">
+                                                <img src="${lecInfo.thumb }" style="width:70px; height:70px;" alt="">
                                             </th>
                                         </tr>
 
                                         <tr height="38">
                                             <th>강사정보</th>
                                             <td>
-                                                asdf
+                                                <a href="/admin/creatorSelect?id=${lecInfo.creId }">${lecInfo.creId }</a> (크리에이터 정보로 이동)
                                             </td>
-                                            <th>위반횟수</th>
+                                            <th>규정위반횟수</th>
                                             <td>
-                                                2
+                                                ${lecInfo.cnt }회
                                             </td>
                                         </tr>
                                     </table>
@@ -98,20 +104,18 @@
                                 <hr class="font-weight-bold">
                                 
                                 <div class="row" style="margin-top:40px; margin-bottom:0px;">
-                                    <table class="table tableTab">
+                                    <table class="table tableTab w-100">
                                         <tr style="background-color: #FCF8E3;">
-                                            <th><a class="crTab" href="강의관리.html" onclick="">강의소개</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">유저</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">커리큘럼</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">키트</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">후기</a></th>
-                                            <th><a class="crTab" href="강의관리.html" onclick="">질문/답변</a></th>
-                                            <th><a class="crTab active" href="강의관리.html" onclick="">공지사항</a></th>
+                                            <th><a class="crTab" href="/admin/adLecI?ltNo=${lecInfo.ltNo }">강의소개</a></th>
+                                            <th><a class="crTab" href="/admin/adLecU?ltNo=${lecInfo.ltNo }">수강생</a></th>
+                                            <th><a class="crTab" href="/admin/adLecC?ltNo=${lecInfo.ltNo }">커리큘럼</a></th>
+                                            <th><a class="crTab active" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>
+                                            <th><a class="crTab" href="/admin/adLecR?ltNo=${lecInfo.ltNo }">후기</a></th>
+                                            <th><a class="crTab" href="/admin/adLecQ?ltNo=${lecInfo.ltNo }">질문/답변</a></th>
+                                            <th><a class="crTab" href="/admin/adLecN?ltNo=${lecInfo.ltNo }">공지사항</a></th>
                                         </tr>
                                     </table>
                                 </div>
-
-                                <hr class="font-weight-bold">
 
                                 <!--검색페이지-->
                                 <div class="row position-relative">

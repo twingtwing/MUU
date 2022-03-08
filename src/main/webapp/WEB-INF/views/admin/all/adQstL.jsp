@@ -25,6 +25,9 @@
     .qstList tr{
     	cursor: pointer;
     }
+    #ho:hover{
+        background-color:#f5f5f5;
+        }
 </style>
 </head>
 <body>
@@ -37,7 +40,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">문의글</li>
                                 </ol>
                             </nav>
@@ -135,7 +138,7 @@
                                     </thead>
                                     <tbody class="qstList">
                                     <c:forEach items="${qstList }" var="qst">
-                                        <tr>
+                                        <tr id = "ho">
                                             <td>${qst.qstNo }</td>
                                             <td>${qst.writer }</td>
                                             <td>${qst.ttl }</td> 

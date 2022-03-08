@@ -26,6 +26,9 @@
         .admin_search th {
             background-color: #eeeeee;
         }
+        #ho:hover{
+        background-color:#f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -80,26 +83,14 @@
 	                                        </tr>
 	                                        <tr height="38">
 	                                            <th class="align-middle">작성일</th>
-	                                            <td>
+	                                            <td colspan="3">
 	                                                <div class="row ml-1">
 	                                                    <div><input name="start" type="date"></div>
 	                                                    <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
 	                                                    <div><input name="end" type="date"></div>
 	                                                </div>
 	                                            </td>
-	                                            <th>상태</th>
-	                                            <td class="text-left align-middle">
-	                                            	<div class="row">
-	                                            		<div class="align-self-center">
-		        	                                        <input type="checkbox" class="ml-3 mr-1" name="fstcode" value="F01" id="code_1" spellcheck="false">
-	                                            		</div>
-	    	                                            <label for="code_1" class="mr-3 mb-0">등록</label>
-	    	                                            <div class="align-self-center">
-			                                                <input type="checkbox" class="mx-1" name="fstcode" value="F02" id="code_2" spellcheck="false">
-	    	                                            </div>
-		                                                <label for="code_2" class="mb-0 mr-3">삭제</label>
-	                                            	</div>
-	                                            </td>
+	                                            
 	                                        </tr>
 	                                    </table>
 	                                    <button type="submit" class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
@@ -122,15 +113,14 @@
                                                 	</tr>
                                                 </c:if>
                                                 <c:if test="${not empty list}">
-                                                	<c:forEach items="${list}" var="faq" varStatus="val">
-		                                                <tr data-no="${val.count}">
+                                                	<c:forEach items="${list}" var="faq" varStatus="val" >
+		                                                <tr data-no="${val.count}" id="ho">
 		                                                    <td class="fno">${faq.fno}</td>
 		                                                    <td class="ctgr" data-code="${faq.ctgr}">${faq.ctgrName}</td>
 		                                                    <td class="faq_chg qcontent">${faq.qcontent}</td>
 		                                                    <td>관리자</td>
 		                                                    <td class="wrdate"><fmt:formatDate value="${faq.wrdate}" pattern="yyyy-MM-dd"/></td>
 		                                                	<td class="d-none acontent">${faq.acontent}</td>
-		                                                	<td class="d-none fstcode" data-code="${faq.fstcode}">${faq.fstName}</td>
 		                                                </tr>
                                                 	</c:forEach>
                                                 </c:if>
@@ -194,10 +184,7 @@
                                                                 <p class="mb-0">작성일자</p>
                                                                 <p class="mb-0 ml-2 wrdate" style="font-weight: 500;"></p>
                                                             </div>
-                                                            <div class="row mr-1">
-                                                                <p class="mb-0">상태</p>
-                                                                <p class="mb-0 ml-2 fstcode" style="font-weight: 500;"></p>
-                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -239,7 +226,7 @@
 																<div class="align-self-center mr-1">
 																	<p class="font-weight-bold mb-0">카테고리</p>
 																</div>
-																<select class="ctgr text-center" name="ctgr">
+																<select class="ctgr text-center" name="ctgr" id="oo1">
 																	<option value="">전체</option>
 	                                                        		<option value="CQ01">결제</option>
 	                                                        		<option value="CQ02">배송</option>
@@ -255,7 +242,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control qcontent" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -265,13 +252,13 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control acontent" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
 			                                            <div class="row d-flex justify-content-end mb-2">
-	                                                        <button id="faqInsertFrm" type="button" class="btn btn-secondary">등록</button>
+	                                                        <button id="faqInsertFrm" type="button" class="btn btn-secondary" disabled>등록</button>
 	                                                        <button type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
 	                                                    </div>
 	                                                </div>
@@ -291,8 +278,8 @@
 																<div class="align-self-center mr-1">
 																	<p class="font-weight-bold mb-0">카테고리</p>
 																</div>
-																<select class="ctgr text-center" name="ctgr">
-																	<option value="">전체</option>
+																<select class="ctgr text-center" name="ctgr" id="oo">
+																	<option   value="">전체</option>
 			                                                        <option value="CQ01">결제</option>
 			                                                        <option value="CQ02">배송</option>
 			                                                        <option value="CQ03">강의</option>
@@ -321,7 +308,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control qcontent" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -331,13 +318,13 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control acontent" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
 			                                            <div class="row d-flex justify-content-end mb-2">
-	                                                        <button id="faqUpdateFrm" type="button" class="btn btn-secondary">수정</button>
+	                                                        <button id="faqUpdateFrm" type="button" class="btn btn-secondary" onclick="btn()" disabled>수정</button>
 	                                                        <button id="faq_chg_Back" type="button" class="btn btn-secondary ml-2 mr-2">취소</button>
 	                                                    </div>
 	                                                </div>
@@ -356,13 +343,66 @@
 
                 <!-- 바디 끝 -->
 	<script type="text/javascript">
+	// 수정
+	$('#qe').keyup(function(){
+		 btndisabled()
+	})
+	
+	
+	$('#con').keyup(function(){
+		 btndisabled()
+	})
+	$('#oo').change(function(){
+		btndisabled()
+	})
+
+	
+	function btndisabled(){
+		var qe = document.getElementById('qe').value;
+		var con = document.getElementById('con').value;
+		var oo = document.getElementById('oo').value;
+		
+		if(qe == '' || con == '' || oo == ''){
+			$('#faqUpdateFrm').attr('disabled','disabled');
+			
+		} else if (qe !="" && con !="" && oo != ''){
+			$('#faqUpdateFrm').removeAttr('disabled');
+		}
+	}
+	
+	
+	// 등록
+	$('#qe1').keyup(function(){
+		 btndisableda()
+	})
+	
+	$('#con1').keyup(function(){
+		 btndisableda()
+	})
+	$('#oo1').change(function(){
+		btndisableda()
+	})
+
+	
+	function btndisableda(){
+		var qe1 = document.getElementById('qe1').value;
+		var con1 = document.getElementById('con1').value;
+		var oo1 = document.getElementById('oo1').value;
+		
+		if(qe1 == '' || con1 == '' || oo1 == ''){
+			$('#faqInsertFrm').attr('disabled','disabled');
+			
+		} else if (qe1 !="" && con1 !="" && oo1 != ''){
+			$('#faqInsertFrm').removeAttr('disabled');
+		}
+	}
 		$('#faqInsertFrm').on('click',function(){
 			event.stopPropagation()
 			//질문 답변 카테고리 유효성 검사가 필요
 			
 			//등록
 			$.ajax({
-				url : '',
+				url : '/admin/insertfaq',
 				type : 'post',
 				data : $('#faq_Insert_frm').serialize(),
 				beforeSend: function(xhr) {
@@ -370,6 +410,10 @@
 		        }
 			})
 			.done((res)=>{
+				if(res == 'Y') {
+					alert("등록성공") ; 
+					location.href = "/admin/adFaqL";
+				}
 				//등록성공 -> 등록성공 alert창 나오고 location.href="/admin/adFaqL"; 실행  
 			})
 		})
@@ -379,8 +423,9 @@
 			//질문 답변 카테고리 유효성 검사가 필요
 			
 			//수정
+		
 			$.ajax({
-				url : '',
+				url : '/admin/upfaq',
 				type : 'post',
 				data : $('#faq_Update_frm').serialize(),
 				beforeSend: function(xhr) {
@@ -388,15 +433,35 @@
 		        }
 			})
 			.done((res)=>{
+				if(res == 'T'){
+					alert("수정성공");
+					location.href="/admin/adFaqL";
+				} 
 				//수정성공 -> 수정성공 alert창 나오고 location.href="/admin/adFaqL"; 실행  
 			})
+		
 			
 		})
 	
 		$('#faqDelete').on('click',function(){
-			//삭제
+			//삭제 진짜 진짜 삭제함
 			let fno = $('#faq_select .fno')[0].innerText;
 			
+			$.ajax({
+				url:'/admin/delfaq',
+				type:'post',
+				data : {fno:fno},
+				beforeSend: function(xhr) {
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		        }
+			})
+			.done((z)=>{
+				if(z == 'z'){
+					alert("삭제성공");
+					location.href="/admin/adFaqL";
+				} 
+			
+			})
 			//삭제  -> 삭제 alert창 나오고 location.href="/admin/adFaqL"; 실행  
 		})
 	
@@ -429,6 +494,7 @@
 			let tr = $('#faq_Table tr')[index];
 			$('#faq_select .fno')[0].innerText = $(tr).find('.fno')[0].innerText;
 			$('#faq_Update .fno')[0].innerText = $(tr).find('.fno')[0].innerText;
+			$('#faq_Update .fno')[1].value = $(tr).find('.fno')[0].innerText;
 			
 			$('#faq_select .ctgr')[0].innerText = $(tr).find('.ctgr')[0].innerText;
 			$('#faq_Update .ctgr')[0].value = $($(tr).find('.ctgr')[0]).data('code');
@@ -442,13 +508,7 @@
 			$('#faq_select .acontent')[0].innerText = $(tr).find('.acontent')[0].innerText;
 			$('#faq_Update .acontent')[0].value = $(tr).find('.acontent')[0].innerText;
 			
-			$('#faq_select .fstcode')[0].innerText = $(tr).find('.fstcode')[0].innerText;
 			
-			if($($(tr).find('.fstcode')[0]).data('code') === 'F01'){
-				$('#faq_up_del').removeClass('d-none');
-			}else if($($(tr).find('.fstcode')[0]).data('code') === 'F02'){
-				$('#faq_up_del').addClass('d-none');
-			}
 		}
 		
 		$(".paginate_button a").on("click" , function(e) {

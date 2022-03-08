@@ -45,6 +45,9 @@
         .lectureList tr{
         	cursor: pointer;
         }
+        #ho:hover{
+        background-color:#f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +62,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의 관리</li>
                                 </ol>
                             </nav>
@@ -123,7 +126,10 @@
                                                     <div class="col-9">
                                                         <input class="w-100 searchKey border" type="text" spellcheck="false"
                                                         <c:if test="${not empty search.creId }">
-                                                        	value = "${search.creId }${search.name }"
+                                                        	value = "${search.creId }"
+                                                        </c:if>
+                                                        <c:if test="${not empty search.name }">
+                                                        	value = "${search.name }"
                                                         </c:if>
                                                         >
                                                     </div>
@@ -201,13 +207,13 @@
                                             <th style="width:120px;">강의등록(신청)날짜</th>
                                             <th style="width:110px;">수강료</th>
                                             <th style="width:130px;">강의별점</th>
-                                            <th style="width:130px;">상태</th>
+                                            <th style="width:180px;">상태</th>
                                         </tr>
                                     </thead>
                                         <!--강의 정보 가져와서 데이터 뿌리기 / 기본 강의소개페이지로 이동-->
                                        <tbody class="lectureList">
                                         <c:forEach items="${lectures}" var="l">
-                                        <tr data-ltno = "${l.ltNo}">
+                                        <tr data-ltno = "${l.ltNo}" id="ho">
                                         	<td>${l.ltNo }</td>
                                         	<td>${l.upCtgr } > ${l.downCtgr }</td>	
                                         	<td>${l.ttl }</td>

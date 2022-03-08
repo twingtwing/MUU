@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.PageVo;
@@ -46,6 +47,42 @@ public class FaqController {
 		model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/all/adFaqL";
 	}
-	
+	@ResponseBody
+	@PostMapping("/admin/insertfaq")
+	public String insertfaq(FaqVO vo) {
+		int r = 0;
+		r+=faqDao.insertfaq(vo);
+		
+		String res = "N";
+		
+		if(r == 1) {
+			res = "Y";
+		}
+		return res ;
+	}
+	@ResponseBody
+	@PostMapping("/admin/upfaq")
+	public String upfaq(FaqVO vo) {
+		int r = 0 ;
+		r+=faqDao.upfaq(vo);
+		String res = "N";
+		if (r == 1) {
+			res = "T";
+		}
+		return res;	
+	}
+	@ResponseBody
+	@PostMapping("/admin/delfaq")
+	public String delfaq(FaqVO vo) {
+		int r = 0;
+		r+=faqDao.delfaq(vo);
+		
+		String z = "N";
+		if(r == 1) {
+			z = "z";
+		}
+		return z;
+		
+	}
 	
 }

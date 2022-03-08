@@ -20,4 +20,22 @@ public class FaqServiceImpl implements FaqService {
 		return map.faqList(vo);
 	}
 
+	@Override
+	public int insertfaq(FaqVO vo) {
+		// TODO Auto-generated method stub
+		return map.insertfaq(vo);
+	}
+
+	@Override
+	public int upfaq(FaqVO vo) {
+		// TODO Auto-generated method stub
+		return map.upfaq(vo);
+	}
+
+	@Override
+	public int delfaq(FaqVO vo) {
+		// TODO Auto-generated method stub
+		return map.delfaq(vo);
+	}
+
 }

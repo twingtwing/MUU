@@ -8,5 +8,5 @@ public interface LessonMapper {
 	int lessonInsert(LessonVO vo);
 	List<LessonVO> lessonWithProgress(LessonVO vo);
 	int lessonUpdate(LessonVO vo);
-
+	LessonVO LessonOTselect(int ltNo);
 }
