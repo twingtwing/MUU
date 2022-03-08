@@ -145,7 +145,7 @@
 	              <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goclLecture(${lecinfo.ltNo })">강의정보</button>
 	              </c:if>
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goQna(${lecinfo.ltNo })">질문&답변</button>
-                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="#">공지사항</button>
+                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="goNotice(${lecinfo.ltNo })">공지사항</button>
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goReview(${lecinfo.ltNo })">리뷰</button>
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goStudent(${lecinfo.ltNo })">수강생</button>
                 </div>
@@ -153,20 +153,18 @@
                  
               <div class="row col-12 justify-content-end mt-3 mb-1">
                 <!--여기서 부터임-->
-                <form name="sere" method="post" action="">
-                    <div class="row mr-1">
-                        <div>
-                            <select id="toc">
-                                <option value="제목">제목</option>
-                                <option value="내용">내용</option>
-                            </select>
-                        </div>
-                        <input class="border mb-0 ml-1" id="tocval" style="height: 37px; width: 170px" type="text"
-                            placeholder="검색..." spellcheck=false>
-                        <a class="btn btn-outline-secondary search-a" onclick="tocSearch()"><i class="icon_search"></i></a>
+                  <div class="row mr-1">
+                      <div>
+                          <select id="toc">                            	
+                              <option value="제목">제목</option>
+                              <option value="내용">내용</option>
+                          </select>
+                      </div>
+                      <input class="border mb-0 ml-1" id="tocval" style="height: 37px; width: 170px" type="text"
+                          placeholder="검색..." spellcheck=false onkeypress="if(event.keyCode==13){tocSearch();}">
+                      <a class="btn btn-outline-secondary search-a" onclick="tocSearch()"><i class="icon_search"></i></a>
 
-                    </div>
-                </form>
+                  </div>
             </div>
             <div class="row col-12">
               <table class="w-100 mt-3 text-center">
@@ -181,8 +179,8 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${nlists }" var="list" varStatus="status">
-                  <tr onclick="noticeSelect(${list.ntNo}, ${list.hits})">
-                    <td>${list.noticeNo }</td>
+                  <tr onclick="noticeSelect(${list.ntNo}, ${list.noticeNo })">
+                    <td>${list.ntNo }</td>
                     <td>${list.ttl }</td>
                     <td>${list.wrDate }</td>
                     <td>${list.hits }</td>
@@ -225,19 +223,59 @@
    	<input class="sendltno" type="hidden" name="ltNo" value="">
    	<input class="spage" type="hidden" name="page" value="">
   </form>
+  <form id="pagesearchFrm">
+    <input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo}">
+   	<input class="sendttl" type="hidden" name="ttlSearchKey" value="">
+   	<input class="sendcontent" type="hidden" name="contentSearchKey" value="">
+   	<input class="spage" type="hidden" name="page" value="">
+  </form>
   <form id="noticeSelectFrm">
   	<input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo}">
    	<input class="sendntno" type="hidden" name="ntNo" value="">
-   	<input class="sendhits" type="hidden" name="hits" value="">
+   	<input class="sendnoticeno" type="hidden" name="noticeNo" value="">
+  </form>
+  <form id="noticeSearchFrm">
+  	<input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo}">
+   	<input class="sendttl" type="hidden" name="ttlSearchKey" value="">
+   	<input class="sendcontent" type="hidden" name="contentSearchKey" value="">
   </form>
   
 </body>
 <script>
-$('.paging').on('click', function(){
-	$('.sendltno').val(${lecinfo.ltNo});
-	$('.spage').val($(this).text());
-  	$('#pageFrm').attr('action', '/creator/cLecNLpage');
-  	$('#pageFrm').submit();
+$('#tocval').keyup(function(e){
+	e.preventDefault();
+})
+
+//시큐리티 토큰
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+//검색키 선언
+let ttlSearchKey;
+let contentSearchKey;
+
+$(function(){
+	$('.paging').on('click', function(){
+		//검색 후 페이지 이동
+		if($('#tocval').val() != null){
+			$('.spage').val($(this).text());
+			if($('#toc option:selected').val() == '제목'){
+		  	    ttlSearchKey = $('#tocval').val();
+		  	} else if($('#toc option:selected').val() == '내용'){
+				contentSearchKey = $('#tocval').val();
+			}
+			$('.sendttl').val(ttlSearchKey);
+		    $('.sendcontent').val(contentSearchKey);
+		  	$('#pagesearchFrm').attr('action', '/creator/cLecNLpagesearch');
+		  	$('#pagesearchFrm').submit();
+		//페이지 이동
+		} else {
+			$('.sendltno').val(${lecinfo.ltNo});
+			$('.spage').val($(this).text());
+		  	$('#pageFrm').attr('action', '/creator/cLecNLpage');
+		  	$('#pageFrm').submit();
+		}
+	})
 })
 
    //mouseover 이벤트 : 사이드바 css변경
@@ -300,45 +338,34 @@ $('.paging').on('click', function(){
   //공지사항 한건 조회
   function noticeSelect(a, b){
 	  $('.sendntno').val(a);
-	  $('.sendhits').val(b);
+	  $('.sendnoticeno').val(b);
 	  $('#noticeSelectFrm').attr("action", "/creator/cLecNS");
 	  $('#noticeSelectFrm').submit();
   }
   
-  //시큐리티 토큰
-  let header = "${_csrf.headerName}";
-  let token = "${_csrf.token}";
-  
   //공지사항 검색 조회
   function tocSearch(){
-	  let ttlSearchKey;
-	  let contentSearchKey;
 	  if($('#toc option:selected').val() == '제목'){
 		  ttlSearchKey = $('#tocval').val();
 	  } else if($('#toc option:selected').val() == '내용'){
 		  contentSearchKey = $('#tocval').val();
 	  }
-	  $.ajax({
-		  url : '/creator/cLecNLsearch',
-		  method : 'post',
-		  processData : false,
-	      contentType : false,
-	      async : false,
-	      beforeSend: function(xhr) {
-	          xhr.setRequestHeader(header, token);
-	      },
-	      datatype:'text',
-		  data : {
-			  ttlSearchKey : ttlSearchKey,
-			  contentSearchKey : contentSearchKey,
-			  ltNo : ${lecinfo.ltNo}
-		  }, 
-		  success : function() {
-			  
-		  }
-		  
-		  
-	  })
+	  $('.sendttl').val(ttlSearchKey);
+	  $('.sendcontent').val(contentSearchKey);
+	  
+	  $('#noticeSearchFrm').attr("action", "/creator/cLecNLsearch");
+	  $('#noticeSearchFrm').submit();
   }
+  //검색 조회시 검색란 선입력
+  $(function(){
+	  if(${inputTtl != null}){
+		  $($('#toc option').val('제목')).attr('selected', 'selected');
+		  $('#tocval').val('${inputTtl}');
+	  }
+	  if(${inputContent != null}){
+		  $($('#toc option').val('내용')).attr('selected', 'selected');
+		  $('#tocval').val('${inputContent}');
+	  }
+  }) 
   </script>
 </html>

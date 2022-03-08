@@ -11,25 +11,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import co.makeu.up.common.view.PageVo;
-import co.makeu.up.ctgr.service.CtgrVO;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
+
 import co.makeu.up.refund.service.RefundVO;
 
 import co.makeu.up.common.view.Pagination;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 
+
+import co.makeu.up.ltqna.service.LtQnaServiceImpl;
+import co.makeu.up.ltqna.service.LtQnaVO;
+import co.makeu.up.notice.service.NoticeServiceImpl;
+import co.makeu.up.notice.service.NoticeVO;
+import co.makeu.up.review.service.ReviewServiceImpl;
+import co.makeu.up.review.service.ReviewVO;
+import co.makeu.up.sugang.service.SugangServiceImpl;
+import co.makeu.up.sugang.service.SugangVO;
+
 import co.makeu.up.common.view.Pagination;
-import co.makeu.up.lecture.service.LectureServiceImpl;
-import co.makeu.up.lecture.service.LectureVO;
 
 @Controller
 public class AdminLectureController {
 	@Autowired LectureServiceImpl lectureDao;
+	@Autowired LessonServiceImpl lessonDao;
+	@Autowired SugangServiceImpl sugangDao;
+	@Autowired ReviewServiceImpl reviewDao;
+	@Autowired LtQnaServiceImpl ltqnaDao;
+	@Autowired NoticeServiceImpl noticeDao;
 	
 	@Autowired LessonServiceImpl lessonDao;
 	
@@ -50,49 +64,99 @@ public class AdminLectureController {
 	//강의상세-강의소개
 	@GetMapping("/admin/adLecI")
 	public String adLecI(Model model,int ltNo) {
-		model.addAttribute("lectureInfo",lectureDao.lectureSelect(ltNo));
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		model.addAttribute("ot",lessonDao.LessonOTselect(ltNo));
 		return "admin/lecture/adLecI";
 	}
 	
 	//강의상세-유저
 	@GetMapping("/admin/adLecU")
-	public String adLecU() {
+	public String adLecU(int ltNo, Model model, SugangVO vo) {
+		vo.setLtNo(ltNo);
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		model.addAttribute("userCnt", sugangDao.adminSugangCount(ltNo));	
+		List<SugangVO> list =sugangDao.adminLecUserList(vo);
+		model.addAttribute("users", list);
+		model.addAttribute("pages",new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage()));
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecU";
 	}
 	
 	//강의상세-커리큘럼
 	@GetMapping("/admin/adLecC")
-	public String adLecC() {
+	public String adLecC(int ltNo, Model model) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		List<LessonVO> list = lessonDao.lessonList(ltNo);
+		model.addAttribute("lessons",list);
+		model.addAttribute("cnt",list.size());
 		return "admin/lecture/adLecC";
 	}
 	
 	//강의상세-키트
 	@GetMapping("/admin/adLecK")
-	public String adLecK() {
+	public String adLecK(int ltNo, Model model, SugangVO vo) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
+		List<SugangVO> list = sugangDao.adminLecDeliver(vo);
+		model.addAttribute("del",list);
+		model.addAttribute("pages",new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage()));
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecK";
 	}
 	
+	
 	//강의상세-후기
 	@GetMapping("/admin/adLecR")
-	public String adLecR() {
+	public String adLecR(int ltNo, Model model, ReviewVO vo) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
+		List<ReviewVO> list = reviewDao.adminReviewList(vo);
+		model.addAttribute("reviews",list);
+		model.addAttribute("pages",new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage()));
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecR";
 	}
 	
 	//강의상세-질문/답변
 	@GetMapping("/admin/adLecQ")
-	public String adLecQ() {
+	public String adLecQ(int ltNo, Model model, LtQnaVO vo) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
+		List<LtQnaVO> list = ltqnaDao.adminQnaList(vo);
+		model.addAttribute("pages",new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1 , vo.getPage()));
+		model.addAttribute("qna", list);
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecQ";
 	}
 	
 	//강의상세-공지사항
 	@GetMapping("/admin/adLecN")
-	public String adLecN() {
+	public String adLecN(int ltNo, Model model, NoticeVO vo) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
+		
+		List<NoticeVO> list = noticeDao.adminNoticeList(vo);
+		model.addAttribute("notices",list);
+		model.addAttribute("pages",new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), ltNo));
+		model.addAttribute("search",vo);
 		return "admin/lecture/adLecN";
 	}
 	
 	//강의상세-공지사항상세
 	@GetMapping("/admin/adLecND")
-	public String adLecND() {
+	public String adLecND(int ltNo, Model model) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
 		return "admin/lecture/adLecND";
 	}
 	

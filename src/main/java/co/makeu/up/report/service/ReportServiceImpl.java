@@ -39,26 +39,32 @@ public class ReportServiceImpl implements ReportMapper{
 
 	@Override
 	public ReportVO selectrespss(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.selectrespss(vo);
 	}
 
 	@Override
 	public int upreport(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.upreport(vo);
 	}
 
 	@Override
 	public int uprepor(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.uprepor(vo);
 	}
 
 	@Override
 	public int rerepor(ReportVO vo) {
-		// TODO Auto-generated method stub
 		return map.rerepor(vo);
+	}
+
+	@Override
+	public int upcode(ReportVO vo) {
+		return map.upcode(vo);
+	}
+
+	@Override
+	public int succode(ReportVO vo) {
+		return map.succode(vo);
 	}
 
 	

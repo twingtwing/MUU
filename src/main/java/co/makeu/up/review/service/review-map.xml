@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.review.service.ReviewMapper">
 	<select id="reviewSelectList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
-		SELECT * FROM REVIEW
+		SELECT r.*, (select round(avg(star),1) from review where lt_no = 1) as avgStar FROM REVIEW r
 		WHERE LT_NO = #{ltNo}
 		AND RV_CODE != 'RE03'
 		AND CONTENT LIKE '%'||#{content}||'%'
@@ -32,4 +32,22 @@
 		STAR = #{star}
 		WHERE RV_NO = #{rvNo}
 	</update>
+	<select id="adminReviewList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
+		SELECT * FROM (SELECT ROWNUM RN,RV_NO WRITER,CONTENT,STAR, COUNT(*) OVER() CNT, FINDLTCODE(RV_CODE) RV_CODE
+		FROM REVIEW
+		WHERE LT_NO = #{ltNo} 
+		AND WRITER LIKE '%'||#{writer}||'%' 
+		AND CONTENT LIKE '%'||#{content}||'%'
+		<if test="star != 0">
+		AND STAR = #{star}
+		</if>
+		<if test="rvCode !=null and !rvCode.equals('')">
+		AND RV_CODE = #{rvCode}
+		</if>
+		ORDER BY RV_NO)
+		<![CDATA[ 
+		WHERE RN > (#{page}-1) * 10
+		AND RN <= #{page} * 10
+		]]>
+	</select>
 </mapper>

@@ -49,4 +49,24 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.sugangInsert(vo);
 	}
 
+	@Override
+	public List<SugangVO> adminSugangList(int ltNo) {
+		return map.adminSugangList(ltNo);
+	}
+
+	@Override
+	public SugangVO adminSugangCount(int ltNo) {
+		return map.adminSugangCount(ltNo);
+	}
+
+	@Override
+	public List<SugangVO> adminLecUserList(SugangVO vo) {
+		return map.adminLecUserList(vo);
+	}
+
+	@Override
+	public List<SugangVO> adminLecDeliver(SugangVO vo) {
+		return map.adminLecDeliver(vo);
+	}
+
 }

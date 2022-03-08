@@ -108,5 +108,44 @@ public class ReportController {
 		return result;
 	}
 	
-
+	
+	@ResponseBody
+	@PostMapping("/admin/reupcode")
+	public String reupcode(ReportVO vo) {
+		System.out.println("ffffff");
+		int r = 0;
+		r+= reportDao.upcode(vo);
+		String result ="N";
+		if (r==1) {
+			result ="A";
+		}
+		return result;
+	}
+		
+	@ResponseBody
+	@PostMapping("/admin/upcode")
+	
+	public String upcode(ReportVO vo) {
+		System.out.println("ltno : " + vo.getLtNo());
+		int r= 0;
+		r+= reportDao.upreport(vo);
+		r+= reportDao.upcode(vo);
+		String result = "N";
+		if( r == 2) {
+			result = "Y";
+		}
+		return result ;
+	}
+	@ResponseBody
+	@PostMapping("/admin/succode")
+	public String succode(ReportVO vo) {
+		int r =0;
+		r+= reportDao.succode(vo);
+		String result = "N";
+		if(r ==1 ) {
+			result = "S";
+		}
+		return result;
+	}
+	
 }

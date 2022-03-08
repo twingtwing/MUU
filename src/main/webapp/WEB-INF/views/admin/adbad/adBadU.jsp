@@ -76,7 +76,7 @@
                                             <input type="file" id="multiFile" name="multiFile" multiple="multiple" onchange="fileChange()">
                                         	<c:if test="${ not empty board.detaFileList}">
 	                                        	<div id="fileDiv" class="row align-items-center position-absolute" style="background-color: #eeeeee; left: 99px; top: 12px; padding-right: 100px;">
-		                                        	<c:forEach items="${ board.detaFileList }" var = "file">
+		                                        	<c:forEach items="${board.detaFileList }" var="file">
 			                                        	<p class="mb-0">${file.filePath}</p>
 		                                        	</c:forEach>
 	                                        	</div>
