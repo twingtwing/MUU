@@ -65,14 +65,14 @@
                                             <div class="row">
                                             <!-- 수업 있으면 -->
                                                 <h6 class="mb-0 ml-2 pl-1">수업 번호</h6>
-                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">000</h6>
+                                                <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.serialno }</h6>
                                                 <h6 class="mb-0 ml-2 pl-1">수업 제목</h6>
                                                 <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.ttl }</h6>
                                             </div>
                                             <div class="row">
                                                 <div class="row mx-2">
                                                     <h6 class="mb-0">강의 제목</h6>
-                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">ㅇㄹㅇㄹㅇ</h6>
+                                                    <h6 class="mb-0 ml-2" style="font-weight: 500;">${report.lsnttl }</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,11 +81,16 @@
                                 <div class="row" >
                                     <div class="form-group col-lg-12"  >
 	                                    <div class="card d-felx justify-content-center">
-		                                    <div class="card-body">
-		                                    	<iframe id="youtube" src="https://www.youtube.com/embed/9d9Zdhpu0yc" frameborder="0" style="display:block; width:100%; height: 80vh"></iframe>
+		                                    <div class="card-body  row justify-content-end">
+		                                    
+		                                    <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
+                                                          <source src="lesson.lsnFile" type="video/mp4">
+                                           </video>
 		                                    </div>
+		                                    
+		                                    
 		                                    <div class="card-footer row justify-content-end" style="background-color: white;">
-			                                	<div>강의 상세 정보 가기</div>
+			                                	
 		                                	</div>
 	                                    </div>
 	                                </div>
@@ -137,11 +142,19 @@
                                 <div class="row form-group">
                                     <div class="card">
                                         <div class="card-body" style="height: 25vh;">
-                                        ㅇㄹㅇㄹ
+                                        ${report.content }
                                         </div>
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
-	                                            처리 상태 : <span class="text-danger font-weight-bold">처리</span>
+	                                            처리 상태 : <span class="text-danger font-weight-bold"> 
+	                                            <c:if test = "${report.rpStCode eq 'RPS01' }">
+	                                            	미처리
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02'  }">
+	                                            	 처리
+	                                            </c:if>
+	                                            
+	                                            </span>
 	                                         </div>
                                         </div>
                                     </div>
@@ -157,8 +170,16 @@
                                             onclick="history.back();">뒤로가기</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-secondary">수정요청</button>
-                                        <button type="button" class="btn btn-secondary" onclick="javascript:btn();">반려</button>
+                                        <c:if test="${report.rpStCode eq 'RPS01' }">
+		                                    	<button type="button" class="btn btn-secondary">수정요청</button>
+		                                        <button type="button" class="btn btn-secondary"
+		                                            onclick="javascript:btn();">반려</button>
+                                    	</c:if>			
+                                    	 <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L06'}">
+		                                    	<button type="button" class="btn btn-secondary">수정 재요청</button>
+		                                        <button type="button" class="btn btn-secondary"
+		                                            onclick="javascript:btn();">정상처리</button>
+                                    	</c:if>
                                     </div>
                                 </div>
 

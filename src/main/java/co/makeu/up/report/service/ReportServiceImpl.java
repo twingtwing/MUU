@@ -38,6 +38,30 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.reportLectureList(creid);
 	}
 
+	@Override
+	public ReportVO selectrespss(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectrespss(vo);
+	}
+
+	@Override
+	public int upreport(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.upreport(vo);
+	}
+
+	@Override
+	public int uprepor(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.uprepor(vo);
+	}
+
+	@Override
+	public int rerepor(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.rerepor(vo);
+	}
+
 	
 	
 }
