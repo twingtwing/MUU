@@ -13,9 +13,15 @@ public class FaqVO {
 	private Date wrdate;
 	private String acontent;	
 
+	//for extend
+	private String ctgrName;
+	private String fstName;
+	
+	//for search
 	private String start;
 	private String end;
 	
+	//for page
 	private int length;
 	private int pageNum;
 	private int amount;
