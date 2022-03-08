@@ -12,4 +12,6 @@ public interface ReportMapper {
 	int upreport(ReportVO vo);
 	int uprepor(ReportVO vo);
 	int rerepor(ReportVO vo);
+	int upcode(ReportVO vo);
+	int succode(ReportVO vo);
 }

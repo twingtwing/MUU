@@ -26,8 +26,8 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">강의신고</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adLRepL">강의신고</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의신고상세페이지</li>
                                 </ol>
                             </nav>
@@ -147,13 +147,24 @@
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
 	                                            처리 상태 : <span class="text-danger font-weight-bold"> 
-	                                            <c:if test = "${report.rpStCode eq 'RPS01' }">
+	                                            
+	                                            
+	                                            
+	                                         <c:if test = "${report.rpStCode eq 'RPS01' }">
 	                                            	미처리
 	                                            </c:if>
-	                                            <c:if test="${report.rpStCode eq 'RPS02'  }">
-	                                            	 처리
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L04' }">
+	                                            	 처리 - 신고
 	                                            </c:if>
-	                                            
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L06' }">
+	                                            	 처리 - 수정완료
+	                                            </c:if>
+	                                            <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode ne 'L04' && report.ltStCode ne 'L06'}">
+	                                            	 처리 - 정상처리
+	                                            </c:if>
+	                                             <c:if test="${report.rpStCode eq 'RPS03' }">
+	                                            	 반려
+	                                          </c:if>
 	                                            </span>
 	                                         </div>
                                         </div>
@@ -171,15 +182,16 @@
                                     </div>
                                     <div>
                                         <c:if test="${report.rpStCode eq 'RPS01' }">
-		                                    	<button type="button" class="btn btn-secondary">수정요청</button>
+		                                    	<button id="upcode" type="button" class="btn btn-secondary">수정요청</button>
 		                                        <button type="button" class="btn btn-secondary"
-		                                            onclick="javascript:btn();">반려</button>
+		                                            id="retrunBtn">반려</button>
                                     	</c:if>			
                                     	 <c:if test="${report.rpStCode eq 'RPS02' && report.ltStCode eq 'L06'}">
-		                                    	<button type="button" class="btn btn-secondary">수정 재요청</button>
+		                                    	<button id="reupcode" type="button" class="btn btn-secondary">수정 재요청</button>
 		                                        <button type="button" class="btn btn-secondary"
-		                                            onclick="javascript:btn();">정상처리</button>
+		                                            id="succode">정상처리</button>
                                     	</c:if>
+                                    	<input type = 'hidden' id='ltnoinput' value='${report.ltNo}' >
                                     </div>
                                 </div>
 
@@ -191,12 +203,86 @@
                         <!-- 내용 끝 -->
                         <!-- 바디 끝 -->
 	<script>
-		function btn() {
-			var returnValue = confirm('삭제하시겠습니까?');
-			if (returnValue = true) {
-				location.href = "강의신고.html"
+	$('#retrunBtn').on('click',function(){
+		event.stopPropagation()
+		
+		$.ajax({
+			url : '/admin/rerepor',
+			type : 'POST',
+			data : {rpNo:'${report.rpNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 't'){
+				alert("해당리뷰를 정상적으로 반려처리하였습니다.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
 			}
 		}
+		})
+})
+	 $('#succode').on('click',function(){
+		 event.stopPropagation()
+		 
+		$.ajax({
+			url:'/admin/succode',
+			type:'post',
+			data:{ltNo:'${report.ltNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 'S'){
+				alert("해당리뷰를 정상처리 하였습니다.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+			}
+		}
+		}) 
+		 
+	 })
+	 
+	$('#reupcode').on('click',function(){
+		event.stopPropagation()
+		
+		$.ajax({
+			url : '/admin/reupcode',
+			type : 'POST',
+			data : {ltNo:'${report.ltNo}'},
+			beforeSend: function(xhr) {
+	        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	        },
+		success:function(result){
+			if(result == 'A'){
+				alert("해당리뷰를 정상적으로 수정 재요청.")
+				location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+			}
+		}
+		})
+})
+
+
+
+
+
+$('#upcode').on('click',function(){
+	event.stopPropagation()
+	$.ajax({
+		url:'/admin/upcode',
+		type:'POST',
+		data : {rpNo:'${report.rpNo}' , ltNo:'${report.ltNo}'},
+		beforeSend: function(xhr) {
+        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+	success:function(result){
+		if(result == 'Y'){
+			
+			alert("해당리뷰를 정상적으로 수정요청하였습니다.");
+			location.href ="/admin/adLRepS?rpNo="+'${report.rpNo}';
+		}
+	}
+	})
+})
+
 	</script>
 </body>
 </html>

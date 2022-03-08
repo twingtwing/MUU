@@ -104,5 +104,13 @@
 	update report set RP_ST_CODE =  'RPS03'
 	where RP_NO = #{rpNo}
 	</update>
+	<update id="upcode" parameterType="co.makeu.up.report.service.ReportVO">
+	update lecture set LT_ST_CODE = 'L04'
+	where LT_NO = #{ltNo}
+	</update>
+	<update id="succode" parameterType="co.makeu.up.report.service.ReportVO">
+	update lecture set LT_ST_CODE = 'L01'
+	where LT_NO = #{ltNo}
+	</update>
 </mapper>
 
