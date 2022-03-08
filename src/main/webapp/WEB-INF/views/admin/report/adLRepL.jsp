@@ -3,6 +3,11 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
+<style>
+#mod:hover{
+background-color:#f5f5f5;
+}
+</style>
 <head>
 <meta charset="UTF-8">
     <style>
@@ -48,7 +53,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">강의신고</li>
                                 </ol>
                             </nav>
@@ -134,7 +139,7 @@
                                         </thead>
                                     <tbody id="mo" onmouseover = "setCursor(this,'pointer')">
                                    		<c:forEach items = "${list }" var = "list">
-                                        <tr  onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
+                                        <tr id="mod" onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
                                             <td>${list.rpNo }</td>
                                             <td>
                                                    <c:if test="${list.type eq 'RPT01' }">
@@ -154,7 +159,7 @@
                                                 <c:if test = "${list.rpStCode eq 'RPS01' }">
 	                                            	미처리
 	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS01' && list.ltStCode eq 'L01' }">
+	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L04' }">
 	                                            	 처리 - 신고
 	                                            </c:if>
 	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L06' }">

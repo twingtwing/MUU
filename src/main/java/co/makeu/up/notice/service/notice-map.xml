@@ -73,6 +73,7 @@
         ON F.FILE_NO = D.FILE_NO
         WHERE F.FILE_NO = #{ltNo}
 	</select>
+
 	<select id="NoticeSelects" parameterType="co.makeu.up.notice.service.NoticeVO" resultType="co.makeu.up.notice.service.NoticeVO">
 		SELECT *
 		FROM NOTICE
@@ -86,4 +87,25 @@
 	    </if>
 		WHERE NT_NO = #{ntNo}
 	</update>
+
+	<select id="adminNoticeList" parameterType="co.makeu.up.notice.service.NoticeVO" resultType="co.makeu.up.notice.service.NoticeVO">
+	SELECT * FROM (SELECT ROWNUM RN, NT_NO,TTL,WR_DATE,HITS, COUNT(*) OVER() COUNT
+	FROM NOTICE
+	WHERE LT_NO = #{ltNo}
+	<if test="ttl != null and !ttl.equals('')">
+	AND TTL LIKE '%'||#{ttl}||'%'
+	</if>
+	<if test="content != null and !content.equals('')">
+	AND CONTENT LIKE '%'||#{content}||'%'
+	</if>
+	<if test="startDate != null and !startDate.equals('')">
+	AND WR_DATE BETWEEN #{startDate} AND #{endDate}
+	</if>
+	ORDER BY NT_NO)
+	<![CDATA[
+	WHERE RN > (#{page}-1) * 10
+		AND RN <= #{page} * 10
+	]]>
+	</select>
+
 </mapper>

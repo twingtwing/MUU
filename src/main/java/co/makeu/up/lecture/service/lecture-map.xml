@@ -158,4 +158,24 @@
    	    WHERE RN <![CDATA[>]]> (#{page}-1) * 10
 		AND RN <![CDATA[<=]]> #{page} * 10	
 	</select>
+	
+	<select id="adminLectureInfo" parameterType="Integer" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT L.LT_NO,L.CRE_ID,FINDLTCODE(L.LT_ST_CODE) LT_ST_CODE_NAME,L.LT_ST_CODE,L.TTL,L.INTRO,RV.AVGSTAR,R.CNT,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC,
+				C.NAME DOWN_CTGR, CU.NAME UP_CTGR,L.THUMB,L.OPEN_TERM,L.KIT_NAME,L.REQ_DATE,L.START_DATE,L.EXP_DATE,ADD_MONTHS(L.EXP_DATE,L.TLSN_TERM) END_DATE
+		FROM LECTURE L 
+		LEFT OUTER JOIN (SELECT LT_NO,COUNT(*) CNT 
+		                            FROM REPORT WHERE CTGR = 'RP02' 
+		                            AND RP_ST_CODE = 'RPS02'
+		                            GROUP BY LT_NO) R
+		ON L.LT_NO = R.LT_NO
+		LEFT OUTER JOIN (
+		    SELECT LT_NO,TRUNC(AVG(STAR),1) AVGSTAR FROM REVIEW
+		    GROUP BY LT_NO) RV
+		ON L.LT_NO = RV.LT_NO
+		JOIN CTGR C
+		ON L.DOWN_CTGR = C.CTGR_ID
+		JOIN CTGR CU
+		ON L.UP_CTGR = CU.CTGR_ID
+		WHERE L.LT_NO = #{ltNo}
+	</select>
 </mapper>

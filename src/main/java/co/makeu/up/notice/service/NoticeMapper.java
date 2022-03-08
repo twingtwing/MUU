@@ -14,4 +14,7 @@ public interface NoticeMapper {
 	List<FilesVO> noticeFiles(int ltNo);
 	NoticeVO NoticeSelects(NoticeVO vo);
 	int NoticeUpdate(NoticeVO vo);
+	
+	// admin
+	List<NoticeVO> adminNoticeList(NoticeVO vo);
 }

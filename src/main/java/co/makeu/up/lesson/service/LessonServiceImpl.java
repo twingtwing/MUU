@@ -33,4 +33,9 @@ public class LessonServiceImpl implements LessonMapper {
 		return map.lessonUpdate(vo);
 	}
 
+	@Override
+	public LessonVO LessonOTselect(int ltNo) {
+		return map.LessonOTselect(ltNo);
+	}
+
 }
