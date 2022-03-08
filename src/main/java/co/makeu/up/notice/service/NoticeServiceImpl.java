@@ -46,5 +46,10 @@ public class NoticeServiceImpl implements NoticeMapper{
 		return map.noticeFiles(ltNo);
 	}
 
+@Override
+public List<NoticeVO> adminNoticeList(NoticeVO vo) {
+	return map.adminNoticeList(vo);
+}
+
 	
 }

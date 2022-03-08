@@ -21,5 +21,9 @@
 		AND (P.ID = #{id} OR P.PROG_PCT IS NULL)
 		ORDER BY L.SERIAL_NO
 	</select>
-
+	<select id="LessonOTselect" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
+		SELECT * FROM LESSON
+		WHERE LT_NO = #{ltNo}
+		AND LSN_NO = 1
+	</select>
 </mapper>

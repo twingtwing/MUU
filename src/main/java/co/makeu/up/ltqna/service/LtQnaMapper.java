@@ -10,4 +10,7 @@ public interface LtQnaMapper {
 	int insertQna(LtQnaVO vo);	
 	int updateMyQna(LtQnaVO vo);
 	int deleteMyQna(int qnaNo);
+	
+	// admin
+	List<LtQnaVO> adminQnaList(LtQnaVO vo);
 }

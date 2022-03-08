@@ -44,4 +44,9 @@ public class LtQnaServiceImpl implements LtQnaMapper{
 		return map.deleteMyQna(qnaNo);
 	}
 
+	@Override
+	public List<LtQnaVO> adminQnaList(LtQnaVO vo) {
+		return map.adminQnaList(vo);
+	}
+
 }

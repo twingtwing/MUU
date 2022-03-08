@@ -18,4 +18,6 @@ public class ReviewVO {
 	private String myReview;//내 강의
 	private String name;
 	private String pht;
+	private int page;
+	private int cnt;
 }
