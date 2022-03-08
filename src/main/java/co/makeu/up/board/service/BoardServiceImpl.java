@@ -58,6 +58,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int deladbad(BoardVO vo) {
+		if(vo.getFileNo()!=0) {
+			fileMap.delFile(vo.getFileNo());
+			detafileMap.delFeilDelete(vo.getFileNo());
+		}
 		return map.deladbad(vo);
 	}
 

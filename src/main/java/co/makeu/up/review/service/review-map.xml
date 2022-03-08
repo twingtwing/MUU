@@ -4,7 +4,6 @@
 	<select id="reviewSelectList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
 		SELECT * FROM REVIEW
 		WHERE LT_NO = #{ltNo}
-		AND RV_CODE != 'RE03'
 		AND CONTENT LIKE '%'||#{content}||'%'
         AND WRITER LIKE '%'||#{writer}||'%'
 		ORDER BY WR_DATE DESC
@@ -19,13 +18,13 @@
 		SELECT * FROM REVIEW
 		WHERE WRITER = #{writer}
 		AND LT_NO = #{ltNo}
-		AND RV_CODE != 'RE03'
 	</select>
-	<update id="deleteMyReveiw" parameterType="co.makeu.up.review.service.ReviewVO">
-		UPDATE REVIEW
-		SET RV_CODE = 'RE03'
+
+	<delete id="deleteMyReveiw" parameterType="co.makeu.up.review.service.ReviewVO">
+		DELETE FROM REVIEW
 		WHERE RV_NO = #{rvNo}
-	</update>
+	</delete>
+	
 	<update id="updateMyReview" parameterType="co.makeu.up.review.service.ReviewVO">
 		UPDATE REVIEW
 		SET CONTENT = #{content},

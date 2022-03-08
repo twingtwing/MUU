@@ -2,29 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.sales.service.SalesMapper">
 	<select id="salesByYear" resultType="co.makeu.up.sales.service.SalesVO">
-		SELECT TO_CHAR(REG_DATE,'YYYY') YEAR, SUM(PAY) PAY, COUNT(*) CNT
-		FROM SUGANG
-		WHERE TLSN_ST_CODE != 'SU03'
-		GROUP BY ROLLUP(TO_CHAR(REG_DATE,'YYYY'))
-		ORDER BY YEAR
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'YYYY') REG_DATE,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03')
+		SELECT L.YEAR, ROUND(SUM(Y.PAY)/10000,0) PAY ,COUNT(Y.PAY) CNT 
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT TO_CHAR(SYSDATE,'YYYY') - LEVEL +1 AS YEAR
+		                           FROM DUAL
+		                           CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY') - LEVEL - 2008) L
+		ON Y.REG_DATE = L.YEAR
+		GROUP BY ROLLUP(L.YEAR)
+		ORDER BY L.YEAR
 	</select>
 	<select id="salesByMonth" parameterType="String" resultType="co.makeu.up.sales.service.SalesVO">
-		SELECT M.MONTH,S.* 
-		FROM (SELECT TO_CHAR(REG_DATE,'MM') MON, SUM(PAY) PAY, COUNT(TLSN_NO) CNT
-				FROM SUGANG
-				WHERE TO_CHAR(REG_DATE,'YYYY') = #{selectYear}
-				AND TLSN_ST_CODE != 'SU03'
-				GROUP BY ROLLUP(TO_CHAR(REG_DATE,'MM'))) S 
-	        	FULL OUTER JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
-        						CONNECT BY LEVEL <![CDATA[<=]]> 12) M
-        		ON S.MON = M.MONTH
-        ORDER BY M.MONTH
+		WITH MON_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'MM') MON,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}
+		 AND S.TLSN_ST_CODE != 'SU03')   
+		SELECT L.MONTH, ROUND(SUM(Y.PAY)/10000,1) PAY ,COUNT(Y.PAY) CNT 
+		FROM MON_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                            CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		ON Y.MON = L.MONTH
+		GROUP BY ROLLUP(L.MONTH)
+		ORDER BY L.MONTH
 	</select>
 	<select id="salesByCtgrYear" resultType="co.makeu.up.sales.service.SalesVO">
-		SELECT L.UP_CTGR, TO_CHAR(REG_DATE,'YYYY') YEAR,COUNT(S.TLSN_NO) CNT, SUM(S.PAY) PAY
-        FROM SUGANG S JOIN LECTURE L
-        ON S.LT_NO = L.LT_NO
-        WHERE S.TLSN_ST_CODE != 'SU03' 
-        GROUP BY ROLLUP(L.UP_CTGR,TO_CHAR(REG_DATE,'YYYY'))
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(REG_DATE,'YYYY') REG_DATE, L.UP_CTGR,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03'),
+		YEAR_END AS
+		(SELECT CASE GROUPING(L.YEAR) WHEN 1 THEN 'ALL' ELSE TO_CHAR(L.YEAR) END AS YEAR, 
+		        CASE GROUPING(Y.UP_CTGR) WHEN 1 THEN 'ALL' ELSE Y.UP_CTGR END AS CTGR, 
+		        ROUND(SUM(Y.PAY)/10000,0) PAY
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT TO_CHAR(SYSDATE,'YYYY') - LEVEL +1 AS YEAR
+		                           FROM DUAL
+		                           CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY') - LEVEL - 2008) L
+		ON Y.REG_DATE = L.YEAR
+		GROUP BY CUBE(L.YEAR,Y.UP_CTGR))
+		SELECT * FROM YEAR_END
+		PIVOT ( SUM(PAY) FOR CTGR IN ('HC01' "HC01",'HC02' "HC02",'HC03' "HC03",'HC04' "HC04",'HC05' "HC05",'HC06' "HC06",'HC07' "HC07",'ALL' "ALL"))
+		order by 1 
 	</select>
 </mapper>

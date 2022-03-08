@@ -11,11 +11,6 @@
             text-align: center;
             vertical-align: middle;
         }
-        
-        table td a:hover{
-        	cursor: pointer;
-        	text-decoration: underline;
-        }
 
         .admin_search td,
         .admin_search th {
@@ -76,19 +71,8 @@
 	                                                    </div>
 	                                                </div>
 	                                            </td>
-	                                            <th style="width: 15%" class="align-middle">상태</th>
-	                                            <td style="width: 35%" class="align-middle">
-	                                                <div class="row align-items-center ml-1">
-	                                                    <input type="radio" name="bStCode" value="B01" id="code_Y" class="mr-1" ondbclick="this.checked = false">
-	                                                    <label class="mb-0" for="code_Y" >등록</label>
-	                                                    <input type="radio" name="bStCode" value="B02" id="code_N" class="ml-3 mr-1" ondbclick="this.checked = false">
-	                                                    <label class="mb-0" for="code_N">삭제</label>
-	                                                </div>
-	                                            </td>
-	                                        </tr>
-	                                        <tr height="38">
 	                                            <th class="align-middle">등록일</th>
-	                                            <td colspan="3" class="text-left align-middle">
+	                                            <td class="text-left align-middle">
 	                                                <div class="row pl-4 d-flex justify-content-start">
 	                                                    <input type="date" name = "start">
 	                                                    <div class="mx-2 d-flex align-self-center justify-content-center"><i class="fa fa-minus m-0"></i></div>
@@ -97,7 +81,6 @@
 	                                            </td>
 	                                        </tr>
 	                                    </table>
-	                                    
 	                                    <button id="but"  type = "submit" class="btn btn-secondary position-absolute"
 	                                        style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
 	                                </div>
@@ -111,7 +94,6 @@
                                             <th width="130px">작성자</th>
                                             <th width="150px">작성일</th>
                                             <th width="130px">첨부파일</th>
-                                            <th width="100px">상태</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -122,11 +104,9 @@
                                         </c:if>
                                         <c:if test="${not empty list }">
 	                                        <c:forEach items ="${list }" var="board">
-		                                        <tr>
+		                                        <tr class="boardSelect" data-no="${board.getBNo() }">
 		                                            <td>${board.getBNo() }</td>
-		                                            <td class="text-left">
-			                                          <a href="/admin/adBadS?bNo=${board.getBNo() }" class="text-dark">${board.ttl}</a>
-		                                          	</td>
+		                                            <td class="text-left">${board.ttl}</td>
 		                                            <td>관리자</td>
 		                                            <td>${board.wrDate }</td>
 		                                            <td>
@@ -137,14 +117,6 @@
 		                                            		<i class="fas fa-download mr-0"></i>
 		                                            	</c:if>
 		                                            </td>
-			                                        <td >
-			                                            <c:if test="${board.getBStCode() eq 'B01' }">
-			                                            	등록
-			                                            </c:if>
-			                                        	<c:if test="${board.getBStCode() eq 'B02' }">	
-			                                        		삭제
-			                                            </c:if>
-			                                        </td>
 		                                        </tr>
 		                                    </c:forEach>
                                         </c:if>
@@ -197,6 +169,10 @@
             <!-- End Page wrapper -->
 </body>
 <script type="text/javascript">
+	$("table .boardSelect").on('click',function(){
+		location.href="/admin/adBadS?bNo="+$(this).attr('data-no');
+	})
+	
 $(".paginate_button a").on("click" , function(e) {
 	e.preventDefault();
 	console.log('click');

@@ -89,12 +89,12 @@
                                             	value="">
                                                 <label for="all" class="mb-0 mx-1">모두</label>
                                                 <input type="radio" name="qstStCode" id="r" spellcheck="false" 
-                                                <c:if test="${searchData.qstStCode eq 'Q01'}">checked="checked"</c:if>
-                                                value="Q01">
+                                                <c:if test="${searchData.qstStCode eq 'QS01'}">checked="checked"</c:if>
+                                                value="QS01">
                                                 <label for="r" class="mb-0 mx-1">답변대기중</label>
                                                 <input type="radio" class="ml-2" name="qstStCode" id="t" spellcheck="false"
-                                                <c:if test="${searchData.qstStCode eq 'Q02'}">checked="checked"</c:if>
-                                                value="Q02">
+                                                <c:if test="${searchData.qstStCode eq 'QS02'}">checked="checked"</c:if>
+                                                value="QS02">
                                                 <label for="t" class="mr-3 mb-0">답변완료</label>
                                             </td>
                                         </tr>
@@ -141,10 +141,10 @@
                                             <td>${qst.ttl }</td> 
                                             <td>${qst.qRegDate }</td>
                                             <td>
-                                            	<c:if test="${qst.qstStCode eq 'Q01'}">
+                                            	<c:if test="${qst.qstStCode eq 'QS01'}">
                                             		답변대기중
                                             	</c:if>
-                                            	<c:if test="${qst.qstStCode eq 'Q02'}">
+                                            	<c:if test="${qst.qstStCode eq 'QS02'}">
                                             		답변완료
                                             	</c:if>
                                             </td>

@@ -7,8 +7,9 @@
 			FROM qst
 		</selectKey>
 		INSERT INTO QST(qst_no,ttl,content,q_reg_date,wirter,email,qst_st_code)
-		VALUES(#{qstNo},#{ttl},#{content},sysdate,#{wirter},#{email},'Q01')
+		VALUES(#{qstNo},#{ttl},#{content},sysdate,#{wirter},#{email},'QS01')
 	</insert>
+	
 	<select id="qstSelectList" parameterType="co.makeu.up.qst.service.QstVO" resultType="co.makeu.up.qst.service.QstVO">
 		SELECT * FROM (    
 	            SELECT ROWNUM RN, Q.* FROM (
@@ -39,12 +40,14 @@
 		AND RN <![CDATA[<=]]> #{page} * 10		    
         
 	</select>
+	
 	<select id="qstSelect" parameterType="Integer" resultType="co.makeu.up.qst.service.QstVO">
 		SELECT * FROM QST WHERE QST_NO = ${qstNo}
 	</select>
+	
 	<update id="qstUpdateStCode" parameterType="co.makeu.up.qst.service.QstVO">
 		UPDATE QST 
-		SET QST_ST_CODE = 'Q02',
+		SET QST_ST_CODE = 'QS02',
 		A_CONTENT = #{aContent},
 		A_REG_DATE = SYSDATE
 		WHERE QST_NO = #{qstNo}
