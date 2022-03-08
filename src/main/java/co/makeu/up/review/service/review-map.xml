@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.review.service.ReviewMapper">
 	<select id="reviewSelectList" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
-		SELECT * FROM REVIEW
+		SELECT r.*, (select round(avg(star),1) from review where lt_no = 1) as avgStar FROM REVIEW r
 		WHERE LT_NO = #{ltNo}
 		AND RV_CODE != 'RE03'
 		AND CONTENT LIKE '%'||#{content}||'%'
