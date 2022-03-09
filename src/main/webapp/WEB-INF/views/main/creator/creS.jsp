@@ -21,9 +21,6 @@
     </style>
 </head>
 <body>
-<security:authorize access="isAuthenticated()">
-<security:authentication property="principal.username" var="username"/>
-</security:authorize>
 	<!-- 배너 시작-->
     <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
