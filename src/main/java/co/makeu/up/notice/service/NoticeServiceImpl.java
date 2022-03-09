@@ -81,6 +81,7 @@ public int NoticeUpdate(NoticeVO vo) {
 	return map.NoticeUpdate(vo);
 }
 
+@Override
 public List<NoticeVO> adminNoticeList(NoticeVO vo) {
 	return map.adminNoticeList(vo);
 }

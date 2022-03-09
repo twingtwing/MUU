@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.Pagination;
+import co.makeu.up.lecture.service.LectureServiceImpl;
+import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
 import co.makeu.up.ltqna.service.LtQnaVO;
 import co.makeu.up.progress.service.ProgressServiceImpl;
@@ -28,6 +30,7 @@ public class LtQnaController {
 	@Autowired LtQnaServiceImpl ltqnaDao;
 	@Autowired SugangServiceImpl sugangDao;
 	@Autowired ProgressServiceImpl progressDao;
+	@Autowired LectureServiceImpl lectureDao;
 	
 	@GetMapping("/user/userLQ")
 	public String userLecQuestion(LtQnaVO vo ,Model model, Principal pri) {
@@ -95,8 +98,40 @@ public class LtQnaController {
 	
 	//강의 qna 페이지 이동
 	@RequestMapping("/creator/cLecQ")
-	public String cLecQPage() {
+	public String cLecQPage(LtQnaVO vo, Model model) {
+		vo.setPage(1);
+		List<LtQnaVO> qnalist = ltqnaDao.selectQnaList(vo);
+		int listCnt = qnalist.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
 		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("qnalist", qnalist);
 		return "main/lecture/cLecQ";
 	}
+	
+	//강의 qna 페이지(검색)
+	@RequestMapping("/creator/cLecQsearch")
+	public String cLecQsearchPage(LtQnaVO vo, Model model) {
+		String inputWriter = vo.getWriterSearchKey();
+		String inputContent = vo.getContentSearchKey();
+		if(inputWriter != null) {
+			model.addAttribute("inputWriter", inputWriter);
+		} else if (inputContent != null) {
+			model.addAttribute("inputContent", inputContent);
+		}
+		vo.setPage(1);
+		List<LtQnaVO> qnalist = ltqnaDao.selectQnaList(vo);
+		int listCnt = qnalist.get(0).getCount();
+		Pagination pagination = new Pagination(listCnt, 1);
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("qnalist", qnalist);
+		return "main/lecture/cLecQ";
+	}
+	
+	
+	
+	
 }

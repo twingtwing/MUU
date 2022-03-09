@@ -1,7 +1,5 @@
 package co.makeu.up.lecture.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import co.makeu.up.common.view.PageVo;
@@ -18,11 +15,8 @@ import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
 
-import co.makeu.up.refund.service.RefundVO;
 
 import co.makeu.up.common.view.Pagination;
-import co.makeu.up.lecture.service.LectureServiceImpl;
-import co.makeu.up.lecture.service.LectureVO;
 
 
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
@@ -34,7 +28,6 @@ import co.makeu.up.review.service.ReviewVO;
 import co.makeu.up.sugang.service.SugangServiceImpl;
 import co.makeu.up.sugang.service.SugangVO;
 
-import co.makeu.up.common.view.Pagination;
 
 @Controller
 public class AdminLectureController {
@@ -146,15 +139,20 @@ public class AdminLectureController {
 		
 		List<NoticeVO> list = noticeDao.adminNoticeList(vo);
 		model.addAttribute("notices",list);
-		model.addAttribute("pages",new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), ltNo));
+		model.addAttribute("pages",new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), vo.getPage()));
 		model.addAttribute("search",vo);
 		return "admin/lecture/adLecN";
 	}
 	
 	//강의상세-공지사항상세
 	@GetMapping("/admin/adLecND")
-	public String adLecND(int ltNo, Model model) {
-		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+	public String adLecND(NoticeVO vo, Model model) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(vo.getLtNo()));
+		
+		NoticeVO notice = noticeDao.NoticeSelects(vo);
+		model.addAttribute("notice",notice);
+		System.out.println(" eeeeee");
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(notice.getFileNo()));
 		return "admin/lecture/adLecND";
 	}
 	

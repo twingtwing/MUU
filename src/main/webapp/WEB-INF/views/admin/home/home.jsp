@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,60 +54,22 @@
                                     </div>
                                     <div class="col-lg-5">
                                         <div class="row">
+                                        <c:forEach items="${countList }" var="c">
                                             <div class="col-6 mb-2" style="height: 110px;">
                                                 <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
                                                     <div class="text-center">
                                                         <i class="fa fa-user m-0 font-16"></i>
-                                                        <h5 class="mb-0 ">2540</h5>
-                                                        <small class="font-light">총 회원 수</small>
+                                                        <h5 class="mb-0 ">${c.cnt }</h5>
+                                                        <small class="font-light">${c.tableName }</small>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 mb-2" style="height: 110px;">
-                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
-                                                    <div class="text-center">
-                                                        <i class="fa fa-plus m-0 m-b-5 font-16"></i>
-                                                        <h5 class="mb-0">120</h5>
-                                                        <small class="font-light">총 수강횟수</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2" style="height: 110px;">
-                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
-                                                    <div class="text-center">
-                                                        <i class="fa fa-cart-plus m-0 font-16"></i>
-                                                        <h5 class="mb-0">656</h5>
-                                                        <small class="font-light">크리에이터<br>총 강의 개수</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2" style="height: 110px;">
-                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
-                                                    <div class="text-center">
-                                                        <i class="fa fa-tag m-0 m-b-5 font-16"></i>
-                                                        <h5 class="mb-0">9540</h5>
-                                                        <small class="font-light">최근 한 달<br>수강횟수</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6" style="height: 110px;">
-                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
-                                                    <div class="text-center">
-                                                        <i class="fa fa-table m-0 m-b-5 font-16"></i>
-                                                        <h5 class="mb-0">100</h5>
-                                                        <small class="font-light">최근 가입한<br>회원 수</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6" style="height: 110px;">
-                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
-                                                    <div class="text-center">
-                                                        <i class="fa fa-globe m-0 m-b-5 font-16"></i>
-                                                        <h5 class="mb-0">8540</h5>
-                                                        <small class="font-light">최근 등록된<br>크리에이터 수</small>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </c:forEach>
+                                             <i class="fa fa-globe m-0 m-b-5 font-16"></i>
+                                             <i class="fa fa-plus m-0 m-b-5 font-16"></i>
+                                             <i class="fa fa-cart-plus m-0 font-16"></i>
+                                             <i class="fa fa-tag m-0 m-b-5 font-16"></i>
+                                             <i class="fa fa-table m-0 m-b-5 font-16"></i> 아이콘을...어쩐다
                                         </div>
                                     </div>
                                     <!-- column -->
@@ -129,36 +93,17 @@
                                     <h4 class="card-title">크리에이터 매출 TOP3</h4>
                                     <h5 class="card-subtitle">최근 1년 기준</h5>
                                     <!--크리에이터 프로필-->
+                                    <c:forEach begin="0" end="2" items="${cre3 }" var="c">
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
+                                        <div class="p-2"><img src="${c.pht }" alt="user" width="50" height="50"
                                                 class="rounded-circle"></div>
                                         <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
+                                            <h6 class="font-medium">${c.name } ( ${c.creId } )</h6>
+                                            <div>매출액: <fmt:formatNumber>${c.pay }</fmt:formatNumber>원 ( 수수료 제외 ) 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
-                                                class="rounded-circle"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50"
-                                                class="rounded-circle"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -171,30 +116,16 @@
                                 <h5 class="card-subtitle">가장 사랑받았던 강의들</h5>
                                 <div class="chat-box scrollable">
                                     <!--강의-->
+                                    <c:forEach begin="0" end="2" items="${lec3 }" var="l">
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/assets/images/custom-select.png" alt="user" width="70"
+                                        <div class="p-2"><img src="${l.thumb }" alt="강의썸네일" width="70"
                                                 height="50" class="rounded c"></div>
                                         <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
+                                            <h6 class="font-medium m-0">${l.ttl }</h6>
+                                            <span>크리에이터 : <strong>${l.name }</strong></span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/assets/images/logo-icon.png" alt="user" width="70"
-                                                height="50" class="rounded c"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/assets/images/custom-select.png" alt="user" width="70"
-                                                height="50" class="rounded c"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -265,103 +196,104 @@
               
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+	    let cnt7 = []; 
+	    let pay7 = [];
+	    let day7= [];
+	    $.ajax({
+	    	url : '/admin/recent7Chart',
+	    	dataType : 'json',
+	    	async : false,
+	    })
+	    .done((r)=>{
+		    r.forEach((v)=>{
+		    	day7.push(v.day)
+		    	cnt7.push(v.cnt)
+		    	pay7.push(v.pay)
+		    })
+	    })    		
         // 최근 일주일
         const recent7daysId = document.getElementById('recent7days').getContext('2d');
         const recent7days = new Chart(recent7daysId, {
             type: 'bar',
             data: {
-                labels: [17, 18, 19, 20, 21, 22, `${23} (오늘)`],
+                labels: day7,
                 datasets: [{
                     type: 'line',
-                    label: '남성',
-                    backgroundColor: 'powderblue',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
+                    label: '판매량',
+                    backgroundColor: 'black',
+                    borderColor : 'darkgreen',
+                    data: cnt7,
+                    yAxisID : 'leftY'
                 }, {
                     type: 'bar',
-                    label: '여성',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ],
-                    backgroundColor: 'seagreen'
+                    label: '매출액',
+                    data: pay7,
+                    backgroundColor: 'seagreen',
+                    yAxisID : 'rightY'
                 }, ]
             },
             options: {
                 scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stacked: true
-                    }
+                    yAxes: [{
+                        id : 'leftY',
+                        type : 'linear',
+                        position : 'left'
+                    }, {
+                        id:'rightY',
+                        type : 'bar',
+                        position : 'right'
+                    }],
                 },
             }
         });
-
+		
+        
         // 최근 1년
+        let yearcnt = []; 
+	    let yearpay = [];
+        $.ajax({
+        	url: '/admin/salesThisyear',
+        	async:false,
+        	dataType : 'json'
+        })
+        .done((r)=>{
+        	r.forEach((v)=>{
+        		yearcnt.push(v.cnt);
+        		yearpay.push(v.pay);
+        	})
+        })
         const thisyearId = document.getElementById('thisyear').getContext('2d');
         const thisyear = new Chart(thisyearId, {
             type: 'bar',
             data: {
                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                datasets: [{
-                    type: 'line',
-                    label: '매출액',
-                    backgroundColor: 'black',
-                    borderColor: 'darkred',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
-                }, {
+                datasets: [
+                	{
+                        type: 'line',
+                        label: '판매량',
+                        data: yearcnt,
+                        backgroundColor: 'black',
+                        borderColor : 'darkgreen',
+                        yAxisID : 'leftY'
+                    },{
                     type: 'bar',
-                    label: '판매량',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ],
-                    backgroundColor: 'gray'
-                }, ]
+                    label: '매출액',
+                    backgroundColor: 'green',
+                    data: yearpay,
+                    yAxisID : 'rightY'
+                },]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                	yAxes: [{
+                        id : 'leftY',
+                        type : 'linear',
+                        position : 'left'
+                    }, {
+                        id:'rightY',
+                        type : 'bar',
+                        position : 'right'
+                    }],
                 },
             }
         });

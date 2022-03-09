@@ -111,9 +111,9 @@
                                             <th><a class="crTab" href="/admin/adLecI?ltNo=${lecInfo.ltNo }">강의소개</a></th>
                                             <th><a class="crTab" href="/admin/adLecU?ltNo=${lecInfo.ltNo }">수강생</a></th>
                                             <th><a class="crTab" href="/admin/adLecC?ltNo=${lecInfo.ltNo }">커리큘럼</a></th>
-                                            <th><a class="crTab active" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>
+                                            <th><a class="crTab" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>
                                             <th><a class="crTab" href="/admin/adLecR?ltNo=${lecInfo.ltNo }">후기</a></th>
-                                            <th><a class="crTab" href="/admin/adLecQ?ltNo=${lecInfo.ltNo }">질문/답변</a></th>
+                                            <th><a class="crTab active" href="/admin/adLecQ?ltNo=${lecInfo.ltNo }">질문/답변</a></th>
                                             <th><a class="crTab" href="/admin/adLecN?ltNo=${lecInfo.ltNo }">공지사항</a></th>
                                         </tr>
                                     </table>
@@ -174,7 +174,7 @@
                                             <td class="question"><a onclick="openAnswer(${q.qnaNo})">${q.qContent}</a></td>
                                             <td>${q.qnaStCode}</td>
                                         </tr>
-                                        <tr class="answer ${q.qnaNo }">
+                                        <tr class="answer ans${q.qnaNo }">
                                             <td colspan="4" id="" class="">
                                             <c:if test="${empty q.aContent }">
                                             답변이 없습니다.
@@ -271,7 +271,7 @@ $('#searchBtn').click((e)=>{
     })
 
     function openAnswer(num){
-        $('.answer' + num).toggle('active');
+    	$($('.ans'+num)[0]).toggle('active')
     }
 </script>
 </body>

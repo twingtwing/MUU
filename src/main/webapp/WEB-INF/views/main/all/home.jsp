@@ -44,19 +44,20 @@
 		참고하세여.(아 ㅋㅋ참고 하라고)<br>
 		관리자아이디: admin123@naver.com / 비밀번호 : 관리자<br>
 		유저아이디 : user123@naver.com / 비밀번호 : 정혜윤<br>
-		크리에이터아이디 : test111@naver.com / 비밀번호 : 테스트111<br>
-				
-		<security:authorize access="isAuthenticated()">
-		<security:authentication property="principal.username" var="username"/>
-		</security:authorize>
+		크리에이터아이디 : test111@naver.com / 비밀번호 : 테스트111, gotohell@naver.com / 정혜윤, minicreator@naver.com/정혜윤<br>
+			
 		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>	
 		<h5> 사용자 아이디: ${username }</h5>
+
+
 		<h5><security:authorize access="isAnonymous()">
 			넌 비회원이야
 		</security:authorize> </h5>
 		<security:authorize access="hasAuthority('A01')">관리자만 볼 수 있는 글자</security:authorize>
 		<security:authorize access="hasAuthority('A02')">유저만 볼 수 있는 글자</security:authorize>
 		<security:authorize access="hasAuthority('A03')">크리에이터만 볼 수 있는 글자</security:authorize>
+
+		
 		
 		<a href="/creator/cLecNL">공지사항</a>
 		<a href="/creator/cLecNS">상세</a><br>

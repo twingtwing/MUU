@@ -264,7 +264,7 @@ td, th {
         }
  
       const checkTel = ()=>{
-        const telreg = /^\d{11}$/;
+        const telreg = /^010\d{8}$/;
         if(!telreg.test($('#tel').val())){
           $('.alert').text('전화번호 양식을 지켜주세요.')
           return false;

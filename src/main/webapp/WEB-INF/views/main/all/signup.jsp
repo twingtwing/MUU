@@ -256,8 +256,8 @@ table {
 		})
 		
 		$('#sbmt').click((e) => {
-			const telreg = /^[0-9]{11}$/;
-			const birthreg = /^[0-9]{4}$/;
+			const telreg = /^010\d{8}$/;
+			const birthreg = /^19\d{2}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
 				$('#alert').text('개인정보 처리방침에 동의해주세요.');
@@ -275,7 +275,7 @@ table {
 				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
 			}
 			if(!birthreg.test($('#birthDate').val())){
-				$('#alert').text('양식에 맞게 작성해주세요.');	
+				$('#alert').text('생년월일 양식에 맞게 작성해주세요.');	
 				return;
 			} else {
 				$('#alert').text('');

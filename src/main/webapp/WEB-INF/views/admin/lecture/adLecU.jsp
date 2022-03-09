@@ -115,7 +115,7 @@
                                 <div class="row" style="margin-top:40px; margin-bottom:0px;">
                                     <table class="table tableTab w-100">
                                         <tr style="background-color: #FCF8E3;">
-                                            <th><a class="crTab" href="#">강의소개</a></th>
+                                            <th><a class="crTab" href="/admin/adLecI?ltNo=${lecInfo.ltNo }">강의소개</a></th>
                                             <th><a class="crTab active" href="/admin/adLecU?ltNo=${lecInfo.ltNo }">수강생</a></th>
                                             <th><a class="crTab" href="/admin/adLecC?ltNo=${lecInfo.ltNo }">커리큘럼</a></th>
                                             <th><a class="crTab" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>

@@ -242,6 +242,9 @@
   
 </body>
 <script>
+$(function(){
+	$('select').niceSelect('destroy');
+})
 $('#tocval').keyup(function(e){
 	e.preventDefault();
 })
@@ -358,12 +361,12 @@ $(function(){
   }
   //검색 조회시 검색란 선입력
   $(function(){
+	  $('#toc option').removeAttr('selected');
 	  if(${inputTtl != null}){
-		  $($('#toc option').val('제목')).attr('selected', 'selected');
+		  $($('#toc option[value="제목"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputTtl}');
-	  }
-	  if(${inputContent != null}){
-		  $($('#toc option').val('내용')).attr('selected', 'selected');
+	  } else if(${inputContent != null}){
+		  $($('#toc option[value="내용"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputContent}');
 	  }
   }) 
