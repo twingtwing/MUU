@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
             <div class="ml-auto text-right">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">매출</a></li>
+                  <li class="breadcrumb-item"><a href="/admin/home">매출</a></li>
                   <li class="breadcrumb-item active" aria-current="page">크리에이터 매출</li>
                 </ol>
               </nav>
@@ -31,28 +31,27 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <!-- 여기서부터 작성 -->
+              
+                <!-- 년별 매출 -->
                 <div class="col-lg-12 pb-5 pt-3">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 연도별 회사 매출</h5>
-                  <div class="row mt-4 justify-content-between mb-3">
-                      <select name="" id="" class="border px-3 py-2">
-                        <option value="">2016</option>
-                        <option value="">2017</option>
-                        <option value="">2018</option>
-                        <option value="">2019</option>
-                        <option value="">2020</option>
-                        <option value="">2021</option>
-                        <option value="">2022</option>
-                      </select>
-                      <div>
-                        <select name="" id="" class="border px-3 py-2">
-                          <option value="id">아이디</option>
-                          <option value="name">이름</option>
-                        </select>
-                        <input type="text" placeholder="검색" class="border px-3 py-2">
-                        <button class="border px-3 py-2">검색</button>
-                      </div>
-                  </div>
+	              <form action="/admin/adCSales" method="get">
+	                  <div class="row mt-4 justify-content-between mb-3">
+	                      <select name="selectYear" class="select border px-3 py-2">
+		                  	<c:forEach begin="${2016}" end="${thisyear }" var="y">
+		                    	<option value="${y }"<c:if test="${selectYear eq y}">selected="selected"</c:if>>${y }년</option>
+		                  	</c:forEach>
+	                      </select>
+	                      <div>
+		                  	<select id="searchYear" class="border px-3 py-2">
+		                    	<option value="yearId">아이디</option>
+		                        <option value="yearName">이름</option>
+		                   	</select>
+		                    <input type="text" id="inputSearch" name="yearId" placeholder="검색" class="border px-3 py-2">
+		                    <button type="submit" class="border px-3 py-2">검색</button>
+	                      </div>
+	                  </div>
+	              </form>
                   <div class="row">
                     <table class="table table-bordered">
                       <tr style="background-color: #eeeeee;">
@@ -63,128 +62,78 @@
                         <th>판매량</th>
                         <th>총 매출</th>
                       </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
+	                  <c:if test="${empty creYear }">
+	                  	<tr>
+	                  		<td colspan="6">해당 데이터가 없습니다.</td>
+	                  	</tr>
+	                  </c:if>    
+                      <c:if test="${not empty creYear }">
+	                      <c:forEach items="${creYear }" var="cre">
+	                      	<tr>
+	                      		<td>${cre.rank }</td>
+	                      		<td>${cre.id }</td>
+	                      		<td>${cre.name }</td>
+	                      		<td>${cre.creCnt }</td>
+	                      		<td>${cre.cnt }</td>
+	                      		<td>${cre.pay } 만 원</td>
+	                      	</tr>
+	                      </c:forEach>
+                      </c:if>
                     </table>
                   </div>
                   <div class="row d-flex justify-content-center position-relative">
-                    <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
-                      <ul class="pagination">
-                        <li class="paginate_button page-item previous"
-                            id="zero_config_previous"><a href="#" aria-controls="zero_config"
-                                data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
-                        <li class="paginate_button page-item active"><a href="#"
-                                aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                class="page-link">1</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="2" tabindex="0"
-                                class="page-link">2</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="3" tabindex="0"
-                                class="page-link">3</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="4" tabindex="0"
-                                class="page-link">4</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="5" tabindex="0"
-                                class="page-link">5</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="6" tabindex="0"
-                                class="page-link">6</a></li>
-                        <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
-                                aria-controls="zero_config" data-dt-idx="7" tabindex="0"
-                                class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
-                    </ul>
+					<div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
+                    	<ul class="pagination year_ul">
+                        	<c:if test = "${page.prevYear }">
+                            	<li class="paginate_button page-item previous" id="zero_config_previous">
+                                	<a href=" ${page.startYear -1 }" aria-controls="zero_config" data-dt-idx="0" tabindex="0" class="page-link">
+                                	<i class="mdi mdi-chevron-double-left"></i>previous</a>
+                               	</li>
+							</c:if>
+                            <c:forEach var = "num" begin = "${page.startYear }" end = "${page.endYear }">
+                            	<li class = "paginate_button page-item  ${page.salesVo.pageYearNum == num? 'active':'' }">
+                                     	<a href="${num}"aria-controls="zero_config" data-dt-idx="${num}" tabindex="0"class="page-link">${num}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test = "${page.nextYear }">
+                            	<li class="paginate_button page-item next" id="zero_config_next">
+                            		<a href="${page.endYear +1 }" aria-controls="zero_config" data-dt-idx="6" tabindex="0" class="page-link">
+                                <i class="mdi mdi-chevron-double-right"></i>next</a></li>
+                            </c:if>
+                    	</ul>
                     </div>
+                    <form id='Year' method = 'get' action = '/admin/adCSales'>
+	                	<input type = 'hidden' name = 'pageYearNum' value = '${page.salesVo.pageYearNum }'>
+	                	<input type = 'hidden' name = 'amountYear' value = '${page.salesVo.amountYear }'>
+                    </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button class="btn btn-danger">PDF다운</button>
                       <button class="btn btn-success">EXCEL다운</button>
                     </div>
-  
                     
                   </div>
                 </div>
-
+				
+				<!-- 월별 매출 -->
                  <div class="col-lg-12 pb-5 pt-3">
-                  <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 월별 회사 매출 <span>(2022년)</span></h5>
-                  <div class="row mt-4 justify-content-between mb-3">
-                    <select name="" id="" class="border px-3 py-2">
-                      <option value="">1월</option>
-                      <option value="">2월</option>
-                      <option value="">3월</option>
-                      <option value="">4월</option>
-                      <option value="">5월</option>
-                      <option value="">6월</option>
-                      <option value="">7월</option>
-                      <option value="">8월</option>
-                      <option value="">9월</option>
-                      <option value="">10월</option>
-                      <option value="">11월</option>
-                      <option value="">12월</option>
-                    </select>
-                    <div>
-                      <select name="" id="" class="border px-3 py-2">
-                        <option value="id">아이디</option>
-                        <option value="name">이름</option>
-                      </select>
-                      <input type="text" placeholder="검색" class="border px-3 py-2">
-                      <button class="border px-3 py-2">검색</button>
-                    </div>
-                  </div>
+                  <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 월별 회사 매출 <span>(${thisyear }년)</span></h5>
+                  <form action="/admin/adCSales" method="get">
+	                  <div class="row mt-4 justify-content-between mb-3">
+	                  	<select name="month" class="select border px-3 py-2">
+			                <c:forEach begin="${1}" end="${thisMonth }" var="y">
+			                	<option value="${y }"<c:if test="${month eq y}">selected="selected"</c:if>>${y }월</option>
+			            	</c:forEach>
+		                </select>
+	                    <div>
+	                      <select id="searchMonth" class="border px-3 py-2">
+	                        <option value="monthId">아이디</option>
+	                        <option value="monthName">이름</option>
+	                      </select>
+	                      <input id="inputMonth" type="text" name="monthId" placeholder="검색" class="border px-3 py-2">
+	                      <button type="submit" class="border px-3 py-2">검색</button>
+	                    </div>
+	                  </div>
+                  </form>
                   <div class="row">
                     <table class="table table-bordered">
                       <tr style="background-color: #eeeeee;">
@@ -195,93 +144,50 @@
                         <th>판매량</th>
                         <th>총 매출</th>
                       </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>creator123</td>
-                        <td>시바</td>
-                        <td>개도 하는 뜨개질</td>
-                        <td>24</td>
-                        <td>150,000</td>
-                      </tr>
+                      <c:if test="${empty creMonth }">
+	                  	<tr>
+	                  		<td colspan="6">해당 데이터가 없습니다.</td>
+	                  	</tr>
+	                  </c:if>    
+                      <c:if test="${not empty creMonth }">
+	                      <c:forEach items="${creMonth }" var="cre">
+	                      	<tr>
+	                      		<td>${cre.rank }</td>
+	                      		<td>${cre.id }</td>
+	                      		<td>${cre.name }</td>
+	                      		<td>${cre.creCnt }</td>
+	                      		<td>${cre.cnt }</td>
+	                      		<td>${cre.pay } 만 원</td>
+	                      	</tr>
+	                      </c:forEach>
+                      </c:if>
                     </table>
                   </div>
                   <div class="row d-flex justify-content-center position-relative">
                     <div class="dataTables_paginate paging_simple_numbers" id="zero_config_paginate">
-                      <ul class="pagination">
-                        <li class="paginate_button page-item previous"
-                            id="zero_config_previous"><a href="#" aria-controls="zero_config"
-                                data-dt-idx="0" tabindex="0" class="page-link"><i class="mdi mdi-chevron-double-left"></i></a></li>
-                        <li class="paginate_button page-item active"><a href="#"
-                                aria-controls="zero_config" data-dt-idx="1" tabindex="0"
-                                class="page-link">1</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="2" tabindex="0"
-                                class="page-link">2</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="3" tabindex="0"
-                                class="page-link">3</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="4" tabindex="0"
-                                class="page-link">4</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="5" tabindex="0"
-                                class="page-link">5</a></li>
-                        <li class="paginate_button page-item "><a href="#"
-                                aria-controls="zero_config" data-dt-idx="6" tabindex="0"
-                                class="page-link">6</a></li>
-                        <li class="paginate_button page-item next" id="zero_config_next"><a href="#"
-                                aria-controls="zero_config" data-dt-idx="7" tabindex="0"
-                                class="page-link"><i class="mdi mdi-chevron-double-right"></i></a></li>
-                    </ul>
+                    	<ul class="pagination month_ul">
+                        	<c:if test = "${page.prvMonth }">
+                            	<li class="paginate_button page-item previous" id="zero_config_previous">
+                                	<a href=" ${page.startMonth -1 }" aria-controls="zero_config" data-dt-idx="0" tabindex="0" class="page-link">
+                                	<i class="mdi mdi-chevron-double-left"></i>previous</a>
+                               	</li>
+							</c:if>
+                            <c:forEach var = "num" begin = "${page.startMonth }" end = "${page.endMonth }">
+                            	<li class = "paginate_button page-item  ${page.salesVo.pageMonthNum == num? 'active':'' }">
+                                     	<a href="${num}"aria-controls="zero_config" data-dt-idx="${num}" tabindex="0"class="page-link">${num}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test = "${page.nextMonth }">
+                            	<li class="paginate_button page-item next" id="zero_config_next">
+                            		<a href="${page.endMonth +1 }" aria-controls="zero_config" data-dt-idx="6" tabindex="0" class="page-link">
+                                <i class="mdi mdi-chevron-double-right"></i>next</a></li>
+                            </c:if>
+                    	</ul>
                     </div>
+                    <form id='Month' method = 'get' action = '/admin/adCSales'>
+	                	<input type = 'hidden' name = 'pageMonthNum' value = '${page.salesVo.pageMonthNum }'>
+	                	<input type = 'hidden' name = 'amountMonth' value = '${page.salesVo.amountMonth }'>
+                    </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button class="btn btn-danger">PDF다운</button>
                       <button class="btn btn-success">EXCEL다운</button>
@@ -296,5 +202,29 @@
           </div>
         </div>
       </div>
+      <script type="text/javascript">
+      	$('#searchYear').on('change',function(){
+      		$('#inputSearch').attr('name',$('#searchYear').val());
+      	})
+      	
+      	$('#searchMonth').on('change',function(){
+      		$('#inputMonth').attr('name',$('#searchMonth').val());
+      	})
+      	
+      	$(".year_ul .paginate_button a").on("click" , function(e) {
+			e.preventDefault();
+			
+			$('#Year').find("input[name='pageYearNum']").val($(this).attr("href"));
+			$('#Year').submit();
+		});
+      	
+      	$(".month_ul .paginate_button a").on("click" , function(e) {
+			e.preventDefault();
+			
+			$('#Month').find("input[name='pageMonthNum']").val($(this).attr("href"));
+			$('#Month').submit();
+		});
+
+      </script>
 </body>
 </html>

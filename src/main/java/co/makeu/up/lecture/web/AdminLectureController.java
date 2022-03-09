@@ -1,7 +1,5 @@
 package co.makeu.up.lecture.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import co.makeu.up.common.view.PageVo;
@@ -18,12 +15,7 @@ import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
 
-import co.makeu.up.refund.service.RefundVO;
-
 import co.makeu.up.common.view.Pagination;
-import co.makeu.up.lecture.service.LectureServiceImpl;
-import co.makeu.up.lecture.service.LectureVO;
-
 
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
 import co.makeu.up.ltqna.service.LtQnaVO;
@@ -34,8 +26,6 @@ import co.makeu.up.review.service.ReviewVO;
 import co.makeu.up.sugang.service.SugangServiceImpl;
 import co.makeu.up.sugang.service.SugangVO;
 
-import co.makeu.up.common.view.Pagination;
-
 @Controller
 public class AdminLectureController {
 	@Autowired LectureServiceImpl lectureDao;
@@ -44,8 +34,6 @@ public class AdminLectureController {
 	@Autowired ReviewServiceImpl reviewDao;
 	@Autowired LtQnaServiceImpl ltqnaDao;
 	@Autowired NoticeServiceImpl noticeDao;
-	
-	@Autowired LessonServiceImpl lessonDao;
 	
 	//강의리스트
 	@GetMapping("/admin/adLecL")

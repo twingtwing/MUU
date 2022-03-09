@@ -23,5 +23,30 @@ public class SalesServiceImpl implements SalesMapper{
 	public List<SalesVO> salesByCtgrYear() {
 		return map.salesByCtgrYear();
 	}
+
+	@Override
+	public List<SalesVO> salesByCtgrMonth(String year) {
+		return map.salesByCtgrMonth(year);
+	}
+
+	@Override
+	public List<SalesVO> salesCreator(SalesVO vo) {
+		return map.salesCreator(vo);
+	}
+
+	@Override
+	public List<SalesVO> salesCreMonth(SalesVO vo) {
+		return map.salesCreMonth(vo);
+	}
+
+	@Override
+	public List<SalesVO> salesGender(String year) {
+		return map.salesGender(year);
+	}
+
+	@Override
+	public List<SalesVO> salesAge(String year) {
+		return map.salesAge(year);
+	}
 	
 }

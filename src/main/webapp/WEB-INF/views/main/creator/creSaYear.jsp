@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,38 +99,38 @@
                 </div>
               </div>
             </div>
+            <div class="row col-12 justify-content-end mr-1 mb-1">
+            	<p class="font-weight-bold text-muted">(단위) 판매량 : 개 / 매출액 : 만 원</p>
+            </div>
             <div class="row col-12 mr-5">
               <table class="text-center table">
                 <tr>
-                  <th></th>
-                  <th>2016</th>
-                  <th>2017</th>
-                  <th>2018</th>
-                  <th>2019</th>
-                  <th>2020</th>
-                  <th>2021</th>
-                  <th>2022</th>
+                  <th width="11%"></th>
+                  	<c:forEach items="${years }" var="y">
+	                    <c:if test="${y.year ne 0 }">
+	                    	<th width="11%" class="yearLabel">${y.year }</th>
+	                    </c:if>
+	               	    <c:if test="${y.year eq 0 }">
+	                    	<th width="12%">총 합</th>
+	                	</c:if>
+                	</c:forEach>
                 </tr>
                 <tr>
-                  <td>판매량</td>
-                  <td>5</td>
-                  <td>9</td>
-                  <td>7</td>
-                  <td>12</td>
-                  <td>20</td>
-                  <td>36</td>
-                  <td>28</td>
+                	<td>판매량</td>
+                    <c:forEach items="${years }" var="y">
+		                <td>
+		                	<span <c:if test="${y.year ne 0 }">class="yearCnt"</c:if>>${y.cnt }</span>
+		           		</td>
+                    </c:forEach>
                 </tr>
                 <tr>
-                  <td>매출액</td>
-                  <td>5</td>
-                  <td>9</td>
-                  <td>7</td>
-                  <td>12</td>
-                  <td>20</td>
-                  <td>36</td>
-                  <td>28</td>
-                </tr>
+                    <td>매출액</td>
+                    <c:forEach items="${years }" var="y">
+	                    <td>
+		                   	<span <c:if test="${y.year ne 0 }">class="yearPay"</c:if>>${y.pay }</span>
+	                	</td>
+                	</c:forEach>
+              	</tr>
               </table>
             </div>
             <div class="row col-12 mr-5 justify-content-end">
@@ -145,34 +145,30 @@
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+  	const yearLabels = [];
+	for(let l of $('.yearLabel')){
+		yearLabels.push(l.textContent)	
+	}
+	const yearCnt = []
+	for(let l of $('.yearCnt')){
+		yearCnt.push(+l.textContent)	
+	}
+	const yearPay = []
+	for(let l of $('.yearPay')){
+		yearPay.push(+l.textContent.replaceAll(',',''))	
+	}
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [2016,2017,2018,2019,2020,2021,2022],
+        labels: yearLabels,
         datasets: [{
           label : '판매량',
-          data : [
-            Math.random()*15,
-            Math.random()*15,
-            Math.random()*15,
-            Math.random()*15,
-            Math.random()*15,
-            Math.random()*15,
-            Math.random()*15,
-          ],
+          data : yearCnt,
           backgroundColor: 'gray'
         },{
           label : '매출액',
-          data : [
-          Math.random()*15,
-          Math.random()*15,
-          Math.random()*15,
-          Math.random()*15,
-          Math.random()*15,
-          Math.random()*15,
-          Math.random()*15,
-          ]
+          data : yearPay
         }]
       },
       options: {

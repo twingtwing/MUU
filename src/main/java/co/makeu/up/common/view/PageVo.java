@@ -5,6 +5,7 @@ import co.makeu.up.faq.service.FaqVO;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.report.service.ReportVO;
+import co.makeu.up.sales.service.SalesVO;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -116,4 +117,46 @@ public class PageVo {
 		this.prev = this.startpage > 1;
 		this.next = this.endpage < realEnd;
 	}
+	
+	private SalesVO salesVo;
+	private int totalYear;
+	private int totalMonth;
+	
+	private int startYear;
+	private int endYear;
+	private int startMonth;
+	private int endMonth;
+	
+	private boolean prevYear, nextYear,prvMonth,nextMonth;
+	
+	public PageVo(SalesVO salesVo, int totalYear,int totalMonth) {
+		this.salesVo = salesVo;
+		this.totalYear = totalYear;
+		this.totalMonth = totalMonth;
+
+		//YEAR
+		this.endYear = (int) (Math.ceil(salesVo.getPageYearNum() / 5.0)) * 5;
+
+		
+		this.startYear = this.endYear - 4;
+		int realYearEnd = (int) (Math.ceil((totalYear * 1.0) / salesVo.getAmountYear()));
+
+		if (realYearEnd < this.endYear) {
+			this.endYear = realYearEnd;
+		}
+		this.prevYear = this.startYear > 1;
+		this.nextYear = this.endYear < realYearEnd;
+		
+		//MONTH
+		this.endMonth = (int) (Math.ceil(salesVo.getPageMonthNum() / 5.0)) * 5;
+		
+		this.startMonth = this.endMonth - 4;
+		int realMonthEnd = (int) (Math.ceil((totalMonth * 1.0) / salesVo.getAmountMonth()));
+
+		if (realYearEnd < this.endMonth) {
+			this.endMonth = realMonthEnd;
+		}
+		this.prvMonth = this.startMonth > 1;
+		this.nextMonth = this.endMonth < realMonthEnd;
+	}	
 }

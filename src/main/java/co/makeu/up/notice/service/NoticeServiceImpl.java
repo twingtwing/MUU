@@ -59,29 +59,31 @@ public class NoticeServiceImpl implements NoticeMapper{
 		return map.noticeFiles(ltNo);
 	}
 
-@Override
-public NoticeVO NoticeSelects(NoticeVO vo) {
-	vo = map.NoticeSelects(vo);
-	if(vo.getFileNo() != -1) {
-		vo.setFileList(detafileMap.detaFileList(vo.getFileNo()));
-	}
-	return vo;
-}
-
-@Override
-public int NoticeUpdate(NoticeVO vo) {
-	if(vo.getDetaFileList() != null) {
-		fileMap.delFile(vo.getFileNo());
-		fileMap.insertFile(vo);
-		for (DetafileVO detaVO : vo.getDetaFileList()) {
-			detaVO.setFileNo(vo.getFileNo());
-			detafileMap.detaFileInsert(detaVO);
+	@Override
+	public NoticeVO NoticeSelects(NoticeVO vo) {
+		vo = map.NoticeSelects(vo);
+		if(vo.getFileNo() != -1) {
+			vo.setFileList(detafileMap.detaFileList(vo.getFileNo()));
 		}
+		return vo;
 	}
-	return map.NoticeUpdate(vo);
-public List<NoticeVO> adminNoticeList(NoticeVO vo) {
-	return map.adminNoticeList(vo);
-}
 
+	@Override
+	public int NoticeUpdate(NoticeVO vo) {
+		if(vo.getDetaFileList() != null) {
+			fileMap.delFile(vo.getFileNo());
+			fileMap.insertFile(vo);
+			for (DetafileVO detaVO : vo.getDetaFileList()) {
+				detaVO.setFileNo(vo.getFileNo());
+				detafileMap.detaFileInsert(detaVO);
+			}
+		}
+		return map.NoticeUpdate(vo);
+	}
+	
+	@Override
+	public List<NoticeVO> adminNoticeList(NoticeVO vo) {
+		return map.adminNoticeList(vo);
+	}
 	
 }

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +29,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb__links">
-            <a href="#"><i class="fa fa-home"></i> 홈</a>
+            <a href="/home"><i class="fa fa-home"></i> 홈</a>
             <a href="#">크리에이터</a>
             <span>매출 내역</span>
           </div>
@@ -66,7 +66,7 @@
                     <a class="list-link" href="#">강의등록</a>
                 </li>
                 <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                    <a class="list-link active" href="#">매출내역</a>
+                    <a class="list-link active" href="/creator/creSaleYear">매출내역</a>
                 </li>
                 <li class="list-group-item align-items-center d-flex" style="height: 55px;">
                     <a class="list-link" href="#">환불 요청 내역</a>
@@ -92,8 +92,8 @@
               </div>
               <hr class="font-weight-bold">
               <div class="row col-12 justify-content-end">
-                <input type="date" class="border mx-1"> - <input type="date" class="border mx-1">
-                <button class="border">조회</button>
+                <input type="date" id="start" name="start" class="border mx-1"> - <input type="date" id="end" name="end" class="border mx-1">
+                <button id="lecTimrBtn" class="border">조회</button>
               </div>
               <div class="col-12 row justify-content-center">
                 <div class="row col-11">
@@ -103,6 +103,42 @@
                 </div>
               </div>
             </div>
+            <div class="row col-12 justify-content-end mr-1 mb-1">
+            	<p class="font-weight-bold text-muted">(단위) 판매량 : 개 / 매출액 : 만 원</p>
+            </div>
+			<div class="row col-12 mr-5">
+				<table class="text-center table">
+					<tr>
+		            	<th></th>
+		                <c:forEach items="${lecs }" var="lec">
+			            	<c:if test="${lec.ttl ne null }">
+			                	<th class="lecLabel">${lec.ttl }</th>
+			                </c:if>
+		                </c:forEach>
+		                <th>전 체</th>
+		            </tr>
+					<tr>
+		                	<td>판매량</td>
+		                	<c:forEach items="${lecs }" var="lec">
+		                    	<td>
+				                	<span class="<c:if test="${lec.ttl ne '' }">lecCnt</c:if> chartCnt">
+				                      	${lec.cnt }
+				                 	</span>
+				               </td>
+		                     </c:forEach>
+		            </tr>
+					<tr>
+		                	<td>매출액</td>
+		                    <c:forEach items="${lecs }" var="lec">
+		                     	<td>
+				                	<span class="<c:if test="${lec.ttl ne '' }">lecPay</c:if> chartPay">
+				                    	${lec.pay }
+				                    </span>
+			                    </td>
+		                    </c:forEach>
+		            </tr>
+				</table>
+			</div>
             <!-- 시간 되면 테이블 추가 -->
             <div class="row col-12 mr-5 justify-content-end">
               <button class="border px-3 py-2 bg-danger text-white">PDF 다운</button>
@@ -116,39 +152,39 @@
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+  	let lecLabel = [];
+	for(let l of $('.lecLabel')){
+		lecLabel.push(l.textContent)	
+	}
+	let lecCnt = []
+	for(let l of $('.lecCnt')){
+		lecCnt.push(+l.textContent)	
+	}
+	let lecPay = []
+	for(let l of $('.lecPay')){
+		lecPay.push(+l.textContent.replaceAll(',',''))	
+	}
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'bar', // 이거 차트 형태 나타내는거임 line 도되는듯
       data: {
-        labels: [
-          '단타 너도 할 수 있다', '인스타그램으로 매달 100만원 들어와요', '주식',
-        ],
+        labels: lecLabel,
         datasets: [
           {//데이터
-            label: '판매량',// 이거 차트 제목임
-            fill: false, // 이거 라인형태인데 이거 지워도 이상없는거 확인
-            data: [
-              50, 70, 50, 30 // x축에 들어가는건데 실제 데이터값 들어가면됨
+            label: '판매량',
+            fill: false, 
+            data: lecCnt,
+            backgroundColor: [ 
+              'red'
             ],
-            backgroundColor: [ // 이거 막대색임 남자는빨강
-              'red',
-              'red',
-              'red',
-              'red',
-            ],
-            borderColor: [ // 경계선 색임 검은색 통일하고싶음
-              'black',
-              'black',
-              'black',
-              'black'
+            borderColor: [ 
+              'red'
             ],
             borderWidth: 1 // 이거 경계선 굵기임
           },
           {
             label: '총매출',
-            data: [
-            70, 80, 90, 40
-          ]
+            data:lecPay
           }
         ]
       }, // 이거 데이터 넣는건데 좀더 찾아야하는듯
@@ -160,6 +196,39 @@
         }
       }
     });
+    
+    $('#lecTimrBtn').click(()=>{
+    	$.ajax({
+    		url : '/creator/creSaleLec/ajaxLec',
+    		data : {start: $('#start').val(),end: $('#end').val()}
+    	})
+    	.done((r)=>{
+    		lecLabel = [];
+    		lecCnt = [];
+    		lecPay = [];
+    		r.forEach((obj)=>{
+    			if(obj.ttl !== null){
+	    			lecLabel.push(obj.ttl);
+    			}
+    			lecCnt.push(obj.cnt=== null ? 0 : obj.cnt)
+    			lecPay.push(obj.pay === null ? 0:obj.pay)
+    		})
+    		myChart.reset();
+    		myChart.data.labels = lecLabel;
+    		myChart.data.datasets[0].data = lecCnt;
+    		myChart.data.datasets[1].data = lecPay;
+    		myChart.update();
+
+    		// 테이블값도 바꾸기
+    		for(let i = 0; i < lecLabel.length; i++){
+    			$('.lecLabel').eq(i)[0].innerText = lecLabel[i]
+    		}
+    		for(let i = 0; i < lecCnt.length; i++){
+    			$('.chartCnt').eq(i)[0].innerText = lecCnt[i]
+    			$('.chartPay').eq(i)[0].innerText = lecPay[i]
+    		}
+    	})
+    })
 
     //mouseover 이벤트 : 사이드바 css변경
         $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
