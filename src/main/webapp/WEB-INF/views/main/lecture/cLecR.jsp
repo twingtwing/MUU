@@ -131,8 +131,8 @@
 	              <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goclLecture(${lecinfo.ltNo })">강의정보</button>
 	              </c:if>
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goQna(${lecinfo.ltNo })">질문&답변</button>
-                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="goNotice(${lecinfo.ltNo })">공지사항</button>
-                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goReview(${lecinfo.ltNo })">리뷰</button>
+                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${lecinfo.ltNo })">공지사항</button>
+                  <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="goReview(${lecinfo.ltNo })">리뷰</button>
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goStudent(${lecinfo.ltNo })">수강생</button>
                   </div>
                 </div> 
@@ -145,14 +145,13 @@
                 
                 <div class="row col-12 justify-content-end mt-3 mb-1 pr-4">
                   <div>
-                    <select class="border px-4">
-                      <option value="">제목</option>
-                      <option value="">내용</option>
-                      <option value="">작성자ID</option>
+                    <select class="border px-4" id="rvsearch">
+                      <option value="내용">내용</option>
+                      <option value="작성자ID">작성자ID</option>
                     </select>
                   </div>
-                  <input type="text" class="border" spellcheck="false" placeholder="검색...">
-                  <button type="button" class="border px-4 mr-4">검색</button>
+                  <input type="text" class="border" id="rvinput" spellcheck="false" placeholder="검색...">
+                  <button type="button" id="rvsearchBtn" class="border px-4 mr-4">검색</button>
                 </div>
 
                 <div class="row col-12 justify-content-center">
@@ -200,7 +199,11 @@
 	                          </c:if>
 	                        </span>
 	                        <span>
-	                          <span>${list.wrDate }</span><i class="fa fa-ban report text-danger ml-2" aria-hidden="true"></i>
+	                          <span>${list.wrDate }</span>
+	                          <i class="fa fa-ban report text-danger ml-2" aria-hidden="true"
+	                          data-toggle="modal" data-target="#revReport"
+	                          data-reporter='${list.writer }' data-ltno='${list.ltNo}'
+	                          data-content='${list.content }' data-num='${list.rvNo }'></i>
 	                        </span>
 	                        <input type="hidden" id="avgStarinput" value="${list.avgStar }">
 	                      </div>
@@ -217,7 +220,7 @@
     </div>
     
     <!-- 리뷰 신고 모달창 -->
-    <div class="modal fade" id="revReport" tabindex="-1" role="dialog">
+    <div class="modal fade" id="revReport" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="reportModal">
       <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
               <div class="modal-header d-flex justify-content-center border-bottom-0" style="position: relative;">
@@ -231,13 +234,13 @@
                       <p class="font-weight-bold">신고 대상</p>
                       <div class="row d-flex justify-content-center mb-3 border px-2 pt-4 pb-2">
                           <div class="col-lg-12 px-0" id="rvcontentMd">
-                            여기에 리뷰내용그대로 들어가야함
+                            
                           </div>
                       </div>
                       <div class="row product__page__title ml-1 mb-0">
                           <div class="product__page__filter">
                               <p class="text-dark font-weight-bold">신고 유형 :</p>
-                              <select class="ctgr" style="display: none;">
+                              <select class="ctgr" id="rptype" style="display: none;">
                                   <option value="RPT01">부적절한 콘텐츠</option>
                                   <option value="RPT02">피싱 또는 스팸</option>
                                   <option value="RPT03">기타</option>
@@ -245,9 +248,9 @@
                               <div class="nice-select" tabindex="0">
                                   <span class="current">부적절한 콘텐츠</span>
                                   <ul class="list">
-                                      <li data-value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
-                                      <li data-value="RPT02" class="option">피싱 또는 스팸</li>
-                                      <li data-value="RPT03" class="option">기타</li>
+                                      <li value="RPT01" class="option selected focus">부적절한 콘텐츠</li>
+                                      <li value="RPT02" class="option">피싱 또는 스팸</li>
+                                      <li value="RPT03" class="option">기타</li>
                                   </ul>
                               </div>
                           </div>
@@ -256,18 +259,20 @@
                           <div class="blog__details__form pt-0 w-100">
                               <form onsubmit="return false">  
                                   <div class="row ml-0 mr-1">
-                                      <textarea v-on:change="changeErr" class="mb-0 border content" rows="10" spellcheck="false"></textarea>
-                                  </div>
-                                  <div class="d-flex justify-content-end">
-                                      <p class="lecErr d-none text-danger mb-0 mr-2">신고 내용을 꼭 적어주셔야합니다.</p>
-                                  </div>
+                                      <textarea class="mb-0 border content" id="incontent" rows="10" spellcheck="false"></textarea>
+                                  </div>                                  
                               </form>
                           </div>
                       </div>
                   </div>
               </div>
+              <div style="display:none;">
+              	<input type="hidden" id="inreporter" value="">
+              	<input type="hidden" id="inltno" value="">
+              	<input type="hidden" id="innum" value="">
+              </div>
               <div class="modal-footer border-top-0">
-                  <button v-on:click="revReport" type="button" class="btn btn-outline-secondary mr-2">신고</button>
+                  <button type="button" class="btn btn-outline-secondary mr-2" data-dismiss="modal" id="reportBtn">신고</button>
                   <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
               </div>
           </div>
@@ -277,18 +282,40 @@
 <form id="frm">
  	<input class="sendltno" type="hidden" name="ltNo" value="">
 </form>
+<form id="searchFrm">
+	<input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo }">
+	<input class="sendcontent" type="hidden" name="content" value="">
+	<input class="sendwriter" type="hidden" name="writer" value="">
+</form>
+</body>
+
 <script type="text/javascript">
 $(function(){
-	$('#avgStar').text($('#avgStarinput').val());	
+	$('#avgStar').text($('#avgStarinput').val());
+	$('select').niceSelect('destroy');
+})
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+    $(this).css('background-color','#e53637');
+    $(this).find('.list-link').css('color','#ffffff');
 })
 
-$('.report').click((e)=>{
-	console.log($(e.target).closest('.rvcard').find($('#rvcontent')));
-	$('#rvcontentMd').html($(e.target).closest('.rvcard').html());
-    $('#revReport').modal('show')
-    // 누른 rpno 가져와서 ajax
-  })
-  //열린강의정보 페이지 이동
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+    $(this).css('background-color','#ffffff');
+    $(this).find('.list-link').css('color','#000000');
+    $(this).find('.list-link.active').css('color','#e53637');
+})
+
+//클릭한 리뷰 정보
+$('#revReport').on('show.bs.modal', function(e){
+	$('#rvcontentMd').html($(e.relatedTarget).closest('.rvcard').html());
+	$('#inreporter').val($(e.relatedTarget).data('reporter'));
+	$('#inltno').val($(e.relatedTarget).data('ltno'));
+	//$('#incontent').val($(e.relatedTarget).data('content'));
+	$('#innum').val($(e.relatedTarget).data('num'));
+})
+//열린강의정보 페이지 이동
 function gooLecture(e){
 	$('.sendltno').val(e);
 	$('#frm').attr("action", "/creator/oLecS");
@@ -325,6 +352,72 @@ function goStudent(e){
 	$('#frm').submit();
 }
 
+//시큐리티 토큰
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+//리뷰 신고
+$('#reportBtn').on('click',function(){
+	let reporter = $('#inreporter').val();
+	let ltNo = $('#inltno').val();
+	let content = $('#incontent').val();
+	let num = $('#innum').val();
+	let type = $('#rptype option:selected').val();
+	
+	$.ajax({
+		url : '/creator/cLecR',
+		method : 'post',
+		dataType : 'text',
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+         },
+		data : {
+			reporter : reporter,
+			ltNo : ltNo,
+			content : content,
+			num : num,
+			type : type
+		}, 
+		success : function(){
+			alert('해당 리뷰를 신고하였습니다');
+			location.reload();
+		}
+	})
+		
+})
+
+//검색 키워드 선언
+let inputcontent;
+let inputwriter;
+
+//리뷰 검색(클릭)
+$('#rvsearchBtn').on('click',function(){
+	if($('#rvsearch option:selected').val() == '내용'){
+		inputcontent = $('#rvinput').val();
+	} else {
+		inputwriter = $('#rvinput').val(); 
+	}
+	$('.sendcontent').val(inputcontent);
+	$('.sendwriter').val(inputwriter);
+	$('#searchFrm').attr("action", "/creator/cLecR");
+	$('#searchFrm').submit();
+})
+
+//리뷰 검색(enter)
+$('#rvinput').on('keypress',function(k){
+	if(k.keyCode == 13){
+		if($('#rvsearch option:selected').val() == '내용'){
+			inputcontent = $('#rvinput').val();
+		} else {
+			inputwriter = $('#rvinput').val(); 
+		}
+		$('.sendcontent').val(inputcontent);
+		$('.sendwriter').val(inputwriter);
+		$('#searchFrm').attr("action", "/creator/cLecR");
+		$('#searchFrm').submit();
+	}
+})
+
 </script>
-</body>
+
 </html>

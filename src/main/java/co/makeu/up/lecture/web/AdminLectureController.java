@@ -38,7 +38,7 @@ public class AdminLectureController {
 	@Autowired LtQnaServiceImpl ltqnaDao;
 	@Autowired NoticeServiceImpl noticeDao;
 	
-	
+
 	//강의리스트
 	@GetMapping("/admin/adLecL")
 	public String adLecL(Model model, LectureVO vo) {

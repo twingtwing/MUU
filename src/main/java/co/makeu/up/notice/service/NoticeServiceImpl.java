@@ -78,7 +78,7 @@ public int NoticeUpdate(NoticeVO vo) {
 			detafileMap.detaFileInsert(detaVO);
 		}
 	}
-	return map.NoticeUpdate(vo);	
+	return map.NoticeUpdate(vo);
 }
 
 @Override
