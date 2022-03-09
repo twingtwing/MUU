@@ -94,4 +94,16 @@
 		SET POINT = POINT - #{point}
 		WHERE ID = #{id}
 	</update>
+	<update id="userToCreator" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS
+		SET CRE_GRD_CODE = 'C01',
+		AUTH_CODE = 'A03',
+		TEL = #{tel},
+		CRE_INTRO = #{creIntro}
+		WHERE ID = #{id}
+	</update>
+	<select id="userPwChck" parameterType="String" resultType="String">
+		SELECT PW FROM USERS
+		WHERE ID = #{id}
+	</select>
 </mapper>

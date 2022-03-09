@@ -34,6 +34,9 @@
         input[name=star]{
             vertical-align: middle;
         }
+        .openClass, .hideClass{
+        cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +109,7 @@
                                 <div class="row" style="margin-top:40px; margin-bottom:0px;">
                                     <table class="table tableTab w-100">
                                         <tr style="background-color: #FCF8E3;">
-                                            <th><a class="crTab" href="#">강의소개</a></th>
+                                            <th><a class="crTab" href="/admin/adLecI?ltNo=${lecInfo.ltNo }">강의소개</a></th>
                                             <th><a class="crTab" href="/admin/adLecU?ltNo=${lecInfo.ltNo }">수강생</a></th>
                                             <th><a class="crTab active" href="/admin/adLecC?ltNo=${lecInfo.ltNo }">커리큘럼</a></th>
                                             <th><a class="crTab" href="/admin/adLecK?ltNo=${lecInfo.ltNo }">키트</a></th>
@@ -134,11 +137,11 @@
                                         </tr>
                                         <!--수업 하나-->
                                         <c:forEach items="${lessons }" var="l">
-                                        <tr class="openClass" data-toggle="toggle">
+                                        <tr class="openClass open${l.lsnNo }" data-toggle="toggle">
                                             <td>${l.lsnNo }</td>
                                             <td>${l.ttl }</td>
                                         </tr>																			
-                                        <tr class="hideClass ${l.lsnNo }">
+                                        <tr class="hideClass hide${l.lsnNo }">
                                             <td colspan="2">
                                                 <video controls height="240">
                                                     <source src="${l.lsnFile }" type="video/mp4">
@@ -191,11 +194,17 @@
         $('[data-toggle="toggle"]').click(function(e){
             if($(this).parent().find('.hideClass').is(':visible')){
                 // $(this).parent().find('.hide').slideUp(600);
-                $(this).parent().find('.hideClass').toggle('inactive');
+                let no = e.target.parentElement.className;
+                no = no.slice(no.lastIndexOf(' ')+1)
+                $($('.'+no)[0]).next().toggle('inactive');
+                //$(this).parent().find('.hideClass').toggle('inactive');
 
             } else {
                 // $(this).parent().find('.hide').slideDown(600);
-                $(this).parent().find('.hideClass').toggle('active');
+                let no = e.target.parentElement.className;
+                no = no.slice(no.lastIndexOf(' ')+1)
+                $($('.'+no)[0]).next().toggle('active');
+                //$(this).parent().find('.hideClass').toggle('active');
             }
         });
     });

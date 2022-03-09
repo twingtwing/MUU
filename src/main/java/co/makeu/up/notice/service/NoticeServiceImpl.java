@@ -78,7 +78,10 @@ public int NoticeUpdate(NoticeVO vo) {
 			detafileMap.detaFileInsert(detaVO);
 		}
 	}
-	return map.NoticeUpdate(vo);
+	return map.NoticeUpdate(vo);	
+}
+
+@Override
 public List<NoticeVO> adminNoticeList(NoticeVO vo) {
 	return map.adminNoticeList(vo);
 }

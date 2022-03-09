@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -17,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,6 +118,7 @@ public class UsersController {
 		model.addAttribute("id",email);
 		return "main/all/changePwForm";
 	}
+	
 
 	// 비밀번호 변경
 	@PostMapping("/changePw")
@@ -198,6 +206,34 @@ public class UsersController {
 		vo = usersDao.selectUsers(vo);
 		model.addAttribute("user",vo);
 		return "main/user/userU";
+	}
+	
+	@GetMapping("/user/creatorRegister")
+	public String creatorRegister() {
+		return "main/user/userCreReg";
+	}
+	
+	@PostMapping("/user/passwordChk")
+	@ResponseBody
+	public String passwordChk(Principal pri, String pw) {
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		if(bcrypt.matches(pw,usersDao.userPwChck(pri.getName()))) {
+			return "ok";
+		} else {
+			return "ng";
+		}
+	}
+	
+	@PostMapping("/user/userTocreator")
+	public String userTocreator(Principal pri, UsersVO vo) {
+		vo.setId(pri.getName());
+		usersDao.userToCreator(vo);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<GrantedAuthority> updatedAuthority = new ArrayList<GrantedAuthority>();
+		updatedAuthority.add(new SimpleGrantedAuthority("A03"));
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(),updatedAuthority);
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		return "redirect:/creator/creS";
 	}
 	
 }

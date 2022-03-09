@@ -141,7 +141,7 @@
 									</ul>
 								</li>
 								<security:authorize access="hasAuthority('A02')">
-									<li><a href="#">크리에이터 등록</a></li>
+									<li><a href="/user/creatorRegister">크리에이터 등록</a></li>
 									<li><a href="/user/userLectureList" class="text-danger">내 수강목록</a></li>
 								</security:authorize>
 								<security:authorize access="hasAuthority('A03')">

@@ -44,6 +44,7 @@ public class SugangVO {
 	private int ok;
 	private int end;
 	private String name;
+	private String pht;
 	
 	// for Search
 	private Date startDate;
