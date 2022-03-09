@@ -58,14 +58,7 @@ public class LectureVO {
 	private Date recentDate;
 	private int count;
 	private String[] ltStCodeList;
-	private int page;
 	
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
 	private int cnt; // 수강인원
 	private int sales; // 강의별 매출액
 	

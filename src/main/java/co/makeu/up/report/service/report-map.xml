@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.report.service.ReportMapper">
 	<insert id="insertReviewReport" parameterType="co.makeu.up.report.service.ReportVO">
-		INSERT INTO REPORT VALUES(
-		(SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP01',#{content},'RPS01', #{num},#{type},SYSDATE)
+		INSERT INTO REPORT(RP_NO, REPORTER, LT_NO, CTGR, CONTENT, RP_ST_CODE, NUM, TYPE, RP_DATE) VALUES(
+		((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1),
+		#{reporter}, #{ltNo}, 'RP01', #{content}, 'RPS01',
+		#{num}, #{type}, SYSDATE)
 	</insert>
 	
 	<insert id="insertLecReport" parameterType="co.makeu.up.report.service.ReportVO">

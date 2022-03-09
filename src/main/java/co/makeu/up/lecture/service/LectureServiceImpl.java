@@ -84,6 +84,8 @@ public class LectureServiceImpl implements LectureMapper {
 	@Override
 	public int AdminlectureUpdateReject(LectureVO vo) {
 		return map.AdminlectureUpdateReject(vo);
+	}
+	@Override
 	public LectureVO adminLectureInfo(int ltNo) {
 		return map.adminLectureInfo(ltNo);
 	}

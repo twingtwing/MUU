@@ -212,11 +212,6 @@ public class NoticeController {
 		return vo;
 	}
 	
-	@GetMapping("/creator/cLecQ")
-	public String cLecQ() {
-		return "main/lecture/cLecQ";
-	}
-	
 	// 공지 리스트
 	@GetMapping("/user/userLNL")
 	public String userLecNoticeList(NoticeVO vo, Model model, Principal pri){	
