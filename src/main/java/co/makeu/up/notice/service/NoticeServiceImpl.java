@@ -68,7 +68,7 @@ public NoticeVO NoticeSelects(NoticeVO vo) {
 	return vo;
 }
 
-@Override
+
 public int NoticeUpdate(NoticeVO vo) {
 	if(vo.getDetaFileList() != null) {
 		fileMap.delFile(vo.getFileNo());

@@ -152,10 +152,12 @@ td, th {
 							</div>
 							<div class="d-flex justify-content-center w-100 mb-5">
 								<form action="/admin/adLecALOK" method='get' name="ltNo" >
+								<input type="hidden" id="ok" name="ltNo" value="${adLecSel.ltNo }">
 									<button class="p-3 mx-2 border bg-success font-weight-bold text-white"
-										id="ok" type="submit" value="${adLecSel.ltNo }">강의 등록 승인</button>
+										id="ok" type="submit">강의 등록 승인</button>
 								</form>
-								<form action="/admin/adLecALReject" method='post' name="ltNo" >
+								<form action="/admin/adLecALReject" method='get' name="ltNo" >
+								<input type="hidden" id="reject" name="ltNo" value="${adLecSel.ltNo }">
 									<button class="p-3 mx-2 border bg-danger font-weight-bold text-white"
 										id="reject" type="submit" value="${adLecSel.ltNo }">강의 등록거부</button>
 								</form>		
