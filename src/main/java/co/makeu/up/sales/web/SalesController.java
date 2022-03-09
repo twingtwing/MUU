@@ -30,6 +30,7 @@ public class SalesController {
 		return "admin/sales/adTSales";
 	}
 	
+	
 	// 기간별 - 연도별 ajax
 	@GetMapping("/admin/tsales/monthChange")
 	@ResponseBody

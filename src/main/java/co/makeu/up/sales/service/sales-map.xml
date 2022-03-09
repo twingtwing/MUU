@@ -63,4 +63,61 @@
 		PIVOT ( SUM(PAY) FOR CTGR IN ('HC01' "HC01",'HC02' "HC02",'HC03' "HC03",'HC04' "HC04",'HC05' "HC05",'HC06' "HC06",'HC07' "HC07",'ALL' "ALL"))
 		order by 1 
 	</select>
+	<select id="lectureTop3" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT L.TTL,GETUSERNAME(L.CRE_ID) NAME,L.THUMB, COUNT(*) CNT 
+		FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO = L.LT_NO
+		GROUP BY L.TTL, CRE_ID, L.THUMB
+		ORDER BY CNT DESC
+	</select>
+	<select id="creatorTop3" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT U.PHT,L.* FROM (SELECT GETUSERNAME(L.CRE_ID) NAME,L.CRE_ID ,SUM(S.PAY) PAY FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO= L.LT_NO
+		WHERE REG_DATE <![CDATA[>]]> ADD_MONTHS(SYSDATE,-12)
+		AND S.TLSN_ST_CODE != 'SU03'
+		GROUP BY L.CRE_ID
+		ORDER BY PAY DESC) L
+		JOIN USERS U
+		ON L.CRE_ID = U.ID
+	</select>
+	<select id="countList" resultType="co.makeu.up.sales.service.SalesVO">
+	SELECT '총 회원 수' TABLE_NAME,COUNT(ID) CNT FROM USERS 
+	UNION 
+	SELECT '총 수강 횟수',COUNT(TLSN_NO)FROM SUGANG
+	WHERE TLSN_ST_CODE != 'SU03'
+	UNION
+	SELECT '총 강의 개수',COUNT(LT_NO) FROM LECTURE
+	UNION
+	<![CDATA[
+	SELECT '최근 한 달<br>수강 횟수',COUNT(TLSN_NO) FROM SUGANG
+	WHERE REG_DATE > ADD_MONTHS(SYSDATE,-1)
+	AND TLSN_ST_CODE != 'SU03'
+	UNION
+	SELECT '최근 한 달<br>가입한 회원 수',COUNT(ID) FROM USERS
+	WHERE JOIN_DATE > ADD_MONTHS(SYSDATE,-1)
+	UNION
+    ]]>
+	SELECT '총 크리에이터 수',COUNT(ID) FROM USERS
+	WHERE AUTH_CODE = 'A03'
+	ORDER BY 1
+	</select>
+	<select id="recent7days" resultType="co.makeu.up.sales.service.SalesVO">
+	SELECT TO_CHAR(REG_DATE,'MM/DD') DAY ,SUM(PAY) PAY,COUNT(TLSN_NO) CNT
+	FROM SUGANG
+	WHERE REG_DATE <![CDATA[>=]]> SYSDATE-7
+	AND TLSN_ST_CODE != 'SU03'
+	GROUP BY TO_CHAR(REG_DATE,'MM/DD')
+	ORDER BY DAY
+	</select>
+	<select id="thisYearSales" resultType="co.makeu.up.sales.service.SalesVO">
+	SELECT TO_NUMBER(M.MONTH) MON,NVL(P.PAY,0) PAY ,NVL(P.CNT,0) CNT 
+		FROM (SELECT TO_CHAR(REG_DATE,'MM') MON ,SUM(PAY) PAY,(COUNT(TLSN_NO)) CNT
+			FROM SUGANG WHERE TO_CHAR(REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			GROUP BY TO_CHAR(REG_DATE,'MM')
+			ORDER BY MON) P 
+	RIGHT OUTER JOIN (SELECT LPAD(LEVEL,2,0) MONTH 
+						FROM DUAL CONNECT BY LEVEL <![CDATA[<=]]>12) M
+	ON P.MON = M.MONTH
+	ORDER BY M.MONTH
+	</select>
 </mapper>

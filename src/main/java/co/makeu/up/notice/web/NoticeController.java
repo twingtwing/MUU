@@ -265,9 +265,10 @@ public class NoticeController {
 		checkvo = sugangDao.sugangCheckDate(checkvo);
 		checkvo.setProgPct(progressDao.wholeProgress(prvo));
 		model.addAttribute("sugang",checkvo);
-		model.addAttribute("notice",noticeDao.NoticeSelect(vo));
+		NoticeVO notice = noticeDao.NoticeSelect(vo);
+		model.addAttribute("notice", notice);
 		noticeDao.updateHits(vo);
-		model.addAttribute("noticeFiles",noticeDao.noticeFiles(vo.getLtNo()));
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(notice.getFileNo()));
 		return "main/user/userLNS";
 	}
 }

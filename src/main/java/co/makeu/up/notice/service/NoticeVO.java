@@ -32,6 +32,9 @@ public class NoticeVO {
 	// for search
 	private String ttlSearchKey;
 	private String contentSearchKey;
+	private Date startDate;
+	private Date endDate;
+	private String ttlContent;
 	
 	//for deta_file
 	private List<DetafileVO> fileList;

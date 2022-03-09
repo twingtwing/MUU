@@ -20,7 +20,6 @@
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
 						<h2>아이디/비밀번호 찾기</h2>
-						<p>이번 한 번만 알려드리는 겁니다 ..</p>
 					</div>
 				</div>
 			</div>
@@ -65,7 +64,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+					<h5 class="modal-title w-100 text-center my-2" id="exampleModalLabel">본인인증(이메일)</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">X</span>
@@ -160,7 +159,8 @@
 			$('#findForm>input').val($('#email').val())
 			console.log($('form>input').val());
 			if(what==='아이디 찾기'){
-				$('#findForm').attr('action','findId');
+				$('#findForm').attr('action','findIdForm');
+				//$('#findForm').submit(); id 찾으려면 id가 필요한 상황(...)	
 			} else {
 				$('#findForm').submit();			
 			}

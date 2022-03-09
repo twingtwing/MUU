@@ -11,6 +11,8 @@ public class SalesVO {
 	private int month;
 	private int mon;
 	private String upCtgr;
+	private String day;
+	private int ages;
 	
 	private String ctgr;
 	private int hc01;
@@ -20,4 +22,6 @@ public class SalesVO {
 	private int hc05;
 	private int hc06;
 	private int hc07;
+	
+	private String tableName;
 }
