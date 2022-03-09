@@ -68,7 +68,7 @@ public NoticeVO NoticeSelects(NoticeVO vo) {
 	return vo;
 }
 
-@Override
+
 public int NoticeUpdate(NoticeVO vo) {
 	if(vo.getDetaFileList() != null) {
 		fileMap.delFile(vo.getFileNo());
@@ -79,6 +79,8 @@ public int NoticeUpdate(NoticeVO vo) {
 		}
 	}
 	return map.NoticeUpdate(vo);
+}
+
 public List<NoticeVO> adminNoticeList(NoticeVO vo) {
 	return map.adminNoticeList(vo);
 }

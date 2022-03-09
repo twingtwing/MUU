@@ -70,7 +70,6 @@ public class LectureVO {
 	private int sales; // 강의별 매출액
 	
 	//관리자 강의 관리를 위한 VO객체 선언 - 문의는 박정욱에게
-	private int page;
 	private int pageNum;
 	private int amount;
 	private int length;
@@ -84,12 +83,7 @@ public class LectureVO {
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
+	
 	public String getStart() {
 		return start;
 	}

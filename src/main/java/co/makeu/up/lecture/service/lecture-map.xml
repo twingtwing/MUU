@@ -181,7 +181,7 @@
 	</select>
 	
 	<update id="AdminlectureUpdateOK" parameterType="co.makeu.up.lecture.service.LectureVO">
-		UPDATE lecture set LT_ST_CODE = 'L02'
+		UPDATE lecture set LT_ST_CODE = 'L01'
 		where LT_NO = #{ltNo}
 	</update>
 	

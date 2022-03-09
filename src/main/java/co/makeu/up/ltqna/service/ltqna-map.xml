@@ -45,8 +45,6 @@
 		WHERE QNA_NO = #{qnaNo}
 	</delete>
 	
-
-	</update>
 	<select id="adminQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
 	SELECT * FROM (SELECT ROWNUM RN,QNA_NO,WRITER,A_CONTENT,Q_CONTENT,LT_NO,FINDLTCODE(QNA_ST_CODE) QNA_ST_CODE ,COUNT(*) OVER() CNT
 	FROM LT_QNA

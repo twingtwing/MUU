@@ -45,8 +45,6 @@ public class AdminLectureController {
 	@Autowired LtQnaServiceImpl ltqnaDao;
 	@Autowired NoticeServiceImpl noticeDao;
 	
-	@Autowired LessonServiceImpl lessonDao;
-	
 	//강의리스트
 	@GetMapping("/admin/adLecL")
 	public String adLecL(Model model, LectureVO vo) {
@@ -185,16 +183,30 @@ public class AdminLectureController {
 	
 	//강의등록 허가
 	@RequestMapping("/admin/adLecALOK")
-	public String adLecALOK(LectureVO vo) {
+	public String adLecALOK(LectureVO vo, Model model) {
 		lectureDao.AdminlectureUpdateOK(vo);
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/lecture/adLecAL";
 	}
 	
 	//강의등록 허가
 	@RequestMapping("/admin/adLecALReject")
-	public String adLecALReject(LectureVO vo) {
+	public String adLecALReject(LectureVO vo, Model model) {
 		lectureDao.AdminlectureUpdateReject(vo);
-	return "admin/lecture/adLecAL";
-		}	
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
+		return "admin/lecture/adLecAL";
+	}	
 	
 }
