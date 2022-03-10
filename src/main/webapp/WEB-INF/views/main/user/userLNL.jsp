@@ -203,6 +203,7 @@
   <input type="hidden" name="ntNo">
   <input type="hidden" name="ltNo" value="${sugang.ltNo}">
   </form>
+  
   <form action="" id="move" method="get">
   	<input type="hidden" name="ltNo" value="${sugang.ltNo}">
   	<input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">

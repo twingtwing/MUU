@@ -348,9 +348,10 @@ $(function(){
   
   //공지사항 검색 조회
   function tocSearch(){
-	  if($('#toc option:selected').val() == '제목'){
+	  if($('#toc').val() == '제목'){
 		  ttlSearchKey = $('#tocval').val();
-	  } else if($('#toc option:selected').val() == '내용'){
+	  }
+	  if($('#toc').val() == '내용'){
 		  contentSearchKey = $('#tocval').val();
 	  }
 	  $('.sendttl').val(ttlSearchKey);
@@ -359,16 +360,18 @@ $(function(){
 	  $('#noticeSearchFrm').attr("action", "/creator/cLecNLsearch");
 	  $('#noticeSearchFrm').submit();
   }
+  
   //검색 조회시 검색란 선입력
   $(function(){
-	  $('#toc option').removeAttr('selected');
-	  if(${inputTtl != null}){
+	  $('#toc option:selected').removeAttr('selected');
+	  if(${inputTtl != ''}){
 		  $($('#toc option[value="제목"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputTtl}');
-	  } else if(${inputContent != null}){
+	  } 
+	  if(${inputContent != ''}){
 		  $($('#toc option[value="내용"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputContent}');
 	  }
-  }) 
+  })
   </script>
 </html>

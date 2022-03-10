@@ -34,4 +34,12 @@ public interface ExtendedLetureMapper {
 	
 	List<NoticeVO> noticeList(ExtendedLectureVO vo);
 	
+	//for main
+	List<LectureVO> thisWeekLecture(ExtendedLectureVO vo);
+	String bestCtgr(String time);
+	List<LectureVO> bestCtgrLecture(ExtendedLectureVO vo);
+	List<LectureVO> newLecture(ExtendedLectureVO vo);
+	List<LectureVO> popularLecture(String time);
+	List<LectureVO> randomLecture();
+	
 }

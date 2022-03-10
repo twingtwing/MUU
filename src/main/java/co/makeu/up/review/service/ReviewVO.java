@@ -21,4 +21,5 @@ public class ReviewVO {
 	private String pht;
 	private int page;
 	private int cnt;
+	
 }
