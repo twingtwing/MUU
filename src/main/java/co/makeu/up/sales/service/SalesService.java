@@ -2,9 +2,7 @@ package co.makeu.up.sales.service;
 
 import java.util.List;
 
-import co.makeu.up.sugang.service.SugangVO;
-
-public interface SalesMapper {
+public interface SalesService {
 	List<SalesVO> salesByYear();
 	List<SalesVO> salesByMonth(String year);
 	List<SalesVO> salesByCtgrYear();
@@ -16,11 +14,10 @@ public interface SalesMapper {
 
 	
 	// main
-	List<SugangVO> lectureTop3();
-	List<SugangVO> creatorTop3();
+	SalesVO adminHome(SalesVO vo);
 	
-	List<SalesVO> genderList();
-	List<SalesVO> countList();
+	// main ajax
 	List<SalesVO> recent7days();
 	List<SalesVO> thisYearSales();
+	List<SalesVO> genderList();
 }

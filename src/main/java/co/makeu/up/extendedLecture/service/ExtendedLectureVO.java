@@ -37,4 +37,17 @@ public class ExtendedLectureVO {
 	private List<ReviewVO> reviewList;//후기 리스트
 	private List<LtQnaVO> ltQnaList;//질문리스트
 	private List<NoticeVO> noticeList;//공지사항 리스트
+	
+	//FOR MAIN-MAIN
+	private List<LectureVO> thisWeekLecture;
+	
+	private List<LectureVO> bestCtgrLectureWeek;
+	private List<LectureVO> bestCtgrLectureMonth;
+	
+	private List<LectureVO> newLecture;
+	
+	private List<LectureVO> popularLectureDay;
+	private List<LectureVO> popularLectureWeek;
+	private List<LectureVO> popularLectureMonth;
+	private List<LectureVO> randomLecture;
 }

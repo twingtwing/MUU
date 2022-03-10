@@ -203,6 +203,7 @@
   <input type="hidden" name="ntNo">
   <input type="hidden" name="ltNo" value="${sugang.ltNo}">
   </form>
+  
   <form action="" id="move" method="get">
   	<input type="hidden" name="ltNo" value="${sugang.ltNo}">
   	<input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">
@@ -279,7 +280,7 @@
 	
   // 클릭시 공지사항 내용으로
     $('#noticeList').click((e)=>{
-      let ntNo = e.target.parentElement.firstElementChild.textContent;
+      let ntNo = e.target.parentElement.closest('tr').firstElementChild.textContent;
       document.querySelector('#userLNS').firstElementChild.value = ntNo;
       $('#userLNS').submit();
     })
