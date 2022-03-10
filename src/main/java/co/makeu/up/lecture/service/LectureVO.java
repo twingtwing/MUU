@@ -40,6 +40,7 @@ public class LectureVO {
 	private String mySugang;//내 수강 영부
 	private String ltStCodeName;
 	private Date endDate;
+	private int page;
 	
 	public Date getEndDate() {
 		return endDate;
@@ -341,6 +342,12 @@ public class LectureVO {
 	}
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
 	}
 	
 

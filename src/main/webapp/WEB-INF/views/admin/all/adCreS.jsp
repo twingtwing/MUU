@@ -36,7 +36,8 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">크리에이터 관리</li>
+                                    <li class="breadcrumb-item"><a href="/admin/adCreL">크리에이터 관리</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">크리에이터 관리(상세)</li>
                                 </ol>
                             </nav>
                         </div>

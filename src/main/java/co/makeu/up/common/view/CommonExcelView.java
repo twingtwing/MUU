@@ -1,7 +1,11 @@
 package co.makeu.up.common.view;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -97,5 +101,28 @@ public class CommonExcelView  extends  AbstractXlsxView {
 
 		LOGGER.debug("### buildExcelDocument Map : {} end!!");	
 	}
+	public static Map<String, Object> convertVOtoMap(Object obj) throws IllegalArgumentException, IllegalAccessException {
+	      if(obj == null ) {
+	         return Collections.emptyMap();
+	      }
+	      Map<String, Object> convertMap = new HashMap<String, Object>();
+	      Field[] fields = obj.getClass().getDeclaredFields();
+	      for(Field field : fields) {
+	         field.setAccessible(true);
+	         convertMap.put(field.getName(), field.get(obj));
+	      }
+	      return convertMap;
+	   }
+
+	public static List<Map<String,Object>> convertVOtoMaps(List<?> list) throws IllegalArgumentException, IllegalAccessException{
+	      if (list == null || list.isEmpty()) {
+	         return Collections.emptyList();
+	      }
+	      List<Map<String, Object>> convertList = new ArrayList<Map<String,Object>>();
+	      for(Object obj : list) {
+	         convertList.add(CommonExcelView.convertVOtoMap(obj));
+	      }
+	      return convertList;
+	   }
 
 }

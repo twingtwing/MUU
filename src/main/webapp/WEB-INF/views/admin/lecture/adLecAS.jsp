@@ -48,9 +48,10 @@ td, th {
 				<div class="ml-auto text-right">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#">크리에이터</a></li>
-							<li class="breadcrumb-item active" aria-current="page">강의관리
-								(상세)</li>
+							<li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
+							<li class="breadcrumb-item"><a href="/admin/adLecAL">강의등록</a></li>
+							<li class="breadcrumb-item active" aria-current="page">강의등록(상세)
+							</li>
 						</ol>
 					</nav>
 				</div>

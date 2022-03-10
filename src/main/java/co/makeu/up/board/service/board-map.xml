@@ -7,6 +7,7 @@
 		ORDER BY b_no DESC
 	</select>
 	
+	
 	<select id="selectBoard" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
 	SELECT  *
 	FROM (SELECT  b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no,
