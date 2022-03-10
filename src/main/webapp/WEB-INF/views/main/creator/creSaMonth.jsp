@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,16 +94,11 @@
 							</div>
 							<hr class="font-weight-bold">
 							<div class="row col-12 justify-content-end">
-								<select name="" id="">
-									<option value="2022" selected>2022년</option>
-									<option value="2022">2021년</option>
-									<option value="2022">2020년</option>
-									<option value="2022">2019년</option>
-									<option value="2022">2018년</option>
-									<option value="2022">2017년</option>
-									<option value="2022">2016년</option>
-									<option value="2022">2015년</option>
-								</select>
+								<select name="" id="monthBox" class="select border">
+			                        <c:forEach begin="${2016}" end="${thisyear }" var="y">
+			                          <option value="${y }"<c:if test="${thisyear eq y }">selected="selected"</c:if>>${y }년</option>
+			                        </c:forEach>
+		                        </select>
 							</div>
 							<div class="col-12 row justify-content-center">
 								<div class="row col-11">
@@ -113,54 +108,40 @@
 								</div>
 							</div>
 						</div>
-
+						<div class="row col-12 justify-content-end mr-1 mb-1">
+            				<p class="font-weight-bold text-muted">(단위) 판매량 : 개 / 매출액 : 만 원</p>
+            			</div>
 						<div class="row col-12 mr-5">
 							<table class="text-center table">
 								<tr>
-									<th></th>
-									<th>1월</th>
-									<th>2월</th>
-									<th>3월</th>
-									<th>4월</th>
-									<th>5월</th>
-									<th>6월</th>
-									<th>7월</th>
-									<th>8월</th>
-									<th>9월</th>
-									<th>10월</th>
-									<th>11월</th>
-									<th>12월</th>
-								</tr>
+		                          <th></th>
+		                          <c:forEach items="${months }" var="mon">
+			                          <c:if test="${mon.month ne 0 }">
+			                          	<th width="7%" class="monthLabel">${mon.month }월</th>
+			                          </c:if>
+		                          </c:forEach>
+		                          <th width="7%">총 합</th>
+		                        </tr>
 								<tr>
-									<td>판매량</td>
-									<td>5</td>
-									<td>9</td>
-									<td>7</td>
-									<td>12</td>
-									<td>20</td>
-									<td>36</td>
-									<td>28</td>
-									<td>5</td>
-									<td>9</td>
-									<td>7</td>
-									<td>12</td>
-									<td>20</td>
-								</tr>
+		                          <td>판매량</td>
+		                          <c:forEach items="${months }" var="mon">
+		                          	<td>
+				                      	<span class="<c:if test="${mon.month ne 0 }">monthCnt</c:if> chartCnt">
+				                      	${mon.cnt }
+				                      	</span>
+				                    </td>
+		                          </c:forEach>
+		                        </tr>
 								<tr>
-									<td>매출액</td>
-									<td>5</td>
-									<td>9</td>
-									<td>7</td>
-									<td>12</td>
-									<td>20</td>
-									<td>36</td>
-									<td>28</td>
-									<td>5</td>
-									<td>9</td>
-									<td>7</td>
-									<td>12</td>
-									<td>20</td>
-								</tr>
+		                          <td>매출액</td>
+		                          <c:forEach items="${months }" var="mon">
+		                          	<td>
+				                    	<span class="<c:if test="${mon.month ne 0 }">monthPay</c:if> chartPay">
+				                        	${mon.pay }
+				                        </span>
+			                        </td>
+		                          </c:forEach>
+		                        </tr>
 							</table>
 						</div>
 
@@ -177,26 +158,32 @@
 	</section>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script type="text/javascript">
+    	const monthsLabels = [];
+	  	for(let l of $('.monthLabel')){
+	  		monthsLabels.push(l.textContent)	
+	  	}
+	  	let monthCnt = []
+	  	for(let l of $('.monthCnt')){
+	  		monthCnt.push(+l.textContent)	
+	  	}
+	  	let monthPay = []
+	  	for(let l of $('.monthPay')){
+	  		monthPay.push(+l.textContent.replaceAll(',',''))	
+	  	}
 		const ctx = document.getElementById('myChart').getContext('2d');
 		const myChart = new Chart(ctx, {
 			type : 'bar',
 			data : {
-				labels : [ 2016, 2017, 2018, 2019, 2020, 2021, 2022 ],
+				labels : monthsLabels,
 				datasets : [
 						{
 							label : '판매량',
-							data : [ Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, ],
+							data : monthCnt,
 							backgroundColor : 'gray'
 						},
 						{
 							label : '매출액',
-							data : [ Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, Math.random() * 15,
-									Math.random() * 15, ]
+							data : monthPay
 						} ]
 			},
 			options : {
@@ -207,6 +194,33 @@
 				}
 			}
 		});
+		
+	    // 값변화
+	    $('#monthBox').change(()=>{
+	    	$.ajax({
+	    		url : '/creator/creSaleMonth/ajaxMonth',
+	    		data : {selectYear: $('#monthBox').val()}
+	    	})
+	    	.done((r)=>{
+	    		monthCnt = [];
+	    		monthPay = [];
+	    		r.forEach((obj)=>{
+	    			monthCnt.push(obj.cnt===null ? 0 : obj.cnt)
+	    			monthPay.push(obj.pay===null ? 0 : obj.pay)
+	    		})
+	    		myChart.reset();
+	    		myChart.data.datasets[0].data = monthCnt;
+	    		myChart.data.datasets[1].data = monthPay;
+	    		myChart.update();
+
+	    		// 테이블값도 바꾸기
+	    		for(let i = 0; i < monthCnt.length; i++){
+	    			$('.chartCnt').eq(i)[0].innerText = monthCnt[i]
+	    			$('.chartPay').eq(i)[0].innerText = monthPay[i]
+	    		}
+	    	})
+	    })
+		
 		//mouseover 이벤트 : 사이드바 css변경
 		$('#cctgr  .list-group-item:not(.mylist)').on('mouseover', function() {
 			$(this).css('background-color', '#e53637');

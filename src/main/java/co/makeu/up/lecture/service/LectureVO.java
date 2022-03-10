@@ -58,7 +58,6 @@ public class LectureVO {
 	private Date recentDate;
 	private int count;
 	private String[] ltStCodeList;
-
 	private int cnt; // 수강인원
 	private int sales; // 강의별 매출액
 	

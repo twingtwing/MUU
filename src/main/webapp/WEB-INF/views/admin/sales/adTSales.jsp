@@ -34,7 +34,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <!-- 여기서부터 작성 -->
+                <!-- 연도별 매출-->
                 <div class="col-lg-12 pb-5 pt-3">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">연도별 회사 매출</h5>
                   <div class="row mt-4 justify-content-center">
@@ -90,15 +90,16 @@
 
                 <hr class="my-5">
 
+				<!-- 월별 매출 -->
                 <div class="col-lg-12 pb-5 pt-3">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">월별 회사 매출</h5>
                   <div class="row mt-4 m-3 justify-content-center">
                     <div class="col-lg-8">
                       <div class="row justify-content-end">
                         <select name="" id="monthBox" class="select border px-3 py-2">
-                        <c:forEach begin="${2016}" end="${thisyear }" var="y">
-                          <option value="${y }"<c:if test="${thisyear eq y }">selected="selected"</c:if>>${y }년</option>
-                        </c:forEach>
+	                        <c:forEach begin="${2016}" end="${thisyear }" var="y">
+	                          <option value="${y }"<c:if test="${thisyear eq y }">selected="selected"</c:if>>${y }년</option>
+	                        </c:forEach>
                         </select>
                       </div>
                     </div>
@@ -127,7 +128,7 @@
                           <td>판매량</td>
                           <c:forEach items="${months }" var="mon">
                           	<td>
-		                      	<span <c:if test="${mon.month ne 0 }">class="monthCnt"</c:if>>
+		                      	<span class="<c:if test="${mon.month ne 0 }">monthCnt</c:if> chartCnt">
 		                      	${mon.cnt }
 		                      	</span> 개
 		                    </td>
@@ -137,7 +138,7 @@
                           <td>매출액</td>
                           <c:forEach items="${months }" var="mon">
                           	<td>
-		                    	<span <c:if test="${mon.month ne 0 }">class="monthPay"</c:if>>
+		                    	<span class="<c:if test="${mon.month ne 0 }">monthPay</c:if> chartPay">
 		                        	<fmt:formatNumber>${mon.pay }</fmt:formatNumber>
 		                        </span>만 원
 	                        </td>
@@ -155,6 +156,7 @@
 
                 <hr class="my-5">
 
+				<!-- 카테도리별 연별 매출 -->
                 <div class="col-lg-12 pb-5">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">카테고리별 연도별 매출</h5>
                   <div class="row mt-4 justify-content-center">
@@ -170,19 +172,92 @@
                         <tr>
                           <th>매출</th>
                           <c:forEach items="${ctgrYear}" var="ctgr">
-                          	<c:if test="${ctgr.year ne 'ALL'}">
-	                          	<th>${ctgr.year}</th>
+                          	<c:if test="${ctgr.year ne 3000}">
+	                          	<th class="ctgrYearCnt">${ctgr.year}</th>
                           	</c:if>
                           </c:forEach>
                           <th>총 합</th>
                         </tr>
                         <tr>
-                        	<td>음악</td>
+                        	<th>음악</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc01}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>요리</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc02}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>건강</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc03}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>아트</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc04}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>외국어</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc05}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>IT/컴퓨터</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc06}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>자기계발</th>
+                        	<c:forEach items="${ctgrYear}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span <c:if test="${not var.last}">class="ctgrYearPay"</c:if> >
+                          				<fmt:formatNumber>${ctgr.hc07}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>전체</th>
                         	<c:forEach items="${ctgrYear}" var="ctgr">
-                          		<th>${ctgr.hc01}</th>
+                          		<td>
+                          			<span>${ctgr.pay}</span>
+                          		</td>
                           	</c:forEach>
                         </tr>
                       </table>
+                      <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
                         <button class="btn btn-success mr-1">EXCEL다운</button>
@@ -193,12 +268,13 @@
 
                 <hr class="my-5">
 
+				<!-- 카테고리별 월별 매출 -->
                 <div class="col-lg-12 pb-5">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">카테고리별 월별 회사 매출</h5>
                   <div class="row mt-4 m-3 justify-content-center">
                     <div class="col-lg-8">
                       <div class="row justify-content-end">
-                        <select name="" id="" class="select border px-3 py-2">
+                        <select id="ctgrMonthBox" class="select border px-3 py-2">
                          <c:forEach begin="${2016}" end="${thisyear }" var="y">
                           <option value="${y }"<c:if test="${thisyear eq y }">selected="selected"</c:if>>${y }년</option>
                         </c:forEach>
@@ -217,55 +293,95 @@
                   <div class="row justify-content-center">
                     <div class="col-lg-10">
                       <table class="w-100 text-center mt-4 table-bordered">
-                        <tr>
-                          <th></th>
-                          <th width="7%">1월</th>
-                          <th width="7%">2월</th>
-                          <th width="7%">3월</th>
-                          <th width="7%">4월</th>
-                          <th width="7%">5월</th>
-                          <th width="7%">6월</th>
-                          <th width="7%">7월</th>
-                          <th width="7%">8월</th>
-                          <th width="7%">9월</th>
-                          <th width="7%">10월</th>
-                          <th width="7%">11월</th>
-                          <th width="7%">12월</th>
-                          <th width="7%">총 합</th>
+                          <tr>
+                          <th>매출</th>
+                          <c:forEach items="${ctgrMonth}" var="ctgr">
+                          	<c:if test="${ctgr.month ne 13}">
+	                          	<th class="ctgrMonthCnt">${ctgr.month}월</th>
+                          	</c:if>
+                          </c:forEach>
+                          <th>총 합</th>
                         </tr>
                         <tr>
-                          <td>판매량</td>
-                          <td>5</td>
-                          <td>9</td>
-                          <td>7</td>
-                          <td>12</td>
-                          <td>20</td>
-                          <td>36</td>
-                          <td>28</td>
-                          <td>5</td>
-                          <td>9</td>
-                          <td>7</td>
-                          <td>12</td>
-                          <td>20</td>
-                          <td></td>
+                        	<th>음악</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay01">
+                          				<fmt:formatNumber>${ctgr.hc01}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
                         </tr>
                         <tr>
-                          <td>매출액</td>
-                          <td>5</td>
-                          <td>9</td>
-                          <td>7</td>
-                          <td>12</td>
-                          <td>20</td>
-                          <td>36</td>
-                          <td>28</td>
-                          <td>5</td>
-                          <td>9</td>
-                          <td>7</td>
-                          <td>12</td>
-                          <td>20</td>
-                          <td></td>
+                        	<th>요리</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay02">
+                          				<fmt:formatNumber>${ctgr.hc02}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>건강</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay03">
+                          				<fmt:formatNumber>${ctgr.hc03}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>아트</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay04">
+                          				<fmt:formatNumber>${ctgr.hc04}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>외국어</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay05">
+                          				<fmt:formatNumber>${ctgr.hc05}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>IT/컴퓨터</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay06">
+                          				<fmt:formatNumber>${ctgr.hc06}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>자기계발</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr" varStatus="var">
+                          		<td>
+                          			<span class="<c:if test="${not var.last}">ctgrMonthPay</c:if> ctgrChartPay07">
+                          				<fmt:formatNumber>${ctgr.hc07}</fmt:formatNumber>
+                          			</span>
+                          		</td>
+                          	</c:forEach>
+                        </tr>
+                        <tr>
+                        	<th>전체</th>
+                        	<c:forEach items="${ctgrMonth}" var="ctgr">
+                          		<td>
+                          			<span class="ctgrChartPay">${ctgr.pay}</span>
+                          		</td>
+                          	</c:forEach>
                         </tr>
                       </table>
+                      <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
                         <button class="btn btn-success mr-2">EXCEL다운</button>
@@ -378,20 +494,28 @@
     		myChart2.data.datasets[0].data = monthCnt;
     		myChart2.data.datasets[1].data = monthPay;
     		myChart2.update();
-    		// 테이블값도 바꾸기.
+
+    		// 테이블값도 바꾸기
+    		for(let i = 0; i < monthCnt.length; i++){
+    			$('.chartCnt').eq(i)[0].innerText = monthCnt[i]
+    			$('.chartPay').eq(i)[0].innerText = monthPay[i]
+    		}
     	})
     })
-    
-    
 	
     // 카테고리별 연도별
     const ctgrYearCnt = []
   	for(let l of $('.ctgrYearCnt')){
   		ctgrYearCnt.push(+l.textContent)	
   	}
-  	const ctgrYearPay = []
-  	for(let l of $('.ctgrYearPay')){
-  		ctgrYearPay.push(+l.textContent.replaceAll(',',''))	
+  	const ctgrYearPay = [];
+  	let yearCount = 0;
+  	for(var i = 0; i < 7 ; i++){
+  		ctgrYearPay[i] = [] 
+  		for(let j =0 ; j <= (Number('${thisyear }') - 2016) ; j++){
+  			ctgrYearPay[i].push($('.ctgrYearPay').eq(yearCount)[0].textContent.replaceAll(',',''))	
+  			yearCount++;
+  		}
   	}
     const ctx3 = document.getElementById('myChart3').getContext('2d');
     const myChart3 = new Chart(ctx3, {
@@ -399,78 +523,41 @@
       data: {
         labels: yearLabels,
         datasets: [{
+        	type: 'bar',
+            label: '음악',
+            backgroundColor: 'coral',
+            data: ctgrYearPay[0]
+          },{
             type: 'bar',
             label: '요리',
-            backgroundColor: 'Darkseagreen',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ]
+            backgroundColor: 'powderblue',
+            data: ctgrYearPay[1]
+          },{
+              type: 'bar',
+              label: '건강',
+              backgroundColor: 'cedetblue',
+              data: ctgrYearPay[2]
+          },{
+              type: 'bar',
+              label: '아트',
+              backgroundColor: 'darkkhaki',
+              data: ctgrYearPay[3]
           }, {
             type: 'bar',
-            label: '아트',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
+            label: '외국어',
+            data: ctgrYearPay[4],
+            backgroundColor: 'Darkseagreen'
+          },
+          {
+            type: 'bar',
+            label: 'IT/컴퓨터',
+            data: ctgrYearPay[5],
             backgroundColor: 'lightgray'
           },
           {
             type: 'bar',
             label: '자기계발',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
-            backgroundColor: 'powderblue'
-          },
-          {
-            type: 'bar',
-            label: 'IT, 컴퓨터',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
+            data:ctgrYearPay[6],
             backgroundColor: 'pink'
           }
         ]
@@ -488,84 +575,60 @@
       }
     });
  
+    const ctgrMonthCnt = []
+  	for(let l of $('.ctgrMonthCnt')){
+  		ctgrMonthCnt.push(l.textContent);
+  	}
+  	const ctgrMonthPay = [];
+  	let monthCount = 0;
+  	for(var i = 0; i < 7 ; i++){
+  		ctgrMonthPay[i] = [] 
+  		for(let j = 0 ; j < 12 ; j++){
+  			ctgrMonthPay[i].push($('.ctgrMonthPay').eq(monthCount)[0].textContent.replaceAll(',',''))	
+  			monthCount++;
+  		}
+  	}
     const ctx4 = document.getElementById('myChart4').getContext('2d');
     const myChart4 = new Chart(ctx4, {
       type: 'bar',
       data: {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        datasets: [{
+        labels: ctgrMonthCnt,
+        datasets:  [{
+        	type: 'bar',
+            label: '음악',
+            backgroundColor: 'coral',
+            data: ctgrMonthPay[0]
+          },{
             type: 'bar',
             label: '요리',
-            backgroundColor: 'Darkseagreen',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ]
+            backgroundColor: 'powderblue',
+            data: ctgrMonthPay[1]
+          },{
+              type: 'bar',
+              label: '건강',
+              backgroundColor: 'cedetblue',
+              data: ctgrMonthPay[2]
+          },{
+              type: 'bar',
+              label: '아트',
+              backgroundColor: 'darkkhaki',
+              data: ctgrMonthPay[3]
           }, {
             type: 'bar',
-            label: '아트',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
+            label: '외국어',
+            data: ctgrMonthPay[4],
+            backgroundColor: 'Darkseagreen'
+          },
+          {
+            type: 'bar',
+            label: 'IT/컴퓨터',
+            data: ctgrMonthPay[5],
             backgroundColor: 'lightgray'
           },
           {
             type: 'bar',
             label: '자기계발',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
-            backgroundColor: 'powderblue'
-          },
-          {
-            type: 'bar',
-            label: 'IT, 컴퓨터',
-            data: [
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-              Math.random() * 15,
-            ],
+            data : ctgrMonthPay[6],
             backgroundColor: 'pink'
           }
         ]
@@ -582,6 +645,55 @@
         },
       }
     });
+    
+ 	// 값변화
+    $('#ctgrMonthBox').change(()=>{
+    	$.ajax({
+    		url : '/admin/tsales/ctgrMonthChange',
+    		data : {selectYear: $('#ctgrMonthBox').val()}
+    	})
+    	.done((r)=>{
+    		hc01 = [];
+    		hc02 = [];
+    		hc03 = [];
+    		hc04 = [];
+    		hc05 = [];
+    		hc06 = [];
+    		hc07 = [];
+    		pay = [];
+    		r.forEach((obj)=>{
+    			hc01.push(obj.hc01===null ? 0 : obj.hc01)
+    			hc02.push(obj.hc02===null ? 0 : obj.hc02)
+    			hc03.push(obj.hc03===null ? 0 : obj.hc03)
+    			hc04.push(obj.hc04===null ? 0 : obj.hc04)
+    			hc05.push(obj.hc05===null ? 0 : obj.hc05)
+    			hc06.push(obj.hc06===null ? 0 : obj.hc06)
+    			hc07.push(obj.hc07===null ? 0 : obj.hc07)
+    			pay.push(obj.pay===null ? 0 : obj.pay)
+    		})
+    		myChart4.reset();
+    		myChart4.data.datasets[0].data = hc01;
+    		myChart4.data.datasets[1].data = hc02;
+    		myChart4.data.datasets[2].data = hc03;
+    		myChart4.data.datasets[3].data = hc04;
+    		myChart4.data.datasets[4].data = hc05;
+    		myChart4.data.datasets[5].data = hc06;
+    		myChart4.data.datasets[6].data = hc07;
+    		myChart4.update();
+
+    		// 테이블값도 바꾸기
+    		for(let i = 0; i < pay.length; i++){
+    			$('.ctgrChartPay').eq(i)[0].innerText = pay[i];
+    			$('.ctgrChartPay01').eq(i)[0].innerText = hc01[i];
+    			$('.ctgrChartPay02').eq(i)[0].innerText = hc02[i];
+    			$('.ctgrChartPay03').eq(i)[0].innerText = hc03[i];
+    			$('.ctgrChartPay04').eq(i)[0].innerText = hc04[i];
+    			$('.ctgrChartPay05').eq(i)[0].innerText = hc05[i];
+    			$('.ctgrChartPay06').eq(i)[0].innerText = hc06[i];
+    			$('.ctgrChartPay07').eq(i)[0].innerText = hc07[i];
+    		}
+    	})
+    })
   
   </script>
 </body>

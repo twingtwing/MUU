@@ -17,7 +17,7 @@ import co.makeu.up.lesson.service.LessonVO;
 
 
 import co.makeu.up.common.view.Pagination;
-
+import co.makeu.up.common.view.Pagination;
 
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
 import co.makeu.up.ltqna.service.LtQnaVO;
@@ -27,7 +27,6 @@ import co.makeu.up.review.service.ReviewServiceImpl;
 import co.makeu.up.review.service.ReviewVO;
 import co.makeu.up.sugang.service.SugangServiceImpl;
 import co.makeu.up.sugang.service.SugangVO;
-
 
 @Controller
 public class AdminLectureController {
