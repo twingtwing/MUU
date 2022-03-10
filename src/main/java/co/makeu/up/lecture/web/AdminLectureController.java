@@ -17,7 +17,6 @@ import co.makeu.up.lesson.service.LessonVO;
 
 
 import co.makeu.up.common.view.Pagination;
-import co.makeu.up.common.view.Pagination;
 
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
 import co.makeu.up.ltqna.service.LtQnaVO;

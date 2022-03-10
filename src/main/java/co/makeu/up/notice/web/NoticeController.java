@@ -50,10 +50,12 @@ public class NoticeController {
 	public String cLecNL(LectureVO lvo, NoticeVO nvo, Model model) {
 		nvo.setPage(1);
 		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
-		int listCnt = nlists.get(0).getCount();
-		Pagination pagination = new Pagination(listCnt, 1);
+		if(nlists.isEmpty() != true) {
+			int listCnt = nlists.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			model.addAttribute("pagination", pagination);
+		}
 		
-		model.addAttribute("pagination", pagination);
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
@@ -62,11 +64,13 @@ public class NoticeController {
 	@RequestMapping("/creator/cLecNLpage")
 	public String cLecNLpage(LectureVO lvo, NoticeVO nvo, Model model, HttpServletRequest request) {
 		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
-		int listCnt = nlists.get(0).getCount();
-		Pagination pagination = new Pagination(listCnt, 1);
-		pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+		if(nlists.isEmpty() != true) {
+			int listCnt = nlists.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+			model.addAttribute("pagination", pagination);
+		}
 		
-		model.addAttribute("pagination", pagination);
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
@@ -79,15 +83,17 @@ public class NoticeController {
 		String inputContent = nvo.getContentSearchKey();
 		if(inputTtl != null) {
 			model.addAttribute("inputTtl", inputTtl);
-		} else if (inputContent != null) {
+		} 
+		if (inputContent != null) {
 			model.addAttribute("inputContent", inputContent);
 		}
 		nvo.setPage(1);
 		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
-		int listCnt = nlists.get(0).getCount();
-		Pagination pagination = new Pagination(listCnt, 1);
-		
-		model.addAttribute("pagination", pagination);
+		if(nlists.isEmpty() != true) {
+			int listCnt = nlists.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			model.addAttribute("pagination", pagination);
+		}
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";
@@ -103,11 +109,12 @@ public class NoticeController {
 			model.addAttribute("inputContent", inputContent);
 		}
 		List<NoticeVO> nlists = noticeDao.NoticeList(nvo);
-		int listCnt = nlists.get(0).getCount();
-		Pagination pagination = new Pagination(listCnt, 1);
-		pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
-		
-		model.addAttribute("pagination", pagination);
+		if(nlists.isEmpty() != true) {
+			int listCnt = nlists.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+			model.addAttribute("pagination", pagination);
+		}
 		model.addAttribute("lecinfo", lectureDao.lectureSelect(lvo.getLtNo()));
 		model.addAttribute("nlists", nlists);
 		return "main/lecture/cLecNL";

@@ -49,4 +49,9 @@ public class LtQnaServiceImpl implements LtQnaMapper{
 		return map.adminQnaList(vo);
 	}
 
+	@Override
+	public int updateQnaAnswer(LtQnaVO vo) {
+		return map.updateQnaAnswer(vo);
+	}
+
 }

@@ -9,6 +9,8 @@ public interface SugangMapper {
 	int sugangBeforeRefund(SugangVO vo);
 	List<SugangVO> sugangPay(SugangVO vo);
 	int updateSugangConfirm(SugangVO vo);
+	List<SugangVO> sugangList(SugangVO vo);
+	int shipUpdate(SugangVO vo);
 	
 	int sugangInsert(SugangVO vo);
 	

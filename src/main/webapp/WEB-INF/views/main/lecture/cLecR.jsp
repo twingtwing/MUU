@@ -312,7 +312,6 @@ $('#revReport').on('show.bs.modal', function(e){
 	$('#rvcontentMd').html($(e.relatedTarget).closest('.rvcard').html());
 	$('#inreporter').val($(e.relatedTarget).data('reporter'));
 	$('#inltno').val($(e.relatedTarget).data('ltno'));
-	//$('#incontent').val($(e.relatedTarget).data('content'));
 	$('#innum').val($(e.relatedTarget).data('num'));
 })
 //열린강의정보 페이지 이동
@@ -413,9 +412,25 @@ $('#rvinput').on('keypress',function(k){
 		}
 		$('.sendcontent').val(inputcontent);
 		$('.sendwriter').val(inputwriter);
-		$('#searchFrm').attr("action", "/creator/cLecR");
+		$('#searchFrm').attr("action", "/creator/cLecRsearch");
 		$('#searchFrm').submit();
 	}
+})
+
+//검색 후 선입력
+$(function(){
+	$('#rvsearch option').removeAttr('selected');
+	if(${inputWriter != ''}){
+		$('#rvsearch option[value="작성자ID"]').attr('selected','selected');
+		$('#rvinput').val('${inputWriter}');
+	}
+	if(${inputContent != ''}){
+		$('#rvsearch option[value="내용"]').attr('selected','selected');
+		$('#rvinput').val('${inputContent}');
+	}
+	
+	
+	
 })
 
 </script>
