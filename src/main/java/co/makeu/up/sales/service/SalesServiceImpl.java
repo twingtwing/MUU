@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.makeu.up.sugang.service.SugangVO;
-
 @Service("salesDao")
-public class SalesServiceImpl implements SalesMapper{
+public class SalesServiceImpl implements SalesService{
 	@Autowired SalesMapper map;
 	
 	@Override
@@ -50,20 +48,14 @@ public class SalesServiceImpl implements SalesMapper{
 	public List<SalesVO> salesAge(String year) {
 		return map.salesAge(year);
 	}
-	
-  @Override
-	public List<SugangVO> lectureTop3() {
-		return map.lectureTop3();
-	}
+
 
 	@Override
-	public List<SugangVO> creatorTop3() {
-		return map.creatorTop3();
-	}
-
-	@Override
-	public List<SalesVO> countList() {
-		return map.countList();
+	public SalesVO adminHome(SalesVO vo) {
+		vo.setCountList(map.countList());
+		vo.setLectureTop3(map.lectureTop3());
+		vo.setCreatorTop3(map.creatorTop3());
+		return vo;
 	}
 
 	@Override
@@ -75,4 +67,8 @@ public class SalesServiceImpl implements SalesMapper{
 	public List<SalesVO> thisYearSales() {
 		return map.thisYearSales();
 	}
-}
+
+	@Override
+	public List<SalesVO> genderList() {
+		return map.genderList();
+	}}

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.makeu.up.common.view.Pagination;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
@@ -151,7 +154,86 @@ public class SugangController {
   
 	//강의 수강생 리스트 페이지 이동
 	@RequestMapping("/creator/cLecSt")
-	public String cLecStPage() {
+	public String cLecStPage(SugangVO vo, Model model) {
+		vo.setPage(1);
+		List<SugangVO> sglist = sugangDao.sugangList(vo);
+		if(sglist.isEmpty() != true) {
+			int listCnt = sglist.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			model.addAttribute("pagination", pagination);
+		}
+		
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("sglist", sglist);
 		return "main/lecture/cLecSt";
+	}
+	//강의 수강생 리스트 페이지 이동(페이지 번호클릭)
+	@RequestMapping("/creator/cLecStpage")
+	public String cLecStselectPage(SugangVO vo, Model model, HttpServletRequest request) {
+		List<SugangVO> sglist = sugangDao.sugangList(vo);
+		if(sglist.isEmpty() != true) {
+			int listCnt = sglist.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+			model.addAttribute("pagination", pagination);
+		}
+		
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("sglist", sglist);
+		return "main/lecture/cLecSt";
+	}
+	
+	//강의 수강생 리스트 페이지 이동(검색)
+	@RequestMapping("/creator/cLecStsearch")
+	public String cLecStselectPage(SugangVO vo, Model model) {
+		String inputName = vo.getNameSearchKey();
+		String inputShipCode = vo.getShipStCodeSearchKey();
+		if(inputName != null) {
+			model.addAttribute("inputName", inputName);
+		}
+		if(inputShipCode != null) {
+			model.addAttribute("inputShipCode", inputShipCode);
+		}
+		vo.setPage(1);
+		List<SugangVO> sglist = sugangDao.sugangList(vo);
+		if(sglist.isEmpty() != true) {
+			int listCnt = sglist.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			model.addAttribute("pagination", pagination);
+		}
+		
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("sglist", sglist);
+		return "main/lecture/cLecSt";
+	}
+	
+	//강의 수강생 리스트 페이지 이동(검색후 번호 클릭)
+	@RequestMapping("/creator/cLecStpagesearch")
+	public String cLecStselectPagesearch(SugangVO vo, Model model, HttpServletRequest request) {
+		String inputName = vo.getNameSearchKey();
+		String inputShipCode = vo.getShipStCodeSearchKey();
+		if(inputName != null) {
+			model.addAttribute("inputName", inputName);
+		}
+		if(inputShipCode != null) {
+			model.addAttribute("inputShipCode", inputShipCode);
+		}
+		List<SugangVO> sglist = sugangDao.sugangList(vo);
+		if(sglist.isEmpty() != true) {
+			int listCnt = sglist.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt, 1);
+			pagination.setCurrPage(Integer.parseInt(request.getParameter("page")));
+			model.addAttribute("pagination", pagination);
+		}
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("sglist", sglist);
+		return "main/lecture/cLecSt";
+	}
+	
+	//운송장 번호 입력 업데이트
+	@PostMapping("/creator/shipNumUpdate")
+	@ResponseBody
+	public void shipNumUpdate(SugangVO vo) {
+		sugangDao.shipUpdate(vo);
 	}
 }

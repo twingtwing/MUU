@@ -26,8 +26,10 @@ public class SugangVO {
 	private String tel;
 	private Date expDate;
 	
+	
 	//for extended
 	private int num;
+	private float prog;
 	
 	//for join
 	private String ttl;
@@ -49,7 +51,13 @@ public class SugangVO {
 	// for Search
 	private Date startDate;
 	private Date endDate;
+	private String nameSearchKey;
+	private String shipStCodeSearchKey;
+	
+	// for pagination
 	private int page;
+	private int count;
+	
 	
 	// progress
 	private int progPct;

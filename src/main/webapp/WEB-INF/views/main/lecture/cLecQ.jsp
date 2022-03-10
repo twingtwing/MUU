@@ -26,6 +26,9 @@
         form .nice-select{
             height: 38px;
         }
+        a {
+        	cursor : pointer;
+        }
        
     </style>
 </head>
@@ -152,11 +155,14 @@
                             <!--여기서 부터임-->
                              <div class="row mr-1">
                                  <div>
+                                 	 <select id="qnayn">
+                                 	 	 <option value="">전체</option>
+                                 	 	 <option value="Q02">처리</option>
+                                 	 	 <option value="Q01">미처리</option>
+                                 	 </select>
                                      <select id="qnasearch">
                                          <option value="질문내용">질문내용</option>
                                          <option value="작성자">작성자</option>
-                                         <option value="작성일자">작성일자</option>
-                                         <option value="답변여부">답변여부</option>
                                      </select>
                                  </div>
                                  <input class="border mb-0 ml-1" id="qnainput" style="height: 37px; width: 170px" type="text"
@@ -179,7 +185,11 @@
                                 </thead>
                                 <tbody id="mo" style="text-align:center">
                                 	<c:forEach items="${qnalist}" var="list" varStatus="status">
-	                                    <tr data-toggle="modal" data-target="#exampleModalCenter" style="cursor:pointer;">
+	                                    <tr data-toggle="modal" data-target="#qnamodal" 
+	                                    data-qcontent='${list.qContent }' data-qregdate='${list.qRegDate }'
+	                                    data-writer='${list.writer }' data-qnano='${list.qnaNo }'
+	                                    data-qnastcode='${list.qnaStCode }' data-acontent='${list.aContent }'
+	                                    style="cursor:pointer;">
 	                                        <td>${list.qContent }</td>
 	                                        <td>${list.writer }</td>
 	                                        <td>${list.qRegDate }</td>
@@ -222,7 +232,7 @@
         <!-- Modal -->
         <!-- click이벤트를 통해서 질문 값을 가지고 와야함
         tr에 따라서 달랴아함 -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog">
+        <div class="modal fade" id="qnamodal" tabindex="-1" role="dialog">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header border-bottom-0 d-flex justify-content-center position-relative">
@@ -236,13 +246,14 @@
                         <div class="row mb-4 justify-content-between">
                             <div class="col-lg-9 pr-0" style="min-height: 103px;">
                                 <div class="w-100 h-100 p-2 d-flex align-items-center" style="border: 1px solid black;">
-                                    <p class="mb-0">여기 고객들 질문오는곳여기 고객들 질문오는곳여기 고객들 질문오는곳</p>
+                                    <p class="mb-0" id="inputQ"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 d-flex justify-content-end align-items-end pl-0"> 
                                 <div>
-                                    <p class="mb-0 text-right">작성자 : <strong>00</strong></p>
-                                    <p class="mb-0 text-right">2022-05-05</p>
+                                    <p class="mb-0 text-right">작성자 : <strong id="inputWriter"></strong></p>
+                                    <p class="mb-0 text-right" id="inputQregdate"></p>
+                                    <input type="hidden" id="inputqnaNo" value="">
                                 </div>
                             </div>
                         </div>
@@ -250,8 +261,8 @@
                             <div class="align-self-start" style="transform: rotate(180deg);">
                                 <i class="arrow_back" style="font-size: 70px;"></i>
                             </div>
-                            <textarea name="aw" id="" cols="30" rows="4"></textarea> 
-                            <button type="button" class="btn btn-outline-dark">저장</button>
+                            <textarea name="aw" id="qnAnswer" cols="30" rows="4" onkeypress="if(event.keyCode==13){aUpdate();}"></textarea> 
+                            <button type="button" id="updateBtn" class="btn btn-outline-dark" onclick="aUpdate()">저장</button>
                         </div>
                     </div>
                 </div>
@@ -262,10 +273,22 @@
 <form id="frm">
   	<input class="sendltno" type="hidden" name="ltNo" value="">
 </form>
+<form id="pageFrm">
+   	<input class="sendltno" type="hidden" name="ltNo" value="">
+   	<input class="spage" type="hidden" name="page" value="">
+</form>
+<form id="pagesearchFrm">
+    <input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo}">
+   	<input class="sendcontent" type="hidden" name="contentSearchKey" value="">
+   	<input class="sendwriter" type="hidden" name="writerSearchKey" value="">
+   	<input class="sendqnastcode" type="hidden" name="qnaStCodeSearchKey" value="">
+   	<input class="spage" type="hidden" name="page" value="">
+</form>
 <form id="searchFrm">
 	<input class="sendltno" type="hidden" name="ltNo" value="${lecinfo.ltNo }">
 	<input class="sendcontent" type="hidden" name="contentSearchKey" value="">
 	<input class="sendwriter" type="hidden" name="writerSearchKey" value="">
+	<input class="sendqnastcode" type="hidden" name="qnaStCodeSearchKey" value="">
 </form>
 </body>
 <script type="text/javascript">
@@ -273,26 +296,49 @@ $(function(){
 	$('select').niceSelect('destroy');
 })
 
+//클릭한 QnA 정보
+$('#qnamodal').on('show.bs.modal', function(e){
+	$('#inputQ').text($(e.relatedTarget).data('qcontent'));
+	$('#inputWriter').text($(e.relatedTarget).data('writer'));
+	$('#inputQregdate').text($(e.relatedTarget).data('qregdate'));
+	$('#inputqnaNo').val($(e.relatedTarget).data('qnano'));
+	if($(e.relatedTarget).data('qnastcode')=='Q02'){
+		$('#updateBtn').attr('style','display:none');
+		$('#qnAnswer').val($(e.relatedTarget).data('acontent'));
+	}
+})
+
+//시큐리티 토큰
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+//검색 키워드 선언
+let contentSearchKey;
+let writerSearchKey;
+let qnastcodeSearchKey;
+
 $(function(){
 	$('.paging').on('click', function(){
 		//검색 후 페이지 이동
 		if($('#qnainput').val() != null){
 			$('.spage').val($(this).text());
-			if($('#toc option:selected').val() == '제목'){
-		  	    ttlSearchKey = $('#qnainput').val();
-		  	} else if($('#toc option:selected').val() == '내용'){
+			qnastcodeSearchKey = $('#qnayn option:selected').val();
+			if($('#qnasearch option:selected').val() == '작성자'){
+				writerSearchKey = $('#qnainput').val();
+		  	} else if($('#qnasearch option:selected').val() == '질문내용'){
 				contentSearchKey = $('#qnainput').val();
 			}
-			$('.sendttl').val(ttlSearchKey);
+			$('.sendttl').val(writerSearchKey);
 		    $('.sendcontent').val(contentSearchKey);
-		  	$('#pagesearchFrm').attr('action', '/creator/cLecNLpagesearch');
+		    $('.sendqnastcode').val(qnastcodeSearchKey);
+		  	$('#pagesearchFrm').attr('action', '/creator/cLecQpagesearch');
 		  	$('#pagesearchFrm').submit();
 		  	
 		//페이지 이동
 		} else {
 			$('.sendltno').val(${lecinfo.ltNo});
 			$('.spage').val($(this).text());
-		  	$('#pageFrm').attr('action', '/creator/cLecNLpage');
+		  	$('#pageFrm').attr('action', '/creator/cLecQpage');
 		  	$('#pageFrm').submit();
 		}
 	})
@@ -346,19 +392,18 @@ function goStudent(e){
 	$('#frm').submit();
 }
 
-//검색 키워드 선언
-let contentSearchKey;
-let writerSearchKey;
-
 //QnA 검색
 function qnasearch(){
+	qnastcodeSearchKey = $('#qnayn option:selected').val();
 	if($('#qnasearch option:selected').val() == '질문내용'){
 		contentSearchKey = $('#qnainput').val();
-	} else {
+	} 
+	if($('#qnasearch option:selected').val() == '작성자') {
 		writerSearchKey = $('#qnainput').val(); 
 	}
 	$('.sendcontent').val(contentSearchKey);
 	$('.sendwriter').val(writerSearchKey);
+	$('.sendqnastcode').val(qnastcodeSearchKey);
 	$('#searchFrm').attr("action", "/creator/cLecQsearch");
 	$('#searchFrm').submit();
 }
@@ -366,15 +411,46 @@ function qnasearch(){
 
 //검색 조회시 검색란 선입력
 $(function(){
-	$('#qnasearch option').removeAttr('selected');
-	 if(${inputContent != null}){
-		  $($('#qnasearch option[value="질문내용"]')).attr('selected', 'selected');
-		  $('#qnainput').val('${inputContent}');
-	 } else if(${inputWriter != null}){
-		  $($('#qnasearch option[value="작성자"]')).attr('selected', 'selected');
-		  $('#qnainput').val('${inputWriter}');
-	 }
+	$('#qnayn option').prop('selected', false);
+	$('#qnasearch option').prop('selected', false);
+	if(${inputQnaStCode != ''}){
+		$($('#qnayn option[value="${inputQnaStCode}"]')).attr('selected', 'selected');
+	}
+	if(${inputContent != ''}){
+		$($('#qnasearch option[value="질문내용"]')).attr('selected', 'selected');
+		$('#qnainput').val('${inputContent}');
+	}
+	if(${inputWriter != ''}){
+		$($('#qnasearch option[value="작성자"]')).attr('selected', 'selected');
+		$('#qnainput').val('${inputWriter}');
+	}
 }) 
+
+//답변 업데이트
+function aUpdate(){
+	let aContent = $('#qnAnswer').val();
+	let qnaNo = $('#inputqnaNo').val();
+	
+	$.ajax({
+		url : '/creator/cLecQupdate',
+		method : 'post',
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+		dataType : 'text',
+		data : {
+			aContent : aContent,
+			qnaNo : qnaNo
+		},
+        success : function(){
+        	alert('해당 질문글에 답변하였습니다');
+        	location.reload();
+        	
+        } 
+	})
+	
+}
+
 
     </script>
 </html>

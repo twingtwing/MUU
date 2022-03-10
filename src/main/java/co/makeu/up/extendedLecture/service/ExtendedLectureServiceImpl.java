@@ -1,7 +1,12 @@
 package co.makeu.up.extendedLecture.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import co.makeu.up.lecture.service.LectureVO;
 
 @Component("extendedDao")
 public class ExtendedLectureServiceImpl implements ExtendedLetureService{
@@ -45,5 +50,42 @@ public class ExtendedLectureServiceImpl implements ExtendedLetureService{
 		vo.setUserAddr(map.userAddr(vo));
 		vo.setLectureDetail(map.lecPay(vo));
 		return vo;
+	}
+
+	@Override
+	public ExtendedLectureVO extendHome(ExtendedLectureVO vo) {
+		
+		vo.setThisWeekLecture(map.thisWeekLecture(vo)); //이번주 베스트
+		
+		String week = map.bestCtgr("week");
+		vo.setUpCtgr(week);
+		List<LectureVO> weekList = map.bestCtgrLecture(vo);
+		Collections.shuffle(weekList);
+		if(weekList.size() > 6) {
+			weekList = weekList.subList(0, 6);
+		}
+		vo.setBestCtgrLectureWeek(weekList); //저번주 베스트 카테고리
+		
+		String month = map.bestCtgr("month");
+		vo.setUpCtgr(month);
+		List<LectureVO> monthList = map.bestCtgrLecture(vo);
+		if(monthList.size() > 6) {
+			monthList = monthList.subList(0, 6);
+		}
+		Collections.shuffle(monthList);
+		vo.setBestCtgrLectureMonth(monthList); //저번달 베스트 카테고리
+		
+		vo.setNewLecture(map.newLecture(vo)); //new 강의
+		
+		vo.setPopularLectureDay(map.popularLecture("day"));
+		vo.setPopularLectureMonth(map.popularLecture("week"));
+		vo.setPopularLectureMonth(map.popularLecture("month"));//인기 강의
+		
+		return vo;
+	}
+
+	@Override
+	public List<LectureVO> randomLecture() {
+		return map.randomLecture();
 	}
 }

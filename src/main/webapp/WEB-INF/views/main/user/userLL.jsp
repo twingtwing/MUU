@@ -115,8 +115,8 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb__links">
-            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
-            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
+            <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i>Home</a>
+            <a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a>
             <span>내 강의리스트</span>
           </div>
         </div>
@@ -302,13 +302,13 @@
     }
 
       //mouseover 이벤트 : 사이드바 css변경
-    $('.list-group .list-group-item').on('mouseover',function(){
+    $('.list-group .list-group-item:not(.mylist)').on('mouseover',function(){
       $(this).css('background-color','#e53637');
       $(this).find('.list-link').css('color','#ffffff');
     })
 
       //mouseover 이벤트 : 사이드바 css변경
-    $('.list-group .list-group-item').on('mouseout',function(){
+    $('.list-group .list-group-item:not(.mylist)').on('mouseout',function(){
       $(this).css('background-color','#ffffff');
       $(this).find('.list-link').css('color','#000000');
       $(this).find('.list-link.active').css('color','#e53637');

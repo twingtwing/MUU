@@ -25,6 +25,7 @@ public class LtQnaVO {
 	// search
 	private String writerSearchKey;
 	private String contentSearchKey;
+	private String qnaStCodeSearchKey;
 	
 	public int getQnaNo() {
 		return qnaNo;
@@ -97,6 +98,12 @@ public class LtQnaVO {
 	}
 	public void setContentSearchKey(String contentSearchKey) {
 		this.contentSearchKey = contentSearchKey;
+	}
+	public String getQnaStCodeSearchKey() {
+		return qnaStCodeSearchKey;
+	}
+	public void setQnaStCodeSearchKey(String qnaStCodeSearchKey) {
+		this.qnaStCodeSearchKey = qnaStCodeSearchKey;
 	}
 	public String getName() {
 		return name;

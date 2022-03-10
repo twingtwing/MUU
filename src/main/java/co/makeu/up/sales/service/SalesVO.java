@@ -1,7 +1,8 @@
 package co.makeu.up.sales.service;
 
-import java.sql.Date;
+import java.util.List;
 
+import co.makeu.up.sugang.service.SugangVO;
 import lombok.Data;
 
 @Data
@@ -44,6 +45,12 @@ public class SalesVO {
 	private String start;
 	private String end;
 	
+	//FOR MAIN
+	private String tableName;	
+	private List<SalesVO> countList;
+	private List<SugangVO> lectureTop3;
+	private List<SugangVO> creatorTop3;
+	
 	//FOR SEARCH
 	private String yearId;
 	private String yearName;
@@ -68,5 +75,4 @@ public class SalesVO {
 		this.amountMonth = amountMonth;
 	}	
 
-	private String tableName;
 }
