@@ -55,9 +55,9 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb__links">
-            <a href="/home" class="text-secondary"><i class="fa fa-home"></i> 홈</a>
-            <a href="/user/userSelect" class="text-secondary">마이페이지</a>
-            <a href="/user/userLectureList" class="text-secondary">내 강의리스트</a>
+            <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i>Home</a>
+            <a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a>
+            <a href="/user/userLectureList" class="text-dark font-weight-bold">내 강의리스트</a>
             <span>공지사항</span>
           </div>
         </div>
@@ -203,6 +203,7 @@
   <input type="hidden" name="ntNo">
   <input type="hidden" name="ltNo" value="${sugang.ltNo}">
   </form>
+  
   <form action="" id="move" method="get">
   	<input type="hidden" name="ltNo" value="${sugang.ltNo}">
   	<input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">
@@ -279,7 +280,7 @@
 	
   // 클릭시 공지사항 내용으로
     $('#noticeList').click((e)=>{
-      let ntNo = e.target.parentElement.firstElementChild.textContent;
+      let ntNo = e.target.parentElement.closest('tr').firstElementChild.textContent;
       document.querySelector('#userLNS').firstElementChild.value = ntNo;
       $('#userLNS').submit();
     })

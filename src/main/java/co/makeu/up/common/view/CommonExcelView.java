@@ -103,52 +103,30 @@ public class CommonExcelView  extends  AbstractXlsxView {
 
 		LOGGER.debug("### buildExcelDocument Map : {} end!!");	
 	}
-	
+
+
 	public static Map<String, Object> convertVOtoMap(Object obj) throws IllegalArgumentException, IllegalAccessException {
-		if(obj == null ) {
-			return Collections.emptyMap();
-		}
-		Map<String, Object> convertMap = new HashMap<String, Object>();
-		Field[] fields = obj.getClass().getDeclaredFields();
-		for(Field field : fields) {
-			field.setAccessible(true);
-			convertMap.put(field.getName(), field.get(obj));
-		}
-		return convertMap;
-	}
-	
-	
-	public static <T> T convertValueObject(Map<String, Object> map, Class<T> type) throws InstantiationException, IllegalAccessException, IllegalArgumentException, NoSuchMethodException, SecurityException, InvocationTargetException {
-		if(type == null) {
-			throw new NullPointerException("Class cannot be null!");
-		}
-		T instance = type.getConstructor().newInstance();
-		if(map == null || map.isEmpty()) {
-			return instance;
-		}
-		for(Map.Entry<String, Object> entrySet : map.entrySet()) {
-			Field[] fields = type.getDeclaredFields();
-			for(Field field : fields) {
-				field.setAccessible(true);
-				String fieldName = field.getName();
-				boolean isSameType = entrySet.getValue().getClass().equals(field.getType());
-				boolean isSameName = entrySet.getKey().equals(fieldName);
-				if(isSameType && isSameName) {
-					field.set(instance, map.get(fieldName));
-				}
-			}
-		}
-		return instance;
-	}
-	
+	      if(obj == null ) {
+	         return Collections.emptyMap();
+	      }
+	      Map<String, Object> convertMap = new HashMap<String, Object>();
+	      Field[] fields = obj.getClass().getDeclaredFields();
+	      for(Field field : fields) {
+	         field.setAccessible(true);
+	         convertMap.put(field.getName(), field.get(obj));
+	      }
+	      return convertMap;
+	   }
+
 	public static List<Map<String,Object>> convertVOtoMaps(List<?> list) throws IllegalArgumentException, IllegalAccessException{
-		if (list == null || list.isEmpty()) {
-			return Collections.emptyList();
-		}
-		List<Map<String, Object>> convertList = new ArrayList<Map<String,Object>>();
-		for(Object obj : list) {
-			convertList.add(CommonExcelView.convertVOtoMap(obj));
-		}
-		return convertList;
-	}
+	      if (list == null || list.isEmpty()) {
+	         return Collections.emptyList();
+	      }
+	      List<Map<String, Object>> convertList = new ArrayList<Map<String,Object>>();
+	      for(Object obj : list) {
+	         convertList.add(CommonExcelView.convertVOtoMap(obj));
+	      }
+	      return convertList;
+	   }
+
 }

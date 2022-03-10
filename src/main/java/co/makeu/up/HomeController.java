@@ -1,33 +1,46 @@
 package co.makeu.up;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.makeu.up.extendedLecture.service.ExtendedLectureVO;
+import co.makeu.up.extendedLecture.service.ExtendedLetureService;
 import co.makeu.up.sales.service.SalesServiceImpl;
 import co.makeu.up.sales.service.SalesVO;
 
 @Controller
 public class HomeController {	
 	@Autowired SalesServiceImpl salesDao;
+	@Autowired ExtendedLetureService extendedDao;
 	
 	@GetMapping("/home")
-	public String home() {
+	public String home(Model model) {
+		model.addAttribute("random",extendedDao.randomLecture());
 		return "main/all/home";
 	}
 	
+	//메인
+	@ResponseBody
+	@GetMapping("/homeLecture")
+	public ExtendedLectureVO homeLecture(ExtendedLectureVO vo,Principal pri) {
+		if(pri != null) {
+			vo.setId(pri.getName());
+		}
+		return extendedDao.extendHome(vo);
+	}
+	//메인 끝
+	
 	// 관리자 메인
 	@GetMapping("/admin/home")
-	public String adminPage(Model model) {
-		model.addAttribute("lec3",salesDao.lectureTop3());
-		model.addAttribute("cre3",salesDao.creatorTop3());
-		model.addAttribute("countList",salesDao.countList());
+	public String adminPage(Model model,SalesVO vo) {
+		model.addAttribute("home",salesDao.adminHome(vo));
 		return "admin/home/home";
 	}
 	
@@ -44,6 +57,13 @@ public class HomeController {
 		return salesDao.thisYearSales();
 	}
 
+	@ResponseBody
+	@GetMapping("/admin/genderList")
+	public List<SalesVO> genderList(){
+		return salesDao.genderList();
+	}
+	//관리자 메인 끝
+	
 	@GetMapping("/customLogin")
 	public String customLoginForm(String error, String logout, Model model) {
 		if(error!=null) {
@@ -51,8 +71,6 @@ public class HomeController {
 		}
 		return "main/all/customLogin";
 	}
-	
-	
 
 	
 	@GetMapping("/accessError")

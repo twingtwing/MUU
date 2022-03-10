@@ -27,6 +27,7 @@
 		SELECT EXP_DATE
 		FROM LECTURE 
 		WHERE CRE_ID = #{id} AND EXP_DATE>SYSDATE
+		ORDER BY 1 DESC
 	</select>
 	<update id="deleteUsers" parameterType="String">
 		UPDATE USERS 
@@ -40,8 +41,6 @@
 		DETA_ADDR=NULL,
 		SOCIAL_TOKEN=NULL,
 		PHT=NULL,
-		U_ST_CODE=0,
-		CRE_GRD_CODE=NULL,
 		POINT=NULL,
 		CRE_INTRO=NULL,
 		SOCIAL_CODE=NULL

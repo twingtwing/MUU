@@ -76,25 +76,25 @@ background-color:#f5f5f5;
                                         <tr height="38">
                                             <th width = "15%">신고자 ID</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text" name = "reporter" spellcheck="false" ondblclick="this.checked=false"> 
+                                                <input class="w-100" type="text" value="${search.reporter }" name = "reporter" spellcheck="false" ondblclick="this.checked=false"> 
                                             </td>
                                             
                                             <th width = "15%">크리에이터</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text"  name="creid" spellcheck="false" ondblclick="this.checked=false">
+                                                <input class="w-100" type="text" value ="${search.creid }"  name="creid" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             
                                         </tr>
                                         <tr height="38">
                                             <th>강의명</th>
                                             <td>
-                                                <input name="ttl" class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
+                                                <input name="ttl" value = "${search.ttl }" class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             <th>신고유형</th>
                                             <td>
-                                                <select name="type" id="ct">
-                                                	<option value="">전체</option>
-                                                    <option value="RPT01">부적절한콘텐츠</option>
+                                                <select name="type" id="ct" >
+                                                	<option value="" >전체</option>
+                                                    <option value="RPT01" >부적절한콘텐츠</option>
                                                     <option value="RPT02">피싱또는스펨</option>
                                                     <option value="RPT03">기타</option>
                                                 </select>
@@ -104,14 +104,14 @@ background-color:#f5f5f5;
                                         <tr height="38">
                                             <th>신고날짜</th>
                                             <td class="text-left">
-                                                <input class="w-30" type="date" spellcheck="false" id="haq" name="start" ondblclick="this.checked=false" >
+                                                <input class="w-30" value="${search.start }" type="date" spellcheck="false" id="haq" name="start" ondblclick="this.checked=false" >
                                                 <i class="fas fa-minus mx-1"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="haq1" name="end" ondblclick="this.checked=false">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq1" value="${search.end }" name="end" ondblclick="this.checked=false">
                                             </td>
                                             <th>처리상태</th>
                                             <td class="text-left">
                                                 <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02">
-                                                <label for="t" class="mr-3 mb-0">처리</label>
+                                                <label for="t" class="mr-3 mb-0" >처리</label>
                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01">
                                                 <label for="r" class="mb-0">미처리</label>
                                                  <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03">

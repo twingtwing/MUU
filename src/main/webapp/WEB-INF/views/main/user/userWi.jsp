@@ -63,9 +63,9 @@ i.fa-heart-o {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="#" class="text-dark font-weight-bold"><i
-							class="fa fa-home "></i> Home</a> <a href="#"
-							class="text-dark font-weight-bold">마이페이지</a> <span>위시리스트</span>
+						<a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i>Home</a> 
+						<a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a> 
+						<span>위시리스트</span>
 					</div>
 				</div>
 			</div>
@@ -320,19 +320,17 @@ i.fa-heart-o {
 		}
 
 		//mouseover 이벤트 : 사이드바 css변경
-		$('#cctgr  .list-group-item:not(.mylist)').on('mouseover', function () {
-			$(this).css('background-color', '#e53637');
-			$(this).find('.list-link').css('color', '#ffffff');
-			$(this).find('p').css('color', '#ffffff');
-		})
+	    $('.list-group .list-group-item:not(.mylist)').on('mouseover',function(){
+	      $(this).css('background-color','#e53637');
+	      $(this).find('.list-link').css('color','#ffffff');
+	    })
 
-		//mouseover 이벤트 : 사이드바 css변경
-		$('#cctgr  .list-group-item:not(.mylist)').on('mouseout', function () {
-			$(this).css('background-color', '#ffffff');
-			$(this).find('.list-link').css('color', '#000000');
-			$(this).find('p').css('color', '#000000');
-			$(this).find('.list-link.active').css('color', '#e53637');
-		})
+	      //mouseover 이벤트 : 사이드바 css변경
+	    $('.list-group .list-group-item:not(.mylist)').on('mouseout',function(){
+	      $(this).css('background-color','#ffffff');
+	      $(this).find('.list-link').css('color','#000000');
+	      $(this).find('.list-link.active').css('color','#e53637');
+	    })
 	</script>
 </body>
 

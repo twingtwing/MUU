@@ -31,7 +31,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="">공지사항</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adBadLi">공지사항</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">공지사항작성</li>
                                 </ol>
                             </nav>

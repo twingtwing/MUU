@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,763 +41,309 @@
 </head>
 <body>
 	<div id="test">		
-		참고하세여.(아 ㅋㅋ참고 하라고)<br>
 		관리자아이디: admin123@naver.com / 비밀번호 : 관리자<br>
 		유저아이디 : user123@naver.com / 비밀번호 : 정혜윤<br>
 		크리에이터아이디 : test111@naver.com / 비밀번호 : 테스트111, gotohell@naver.com / 정혜윤, minicreator@naver.com/정혜윤<br>
 			
 		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>	
 		<h5> 사용자 아이디: ${username }</h5>
-
-
-		<h5><security:authorize access="isAnonymous()">
-			넌 비회원이야
-		</security:authorize> </h5>
-		<security:authorize access="hasAuthority('A01')">관리자만 볼 수 있는 글자</security:authorize>
-		<security:authorize access="hasAuthority('A02')">유저만 볼 수 있는 글자</security:authorize>
-		<security:authorize access="hasAuthority('A03')">크리에이터만 볼 수 있는 글자</security:authorize>
-
-		
-		
-		<a href="/creator/cLecNL">공지사항</a>
-		<a href="/creator/cLecNS">상세</a><br>
-		<a href="/creator/cLecNI">등록</a>
-		<a href="/creator/cLecNU">수정</a>
-
-		<a href="/creator/cLecQ">질답</a>
-		<a href="/creator/creLectureReview">크리에이터 리뷰</a>
-		<div style="border: 1px solid grey">
-			<a href="/creator/creS">크리에이터 정보 >></a>
-			<a href="/creator/lecI">강의 등록 >></a>
-			<a href="/creator/rLecL">신청 강의리스트 >></a>
-			<a href="/creator/oLecL">열린 강의리스트 >></a>
-			<a href="/creator/clLecL">닫힌 강의리스트 >></a>
-			<a href="/creator/rpLecL">신고된 강의리스트 >></a>
-			<a href="/creator/aaa">영상 업로드 테스트----</a>
-			<a href="/creator/lesU">영상 관리 페이지</a>
-		</div>
-		<a href="/creator/cLecNL">공지사항</a>
-		<a href="/creator/cLecNS">상세</a><br>
-		<a href="/creator/cLecNI">등록</a>
-		<a href="/creator/cLecNU">수정</a>
-		<a href="/creator/cLecQ">질답</a><br>
-		<a href="excel">엑셀다운로드</a>
-		<a href="/user/userWishList">유저-위시리스트</a>
-		<a href="/creator/creRefund">크리에이터-환불내역</a>
-		
 	</div>
-    <!-- slide benner -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero__slider owl-carousel">
-                <div class="hero__items set-bg" data-setbg="/resources/img/blog/blog-1.jpg">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="hero__text">
-                                <div class="label font-weight-bold py-2">상위 · 하위</div>
-                                <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-                                <p></p>
-                                <a href="#"><span>Go Now</span> <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero__items set-bg" data-setbg="/resources/img/hero/hero-1.jpg">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="hero__text">
-                                <div class="label font-weight-bold py-2">상위 · 하위</div>
-                                <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-                                <p></p>
-                                <a href="#"><span>Go Now</span> <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero__items set-bg" data-setbg="/resources/img/hero/hero-1.jpg">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="hero__text">
-                                <div class="label font-weight-bold py-2">상위 · 하위</div>
-                                <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-                                <p></p>
-                                <a href="#"><span>Go Now</span> <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- slide benner End -->
 
-    <!-- Product Section Begin -->
-    <section class="product spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="trending__product">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="section-title">
-                                    <h4>이번주 HOT🔥</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-1.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">직장인 위스키 클래스</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-2.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Gintama Movie 2: Kanketsu-hen - Yorozuya yo Eien</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-3.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Shingeki no Kyojin Season 3 Part 2</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-4.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Fullmetal Alchemist: Brotherhood</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-5.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Shiratorizawa Gakuen Koukou</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/trending/trend-6.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Code Geass: Hangyaku no Lelouch R2</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="popular__product">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="section-title">
-                                    <h4>주간 BEST 카테고리 ??🥇</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="btn__all">
-                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-1.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Sen to Chihiro no Kamikakushi</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-2.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Kizumonogatari III: Reiket su-hen</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-3.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Shirogane Tamashii hen Kouhan sen</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-4.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Rurouni Kenshin: Meiji Kenkaku Romantan</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-5.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Mushishi Zoku Shou 2nd Season</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/popular/popular-6.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Monogatari Series: Second Season</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent__product">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="section-title">
-                                    <h4>월간 BEST 카테고리??🏆</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="btn__all">
-                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-1.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Great Teacher Onizuka</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-2.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Fate/stay night Movie: Heaven's Feel - II. Lost</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-3.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Mushishi Zoku Shou: Suzu no Shizuku</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-4.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Fate/Zero 2nd Season</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-5.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">Kizumonogatari II: Nekket su-hen</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/resources/img/recent/recent-6.jpg">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li>상위</li>
-                                            <li>하위</li>
-                                        </ul>
-                                        <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8">
-                    <div class="product__sidebar">
-                        <div class="product__sidebar__view">
-                            <div class="section-title">
-                                <h5>BEST TOP 3✨</h5>
-                            </div>
-                            <ul class="filter__controls">
-                                <li data-filter="*"></li>
-                                <li class="active" data-filter=".day">Day</li>
-                                <li data-filter=".week">Week</li>
-                                <li data-filter=".month">Month</li>
-                            </ul>
-                            <div class="filter__gallery filter_really d-none">
-                                <div class="product__sidebar__view__item set-bg mix month" data-setbg="/resources/img/sidebar/tv-1.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix week" data-setbg="/resources/img/sidebar/tv-2.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Boruto: Naruto next generations</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-3.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix month" data-setbg="/resources/img/sidebar/tv-4.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix week" data-setbg="/resources/img/sidebar/tv-5.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Sword art online alicization war of underworld</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-1.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix month" data-setbg="/resources/img/sidebar/tv-2.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix week" data-setbg="/resources/img/sidebar/tv-3.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Sword art online alicization war of underworld</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-4.jpg">
-                                    <div class="view">
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star text-danger"></i>
-                                            <i class="fa fa-star-o text-danger"></i>
-                                        </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                            </div>
-                            <div class="filter__gallery filter_fake">
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-3.jpg">
-                                    <div class="view">
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star-o text-danger"></i>
-                                    </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-1.jpg">
-                                    <div class="view">
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star-o text-danger"></i>
-                                    </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                                <div class="product__sidebar__view__item set-bg mix day" data-setbg="/resources/img/sidebar/tv-4.jpg">
-                                    <div class="view">
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star text-danger"></i>
-                                        <i class="fa fa-star-o text-danger"></i>
-                                    </div>
-                                    <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product__sidebar__comment">
-                            <div class="section-title">
-                                <h5>New 강의</h5>
-                            </div>
-                            <div class="product__sidebar__comment__item">
-                                <div class="product__sidebar__comment__item__pic">
-                                    <img src="/resources/img/sidebar/comment-1.jpg" alt="">
-                                </div>
-                                <div class="product__sidebar__comment__item__text">
-                                    <ul>
-                                        <li>상위</li>
-                                        <li>하위</li>
-                                    </ul>
-                                    <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                                    <span><i class="fa fa-comments"></i> 19.141 reviews</span>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        4 star
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="product__sidebar__comment__item">
-                                <div class="product__sidebar__comment__item__pic">
-                                    <img src="/resources/img/sidebar/comment-2.jpg" alt="">
-                                </div>
-                                <div class="product__sidebar__comment__item__text">
-                                    <ul>
-                                        <li>상위</li>
-                                        <li>하위</li>
-                                    </ul>
-                                    <h5><a href="#">Shirogane Tamashii hen Kouhan sen</a></h5>
-                                    <span><i class="fa fa-comments"></i> 19.141 reviews</span>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        4 star
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="product__sidebar__comment__item">
-                                <div class="product__sidebar__comment__item__pic">
-                                    <img src="/resources/img/sidebar/comment-3.jpg" alt="">
-                                </div>
-                                <div class="product__sidebar__comment__item__text">
-                                    <ul>
-                                        <li>상위</li>
-                                        <li>하위</li>
-                                    </ul>
-                                    <h5><a href="#">Kizumonogatari III: Reiket su-hen</a></h5>
-                                    <span><i class="fa fa-comments"></i> 19.141 reviews</span>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        4 star
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="product__sidebar__comment__item">
-                                <div class="product__sidebar__comment__item__pic">
-                                    <img src="/resources/img/sidebar/comment-4.jpg" alt="">
-                                </div>
-                                <div class="product__sidebar__comment__item__text">
-                                    <ul>
-                                        <li>상위</li>
-                                        <li>하위</li>
-                                    </ul>
-                                    <h5><a href="#">Monogatari Series: Second Season</a></h5>
-                                    <span><i class="fa fa-comments"></i> 19.141 reviews</span>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        4 star
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Product Section End -->
 
+	<!-- slide benner -->
+	<section class="hero">
+		<div class="container">
+			<div class="hero__slider owl-carousel">
+				<c:forEach items="${random }" var="lec">
+					<div class="hero__items set-bg" data-setbg="${lec.thumb }">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="hero__text">
+									<div class="label font-weight-bold py-2">${lec.upCtgr} · ${lec.downCtgr}</div>
+									<h2 class="text-dark">${lec.ttl}</h2>
+									<p></p>
+									<a href="/lecD?ltNo=${lec.ltNo}">
+										<span>Go Now</span> 
+										<i class="fa fa-angle-right"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</section>
+	    
+	<div id="homeVue">
+	    <!-- slide benner End -->
+	
+		<!-- 여기에 워시리스트 넣을려다가 중복 강의 땜에 오류파티될까봐 일부퍼 빼버림 -->
+	    <!-- Product Section Begin -->
+	    <section class="product spad">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-8">
+	                    <div class="trending__product">
+	                        <div class="row">
+	                            <div class="col-lg-8 col-md-8 col-sm-8">
+	                                <div class="section-title">
+	                                    <h4>이번주 HOT🔥</h4>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                        	<!-- 이번주 hot 반복 -->
+	                            <div v-for="lec in thisWeekLecture" class="col-lg-4 col-md-6 col-sm-6">
+	                                <div class="product__item">
+	                                    <div class="product__item__pic border set-bg" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                        <div class="comment"><i class="fa fa-comments"></i> {{lec.rCount}}</div>
+	                                        <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    </div>
+	                                    <div class="product__item__text">
+	                                        <ul>
+	                                            <li>{{lec.upCtgr}}</li>
+	                                            <li>{{lec.downCtgr}}</li>
+	                                        </ul>
+	                                        <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="popular__product">
+	                        <div class="row">
+	                            <div class="col-lg-8 col-md-8 col-sm-8">
+	                                <div class="section-title">
+	                                    <h4>주간 BEST 카테고리 <strong class="text-danger">{{bestCtgrLectureWeek[0].upCtgr}}</strong> 🥇</h4>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-4">
+	                                <div class="btn__all">
+	                                    <a :href="'/lecS?upCtgr='+bestCtgrLectureWeek[0].ctgrId" class="primary-btn">View All <span class="arrow_right"></span></a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                        
+	                        	<!-- 주간 BEST카테고리 -->
+	                            <div v-for="lec in bestCtgrLectureWeek" class="col-lg-4 col-md-6 col-sm-6">
+	                                <div class="product__item">
+	                                    <div class="product__item__pic border set-bg" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                        <div class="comment"><i class="fa fa-comments"></i> {{lec.rCount}}</div>
+	                                        <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    </div>
+	                                    <div class="product__item__text">
+	                                        <ul>
+	                                            <li>{{lec.upCtgr}}</li>
+	                                            <li>{{lec.downCtgr}}</li>
+	                                        </ul>
+	                                        <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            
+	                    	</div>
+	                    </div>
+	                    <div class="recent__product">
+	                        <div class="row">
+	                            <div class="col-lg-8 col-md-8 col-sm-8">
+	                                <div class="section-title">
+	                                    <h4>월간 BEST 카테고리 <strong class="text-danger">{{bestCtgrLectureMonth[0].upCtgr}}</strong> 🏆</h4>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-4">
+	                                <div class="btn__all">
+	                                    <a :href="'/lecS?upCtgr='+bestCtgrLectureMonth[0].ctgrId" class="primary-btn">View All <span class="arrow_right"></span></a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                        
+	                        	<!-- 월간 베스트 카테고리 반복 -->
+	                            <div v-for="lec in bestCtgrLectureMonth" class="col-lg-4 col-md-6 col-sm-6">
+	                                <div class="product__item">
+	                                    <div class="product__item__pic border set-bg" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                        <div class="comment"><i class="fa fa-comments"></i> {{lec.rCount}}</div>
+	                                        <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    </div>
+	                                    <div class="product__item__text">
+	                                        <ul>
+	                                            <li>{{lec.upCtgr}}</li>
+	                                            <li>{{lec.downCtgr}}</li>
+	                                        </ul>
+	                                        <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                    </div>
+	                                </div>
+	                            </div>
+
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-4 col-md-6 col-sm-8">
+	                    <div class="product__sidebar">
+	                        <div class="product__sidebar__view">
+	                            <div class="section-title">
+	                                <h5>BEST TOP 3✨</h5>
+	                            </div>
+	                            <ul class="filter__controls">
+	                                <li data-filter="*"></li>
+	                                <li v-on:click="filterLick" class="active" data-filter=".day">Day</li>
+	                                <li v-on:click="filterLick" data-filter=".week">Week</li>
+	                                <li v-on:click="filterLick" data-filter=".month">Month</li>
+	                            </ul>
+	                            
+	                            <div class="filter__gallery filter_really d-none">
+	                                <div v-for="lec in popularLectureMonth" class="product__sidebar__view__item set-bg mix month" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                                <div v-for="lec in popularLectureWeek" class="product__sidebar__view__item set-bg mix week" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                                <div v-for="lec in popularLectureDay" class="product__sidebar__view__item set-bg mix day" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                            </div>
+	                            
+	                            <div class="filter__gallery filter_fake">
+	                                <div v-for="lec in popularLectureMonth" class="product__sidebar__view__item set-bg mix month" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                                <div v-for="lec in popularLectureWeek" class="product__sidebar__view__item set-bg mix week" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                                <div v-for="lec in popularLectureDay" class="product__sidebar__view__item set-bg mix day" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
+	                                    <div class="view">
+	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
+	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
+	                                        </div>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                </div>
+	                            </div>
+	                         
+	                        </div>
+	                        <div class="product__sidebar__comment">
+	                            <div class="section-title">
+	                                <h5>New 강의</h5>
+	                            </div>
+	                            
+	                            <div v-for="lec in newLecture" class="product__sidebar__comment__item">
+	                                <div class="product__sidebar__comment__item__pic">
+	                                	<img :src="lec.thumb" width="90" height="130" alt="">
+	                                    <!-- <img src="resources/img/sidebar/comment-1.jpg" alt=""> -->
+	                                </div>
+	                                <div class="product__sidebar__comment__item__text">
+	                                    <ul>
+	                                        <li>{{lec.upCtgr}}</li>
+	                                        <li>{{lec.downCtgr}}</li>
+	                                    </ul>
+	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
+	                                    <span><i class="fa fa-comments"></i> {{lec.rCount}} reviews</span>
+	                                    <span>
+	                                    	<i v-for="index in lec.star" class="fa fa-star"></i>
+	                                        <i v-for="index in 5-lec.star" class="fa fa-star-o"></i>
+	                                        {{lec.star}} star
+	                                    </span>
+	                                </div>
+	                            </div>
+	                            
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- Product Section End -->
+	</div>
+	
     <script>
-        $('.filter__controls li').on('click',function(){
-            if($('.filter_really').hasClass('d-none')){
-                $('.filter_fake').addClass('d-none');
-                $('.filter_really').removeClass('d-none');
-            }
-        })
+    	const home = Vue.createApp({
+    		data(){
+    			return {
+    				thisWeekLecture : [],
+    				bestCtgrLectureWeek: [],
+    				bestCtgrLectureMonth: [],
+    				newLecture: [],
+    				popularLectureDay : [],
+    				popularLectureWeek : [],
+    				popularLectureMonth : [],
+    				randomLecture : []
+    			}
+    		},
+    		methods :{
+    			filterLick(){
+    				console.log($(event.target));
+    				$('.filter__controls li').removeClass('active');
+    				$($(event.target)[0]).addClass('active');
+			   		if($('.filter_really').hasClass('d-none')){
+			        	$('.filter_fake').addClass('d-none');
+			        	$('.filter_really').removeClass('d-none');
+			        }
+    			}
+    		},
+    		beforeCreate : function () {
+    			fetch('/homeLecture')
+                .then(response => response.json())
+                .then(result => {
+                	this.thisWeekLecture = result.thisWeekLecture;
+                	this.bestCtgrLectureWeek = result.bestCtgrLectureWeek;
+                	this.bestCtgrLectureMonth = result.bestCtgrLectureMonth;
+                	this.newLecture = result.newLecture;
+                	this.popularLectureDay = result.popularLectureDay;
+                	this.popularLectureWeek = result.popularLectureWeek;
+                	this.popularLectureMonth = result.popularLectureMonth;
+
+                	$('.set-bg').each(function () {
+			            var bg = $(this).data('setbg');
+			            console.log($(this))
+			            $(this).css('background-image', 'url(' + bg + ')');
+			        });
+                	
+			        $(".loader").fadeOut();
+			        $("#preloder").delay(200).fadeOut("slow");
+			
+			        if ($('.filter__gallery').length > 0) {
+						var containerEl = document.querySelector('.filter__gallery');
+					    var mixer = mixitup(containerEl);
+					}
+			        
+			        
+			        
+				})
+    		}
+    	})
+    	const homeMounted = home.mount('#homeVue');
+
+    
     </script>
 </body>
 </html>

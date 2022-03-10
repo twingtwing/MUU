@@ -32,7 +32,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">문의글</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/adQstL">문의글</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">문의글 상세페이지</li>
                                 </ol>
                             </nav>

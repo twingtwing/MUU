@@ -67,6 +67,8 @@ public class BoardController {
 			length = list.get(0).getLength();
 		}
 		model.addAttribute("pageMaker",new PageVo(vo,length));
+		model.addAttribute("search",vo);
+		System.out.println("dddddd");
 		return "admin/adbad/adBadLi";
 	}
 	

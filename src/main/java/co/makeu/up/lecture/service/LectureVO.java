@@ -71,7 +71,8 @@ public class LectureVO {
 	private String mySugang;//내 수강 영부
 	private String ltStCodeName;
 	private Date endDate;
-	
+	private String ctgrId;
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -93,11 +94,14 @@ public class LectureVO {
 	private int sales; // 강의별 매출액
 	
 	//관리자 강의 관리를 위한 VO객체 선언 - 문의는 박정욱에게
+	private int page;
 	private int pageNum;
 	private int amount;
 	private int length;
 	private String start;
 	private String end;
+	private String lowCtgr;
+	private String highCtgr;
 	
 	public LectureVO(){
 		this (1,10);
@@ -107,6 +111,24 @@ public class LectureVO {
 		this.amount = amount;
 	}
 	
+
+	public String getLowCtgr() {
+		return lowCtgr;
+	}
+	public void setLowCtgr(String lowCtgr) {
+		this.lowCtgr = lowCtgr;
+	}
+	public String getHighCtgr() {
+		return highCtgr;
+	}
+	public void setHighCtgr(String highCtgr) {
+		this.highCtgr = highCtgr;
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public String getStart() {
 		return start;
 	}
@@ -373,7 +395,14 @@ public class LectureVO {
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
 	}
-	
 
+	public String getCtgrId() {
+		return ctgrId;
+	}
+	public void setCtgrId(String ctgrId) {
+		this.ctgrId = ctgrId;
+	}
+	
+	
 	
 }

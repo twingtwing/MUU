@@ -68,9 +68,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
-                        <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
-                        <span>신청한 강의</span>
+                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                        <a href="/creator/rLecL" class="text-dark font-weight-bold"> 신청한 강의</a>
+                        <span>${rlists.ttl }</span>
                     </div>
                 </div>
             </div>

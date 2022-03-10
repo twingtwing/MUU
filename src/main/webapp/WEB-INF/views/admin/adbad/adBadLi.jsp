@@ -66,22 +66,31 @@
 	                                                <div class="row">
 	                                                    <div class="col-3">
 	                                                        <select class="custom-select text-center p-0" id="sel" onchange="chsel()" style="height: 27px;width: 100px;">
-	                                                            <option value ="ttl">제목</option>
-	                                                            <option value = "content">내용</option>
-	                                                            <option value = "mix">제목 + 내용</option>
+	                                                            <option value ="ttl"
+	                                                            <c:if test="${not empty search.ttl }"> selected="selected"</c:if>
+	                                                            >제목</option>
+	                                                            <option value = "content" <c:if test="${not empty search.content }"> selected="selected"</c:if>
+	                                                            >내용
+	                                                            
+	                                                            </option>
+	                                                            <option value = "mix" <c:if test="${not empty search.mix }"> selected="selected"</c:if>>제목 + 내용</option>
 	                                                        </select>
 	                                                    </div>
 	                                                    <div class="col-9 d-flex align-items-center pl-0">
-	                                                        <input id="inp" class="ml-1 w-100" type="text" name ="ttl" spellcheck="false">
+	                                                        <input id="inp" class="ml-1 w-100" type="text" name ="ttl" spellcheck="false" 
+	                                     					<c:if test="${not empty search.ttl }">value="${search.ttl }"</c:if>
+	                                     					<c:if test="${not empty search.content }">value="${search.content }"</c:if>
+	                                     					<c:if test="${not empty search.mix }">value="${search.mix }"</c:if>>
+                                            
 	                                                    </div>
 	                                                </div>
 	                                            </td>
 	                                            <th class="align-middle">등록일</th>
 	                                            <td class="text-left align-middle">
 	                                                <div class="row pl-4 d-flex justify-content-start">
-	                                                    <input type="date" name = "start">
+	                                                    <input type="date" name = "start" value = "${search.start }">
 	                                                    <div class="mx-2 d-flex align-self-center justify-content-center"><i class="fa fa-minus m-0"></i></div>
-	                                                    <input type="date" name = 'end'>
+	                                                    <input type="date" name = 'end' value  = "${search.end }">
 	                                                </div>
 	                                            </td>
 	                                        </tr>
@@ -109,7 +118,7 @@
                                         </c:if>
                                         <c:if test="${not empty list }">
 	                                        <c:forEach items ="${list }" var="board">
-		                                        <tr class="boardSelect" data-no="${board.getBNo() }">
+		                                        <tr id="ho" class="boardSelect" data-no="${board.getBNo() }" onmouseover = "setCursor(this,'pointer')">
 		                                            <td>${board.getBNo() }</td>
 		                                            <td class="text-left">${board.ttl}</td>
 		                                            <td>관리자</td>
@@ -158,8 +167,8 @@
                                     </form>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-dark" onclick="location.href='/admin/adBadl'">글 등록</button>
-                                        <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
+                                        <button type="button" class="btn btn-danger">PDF다운</button>
+										<button type="button" class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
                             </div>
@@ -192,5 +201,15 @@ $(".paginate_button a").on("click" , function(e) {
 		
 		document.getElementById( 'inp' ).setAttribute( 'name', ssel);
 	}
+	function setCursor(str,str2){
+        str.style.cursor = str2;
+    }
+	
+	$('#excel').on('click',()=>{
+		console.log('hi')
+		$('#ser').attr('action','/admin/adBadexcel');
+		$('#ser').submit();
+	    $('#ser').attr('action','/admin/adBadLi');
+	})
 </script>
 </html>

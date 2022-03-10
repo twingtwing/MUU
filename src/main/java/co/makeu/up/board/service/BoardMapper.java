@@ -11,5 +11,6 @@ public interface BoardMapper {
 	BoardVO selectadbads(BoardVO vo);
 	int deladbad(BoardVO vo);
 	int upadbad(BoardVO vo);
+	
 
 }
