@@ -278,7 +278,6 @@ $('.page-item').click((e)=>{
 	let pageNum = +e.currentTarget.dataset.num;
 	$('#searchForm>input[name=page]').val(pageNum)
 	searchSetting();
-	console.log(pageNum)
 	$('#searchForm').submit();
 })
 

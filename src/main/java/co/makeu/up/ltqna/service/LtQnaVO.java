@@ -2,9 +2,6 @@ package co.makeu.up.ltqna.service;
 
 import java.sql.Date;
 
-//import lombok.Data;
-
-
 public class LtQnaVO {
 	private int qnaNo;
 	private String aContent;
@@ -21,17 +18,14 @@ public class LtQnaVO {
 	private String myQna;
 	private int cnt;
 	
-	public int getCnt() {
-		return cnt;
-	}
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
-	}
 	// page
 	private int page;
+	private int count;
+	
 	// search
 	private String writerSearchKey;
 	private String contentSearchKey;
+	
 	public int getQnaNo() {
 		return qnaNo;
 	}
@@ -116,5 +110,18 @@ public class LtQnaVO {
 	public void setMyQna(String myQna) {
 		this.myQna = myQna;
 	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	
 	
 }

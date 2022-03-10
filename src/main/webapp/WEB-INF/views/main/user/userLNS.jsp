@@ -150,14 +150,12 @@
               <!-- 다중파일 -->
               <div class="row col-12 bg-light px-3 py-0 m-0 bg-light py-2" style="border-top: 2px solid lightgray; border-bottom:2px solid lightgray;">
                   <div class="d-flex align-items-center">
-	                  <span class="mb-0 mr-2">　
                   <c:if test="${notice.fileNo ne 0}">
                   <c:forEach items="${noticeFiles }" var="f">
-	                      <i class="fa fa-download mr-2"></i>
+	                      <i class="fa fa-download mx-3"></i>
 		                  <a href="/download?phyPath=${f.phyPath}" class="text-muted file_download">${f.filePath }</a>
                   </c:forEach>
                   </c:if>
-		               </span>
                   </div>
               </div>
             </div>

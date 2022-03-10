@@ -86,12 +86,12 @@
 		<if test="startDate != null and !startDate.equals('')">
         	AND REG_DATE BETWEEN #{startDate} AND #{endDate}
         </if>
+        ORDER BY S.TLSN_NO DESC
         ) 
         <![CDATA[ 
 		WHERE RN > (#{page}-1) * 10
 		AND RN <= #{page} * 10
 		]]>
-		ORDER BY 1
 	</select>
 	<select id="adminLecDeliver" resultType="co.makeu.up.sugang.service.SugangVO" parameterType="co.makeu.up.sugang.service.SugangVO">
 		SELECT * FROM (SELECT ROWNUM RN,S.TLSN_NO,S.ID,S.PAY,
@@ -113,7 +113,7 @@
 		<if test="startDate != null and !startDate.equals('')">
 		AND REG_DATE BETWEEN #{startDate} AND #{endDate}
 		</if>
-		ORDER BY TLSN_NO
+		ORDER BY TLSN_NO DESC
 		)
 		<![CDATA[ 
 		WHERE RN > (#{page}-1) * 10

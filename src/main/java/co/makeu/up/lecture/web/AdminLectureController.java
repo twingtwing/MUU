@@ -15,6 +15,8 @@ import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
 
+
+import co.makeu.up.common.view.Pagination;
 import co.makeu.up.common.view.Pagination;
 
 import co.makeu.up.ltqna.service.LtQnaServiceImpl;
@@ -136,15 +138,20 @@ public class AdminLectureController {
 		
 		List<NoticeVO> list = noticeDao.adminNoticeList(vo);
 		model.addAttribute("notices",list);
-		model.addAttribute("pages",new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), ltNo));
+		model.addAttribute("pages",new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), vo.getPage()));
 		model.addAttribute("search",vo);
 		return "admin/lecture/adLecN";
 	}
 	
 	//강의상세-공지사항상세
 	@GetMapping("/admin/adLecND")
-	public String adLecND(int ltNo, Model model) {
-		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(ltNo));
+	public String adLecND(NoticeVO vo, Model model) {
+		model.addAttribute("lecInfo",lectureDao.adminLectureInfo(vo.getLtNo()));
+		
+		NoticeVO notice = noticeDao.NoticeSelects(vo);
+		model.addAttribute("notice",notice);
+		System.out.println(" eeeeee");
+		model.addAttribute("noticeFiles",noticeDao.noticeFiles(notice.getFileNo()));
 		return "admin/lecture/adLecND";
 	}
 	
@@ -173,16 +180,30 @@ public class AdminLectureController {
 	
 	//강의등록 허가
 	@RequestMapping("/admin/adLecALOK")
-	public String adLecALOK(LectureVO vo) {
+	public String adLecALOK(LectureVO vo, Model model) {
 		lectureDao.AdminlectureUpdateOK(vo);
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
 		return "admin/lecture/adLecAL";
 	}
 	
 	//강의등록 허가
 	@RequestMapping("/admin/adLecALReject")
-	public String adLecALReject(LectureVO vo) {
+	public String adLecALReject(LectureVO vo, Model model) {
 		lectureDao.AdminlectureUpdateReject(vo);
-	return "admin/lecture/adLecAL";
-		}	
+		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		model.addAttribute("llists", llist);
+		int length = 0;
+	      if(llist.size() != 0) {
+	         length = llist.get(0).getLength();
+	     }
+	    model.addAttribute("pageMaker",new PageVo(vo,length));
+		return "admin/lecture/adLecAL";
+	}	
 	
 }

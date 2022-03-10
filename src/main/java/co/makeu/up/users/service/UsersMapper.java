@@ -14,6 +14,8 @@ public interface UsersMapper {
 	int deleteUsers(String id);
 	
 	int userPointUpdate(UsersVO vo);
+	int userToCreator(UsersVO vo);
+	String userPwChck(String id);
 	
 	// admin
 	List<UsersVO> usersList(UsersVO vo);

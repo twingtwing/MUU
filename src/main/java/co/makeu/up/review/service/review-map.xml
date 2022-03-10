@@ -43,7 +43,7 @@
 		<if test="rvCode !=null and !rvCode.equals('')">
 		AND RV_CODE = #{rvCode}
 		</if>
-		ORDER BY RV_NO)
+		ORDER BY RV_NO DESC)
 		<![CDATA[ 
 		WHERE RN > (#{page}-1) * 10
 		AND RN <= #{page} * 10

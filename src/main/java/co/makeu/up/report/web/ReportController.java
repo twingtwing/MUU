@@ -1,10 +1,8 @@
 package co.makeu.up.report.web;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 import java.util.List;
 
-import org.openxmlformats.schemas.drawingml.x2006.main.CTRegularTextRun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,6 +144,14 @@ public class ReportController {
 			result = "S";
 		}
 		return result;
+	}
+	
+	
+	//크리에이터 리뷰 신고
+	@PostMapping("/creator/cLecR")
+	@ResponseBody
+	public void cLecR(ReportVO vo) {
+		reportDao.insertReviewReport(vo);
 	}
 	
 }

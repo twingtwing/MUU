@@ -13,6 +13,8 @@ public class SalesVO {
 	private int month;
 	private int mon;
 	private String upCtgr;
+	private String day;
+	private int ages;
 	
 	private String ctgr;
 	private int hc01;
@@ -65,4 +67,6 @@ public class SalesVO {
 		this.pageMonthNum = pageMonthNum;
 		this.amountMonth = amountMonth;
 	}	
+
+	private String tableName;
 }

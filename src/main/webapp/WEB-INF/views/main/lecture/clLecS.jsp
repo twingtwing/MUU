@@ -167,11 +167,11 @@
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
                                 <!-- 선택 : active -->
-                                <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="location.href='clLecS.html'">강의정보</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">질문&답변</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${cllists.ltNo})">공지사항</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">리뷰</button>
-                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="location.href='#'">수강생</button>
+                                <button class="btn btn-outline-secondary lecbtn active" style="width: 150px;" type="button" onclick="#">강의정보</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goQna(${cllists.ltNo })">질문&답변</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goNotice(${cllists.ltNo })">공지사항</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goReview(${cllists.ltNo })">리뷰</button>
+                                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="goStudent(${cllists.ltNo })">수강생</button>
                             </div>
                         </div>
 
@@ -364,10 +364,28 @@
     	$('#frm').attr("action", "/creator/lesU");
     	$('#frm').submit();
     }
-   //공지사항 페이지 이동
+  //qna 페이지 이동
+    function goQna(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecQ");
+    	$('#frm').submit();
+    }
+    //공지사항 페이지 이동
     function goNotice(e){
     	$('.sendltno').val(e);
     	$('#frm').attr("action", "/creator/cLecNL");
+    	$('#frm').submit();
+    }
+    //리뷰 페이지 이동
+    function goReview(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecR");
+    	$('#frm').submit();
+    }
+    //수강생 리스트 페이지 이동
+    function goStudent(e){
+    	$('.sendltno').val(e);
+    	$('#frm').attr("action", "/creator/cLecSt");
     	$('#frm').submit();
     }
     
