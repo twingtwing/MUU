@@ -30,7 +30,6 @@ public class LectureVO {
 	private Date startDate;
 	private float avgStar;
 	private int studentCount;
-	private int page;
 	private int endrow;
 	private String orderColumn;
 	private String orderBy;
@@ -54,12 +53,7 @@ public class LectureVO {
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
+	
 	//extended vo --> 딴데서 재활용해도됨
 	private int star;//별점 평균
 	private int rCount;//별점 갯수
@@ -123,6 +117,8 @@ public class LectureVO {
 	}
 	public void setHighCtgr(String highCtgr) {
 		this.highCtgr = highCtgr;
+	}		
+	
 	public int getPage() {
 		return page;
 	}

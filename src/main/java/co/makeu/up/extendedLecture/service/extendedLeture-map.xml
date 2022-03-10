@@ -44,7 +44,9 @@
 		ON L.LT_NO = C.LT_NO
 		WHERE L.LT_NO = #{ltNo})
 		SELECT L.*,NVL2(S.TLSN_NO,'Y','N') MY_SUGANG 
-		FROM LECT_DETA L LEFT JOIN (SELECT * FROM SUGANG WHERE ID = #{id} AND TLSN_ST_CODE = 'SU01') S
+		FROM LECT_DETA L LEFT JOIN (SELECT * FROM SUGANG 
+									WHERE ID = #{id} AND TLSN_ST_CODE = 'SU01'
+									AND EXP_DATE <![CDATA[>=]]> SYSDATE) S
 		ON L.LT_NO = S.LT_NO
 	</select>
 	
@@ -121,6 +123,7 @@
 		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
 		ON J.LT_NO = L.LT_NO
 		WHERE J.LT_ST_CODE = 'L01'
+		AND J.EXP_DATE &gt;= SYSDATE
         AND J.CRE_ID = #{creId}
 		ORDER BY J.LT_NO)
         SELECT L.LT_NO,L.TTL,L.THUMB,L.PRC,L.KIT_PRC,L.STAR,L.R_COUNT,L.WASH,L.w_count,C.NAME DOWN_CTGR, C.UP_NAME UP_CTGR
@@ -156,7 +159,8 @@
 	                   FROM REVIEW
 	                   GROUP BY LT_NO) R
 	        ON R.LT_NO = L.LT_NO
-			WHERE L.LT_ST_CODE = 'L01') 
+			WHERE L.LT_ST_CODE = 'L01'
+			AND L.EXP_DATE &gt;= SYSDATE) 
 	    WHERE RANK <![CDATA[<]]> 7	
 	</select>
 	
@@ -187,6 +191,7 @@
         ON R.LT_NO = L.LT_NO
         WHERE L.UP_CTGR = #{upCtgr}
         AND L.LT_ST_CODE = 'L01'
+        AND L.EXP_DATE &gt;= SYSDATE
 	</select>
 	
 	<select id="newLecture" resultType="co.makeu.up.lecture.service.LectureVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
@@ -201,6 +206,7 @@
 	                     GROUP BY LT_NO) R
 	          ON R.LT_NO = L.LT_NO
 	          WHERE L.LT_ST_CODE = 'L01'
+	          AND L.EXP_DATE &gt;= SYSDATE
 	          ORDER BY L.START_DATE DESC)
 	    WHERE ROWNUM <![CDATA[<]]> 7	
 	</select>
@@ -229,7 +235,8 @@
                    FROM REVIEW
                    GROUP BY LT_NO) R
         ON R.LT_NO = L.LT_NO
-        WHERE L.LT_ST_CODE = 'L01') 
+        WHERE L.LT_ST_CODE = 'L01'
+        AND L.EXP_DATE &gt;= SYSDATE) 
     	WHERE RANK <![CDATA[<]]> 3	
 	</select>
 	
@@ -240,7 +247,8 @@
 	                               FROM CTGR C JOIN CTGR U
 	                               ON C.UP_CTGR = U.CTGR_ID) C
 	         ON L.DOWN_CTGR =  C.CTGR_ID
-	         WHERE L.LT_ST_CODE = 'L01' 
+	         WHERE L.LT_ST_CODE = 'L01'
+	         AND L.EXP_DATE &gt;= SYSDATE 
 	         ORDER BY SYS.dbms_random.VALUE)
 	    WHERE ROWNUM <![CDATA[<]]> 4
 	</select>

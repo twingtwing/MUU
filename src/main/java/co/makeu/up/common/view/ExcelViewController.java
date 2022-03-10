@@ -13,6 +13,8 @@ import co.makeu.up.board.service.BoardVO;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.refund.service.RefundServiceImpl;
+import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
 
@@ -21,6 +23,8 @@ import co.makeu.up.users.service.UsersVO;
 public class ExcelViewController {
 	@Autowired UsersServiceImpl usersDao;
 	@Autowired LectureServiceImpl lectureDao;
+	@Autowired RefundServiceImpl refundDao;
+	@Autowired BoardServiceImpl boardDao;
 	
 	@RequestMapping("/admin/userExcel")
 	public String excel(Model model, UsersVO vo) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException {
@@ -66,37 +70,24 @@ public class ExcelViewController {
 		model.addAttribute("datas",convertMapsList);
 		model.addAttribute("fileName","lectureList");
 		model.addAttribute("headers",headers);
-
-  }
-  
-	@Autowired BoardServiceImpl boardDao;
+		return "excelView";
+	}
 
 	@RequestMapping("/admin/adBadexcel")
 	public String adBadexcel(Model model, BoardVO vo) throws IllegalArgumentException, IllegalAccessException , InstantiationException{
-	vo.setPageNum(0);
-	String [] headers = new String[] {"bNo","ttl","content","bStCode","wrDate","hits"};
-	vo.setAmount(10);
-	vo.setPageNum(1);
-	List<BoardVO> list = boardDao.selectadbad(vo);
-	List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
-	model.addAttribute("fileName","boardList");
-	model.addAttribute("headers", headers);
-	model.addAttribute("datas", converMapsList);
-	
-	
-	return "excelView";
-  }
-
-import co.makeu.up.lecture.service.LectureServiceImpl;
-import co.makeu.up.lecture.service.LectureVO;
-import co.makeu.up.refund.service.RefundServiceImpl;
-import co.makeu.up.refund.service.RefundVO;
-
-	@Autowired
-	RefundServiceImpl refundDao;
-	
-	@Autowired
-	LectureServiceImpl lectureDao;
+		vo.setPageNum(0);
+		String [] headers = new String[] {"bNo","ttl","content","bStCode","wrDate","hits"};
+		vo.setAmount(10);
+		vo.setPageNum(1);
+		List<BoardVO> list = boardDao.selectadbad(vo);
+		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
+		model.addAttribute("fileName","boardList");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		
+		
+		return "excelView";
+	}
 
 
 	@RequestMapping("/admin/refundExcel")

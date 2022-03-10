@@ -321,6 +321,15 @@
                 	this.popularLectureDay = result.popularLectureDay;
                 	this.popularLectureWeek = result.popularLectureWeek;
                 	this.popularLectureMonth = result.popularLectureMonth;
+        			
+                	/* 안되면,,,beforCreate 등 해야함 */
+                	$(".loader").fadeOut();
+        			$("#preloder").delay(200).fadeOut("slow");
+        				
+        			if ($('.filter__gallery').length > 0) {
+        				var containerEl = document.querySelector('.filter__gallery');
+        				var mixer = mixitup(containerEl);
+        			}
 
                 	$('.set-bg').each(function () {
 			            var bg = $(this).data('setbg');
@@ -328,19 +337,10 @@
 			            $(this).css('background-image', 'url(' + bg + ')');
 			        });
                 	
-			        $(".loader").fadeOut();
-			        $("#preloder").delay(200).fadeOut("slow");
-			
-			        if ($('.filter__gallery').length > 0) {
-						var containerEl = document.querySelector('.filter__gallery');
-					    var mixer = mixitup(containerEl);
-					}
-			        
-			        
-			        
 				})
     		}
     	})
+    	
     	const homeMounted = home.mount('#homeVue');
 
     
