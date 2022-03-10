@@ -12,4 +12,5 @@ public interface BoardService {
 	BoardVO selectadbads(BoardVO vo);
 	int deladbad(BoardVO vo);
 	int upadbad(BoardVO vo);
+
 }

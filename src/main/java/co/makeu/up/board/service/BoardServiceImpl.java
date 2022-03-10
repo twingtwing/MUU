@@ -19,7 +19,7 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> selectBoardList() {
 		return map.selectBoardList();
 	}
-
+	
 	@Override
 	public BoardVO selectBoard(BoardVO vo) {
 		vo = map.selectBoard(vo);
@@ -77,6 +77,8 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return map.upadbad(vo);
 	}
+
+
 
 	
 	

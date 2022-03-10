@@ -30,6 +30,7 @@ public class ReportController {
 		}
 		model.addAttribute("pageMaker",new PageVo(vo,length));
 		System.out.println(model.getAttribute("pageMaker"));
+		model.addAttribute("search",vo);
 		return "admin/report/adLRepL";
 	}
 	
@@ -58,8 +59,6 @@ public class ReportController {
 	//리뷰 신고 상세
 	@GetMapping("/admin/adRRepS")
 	public String adRRepS(ReportVO vo , Model model) {
-
-		
 		model.addAttribute("report",reportDao.selectreports(vo));
 		return "admin/report/adRRepS";
 	}

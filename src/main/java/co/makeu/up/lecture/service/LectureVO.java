@@ -41,15 +41,7 @@ public class LectureVO {
 	private String ltStCodeName;
 	private Date endDate;
 	private String ctgrId;
-	
-	private int page;
-	
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -372,6 +364,7 @@ public class LectureVO {
 	public void setMySugang(String mySugang) {
 		this.mySugang = mySugang;
 	}
+
 	public String getCtgrId() {
 		return ctgrId;
 	}
