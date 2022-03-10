@@ -69,4 +69,14 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.adminLecDeliver(vo);
 	}
 
+	@Override
+	public List<SugangVO> sugangList(SugangVO vo) {
+		return map.sugangList(vo);
+	}
+
+	@Override
+	public int shipUpdate(SugangVO vo) {
+		return map.shipUpdate(vo);
+	}
+
 }

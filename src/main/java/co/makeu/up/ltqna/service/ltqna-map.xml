@@ -9,11 +9,12 @@
                     from lt_qna r 
                     where lt_no = #{ltNo}
                     AND (q_content LIKE '%'||#{contentSearchKey}||'%'
-                    AND writer LIKE '%'||#{writerSearchKey}||'%')
+                    AND writer LIKE '%'||#{writerSearchKey}||'%'
+                    AND qna_st_code LIKE '%'||#{qnaStCodeSearchKey}||'%')
                     order by qna_no) a
                 order by ltqnaNo desc) b
             WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}))
-		WHERE RN <![CDATA[>]]> (#{page}-1)*1
+		WHERE RN <![CDATA[>]]> (#{page}-1)*10
 	</select>
 	<select id="selectMyQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
 		SELECT * FROM LT_QNA
@@ -67,5 +68,12 @@
 		AND RN <= #{page} * 10
 	]]>
 	</select>
+	
+	<update id="updateQnaAnswer" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		UPDATE LT_QNA
+		SET A_CONTENT = #{aContent}, A_REG_DATE = SYSDATE, QNA_ST_CODE = 'Q02'
+		WHERE QNA_NO = #{qnaNo} 
+	</update>
+	
 
 </mapper>

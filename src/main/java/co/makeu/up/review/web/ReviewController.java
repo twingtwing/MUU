@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
-import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.progress.service.ProgressServiceImpl;
 import co.makeu.up.progress.service.ProgressVO;
 import co.makeu.up.review.service.ReviewServiceImpl;
@@ -108,4 +107,22 @@ public class ReviewController {
 		model.addAttribute("rvlist", reviewDao.reviewSelectList(rvo));
 		return "main/lecture/cLecR";
 	}
+	
+	//리뷰 페이지 검색
+	@RequestMapping("/creator/cLecRsearch")
+	public String cLecRsearch(ReviewVO vo, Model model) {
+		String inputWriter = vo.getWriter();
+		String inputContent = vo.getContent();
+		if(inputWriter != null) {
+			model.addAttribute("inputWriter", inputWriter);
+		}
+		if(inputContent != null) {
+			model.addAttribute("inputContent", inputContent);
+		}
+		
+		model.addAttribute("lecinfo", lectureDao.lectureSelect(vo.getLtNo()));
+		model.addAttribute("rvlist", reviewDao.reviewSelectList(vo));
+		return "main/lecture/cLecR";
+	}
+	
 }

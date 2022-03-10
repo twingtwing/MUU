@@ -41,6 +41,14 @@ public class LectureVO {
 	private String ltStCodeName;
 	private Date endDate;
 	
+	private int page;
+	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public Date getEndDate() {
 		return endDate;
 	}
