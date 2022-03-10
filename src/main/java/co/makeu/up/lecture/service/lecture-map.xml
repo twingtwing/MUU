@@ -124,7 +124,7 @@
   </select>
   
   <select id="AdminlectureSelect" resultType="co.makeu.up.lecture.service.LectureVO">
-  	SELECT L.*, C.name down_ctgr, C.up_name up_ctgr
+  	SELECT L.*, C.name low_ctgr, C.up_name high_ctgr
 	FROM LECTURE L JOIN (select c.* ,c2.name up_name
                         from ctgr c join ctgr c2
                         on c2.ctgr_id = c.up_ctgr) C

@@ -40,7 +40,14 @@ public class LectureVO {
 	private String mySugang;//내 수강 영부
 	private String ltStCodeName;
 	private Date endDate;
+	private int page;
 	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -67,6 +74,8 @@ public class LectureVO {
 	private int length;
 	private String start;
 	private String end;
+	private String lowCtgr;
+	private String highCtgr;
 	
 	public LectureVO(){
 		this (1,10);
@@ -76,6 +85,18 @@ public class LectureVO {
 		this.amount = amount;
 	}
 	
+	public String getLowCtgr() {
+		return lowCtgr;
+	}
+	public void setLowCtgr(String lowCtgr) {
+		this.lowCtgr = lowCtgr;
+	}
+	public String getHighCtgr() {
+		return highCtgr;
+	}
+	public void setHighCtgr(String highCtgr) {
+		this.highCtgr = highCtgr;
+	}
 	public String getStart() {
 		return start;
 	}

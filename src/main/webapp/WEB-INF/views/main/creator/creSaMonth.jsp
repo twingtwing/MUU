@@ -24,17 +24,17 @@
   <!-- 배너끝 -->
 	<!-- 카테고리 시작-->
 	<div class="breadcrumb-option">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="breadcrumb__links">
-						<a href="#"><i class="fa fa-home"></i> 홈</a> <a href="#">크리에이터</a>
-						<span>매출 내역</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                        <span>매출내역</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<!-- 카테고리 끝-->
 
 	<!-- body 의 body-->
@@ -42,37 +42,38 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2">
-					<div class="row mr-2" style="width: 160px">
-						<ul class="list-group w-100" id="cctgr">
+                    <div class="row mr-2" style="width:160px">
+                        <ul class="list-group w-100" id="cctgr">
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link active" href="/creS">크리에이터 정보</a>
+                                <a class="list-link" href="/creator/creS">크리에이터 정보</a>
                             </li>
                             <p class="list-group-item border-bottom-0 mb-0 align-items-center d-flex mylist">내 강의 목록</p>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex pl-40" style="height: 35px;">
-                                <a class="list-link" href="/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
+                                <a class="list-link" href="/creator/rLecL">&nbsp;&nbsp;- 신청한 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/oLecL">&nbsp;&nbsp;- 열린 강의</a>
+                                <a class="list-link" href="/creator/oLecL">&nbsp;&nbsp;- 열린 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
+                                <a class="list-link" href="/creator/clLecL">&nbsp;&nbsp;- 종료된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 35px;">
-                                <a class="list-link" href="/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
+                                <a class="list-link" href="/creator/rpLecL">&nbsp;&nbsp;- 신고된 강의</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/lecI">강의등록</a>
+                                <a class="list-link" href="/creator/lecI">강의등록</a>
                             </li>
                             <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                <a class="list-link" href="/creator/creSaleYear">매출내역</a>
+                                <a class="list-link active" href="/creator/creSaleYear">매출내역</a>
                             </li>
                             <li class="list-group-item align-items-center d-flex" style="height: 55px;">
                                 <a class="list-link" href="/creator/creRefund">환불 요청 내역</a>
                             </li>
                         </ul>
-					</div>
-				</div>
+                        
+                    </div>
+                </div>
 
 				<div class="col-lg-10">
 					<div class="col-12 ml-2">

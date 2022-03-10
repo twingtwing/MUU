@@ -48,8 +48,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
-                        <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <span>열린 강의</span>
                     </div>
                 </div>

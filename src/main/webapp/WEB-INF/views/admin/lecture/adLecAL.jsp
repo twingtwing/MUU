@@ -62,7 +62,7 @@ table tr, table td {
 				<div class="card">
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
-						<form action='/admin/adLecAL' id='ser' method='get'>
+						<form action='/admin/adLecAL' id='searchForm' method='get'>
 							<div class="row position-relative">
 								<table class="admin_search table table-bordered">
 									<tr height="38">
@@ -72,32 +72,40 @@ table tr, table td {
 												<div class="col-3">
 													<select class="w-100" id="searchTypeLecture" onchange="changeSelect()">
 														<option selected="selected" value="">전체</option>
-														<option id="creId" value="creId">아이디</option>
-														<option id="name" value="name">이름</option>
+														<option id="creId" value="creId" <c:if test="${not empty search.creId }"> selected="selected"</c:if>>아이디</option>
+														<option id="name" value="name"<c:if test="${not empty search.name }"> selected="selected"</c:if>>이름</option>
 													</select>
 												</div>
 												<div class="col-9">
-													<input class="w-100" type="text" id="incheck" name=""spellcheck="false">
+													<input class="w-100" type="text" id="incheck" name=""spellcheck="false"
+													<c:if test="${not empty search.creId }">value="${search.creId }"</c:if>
+                                        			<c:if test="${not empty search.name }">value="${search.name }"</c:if>
+													>
 												</div>
 											</div>
 										</td>
 										<th width="15%">강의명</th>
 										<td width="35%">
-										<input id="ttl" name="ttl" class="w-100 border" type="text"
-											spellcheck="false"></td>
+										<input id="ttl" name="ttl" class="w-100 border" type="text" spellcheck="false" value="${search.ttl }"></td>
 									</tr>
 									<tr>
 										<th>카테고리</th>
 										<td class="d-flex border-0"><select name="" id=upCtgrTypeLecture onchange="upCtgrChangeSelect()"
 											class="border w-100">
-												<option value="">전체(상위 카테고리)</option>
-												<option value="요리">요리</option>
-												<option value="건강">건강</option>
-												<option value="아트">아트</option>
-												<option value="IT/컴퓨터">IT/컴퓨터</option>
-												<option value="외국어">외국어</option>
-												<option value="자기계발">자기계발</option>
-										</select> <select name="" id="downCtgrTypeLecture" onchange="downCtgrChangeSelect()" class="border w-100">
+												<option value=""
+												<c:if test="${empty search.upCtgr}">selected="selected"</c:if>
+                                            	>전체(상위 카테고리)</option>
+												<option value="요리"<c:if test="${search.upCtgr eq '요리'}">selected="selected"</c:if>
+												>요리</option>
+												<option value="건강"<c:if test="${search.upCtgr eq '건강'}">selected="selected"</c:if>
+												>건강</option>
+												<option value="아트"<c:if test="${search.upCtgr eq '아트'}">selected="selected"</c:if>
+												>아트</option>
+												<option value="IT/컴퓨터"<c:if test="${search.upCtgr eq 'IT/컴퓨터'}">selected="selected"</c:if>>IT/컴퓨터</option>
+												<option value="외국어"<c:if test="${search.upCtgr eq '외국어'}">selected="selected"</c:if>>외국어</option>
+												<option value="자기계발"<c:if test="${search.upCtgr eq '자기계발'}">selected="selected"</c:if>>자기계발</option>
+												</select> 
+												<select name="" id="downCtgrTypeLecture" onchange="downCtgrChangeSelect()" class="border w-100">
 												<option value="">전체(하위 카테고리)</option>
 										</select>
 										<input type="hidden" id=upCtgrCheck value='' name='upCtgr'>
@@ -108,9 +116,9 @@ table tr, table td {
 										<th>등록 신청 날짜</th>
 										<td colspan="3">
 											<div class="d-flex border-0 align-items-center">
-												<input name="start" type="date" class="border w-30"> 
+												<input name="start" type="date" class="border w-30" value="${search.start }"> 
 												<i class="fas fa-minus mx-2"></i> 
-												<input name="end" type="date" class="border w-30">
+												<input name="end" type="date" class="border w-30" value="${search.end }">
 											</div>
 										</td>
 									</tr>
@@ -193,6 +201,10 @@ table tr, table td {
 								value='${pageMaker.lvo.pageNum }'> <input type='hidden'
 								name='amount' value='${pageMaker.lvo.amount }'>
 						</form>
+						<div class="position-absolute" style="right: 10px; bottom: 35px">
+							<button class="btn btn-danger">PDF다운</button>
+							<button class="btn btn-success" id="excel">EXCEL다운</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -211,6 +223,8 @@ table tr, table td {
 		 '외국어': ['영어','일본어','중국어','스페인어','아랍어','러시아어','기타'],
 		 '자기계발': ['부동산','주식','면접/자소서','SNS/블로그','기타'],
 		 }
+		
+		 $('#downCtgrTypeLecture')
 		 $('#upCtgrTypeLecture').change(()=>{
 		 $('#downCtgrTypeLecture>option:not(:eq(0))').remove();
 		 let upper = $('#upCtgrTypeLecture option:selected').text();
@@ -220,6 +234,15 @@ table tr, table td {
 		 			)
 		 		})
 		 })
+		 
+		 //검색 후 하위카테고리 값 남기기
+		if('${search.upCtgr}' != ''){
+			console.log('hi');
+		 	for( obj of 종류['${search.upCtgr}']){
+          		$('#downCtgrTypeLecture').append($('<option>').val(obj).text(obj))
+       		}	 
+       	  	$('#downCtgrTypeLecture').val('${search.downCtgr}'); 
+		 }
 
 		//페이징 처리
 		$(".paginate_button a").on("click", function(e) {
@@ -246,6 +269,15 @@ table tr, table td {
 			console.log(downCtgrTypeLecture)
 			document.getElementById('downCtgrCheck').setAttribute('value', downCtgrTypeLecture);
 		}
+		
+		//엑셀 다운로드
+		$('#excel').click(()=>{
+			/* makeSearchData(1); */
+			$('#searchForm').attr('action','/admin/adminLectureRegExcel');
+			$('#searchForm').submit();
+			$('#searchForm').attr('action','/admin/adLecAL');
+		})
+
 	</script>
 </body>
 </html>

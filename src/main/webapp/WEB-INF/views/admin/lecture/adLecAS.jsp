@@ -87,7 +87,7 @@ td, th {
 									<td>${adLecSel.reqDate }</td>
 									<td>${adLecSel.prc }</td>
 									<td>${adLecSel.kitPrc }</td>
-									<td><span>${adLecSel.upCtgr }</span> > <span>${adLecSel.downCtgr }</span>
+									<td><span>${adLecSel.highCtgr }</span> > <span>${adLecSel.lowCtgr }</span>
 									</td>
 									<td>처리대기중</td>
 								</tr>

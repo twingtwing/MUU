@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb__links">
-                            <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                            <a href="/Home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                             <span>크리에이이터 이름</span>
                         </div>
                     </div>

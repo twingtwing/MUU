@@ -65,7 +65,7 @@ table tr, table td {
 				<div class="card">
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
-						<form action='/admin/adRefSearch' id='ser' method='get'>
+						<form action='/admin/adRefSearch' id='searchForm' method='get'>
 							<div class="row position-relative">
 								<table class="admin_search table table-bordered">
 									<tr height="38">
@@ -73,67 +73,84 @@ table tr, table td {
 										<td width="35%">
 											<div class="d-flex col-12 px-0">
 												<div class="col-3 px-0">
-													<select class="ml-2 custom-select w-100" id="searchType"
-														onchange="changeSelect()">
+													<select class="ml-2 custom-select w-100" id="searchType" onchange="changeSelect()">
 														<option selected="selected" value="">전체</option>
-														<option value="name">이름</option>
-														<option value="id">아이디</option>
+														<option value="name"<c:if test="${not empty search.name }"> selected="selected"</c:if>>이름</option>
+														<option value="id"<c:if test="${not empty search.id }"> selected="selected"</c:if>>아이디</option>
 													</select>
 												</div>
 												<div class="col-9 d-flex align-items-center">
-													<input id=input name="searchKey" class="w-100" type="text"
-														spellcheck="false">
+													<input id=input name="searchKey" class="w-100" type="text" spellcheck="false"
+													<c:if test="${not empty search.id }">value="${search.id }"</c:if>
+                                                    <c:if test="${not empty search.name }">value="${search.name }"</c:if>
+													>
 												</div>
 											</div>
 										</td>
 										<th width="15%">환불처리상태</th>
 										<td width="35%" class="text-left" colspan="3">
-											<div
-												class="row d-flex justify-content-start align-middle ml-3 mt-1">
-												<input type="radio" ondblclick="this.checked=false"
-													class="ml-2" name="rfStCode" value="RF01" id="t"
-													spellcheck="false"> <label for="t"
-													class="mr-3 mb-0">환불신청대기</label> <input type="radio"
-													ondblclick="this.checked=false" name="rfStCode"
-													value="RF02" id="r" spellcheck="false"> <label
-													for="r" class="mr-3 mb-0">환불완료</label> <input type="radio"
-													ondblclick="this.checked=false" name="rfStCode"
-													value="RF03" id="w" spellcheck="false"> <label
-													for="w" class="mb-0">환불거부</label>
+											<div class="row d-flex justify-content-start align-middle ml-3 mt-1">
+												<input type="radio" ondblclick="this.checked=false" name="rfStCode" value="" id="a" spellcheck="false"> 
+												<label for="a" class="mb-0">전체</label>
+												<input type="radio" ondblclick="this.checked=false" class="ml-2" name="rfStCode" value="RF01" id="t" spellcheck="false"
+												<c:if test="${search.rfStCode eq 'RF01'}">checked="checked"</c:if> 
+												>
+												<label for="t" class="mr-3 mb-0">환불신청대기</label> 
+												<input type="radio" ondblclick="this.checked=false" name="rfStCode" value="RF02" id="r" spellcheck="false"
+												<c:if test="${search.rfStCode eq 'RF02'}">checked="checked"</c:if> 
+												> 
+												<label for="r" class="mr-3 mb-0">환불허가</label> 
+												<input type="radio" ondblclick="this.checked=false" name="rfStCode" value="RF03" id="w" spellcheck="false"
+												<c:if test="${search.rfStCode eq 'RF03'}">checked="checked"</c:if> 
+												> 
+												<label for="w" class="mb-0">환불거부</label>
 											</div>
 										</td>
 									</tr>
 									<tr height="38">
 										<th>강의명</th>
-										<td><input id="ttl" name="ttl" class="w-100"
-											style="vertical-align: middle;" type="text"
-											spellcheck="false"></td>
+										<td>
+											<input id="ttl" name="ttl" class="w-100" style="vertical-align: middle;" type="text" spellcheck="false" value="${search.ttl }">
+										</td>
 										<th>환불사유</th>
-										<td><select class="ml-2 custom-select w-100"
-											id="searchTypeRefund" onchange="changeSelectRefund()">
-												<option selected="selected" value="">전체</option>
-												<option value="강의가 만족스럽지 못함">강의가 만족스럽지 못함</option>
-												<option value="터무니 없는 가격">터무니 없는 가격</option>
-												<option value="결제 실수">결제 실수</option>
-												<option value="단순 변심">단순 변심</option>
-												<option value="친구나 가족 구성원이 내 동의 없이 결제함">친구나 가족 구성원이
-													내 동의 없이 결제함</option>
-												<option value="">기타</option>
-										</select> <input id=hiddeninput name="content" class="w-100"
-											type="hidden" value=''></td>
+										<td>
+											<select class="ml-2 custom-select w-100" id="searchTypeRefund" onchange="changeSelectRefund()">
+												<option selected="selected" value=""
+												<c:if test="${empty search.content}">selected="selected"</c:if>
+                                            	>전체</option>
+												<option value="강의가 만족스럽지 못함"
+												<c:if test="${search.content eq '강의가 만족스럽지 못함'}">selected="selected"</c:if>
+                                            	>강의가 만족스럽지 못함</option>
+												<option value="터무니 없는 가격"
+												<c:if test="${search.content eq '터무니 없는 가격'}">selected="selected"</c:if>
+												>터무니 없는 가격</option>
+												<option value="결제 실수"
+												<c:if test="${search.content eq '결제 실수'}">selected="selected"</c:if>
+												>결제 실수</option>
+												<option value="단순 변심"
+												<c:if test="${search.content eq '단순 변심'}">selected="selected"</c:if>
+												>단순 변심</option>
+												<option value="친구나 가족 구성원이 내 동의 없이 결제함"
+												<c:if test="${search.content eq '친구나 가족 구성원이 내 동의 없이 결제함'}">selected="selected"</c:if>
+												>친구나 가족 구성원이 내 동의 없이 결제함</option>
+												<%-- <option value=""
+												<c:if test="${empty search.content}">selected="selected"</c:if>
+												>기타</option> --%>
+											</select> 
+											<input id=hiddeninput name="content" class="w-100" type="hidden" value=''></td>
 									</tr>
 									<tr height="38">
 										<th>작성일</th>
 										<td colspan="3" class="justify-content-start row border-0">
 											<div class="row pl-4 d-flex justify-content-center">
 												<div>
-													<input type="date" name="start" class="w-100">
+													<input type="date" name="start" class="w-100" value="${search.start }">
 												</div>
 												<div class="ml-3 mr-3">
 													<i class="fa fa-minus"></i>
 												</div>
 												<div>
-													<input type="date" name="end" class="w-100">
+													<input type="date" name="end" class="w-100" value="${search.end }">
 												</div>
 											</div>
 										</td>
@@ -239,13 +256,12 @@ table tr, table td {
 							</div>
 						</div>
 						<form id='actionFrom' method='get' action='/admin/adRef'>
-							<input type='hidden' name='pageNum'
-								value='${pageMaker.rvo.pageNum }'> <input type='hidden'
-								name='amount' value='${pageMaker.rvo.amount }'>
+							<input type='hidden' name='pageNum' value='${pageMaker.rvo.pageNum }'> 
+							<input type='hidden' name='amount' value='${pageMaker.rvo.amount }'>
 						</form>
-						<div class="position-absolute" style="right: 1px;">
+						<div class="position-absolute" style="right: 10px; bottom: 35px">
 							<button class="btn btn-danger">PDF다운</button>
-							<button class="btn btn-success">EXCEL다운</button>
+							<button class="btn btn-success" id="excel">EXCEL다운</button>
 						</div>
 					</div>
 				</div>
@@ -318,6 +334,14 @@ table tr, table td {
 	</div>
 </body>
 <script type="text/javascript">
+	//엑셀 다운로드
+	$('#excel').click(()=>{
+		/* makeSearchData(1); */
+		$('#searchForm').attr('action','/admin/refundExcel');
+		$('#searchForm').submit();
+		$('#searchForm').attr('action','/admin/adRefSearch');
+	})
+
 	//페이징 처리
 	$(".paginate_button a").on(
 			"click",
