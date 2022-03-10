@@ -174,10 +174,21 @@
 			    		#{ltStCodeList}
 			    </foreach>
 				</if>
-                ORDER BY LT_NO) W
+				<if test="orderColumn != null and !orderColumn.equals('')">
+                ORDER BY ${orderColumn} ${orderBy}
+				</if>
+				<if test="orderColumn == null or orderColumn.equals('')">
+                ORDER BY LT_NO DESC
+				</if>
+                ) W
         )
-   	    WHERE RN <![CDATA[>]]> (#{page}-1) * 10
-		AND RN <![CDATA[<=]]> #{page} * 10	
+        <if test="page > 0">
+		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
+		AND RN <![CDATA[<=]]> #{page} * 10
+		</if>
+		<if test="page == 0">
+		WHERE RN BETWEEN 1 AND #{endrow}
+		</if>
 	</select>
 	
 	<update id="AdminlectureUpdateOK" parameterType="co.makeu.up.lecture.service.LectureVO">

@@ -43,6 +43,10 @@ public class AdminLectureController {
 		if(vo.getPage()==0) {
 			vo.setPage(1);			
 		}
+		if(vo.getLtStCodeList()==null) {
+			String[] ltstcode = {"L01","L02","L03"};
+			vo.setLtStCodeList(ltstcode);
+		}
 		List<LectureVO> list = lectureDao.adminLectureTable(vo);
 		Pagination pagination = new Pagination(list.size()==0 ? 1 : list.get(0).getCount(), vo.getPage());
 		model.addAttribute("lectures",list);

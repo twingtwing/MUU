@@ -263,10 +263,10 @@
   <script type="text/javascript">
     $(function () {
       $('#datetimepicker1').datetimepicker({
-        format: 'yy-mm-dd'
+        format: 'YYYY-MM-DD'
       });
       $('#datetimepicker2').datetimepicker({
-    	format: 'yy-mm-dd',
+    	format: 'YYYY-MM-DD',
         useCurrent: false
       });
       $("#datetimepicker1").on("change.datetimepicker", function (e) {

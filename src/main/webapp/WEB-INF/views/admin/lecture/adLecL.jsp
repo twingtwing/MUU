@@ -48,6 +48,13 @@
         #ho:hover{
         background-color:#f5f5f5;
         }
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
+        td{
+        vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -80,7 +87,7 @@
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
                                 <form action="/admin/adLecL" id="searchForm">
-                                <input type="hidden" value="1" name="page">
+                                <input type="hidden" value="0" name="page">
                                 <div class="row position-relative">
                                     <table class="admin_search table table-bordered">
                                         <tr height="38">
@@ -179,14 +186,20 @@
                                             </td>
                                             <th>상태</th>
                                             <td class="text-left">
-                                                <input type="checkbox" class="ml-2" name="ltStCodeList" id="code_1" spellcheck="false" value="L01">
-                                                <label for="code_1" class="mr-3 mb-0">등록됨</label>
-                                                <input type="checkbox" class="ml-2" name="ltStCodeList" id="code_2" spellcheck="false" value="L02">
-                                                <label for="code_2" class="mr-3 mb-0">등록 대기</label>
-                                                <input type="checkbox" class="ml-2" name="ltStCodeList" id="code_3" spellcheck="false" value="L03">
-                                                <label for="code_3" class="mr-3 mb-0">만료/정지</label>
-                                                <input type="checkbox" class="ml-2" name="ltStCodeList" id="code_4" spellcheck="false" value="L04">
-                                                <label for="code_4" class="mr-3 mb-0">임시저장됨</label>
+                                            	<c:forEach items="${search.ltStCodeList }" var="g">
+                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="ltStCodeList" checked="checked">                                     	
+                                                <label for="${g }" class="mr-3 mb-0">
+                                                <c:if test="${g eq 'L01' }">
+                                                정상
+                                                </c:if>
+                                                <c:if test="${g eq 'L02' }">
+                                                등록 대기
+                                                </c:if>
+                                                <c:if test="${g eq 'L03' }">
+                                                만료
+                                                </c:if>
+                                                </label>
+                                            	</c:forEach>    
                                             </td>
                                         </tr>
                                         
@@ -194,20 +207,94 @@
                                     </table>
                                     <button type="button" id="searchBtn" class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
                                 </div>
+                                <input type="hidden" value="${search.orderColumn }" name="orderColumn">
+                                <input type="hidden" value="${search.orderBy }" name="orderBy">
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #eeeeee;">
-                                            <th style="width:90px;">번호</th>
-                                            <th style="width: 200px;">카테고리</th>
-                                            <th>강의명</th>
-                                            <th style="width:110px;">ID</th>
-                                            <th style="width:110px;">이름</th>
-                                            <th style="width:120px;">강의등록(신청)날짜</th>
-                                            <th style="width:110px;">수강료</th>
-                                            <th style="width:130px;">강의별점</th>
-                                            <th style="width:180px;">상태</th>
+                                            <th style="width:90px;" data-col="lt_no">번호
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'lt_no' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width: 200px;"data-col="up_ctgr">카테고리
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'ctgr' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th data-col="ttl">강의명
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'ttl' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:190px;" data-col="cre_id">크리에이터 아이디
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'cre_id' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:110px;" data-col="name">이름
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'name' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:150px;" data-col="req_date">강의신청날짜
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'req_date' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:110px;"data-col="prc">수강료
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'prc' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:130px;"data-col="avgstar">강의별점
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'avgstar' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th style="width:180px;"data-col="lt_st_code">상태
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${search.orderColumn eq 'lt_st_code' and search.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
                                         </tr>
                                     </thead>
                                         <!--강의 정보 가져와서 데이터 뿌리기 / 기본 강의소개페이지로 이동-->
@@ -263,7 +350,7 @@
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
+                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
                             </div>
@@ -295,6 +382,29 @@
 			$('#lastJdate').val(new Date(today).toISOString().slice(0,10));
 		}
 	}
+	
+	$('#excel').click(()=>{
+		searchSetting();
+		$('#searchForm').attr('action','/admin/lectureExcel');
+		$('#searchForm').submit();
+		$('#searchForm').attr('action','/admin/adLecL');
+	})
+
+	$('.fa-caret-down').click((e)=>{
+		searchSetting();
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('asc');
+		$('#searchForm').submit();
+	})
+	$('.fa-rotate-180').click((e)=>{
+		searchSetting();
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('desc');
+		$('#searchForm').submit();
+	})
+	
 	
 	
 	// 페이지네이션

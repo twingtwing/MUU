@@ -50,6 +50,8 @@ public class SugangVO {
 	private Date startDate;
 	private Date endDate;
 	private int page;
+	private String orderColumn;
+	private String orderBy;
 	
 	// progress
 	private int progPct;

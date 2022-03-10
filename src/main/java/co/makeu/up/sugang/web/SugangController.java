@@ -108,10 +108,12 @@ public class SugangController {
 		vo.setId(pri.getName());
 		List<SugangVO> listDelivery = new ArrayList<SugangVO>();
 		List<SugangVO> listAll = sugangDao.sugangPay(vo);
+		if(listAll.size()!=0) {			
 		for(SugangVO list : listAll) {
-			if(!list.getShipStCode().equals("D03")) {
+			if(list.getShipStCode()!=null && list.getShipNum()!=null && !list.getShipStCode().equals("D03")) {
 				listDelivery.add(list);
 			}
+		}
 		}
 		model.addAttribute("payCnt",listAll.size());
 		model.addAttribute("payInfo",listAll);

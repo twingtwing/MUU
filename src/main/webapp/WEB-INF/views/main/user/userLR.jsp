@@ -340,9 +340,11 @@
   	let rvno;
   	// 리뷰 신고 클릭시 내용, 아이디 가져오기
     $('.report').click((e)=>{
-      $('#revReport').modal('show')
-      $('.rpContent').text($(e.currentTarget).parent().parent().next().text())
-      $('.reported').text($(e.currentTarget).parent().parent().first().children().first().text())
+      $('#revReport').modal('show');
+      let id = $(e.currentTarget).parent().parent().next().text();
+      let content = $(e.currentTarget).parent().parent().first().children().first().text();
+      $('.rpContent').text()
+      $('.reported').text()
       rvno = e.currentTarget.dataset.rvno;
     })
     

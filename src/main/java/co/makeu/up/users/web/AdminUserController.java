@@ -24,30 +24,20 @@ public class AdminUserController {
 	
 	@GetMapping("/admin/adUserL")
 	public String adUserL(Model model,UsersVO vo) {
-		String[] grd = {"일반","새싹","꽃","나무"};
-		vo.setuGrdCodeList(grd);
-		vo.setId("");			
-		vo.setName("");			
-		vo.setPage(1);
-		List<UsersVO> list = usersDao.usersList(vo);
-		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage());
-		model.addAttribute("pages",pagination);
-		model.addAttribute("users", list);
-		return "admin/all/adUserL";		
-	}
-	
-	@GetMapping("/admin/adUserLSearch")
-	public String adUserLSearch(UsersVO vo,Model model) {
 		if(vo.getuGrdCodeList()==null) {
 			String[] grd = {"일반","새싹","꽃","나무"};
 			vo.setuGrdCodeList(grd);
+		}
+
+		if(vo.getPage()==0) {
+			vo.setPage(1);
 		}
 		List<UsersVO> list = usersDao.usersList(vo);
 		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage());
 		model.addAttribute("pages",pagination);
 		model.addAttribute("users", list);
 		model.addAttribute("search",vo);
-		return "admin/all/adUserL";
+		return "admin/all/adUserL";		
 	}
 	
 	@GetMapping("/admin/userSelect")
@@ -59,7 +49,7 @@ public class AdminUserController {
 		List<SugangVO> sugangList = new ArrayList<SugangVO>();
 		List<SugangVO> deliverList = new ArrayList<SugangVO>();
 		for(SugangVO s : sugangDao.sugangPay(sugangvo)) {
-			if(!s.getShipStCode().equals("D03")) {
+			if(s.getShipStCode()!=null && s.getShipNum()!=null && !s.getShipStCode().equals("D03")) {
 				deliverList.add(s);
 			}			
 			if(!s.getTlsnStCode().equals("SU03")) {

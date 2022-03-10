@@ -7,7 +7,7 @@
 		ON S.LT_NO = L.LT_NO 
 		WHERE ID = #{id}
 		AND TLSN_ST_CODE != 'SU03'
-		ORDER BY S.REG_DATE
+		ORDER BY S.REG_DATE DESC
 	</select>
 	<select id="sugangCheckDate" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">		
 		SELECT S.*,L.TTL,L.THUMB FROM SUGANG S JOIN LECTURE L
@@ -70,7 +70,7 @@
 		WHERE EXP_DATE <![CDATA[<]]> SYSDATE)
 	</select>
 	<select id="adminLecUserList" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
-		SELECT * FROM (SELECT ROWNUM RN ,U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT
+		SELECT ROWNUM, W.* FROM (SELECT U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT
 		FROM SUGANG S JOIN USERS U
 		ON S.ID = U.ID
 		WHERE S.LT_NO = #{ltNo}
@@ -86,11 +86,16 @@
 		<if test="startDate != null and !startDate.equals('')">
         	AND REG_DATE BETWEEN #{startDate} AND #{endDate}
         </if>
-        ORDER BY S.TLSN_NO DESC
-        ) 
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+			ORDER BY ${orderColumn} ${orderBy}
+		</if>
+		<if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY LT_NO ${orderBy}
+		</if>
+        ) W
         <![CDATA[ 
-		WHERE RN > (#{page}-1) * 10
-		AND RN <= #{page} * 10
+		WHERE ROWNUM > (#{page}-1) * 10
+		AND ROWNUM <= #{page} * 10
 		]]>
 	</select>
 	<select id="adminLecDeliver" resultType="co.makeu.up.sugang.service.SugangVO" parameterType="co.makeu.up.sugang.service.SugangVO">

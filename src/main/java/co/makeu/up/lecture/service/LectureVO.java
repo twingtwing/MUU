@@ -2,6 +2,8 @@ package co.makeu.up.lecture.service;
 
 import java.sql.Date;
 
+import lombok.Data;
+
 public class LectureVO {
 	private int ltNo;
 	private String creId;
@@ -28,7 +30,36 @@ public class LectureVO {
 	private Date startDate;
 	private float avgStar;
 	private int studentCount;
+	private int page;
+	private int endrow;
+	private String orderColumn;
+	private String orderBy;
 	
+	
+	public int getEndrow() {
+		return endrow;
+	}
+	public void setEndrow(int endrow) {
+		this.endrow = endrow;
+	}
+	public String getOrderColumn() {
+		return orderColumn;
+	}
+	public void setOrderColumn(String orderColumn) {
+		this.orderColumn = orderColumn;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	//extended vo --> 딴데서 재활용해도됨
 	private int star;//별점 평균
 	private int rCount;//별점 갯수

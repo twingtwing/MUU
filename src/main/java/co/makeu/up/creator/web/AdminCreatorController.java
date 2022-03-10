@@ -28,14 +28,19 @@ public class AdminCreatorController {
 	//admin list
 	@GetMapping("/admin/adCreL")
 	public String adCreL(UsersVO vo, Model model) {
-		vo.setPage(1);
-		vo.setId("");
-		vo.setName("");
+		if(vo.getCreGrdCodeList()==null) {
+			String[] grd = {"Family","VIP","VVIP"};
+			vo.setCreGrdCodeList(grd);
+		}
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
 		vo.setAuthCode("A03");
 		List<UsersVO> list = userDao.usersList(vo);
-		Pagination pagination = new Pagination(list.get(0).getCnt(),vo.getPage());
+		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1,vo.getPage());
 		model.addAttribute("creators",list);
 		model.addAttribute("pages",pagination);
+		model.addAttribute("search",vo);
 		return "admin/all/adCreL";
 	}
 	
@@ -56,17 +61,6 @@ public class AdminCreatorController {
 		model.addAttribute("refundList",refundDao.RefundListByCreator(vo.getId()));
 		model.addAttribute("reports",reportDao.reportLectureList(vo.getId()));
 		return "admin/all/adCreS";
-	}
-	
-	@GetMapping("/admin/adCreatorSearch")
-	public String adCreSearch(Model model, UsersVO vo) {
-		vo.setAuthCode("A03");
-		List<UsersVO> list = userDao.usersList(vo);
-		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1,vo.getPage());
-		model.addAttribute("creators",list);
-		model.addAttribute("pages",pagination);
-		model.addAttribute("search",vo);
-		return "admin/all/adCreL";
 	}
 	
 }
