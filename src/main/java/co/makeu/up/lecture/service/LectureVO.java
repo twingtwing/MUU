@@ -77,6 +77,8 @@ public class LectureVO {
 	private int length;
 	private String start;
 	private String end;
+	private String lowCtgr;
+	private String highCtgr;
 	
 	public LectureVO(){
 		this (1,10);
@@ -86,6 +88,18 @@ public class LectureVO {
 		this.amount = amount;
 	}
 	
+
+	public String getLowCtgr() {
+		return lowCtgr;
+	}
+	public void setLowCtgr(String lowCtgr) {
+		this.lowCtgr = lowCtgr;
+	}
+	public String getHighCtgr() {
+		return highCtgr;
+	}
+	public void setHighCtgr(String highCtgr) {
+		this.highCtgr = highCtgr;
 	public int getPage() {
 		return page;
 	}

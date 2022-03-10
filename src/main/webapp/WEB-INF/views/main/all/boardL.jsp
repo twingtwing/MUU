@@ -48,7 +48,6 @@
 		</div>
 	</div>
 	<!-- 카테고리 끝-->
- c
 	<!-- body 의 body-->
 	<section id="title_search" class="blog spad">
 		<div class="container">

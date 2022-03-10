@@ -28,8 +28,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="/home" class="text-secondary"><i class="fa fa-home"></i>
-							홈</a> <span>크리에이터 등록</span>
+						<a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i>
+							Home</a> <span>크리에이터 등록</span>
 					</div>
 				</div>
 			</div>

@@ -50,6 +50,7 @@ public class AdminRefundController {
 	         length = arslist.get(0).getLength();
 	      }
 		model.addAttribute("pageMaker",new PageVo(vo,length));
+		model.addAttribute("search",vo);
 		return "admin/all/adRef";
 	}
 	

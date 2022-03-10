@@ -6,7 +6,7 @@
             (select rownum rn, b.* from
                 (select rownum ltqnaNo, a.* from
                     (select r.*,  COUNT(*) OVER() AS COUNT
-                    from lt_qna r 
+                    from lt_qna r
                     where lt_no = #{ltNo}
                     AND (q_content LIKE '%'||#{contentSearchKey}||'%'
                     AND writer LIKE '%'||#{writerSearchKey}||'%'

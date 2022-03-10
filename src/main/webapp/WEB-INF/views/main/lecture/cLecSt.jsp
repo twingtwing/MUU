@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -354,26 +354,23 @@ $('.updateShip').click((e) => {
 })
 
 
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+    $(this).css('background-color','#e53637');
+    $(this).find('.list-link').css('color','#ffffff');
+})
 
-
-
+//mouseover 이벤트 : 사이드바 css변경
+$('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+    $(this).css('background-color','#ffffff');
+    $(this).find('.list-link').css('color','#000000');
+    $(this).find('.list-link.active').css('color','#e53637');
+})
 
 $('.cancel').click((e) => {
   $(e.currentTarget.parentElement).css('display', 'none')
 })
 
-//mouseover 이벤트 : 사이드바 css변경
-$('#cctgr > .list-group-item').on('mouseover',function(){
-  $(this).css('background-color','#e53637');
-  $(this).find('.list-link').css('color','#ffffff');
-})
-
-//mouseover 이벤트 : 사이드바 css변경
-$('#cctgr > .list-group-item').on('mouseout',function(){
-    $(this).css('background-color','#ffffff');
-    $(this).find('.list-link').css('color','#000000');
-    $(this).find('.list-link.active').css('color','#e53637');
-})
 //열린강의정보 페이지 이동
 function gooLecture(e){
 	$('.sendltno').val(e);

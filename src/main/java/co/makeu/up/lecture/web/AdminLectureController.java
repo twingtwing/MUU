@@ -164,6 +164,7 @@ public class AdminLectureController {
 	         length = llist.get(0).getLength();
 	     }
 	    model.addAttribute("pageMaker",new PageVo(vo,length));
+	    model.addAttribute("search",vo);
 		return "admin/lecture/adLecAL";
 	}
 	
@@ -191,7 +192,7 @@ public class AdminLectureController {
 		return "admin/lecture/adLecAL";
 	}
 	
-	//강의등록 허가
+	//강의등록 반려
 	@RequestMapping("/admin/adLecALReject")
 	public String adLecALReject(LectureVO vo, Model model) {
 		lectureDao.AdminlectureUpdateReject(vo);
