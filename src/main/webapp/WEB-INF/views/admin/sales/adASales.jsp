@@ -285,13 +285,13 @@
         datasets: [{
           type: 'bar',
           label: '남성',
-          backgroundColor: 'powderblue',
+          backgroundColor: 'lavender',
           data: genderVal[1] 
         }, {
           type: 'bar',
           label: '여성',
           data: genderVal[0] ,
-          backgroundColor: 'pink'
+          backgroundColor: 'teal'
         }, ]
       },
       options: {

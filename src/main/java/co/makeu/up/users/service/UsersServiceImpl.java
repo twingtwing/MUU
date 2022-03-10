@@ -1,6 +1,6 @@
 package co.makeu.up.users.service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class UsersServiceImpl implements UsersMapper {
 		return map.updateUserProfileImg(vo);
 	}
 	@Override
-	public Date chkCreFarewell(String creId) {
+	public List<Date> chkCreFarewell(String creId) {
 		return map.chkCreFarewell(creId);
 	}
 

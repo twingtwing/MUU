@@ -176,11 +176,11 @@ public class UsersController {
 	@GetMapping("/user/userFarewellChk")
 	public String userFarewell(String id) {
 		String result;
-		if(usersDao.chkCreFarewell(id)==null) {
+		if(usersDao.chkCreFarewell(id).size()==0) {
 			result = "ok";
 		} else {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			result = dateFormat.format(usersDao.chkCreFarewell(id));
+			result = dateFormat.format(usersDao.chkCreFarewell(id).get(0));
 		}
 		logger.info(result);
 		return result;
