@@ -2,6 +2,8 @@ package co.makeu.up.users.service;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class UsersVO {
 	private String id;
@@ -19,12 +21,33 @@ public class UsersVO {
 	private String[] uGrdCodeList;
 	private String[] creGrdCodeList;
 	private String pht;
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date joinDate;
 	private Date pastDate;
 	private Date recentDate;
 	private Integer cnt;
+	private int endrow;
+	private String orderColumn;
+	private String orderBy;
 	
-	
+	public String getOrderColumn() {
+		return orderColumn;
+	}
+	public void setOrderColumn(String orderColumn) {
+		this.orderColumn = orderColumn;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public int getEndrow() {
+		return endrow;
+	}
+	public void setEndrow(int endrow) {
+		this.endrow = endrow;
+	}
 	public String[] getCreGrdCodeList() {
 		return creGrdCodeList;
 	}

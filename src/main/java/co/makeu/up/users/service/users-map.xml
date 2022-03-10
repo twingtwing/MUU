@@ -47,8 +47,9 @@
 		WHERE ID = #{id}
 	</update>
 	<select id="usersList" resultType="co.makeu.up.users.service.UsersVO" parameterType="co.makeu.up.users.service.UsersVO">
-		SELECT * FROM (
-		    SELECT ROWNUM RN, U.*, COUNT(*) OVER() CNT FROM USERS_V U
+		SELECT * FROM (SELECT ROWNUM RN, W.* FROM (
+		    SELECT U.ID,U.NAME,U.AUTH_CODE,U.U_GRD_CODE ,U.CRE_GRD_CODE,U.TEL,U.GENDER,U.ZIP,U.ADDR,U.DETA_ADDR,U.PHT,TO_CHAR(U.JOIN_DATE,'YYYY-MM-DD') JOIN_DATE ,U.U_ST_CODE,U.POINT, COUNT(*) OVER() CNT 
+		    FROM USERS_V U
 		    WHERE AUTH_CODE != 'A01'
 		    AND (ID LIKE '%'||#{id}||'%'
 			    AND NAME LIKE '%'||#{name}||'%'
@@ -83,9 +84,20 @@
 			    	</foreach>
 			    </if>
 				)			    
-			)
+			    <if test="orderColumn !=null and !orderColumn.equals('')">
+			    	ORDER BY ${orderColumn} ${orderBy}
+			    </if>
+			    <if test="orderColumn == null or orderColumn.equals('')">
+			    	ORDER BY JOIN_DATE ${orderBy}
+			    </if>
+			) W )
+		<if test="page > 0">
 		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
 		AND RN <![CDATA[<=]]> #{page} * 10
+		</if>
+		<if test="page == 0">
+		WHERE RN BETWEEN 1 AND #{endrow}
+		</if>
 	</select>
 	
 	<update id="userPointUpdate" parameterType="co.makeu.up.users.service.UsersVO">

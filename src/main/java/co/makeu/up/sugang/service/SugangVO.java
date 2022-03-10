@@ -56,8 +56,10 @@ public class SugangVO {
 	
 	// for pagination
 	private int page;
+	private String orderColumn;
+	private String orderBy;
 	private int count;
-	
+
 	
 	// progress
 	private int progPct;

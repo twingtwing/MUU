@@ -1,6 +1,7 @@
 package co.makeu.up.common.view;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class CommonExcelView  extends  AbstractXlsxView {
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
+		// map인경우는 그냥 맵아니면 reflection 
 
 		Sheet sheet = workbook.createSheet("Datatypes in Java");
 		Row row;
@@ -53,7 +54,6 @@ public class CommonExcelView  extends  AbstractXlsxView {
 		//body 출력
         List<Map<String, Object>> list  = (List<Map<String, Object>>)model.get("datas");
         // Map 대신 Object로 받아서 따로 변환시켜줘도된다
-        System.out.println(list);
         if(headers != null) {
         	for (Map<String, Object> map : list) {
         		row = sheet.createRow(rowNum++);
@@ -63,7 +63,6 @@ public class CommonExcelView  extends  AbstractXlsxView {
  					Object field = map.get(header);
  					if(field == null) {
  						field = "";
- 						System.out.println(header);
  					}
  					
  					if (field instanceof String) {
@@ -92,15 +91,19 @@ public class CommonExcelView  extends  AbstractXlsxView {
 						cell.setCellValue(((BigDecimal) field).doubleValue());
 					} else if (field instanceof Date) {
 						cell.setCellValue((Date) field);
-					} else {
+					} else if(field!=null) {
 						cell.setCellValue(field.toString());
+					} else {
+						cell.setCellValue("");
 					}
+					
 				} 
 	        }
         }
 
 		LOGGER.debug("### buildExcelDocument Map : {} end!!");	
 	}
+
 
 	public static Map<String, Object> convertVOtoMap(Object obj) throws IllegalArgumentException, IllegalAccessException {
 	      if(obj == null ) {
