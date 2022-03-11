@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,25 +81,25 @@
                     <tr>
                       <td>여성</td>
                       <c:forEach items="${salesGender }" var="gender" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">gender_val</c:if> <c:if test="${var.last }">gender_total</c:if> woman_td" >${gender.woman}</td>
+                      	<td class="<c:if test="${not var.last }">gender_val</c:if> <c:if test="${var.last }">gender_total</c:if> woman_td" ><fmt:formatNumber>${gender.woman}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>남성</td>
                       <c:forEach items="${salesGender }" var="gender" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">gender_val</c:if> <c:if test="${var.last }">gender_total</c:if> man_td" >${gender.man}</td>
+                      	<td class="<c:if test="${not var.last }">gender_val</c:if> <c:if test="${var.last }">gender_total</c:if> man_td" ><fmt:formatNumber>${gender.man}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                     	<td>전체</td>
                     	<c:forEach items="${salesGender }" var="gender">
-                    		<td class="gender_pay">${gender.pay }</td> 
+                    		<td class="gender_pay"><fmt:formatNumber>${gender.pay }</fmt:formatNumber></td> 
                     	</c:forEach>
                     </tr>
                   </table>
                   <div class="row justify-content-end mt-3 w-100">
                     <button class="btn btn-danger mr-2">PDF다운</button>
-                    <button class="btn btn-success mr-2">EXCEL다운</button>
+                    <a id="genderExcel" href="/admin/genderExcel?year=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                   </div>
 
                 </div>
@@ -151,49 +152,49 @@
                     <tr>
                       <td>10대 이하</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_1" >${age.age10}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_1" ><fmt:formatNumber>${age.age10}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>20대</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_2" >${age.age20}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_2" ><fmt:formatNumber>${age.age20}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>30대</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_3" >${age.age30}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_3" ><fmt:formatNumber>${age.age30}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>40대</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_4" >${age.age40}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_4" ><fmt:formatNumber>${age.age40}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>50대</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_5" >${age.age50}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_5" ><fmt:formatNumber>${age.age50}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                       <td>60대 이상</td>
                       <c:forEach items="${salesAge }" var="age" varStatus="var">
-                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_6" >${age.age60}</td>
+                      	<td class="<c:if test="${not var.last }">age_val</c:if> <c:if test="${var.last }">age_total</c:if> age_td_6" ><fmt:formatNumber>${age.age60}</fmt:formatNumber></td>
                       </c:forEach>
                     </tr>
                     <tr>
                     	<td>전체</td>
                     	<c:forEach items="${salesAge }" var="age">
-                    		<td class="age_pay">${age.pay }</td> 
+                    		<td class="age_pay"><fmt:formatNumber>${age.pay }</fmt:formatNumber></td> 
                     	</c:forEach>
                     </tr>
                   </table>
                   <div class="row justify-content-end mt-3 w-100">
                     <button class="btn btn-danger mr-2">PDF다운</button>
-                    <button class="btn btn-success mr-2">EXCEL다운</button>
+                    <a id="ageExcel" href="/admin/ageExcel?year=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                   </div>
                 </div>
                 
@@ -230,7 +231,7 @@
         labels: ['남성', '여성'],
         datasets: [{
           label: '매출액',
-          backgroundColor: ['powderblue', 'pink'],
+          backgroundColor: ['lavender', 'teal'],
           data: [
         	  $('.gender_total').eq(1)[0].textContent, $('.gender_total').eq(0)[0].textContent
           ]
@@ -273,6 +274,8 @@
     			$('.woman_td').eq(i)[0].innerText = woman[i];
     			$('.man_td').eq(i)[0].innerText = man[i];
     		}
+    		
+    		genderExcel.setAttribute('href','/admin/genderExcel?year='+$('#genderBox').val());
     	})
     })
 
@@ -442,6 +445,8 @@
     			$('.age_td_6').eq(i)[0].innerText = age60[i];
     			$('.age_pay').eq(i)[0].innerText = pay[i];
     		}
+    		
+    		ageExcel.setAttribute('href','/admin/ageExcel?year='+$('#ageBox').val());
     	})
     })
   </script>

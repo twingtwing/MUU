@@ -26,7 +26,6 @@ public class SalesController {
 		model.addAttribute("thisyear",sdf.format(c1.getTime()));
 		model.addAttribute("years",salesDao.salesByYear());
 		model.addAttribute("months", salesDao.salesByMonth(selectYear==null ? sdf.format(c1.getTime()) : selectYear));
-		model.addAttribute("monthsYear", selectYear);
 		model.addAttribute("ctgrYear", salesDao.salesByCtgrYear());
 		model.addAttribute("ctgrMonth", salesDao.salesByCtgrMonth(selectYear==null ? sdf.format(c1.getTime()) : selectYear));
 		return "admin/sales/adTSales";
@@ -69,7 +68,15 @@ public class SalesController {
 		
 		model.addAttribute("thisyear",sdf.format(c1.getTime()));
 		model.addAttribute("thisMonth",month.format(c1.getTime()));
-		model.addAttribute("selectYear",vo.getSelectYear()==null ? sdf.format(c1.getTime()) : vo.getSelectYear() );
+		
+		if(vo.getSelectYear() == null) {
+			vo.setSelectYear(sdf.format(c1.getTime()));
+		}
+		if(vo.getMonth() == 0) {
+			vo.setMonth(Integer.parseInt(month.format(c1.getTime())));
+		}
+		
+		model.addAttribute("search",vo);
 		model.addAttribute("month",vo.getMonth()==0 ? month.format(c1.getTime()) : vo.getMonth() );
 		
 		model.addAttribute("creYear",yearList);

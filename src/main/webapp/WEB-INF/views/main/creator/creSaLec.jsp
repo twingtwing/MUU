@@ -142,7 +142,7 @@
             <!-- 시간 되면 테이블 추가 -->
             <div class="row col-12 mr-5 justify-content-end">
               <button class="border px-3 py-2 bg-danger text-white">PDF 다운</button>
-              <button class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL 다운</button>
+              <a id="creSaLecExcel" href="/creator/creSaLecExcel?start=&end=" class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL 다운</a>
             </div>
           </div>
         </div>
@@ -203,6 +203,7 @@
     		data : {start: $('#start').val(),end: $('#end').val()}
     	})
     	.done((r)=>{
+    		console.log(r);
     		lecLabel = [];
     		lecCnt = [];
     		lecPay = [];
@@ -211,7 +212,7 @@
 	    			lecLabel.push(obj.ttl);
     			}
     			lecCnt.push(obj.cnt=== null ? 0 : obj.cnt)
-    			lecPay.push(obj.pay === null ? 0:obj.pay)
+    			lecPay.push(obj.pay === null ? 0 : obj.pay)
     		})
     		myChart.reset();
     		myChart.data.labels = lecLabel;
@@ -223,10 +224,24 @@
     		for(let i = 0; i < lecLabel.length; i++){
     			$('.lecLabel').eq(i)[0].innerText = lecLabel[i]
     		}
+    		for(let i = lecLabel.length-1; i < $('.lecLabel').length; i++){
+    			$('.lecLabel').eq(i).remove();
+    		}
+    		
     		for(let i = 0; i < lecCnt.length; i++){
     			$('.chartCnt').eq(i)[0].innerText = lecCnt[i]
     			$('.chartPay').eq(i)[0].innerText = lecPay[i]
     		}
+    		console.log(lecCnt.length);
+    		console.log($('.chartCnt').length);
+    		for(let i = lecCnt.length; i < $('.chartCnt').length; i++){
+    			console.log($('.chartCnt').eq(i)[0]);
+    			$('.chartCnt').eq(i)[0].closest('td').remove();
+    			$('.chartPay').eq(i)[0].closest('td').remove();
+    			i--;
+    		}
+    		
+    		creSaLecExcel.setAttribute('href','/creator/creSaLecExcel?start='+$('#start').val()+'&end='+$('#end').val());
     	})
     })
 

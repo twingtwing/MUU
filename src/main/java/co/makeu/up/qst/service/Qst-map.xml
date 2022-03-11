@@ -93,7 +93,7 @@
 		UPDATE QST 
 		SET QST_ST_CODE = 'QS02',
 		A_CONTENT = #{aContent},
-		A_REG_DATE = SYSDATE
+		A_REG_DATE = TRUNC(SYSDATE)
 		WHERE QST_NO = #{qstNo}
 	</update>
 </mapper>

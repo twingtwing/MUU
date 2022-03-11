@@ -66,11 +66,11 @@
 		 JOIN USERS U 
 		 ON L.CRE_ID = U.ID
 		 WHERE S.TLSN_ST_CODE != 'SU03'
-		 <if test="start != null and start != null">
-		 	AND TO_CHAR(S.REG_DATE, 'YYYY-MM-DD') <![CDATA[>=]]> #{start}
+		 <if test="start != null and start != ''">
+		 	AND TRUNC(s.reg_date) <![CDATA[>=]]> TRUNC(TO_DATE(#{start}, 'YYYY-MM-DD'))
 		 </if>
 		 <if test="end != null and end != ''">
-		 	AND TO_CHAR(S.REG_DATE, 'YYYY-MM-DD') <![CDATA[<=]]> #{end}
+		 	AND TRUNC(s.reg_date) <![CDATA[<=]]> TRUNC(TO_DATE(#{end}, 'YYYY-MM-DD'))
 		 </if>
          AND L.CRE_ID =  #{id})
          SELECT TTL,ROUND(SUM(PAY)/10000,0) PAY, COUNT(TTL) CNT FROM LEC_TOTAL

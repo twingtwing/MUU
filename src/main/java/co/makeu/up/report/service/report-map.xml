@@ -5,12 +5,12 @@
 		INSERT INTO REPORT(RP_NO, REPORTER, LT_NO, CTGR, CONTENT, RP_ST_CODE, NUM, TYPE, RP_DATE) VALUES(
 		((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1),
 		#{reporter}, #{ltNo}, 'RP01', #{content}, 'RPS01',
-		#{num}, #{type}, SYSDATE)
+		#{num}, #{type}, TRUNC(SYSDATE))
 	</insert>
 	
 	<insert id="insertLecReport" parameterType="co.makeu.up.report.service.ReportVO">
 		INSERT INTO REPORT 
-		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type},SYSDATE)
+		VALUES((SELECT NVL(MAX(RP_NO),1) FROM REPORT)+1,#{reporter},#{ltNo},'RP02',#{content},'RPS01', #{num},#{type},TRUNC(SYSDATE))
 	</insert>
 	
 	<select id="selectreport" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
@@ -69,7 +69,6 @@
 			ON R.LT_NO = L.LT_NO
 			LEFT JOIN REVIEW V
 			ON R.NUM = V.RV_NO
-			
 			where RP_NO = #{rpNo}
 	</select>
 	
@@ -79,7 +78,6 @@
 			ON R.LT_NO = L.LT_NO
 			LEFT JOIN LESSON O
 			ON R.NUM = O.SERIAL_NO
-			
 			where RP_NO = #{rpNo}
 	
 	</select>

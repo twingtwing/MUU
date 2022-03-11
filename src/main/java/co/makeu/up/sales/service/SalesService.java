@@ -20,4 +20,9 @@ public interface SalesService {
 	List<SalesVO> recent7days();
 	List<SalesVO> thisYearSales();
 	List<SalesVO> genderList();
+	
+	//excel
+	List<SalesVO> creYearExcel(SalesVO vo);
+	List<SalesVO> creMonthExcel(SalesVO vo);
+
 }

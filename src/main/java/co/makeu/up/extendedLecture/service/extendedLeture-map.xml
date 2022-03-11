@@ -11,7 +11,7 @@
 		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
 		ON J.LT_NO = L.LT_NO
 		WHERE J.LT_ST_CODE = 'L01'
-		AND EXP_DATE &gt;= SYSDATE
+		AND TRUNC(EXP_DATE) &gt;= TRUNC(SYSDATE)
 		<if test="upCtgr != '' and upCtgr != null">AND J.UP_CTGR = #{upCtgr}</if>
 		<if test="downCtgr != '' and downCtgr != null">AND J.DOWN_CTGR = #{downCtgr}</if>
 		ORDER BY J.LT_NO DESC
@@ -123,7 +123,7 @@
 		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
 		ON J.LT_NO = L.LT_NO
 		WHERE J.LT_ST_CODE = 'L01'
-		AND J.EXP_DATE &gt;= SYSDATE
+		AND TRUNC(J.EXP_DATE) &gt;= TRUNC(SYSDATE)
         AND J.CRE_ID = #{creId}
 		ORDER BY J.LT_NO)
         SELECT L.LT_NO,L.TTL,L.THUMB,L.PRC,L.KIT_PRC,L.STAR,L.R_COUNT,L.WASH,L.w_count,C.NAME DOWN_CTGR, C.UP_NAME UP_CTGR
@@ -160,7 +160,7 @@
 	                   GROUP BY LT_NO) R
 	        ON R.LT_NO = L.LT_NO
 			WHERE L.LT_ST_CODE = 'L01'
-			AND L.EXP_DATE &gt;= SYSDATE) 
+			AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)) 
 	    WHERE RANK <![CDATA[<]]> 7	
 	</select>
 	
@@ -170,7 +170,7 @@
 	    FROM SUGANG S JOIN LECTURE L
 	    ON S.LT_NO = L.LT_NO
 	    <if test="time == 'week'">
-		    WHERE S.REG_DATE BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+		    WHERE TRUNC(S.REG_DATE) BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
 	    </if>
 	    <if test="time =='month'">
 		    WHERE TO_CHAR(S.REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
@@ -191,7 +191,7 @@
         ON R.LT_NO = L.LT_NO
         WHERE L.UP_CTGR = #{upCtgr}
         AND L.LT_ST_CODE = 'L01'
-        AND L.EXP_DATE &gt;= SYSDATE
+        AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)
 	</select>
 	
 	<select id="newLecture" resultType="co.makeu.up.lecture.service.LectureVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
@@ -206,7 +206,7 @@
 	                     GROUP BY LT_NO) R
 	          ON R.LT_NO = L.LT_NO
 	          WHERE L.LT_ST_CODE = 'L01'
-	          AND L.EXP_DATE &gt;= SYSDATE
+	          AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)
 	          ORDER BY L.START_DATE DESC)
 	    WHERE ROWNUM <![CDATA[<]]> 7	
 	</select>
@@ -220,7 +220,7 @@
 	          	WHERE TO_CHAR(REG_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE -1,'YYYY-MM-DD')
               </if>
               <if test="time == 'week'">
-              	WHERE REG_DATE BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+              	WHERE TRUNC(REG_DATE) BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
               </if>
               <if test="time == 'month'">
               	WHERE TO_CHAR(REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
@@ -236,7 +236,7 @@
                    GROUP BY LT_NO) R
         ON R.LT_NO = L.LT_NO
         WHERE L.LT_ST_CODE = 'L01'
-        AND L.EXP_DATE &gt;= SYSDATE) 
+        AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE) ) 
     	WHERE RANK <![CDATA[<]]> 3	
 	</select>
 	
@@ -248,7 +248,7 @@
 	                               ON C.UP_CTGR = U.CTGR_ID) C
 	         ON L.DOWN_CTGR =  C.CTGR_ID
 	         WHERE L.LT_ST_CODE = 'L01'
-	         AND L.EXP_DATE &gt;= SYSDATE 
+	         AND TRUNC(L.EXP_DATE) <![CDATA[>=]]> TRUNC(SYSDATE)
 	         ORDER BY SYS.dbms_random.VALUE)
 	    WHERE ROWNUM <![CDATA[<]]> 4
 	</select>
