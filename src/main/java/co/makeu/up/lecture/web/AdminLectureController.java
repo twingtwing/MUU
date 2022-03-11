@@ -43,7 +43,7 @@ public class AdminLectureController {
 			vo.setPage(1);			
 		}
 		if(vo.getLtStCodeList()==null) {
-			String[] ltstcode = {"L01","L02","L03"};
+			String[] ltstcode = {"L01","L02","L03","L07"};
 			vo.setLtStCodeList(ltstcode);
 		}
 		List<LectureVO> list = lectureDao.adminLectureTable(vo);

@@ -61,17 +61,27 @@
 	            AND (CONTENT LIKE '%'||#{ttlContent}||'%' OR TTL LIKE '%'||#{ttlContent}||'%')
 	            </if>
 	            <if test="startDate != null and !startDate.equals('')">
-	             AND #{startDate} <![CDATA[<]]> Q_REG_DATE
+	             AND TRUNC(#{startDate}) <![CDATA[<]]> TRUNC(Q_REG_DATE)
 	            </if>
 	            <if test="endDate != null and !endDate.equals('')">
-	             AND #{endDate} <![CDATA[>]]> Q_REG_DATE
+	             AND TRUNC(#{endDate}) <![CDATA[>]]> TRUNC(Q_REG_DATE)
 	            </if>
 	            <if test="qstStCode !=null and !qstStCode.equals('')">
 	            AND QST_ST_CODE = #{qstStCode}
 	            </if>
+	            <if test="orderColumn != null and !orderColumn.equals('')">
+	            ORDER BY ${orderColumn} ${orderBy}
+	            </if>
 	            ) Q
 	    )
 		WHERE 1=1	    
+	    <if test="page == 0">
+	    WHERE RN  <![CDATA[<]]> #{endrow}
+	    </if>
+	    <if test="page != 0">
+		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
+		AND RN <![CDATA[<=]]> #{page} * 10		    
+	    </if>
         
 	</select>
 	

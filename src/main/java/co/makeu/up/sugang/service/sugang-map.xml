@@ -146,7 +146,7 @@
 	</select>
 	<update id="shipUpdate" parameterType="co.makeu.up.sugang.service.SugangVO">
 		update sugang set
-		ship_st_code = 'D02', ship_num = #{shipNum}
+		ship_st_code = #{shipStCode}, ship_num = #{shipNum}
 		where tlsn_no = #{tlsnNo}
 	</update>
 </mapper>

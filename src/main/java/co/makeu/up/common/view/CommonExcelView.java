@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -51,6 +53,9 @@ public class CommonExcelView  extends  AbstractXlsxView {
 			}
 		}
 		
+		CellStyle style = workbook.createCellStyle();
+		CreationHelper creationHelper = workbook.getCreationHelper();
+		style.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy/mm/dd"));
 		//body 출력
         List<Map<String, Object>> list  = (List<Map<String, Object>>)model.get("datas");
         // Map 대신 Object로 받아서 따로 변환시켜줘도된다
@@ -64,13 +69,13 @@ public class CommonExcelView  extends  AbstractXlsxView {
  					if(field == null) {
  						field = "";
  					}
- 					
  					if (field instanceof String) {
  						cell.setCellValue((String) field);
  					} else if (field instanceof BigDecimal) {
  						cell.setCellValue(((BigDecimal) field).doubleValue());
  					} else if (field instanceof Date) {
  						cell.setCellValue((Date) field);
+ 						cell.setCellStyle(style);
  					} else {
  						cell.setCellValue(field.toString());
  					}
