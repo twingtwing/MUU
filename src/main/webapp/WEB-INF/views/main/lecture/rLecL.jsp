@@ -110,7 +110,7 @@
                         <div class="col-lg-12">
                             <h5 class="ml-1 mb-3 font-weight-bold">
                                 <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
-                                신청한 강의
+                                신청한 강의(<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 신청중</span>)
                             </h5>
                             <!-- 강의 하나-->
                             <c:forEach items="${rlists}" var="list" varStatus="status" begin="0" end="2">

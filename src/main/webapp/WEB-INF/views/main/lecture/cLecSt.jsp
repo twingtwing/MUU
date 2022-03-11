@@ -40,6 +40,7 @@
     a{
     	cursor : pointer;
     }
+    
 </style>
 </head>
 <body>
@@ -163,14 +164,13 @@
             </div>
   
             <div class="row col-12 justify-content-end mt-3 mb-1">
-              <input type="text" class="border" id="stval" spellcheck="false" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색...">
+              <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색...">
               <button type="button" class="border px-4 mr-4" id="stBtn" onclick="stSearch()">검색</button>
                 <select id="shipcode" class="border px-4" onchange="stSearch()">
                   <option value="" selected>전체</option>
                   <option value="D01">배송 예정</option>
                   <option value="D02">배송 중</option>
                   <option value="D03">배송 완료</option>
-                  <option value="D04">배송 실패</option>
                   <option value="D05">반송</option>
                   <option value="D06">반송 거부</option>
                 </select>
@@ -207,7 +207,7 @@
                     </c:if>
                     <td class="position-relative" onclick="event.cancelBubble=true">
 	                    <c:if test="${list.shipStCode == 'D01' }">
-		                      <button class="border p-2 updateShip">배송시작</button>
+		                      <button class="border p-2 updateShip">배송 예정</button>
 		                      <div class="shipbox justify-content-center position-absolute">
 		                        <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
 		                        <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
@@ -215,19 +215,22 @@
 		                      </div>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D02' }">
-	                     	<button class="border p-2 updateShip" style="cursor:default">배송중</button>
+	                     	<span class="p-2 updateShip" style="cursor:default">배송 중</span>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D03' }">
-	                     	<button class="border p-2 updateShip" style="cursor:default">배송완료</button>
-	                     </c:if>
-	                     <c:if test="${list.shipStCode == 'D04' }">
-	                     	<button class="border p-2 updateShip" style="cursor:default">배송실패</button>
+	                     	<span class="p-2 updateShip" style="cursor:default">배송 완료</span>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D05' }">
-	                     	<button class="border p-2 updateShip" style="cursor:default">반송</button>
+	                   		 <button class="border p-2 updateShip">반송</button>
+	                         <div class="shipbox justify-content-center position-absolute">
+		                         <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
+		                         <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
+		                         <button class="border compl" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
+		                         <button class="border cancel">취소</button>
+	                         </div>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D06' }">
-	                     	<button class="border p-2 updateShip" style="cursor:default">반송거부</button>
+	                     	<span class="p-2 updateShip" style="cursor:default">반송 거부</span>
 	                     </c:if>
                     </td>
                   </tr>
@@ -457,7 +460,7 @@ $(function(){
 	}
 })
 
-//배송예정? 전? >> 운송장 입력
+//배송예정/반송 >> 운송장 입력 >> 배송중
 function goDelivery(e){
 	let shipNum = $('#inputshipNum').val();
 	let tlsnNo = e;
@@ -475,6 +478,28 @@ function goDelivery(e){
 		},
 		success : function(){
 			alert('운송장 번호 입력을 완료하였습니다');
+			location.reload();
+		}
+        
+	})
+}
+
+//반송거부
+function rejectDelivery(e){
+	let tlsnNo = e;
+	
+	$.ajax({
+		url : "/creator/shipReject",
+		method : "post",
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+		dataType : 'text',
+		data : {
+			tlsnNo : tlsnNo
+		},
+		success : function(){
+			alert('반송거부하였습니다');
 			location.reload();
 		}
         

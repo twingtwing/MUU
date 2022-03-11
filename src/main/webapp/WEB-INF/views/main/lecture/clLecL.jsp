@@ -111,7 +111,7 @@
                         <div class="col-lg-12">
                             <h5 class="ml-1 mb-3 font-weight-bold">
                                 <i class="fa fa-hand-rock-o text-danger" aria-hidden="true"></i>
-                                종료된 강의
+                                종료된 강의(<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 종료됨</span>)
                             </h5>
                             <!-- 강의 하나-->
                             <c:forEach items="${cllists}" var="list" varStatus="status" begin="0" end="2">
