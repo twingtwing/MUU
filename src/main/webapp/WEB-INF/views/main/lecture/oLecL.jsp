@@ -110,7 +110,7 @@
                         <div class="col-lg-12">
                             <h5 class="ml-1 mb-3 font-weight-bold">
                                 <i class="fa fa-hand-o-right text-danger" aria-hidden="true"></i>
-                                열린 강의
+                                열린 강의(<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 열림</span>)
                             </h5>
                             <!-- 강의 하나-->
                             <c:forEach items="${olists}" var="list" varStatus="status" begin="0" end="2">

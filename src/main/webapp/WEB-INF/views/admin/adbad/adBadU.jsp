@@ -89,7 +89,7 @@
                                         <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
                                     </div>
                                     <div>
-                                        <button type="button" id="boardBtn" class="btn btn-secondary" onclick="btn()" disabled>공지사항 수정</button>
+                                        <button type="button" id="boardBtn" class="btn btn-secondary" onclick="btn();" disabled>공지사항 수정</button>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,19 @@
 
                 <!-- 바디 끝 -->
              <script type="text/javascript">
-
+				
+        	 const lineMaker = ()=>{
+      		   let intro = $('#cont').val();
+      		   intro = intro.replace(/\r\n/ig,'<br>');
+      		   intro = intro.replace(/\\n/ig,'<br>');
+      		   intro = intro.replace(/\n/ig,'<br>');
+      		   $('#cont').val(intro);
+      		   
+      		}
+         
+             
+             
+             
              	$('#ttli').keyup(function(){
                 	console.log("4번 테스트")
                	 	btnDisabled()
@@ -131,7 +143,7 @@
                 
                 function btn() {
                 	event.preventDefault();
-                    
+                    lineMaker();
                 	let fileNo = '${board.fileNo}';
                 	let bNo = '${board.getBNo()}';
                     let form  = new FormData();
@@ -145,6 +157,7 @@
 	            	for(obj of $('#multiFile')[0].files){
 	            		form.append("files",obj);
 	            	}
+	            	lineMaker();
 	            	 
 	            	 $.ajax({
 	            		url:'/admin/upadbad',
@@ -167,6 +180,7 @@
 	               		 }
 	                 });
                 }
+                
                 
              </script>
                 

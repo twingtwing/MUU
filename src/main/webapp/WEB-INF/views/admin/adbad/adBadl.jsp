@@ -92,7 +92,7 @@
 	                                        <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
 	                                    </div>
 	                                    <div>
-	                                        <button type="button" id="boardBtn"  class="btn btn-secondary" disabled >공지사항 등록</button>
+	                                        <button type="button" id="boardBtn"  onclick="lineMaker()" class="btn btn-secondary" disabled >공지사항 등록</button>
 	                                    </div>
 	                                </div>
                                 </form>
@@ -108,6 +108,13 @@
           <!-- boardBtn  insert_vali -> chanbe : val() 없으면 console.log 없다  -->
           <script type="text/javascript">
         
+        	 const lineMaker = ()=>{
+        		   let intro = $('#cont').val();
+        		   intro = intro.replace(/\r\n/ig,'<br>');
+        		   intro = intro.replace(/\\n/ig,'<br>');
+        		   intro = intro.replace(/\n/ig,'<br>');
+        		   $('#cont').val(intro);
+        		}
           
          
          $('#ttli').keyup(function(){
@@ -154,6 +161,7 @@
             	alert("글이 성공적으로 등록되었습니다.");
 	        	location.href="/admin/adBadS?bNo="+res.bno;
              });
+        	 
         	 
          })
           </script>

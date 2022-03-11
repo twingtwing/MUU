@@ -135,6 +135,7 @@
                                                 <input type="date" class="border py-1 pastDate" value="${search.pastDate }" name="pastDate">
                                                 <i class="fas fa-minus mx-2"></i>
                                                 <input type="date" class="border py-1 recentDate" value="${search.recentDate }" name="recentDate">
+                                            <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -286,8 +287,19 @@
 <input type="hidden" name="id" id="creatorId">
 </form>       
 <script>
+// 검색조건초기화
+$('#resetAll').click(()=>{
+	$('.selectBox').val('');
+	$('.tel').val('');
+	$('#searchForm .pastDate').val(null);	
+	$('#searchForm .recentDate').val(null);
+	$('#code_all').prop('checked','checked');
+	$('#code_1').prop('checked','checked');
+	$('input[name=creGrdCodeList]').prop('checked',null);
+})
+
+
 $('#excel').click(()=>{
-	console.log('d')
 	makeSearchData(0);
 	$('#searchForm').attr('action','/admin/creatorExcel');
 	$('#searchForm').submit();

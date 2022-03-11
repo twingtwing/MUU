@@ -7,6 +7,15 @@
 		ORDER BY F_NO
 	</select>
 	
+	<select id="faqListSearch" resultType="co.makeu.up.faq.service.FaqVO" parameterType="co.makeu.up.faq.service.FaqVO">
+		SELECT * FROM FAQ
+		WHERE F_ST_CODE = 'F01'
+		<if test="qcontent != null and qcontent != ''">
+		AND q_content LIKE '%' || #{qcontent}  || '%'
+		</if>
+		ORDER BY F_NO
+	</select>
+	
 	<select id="faqList" resultType="co.makeu.up.faq.service.FaqVO" parameterType="co.makeu.up.faq.service.FaqVO">
 		SELECT * 
 		FROM (SELECT ROWNUM RN, W.*
@@ -52,4 +61,33 @@
                 delete from FAQ
                 where F_NO = #{fno}
 	</delete>
+	
+	<select id="faqListPlus" resultType="co.makeu.up.faq.service.FaqVO" parameterType="co.makeu.up.faq.service.FaqVO">
+		SELECT * 
+		FROM (SELECT ROWNUM RN, W.*
+		      FROM(SELECT F.F_NO,F.CTGR, CT.CODE_NAME CTGR_NAME, F.Q_CONTENT,F.WR_DATE, F.A_CONTENT,COUNT(*) OVER() length
+			  	  from FAQ f JOIN COMM_CODE CT
+				  ON F.CTGR = CT.CODE_ID
+				  WHERE 1 = 1
+				  <if test="qcontent != null and qcontent != ''">
+				  AND F.Q_CONTENT LIKE '%' || #{qcontent}  || '%'
+				  </if>
+				  <if test="ctgr != null and ctgr != ''">
+				  AND F.CTGR = #{ctgr}
+				  </if>
+				  <if test="start != null and start != ''">
+		          <![CDATA[
+		          AND TO_DATE(#{start}, 'YYYY-MM-DD') <  F.WR_DATE
+		          ]]>
+		          </if>
+		          <if test="end != null and end != ''">
+		          <![CDATA[
+		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  > F.WR_DATE
+		          ]]>
+		          </if>
+				  ORDER BY F.F_NO DESC) W)
+		 <![CDATA[
+	    WHERE 1=1
+	    ]]>
+	</select>
 </mapper>

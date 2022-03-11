@@ -123,6 +123,41 @@
 	    ]]>
   </select>
   
+  	<select id="adminLectureListPlus" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+        SELECT *
+        FROM (SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+		FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                                from ctgr c join ctgr c2
+                                on c2.ctgr_id = c.up_ctgr) C
+        ON L.DOWN_CTGR = C.CTGR_ID 
+        JOIN USERS U
+		ON L.CRE_ID =  U.ID 
+		WHERE L.LT_ST_CODE = 'L02'
+		<if test="name != null and name != ''">
+			and u.name like '%' || #{name}  || '%'
+		</if>
+		<if test="creId != null and creId != ''">
+			and L.CRE_ID like '%'||#{creId}||'%'
+		</if>
+		<if test="ttl != null and ttl != ''">
+			and l.ttl like '%'||#{ttl}||'%'
+		</if>
+		<if test="upCtgr != null and upCtgr !=''">
+			AND c.up_name = #{upCtgr}
+		</if>
+		<if test="downCtgr != null and downCtgr !=''">
+			AND c.name = #{downCtgr}
+		</if>
+		<if test="start != null and start !=''">
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
+        </if>
+        <if test="end != null and end !=''" >
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > l.req_Date ]]>
+        </if>
+		)
+		ORDER BY LT_NO DESC
+  </select>
+  
   <select id="AdminlectureSelect" resultType="co.makeu.up.lecture.service.LectureVO">
   	SELECT L.*, C.name low_ctgr, C.up_name high_ctgr
 	FROM LECTURE L JOIN (select c.* ,c2.name up_name
@@ -163,10 +198,10 @@
 				AND TRUNC(AVGSTAR,0) = #{star}
 				</if>
 				<if test="pastDate != null and !pastDate.equals('')">
-			    AND #{pastDate} <![CDATA[<]]> REQ_DATE
+			    AND TRUNC(#{pastDate}) <![CDATA[<]]> TRUNC(REQ_DATE)
 			    </if>
 			    <if test="recentDate !=null and !recentDate.equals('')">
-			    AND REQ_DATE <![CDATA[<]]> #{recentDate}
+			    AND TRUNC(REQ_DATE) <![CDATA[<]]> TRUNC(#{recentDate})
 			    </if>
 				<if test="ltStCodeList != null and ltStCodeList.length != 0">
 				AND LT_ST_CODE IN

@@ -143,6 +143,7 @@
                                                 <input type="date" class="border py-1 pastDate" value="${search.pastDate }" name="pastDate">
                                                 <i class="fas fa-minus mx-2"></i>
                                                 <input type="date" class="border py-1 recentDate" value="${search.recentDate }" name="recentDate">
+			                                    <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -277,7 +278,7 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger">PDF다운</button>
+                                        <button class="btn btn-danger" id="pdf">PDF다운</button>
                                         <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
@@ -300,6 +301,25 @@ $('#excel').click(()=>{
 	$('#searchForm').submit();
 	$('#searchForm').attr('action','/admin/adUserL');
 })
+
+$('#pdf').click(()=>{
+	makeSearchData(1);
+	$('#searchForm').attr('action','/admin/usersReport');
+	$('#searchForm').submit();
+	$('#searchForm').attr('action','/admin/adUserL');
+})
+
+// 검색 초기화
+$('#resetAll').click(()=>{
+	$('.selectBox').val('');
+	$('.tel').val('');
+	$('#searchForm .pastDate').val(null);	
+	$('#searchForm .recentDate').val(null);
+	$('#code_all').prop('checked','checked');
+	$('#code_1').prop('checked','checked');
+	$('input[name=uGrdCodeList]').prop('checked',null);
+})
+
 
 $('.fa-caret-down').click((e)=>{
 	$(e.currentTarget).toggleClass('fa-rotate-180')
@@ -325,9 +345,6 @@ $('#usersSearch').click(()=>{
 })
 	
 	const makeSearchData = (pageNum)=>{
-		if($('input[name=uGrdCodeList]:checked').length===0){
-			$('input[name=uGrdCodeList]').attr('checked','checked');
-		}
 		if($('.searchType').val()==='id'){
 			$('.selectBox').attr('name','id');
 			$('#searchForm input[name=id]').val($('.selectBox').val());

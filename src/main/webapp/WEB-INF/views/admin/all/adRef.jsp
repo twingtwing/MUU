@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -203,7 +204,7 @@ table tr, table td {
 												<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
 													<td style="display: none;">환불불가</td>
 												</c:if>
-												<td style="display: none;">${adminRefundList.pay }</td>
+												<td style="display: none;"><fmt:formatNumber>${adminRefundList.pay }</fmt:formatNumber>워ㅕㄴ</td>
 												<td>
 													<div class="name">${adminRefundList.content }</div>
 												</td>

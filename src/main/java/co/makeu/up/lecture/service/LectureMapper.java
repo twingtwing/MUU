@@ -15,6 +15,7 @@ public interface LectureMapper {
 	int lectureUpdateTemp(LectureVO vo);
 	List<LectureVO> creLectureList(String id);
 	List<LectureVO> adminLectureList(LectureVO vo);
+	List<LectureVO> adminLectureListPlus(LectureVO vo);
 
 	List<LectureVO> adminLectureTable(LectureVO vo);
 	LectureVO AdminlectureSelect(LectureVO vo);

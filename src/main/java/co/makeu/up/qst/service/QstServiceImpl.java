@@ -31,4 +31,9 @@ public class QstServiceImpl implements QstService {
 		return map.qstUpdateStCode(vo);
 	}
 
+	@Override
+	public List<QstVO> qstSelectListPlus(QstVO vo) {
+		return map.qstSelectListPlus(vo);
+	}
+
 }

@@ -137,7 +137,7 @@ table tr, table td {
 									<th width="150px">이름</th>
 									<th>강의명</th>
 									<th width="120px">강의 등록일</th>
-									<th width="100px">처리상태</th>
+									<th width="120px">처리상태</th>
 								</tr>
 								<c:if test="${empty llists }">
 								<td colspan="7" >

@@ -111,6 +111,12 @@
                             <h5 class="ml-1 mb-3 font-weight-bold">
                                 <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
                                 신고된 강의
+                                <c:if test="${listCnt != null}">
+                                (<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 신고됨</span>)
+                                </c:if>
+                                <c:if test="${listCnt == null}">
+                                (<span><i class="fa fa-check" aria-hidden="true"></i>0개 신고됨</span>)
+                                </c:if>
                             </h5>
                             <!-- 강의 하나-->
                             <c:forEach items="${rplists}" var="list" varStatus="status" begin="0" end="2">

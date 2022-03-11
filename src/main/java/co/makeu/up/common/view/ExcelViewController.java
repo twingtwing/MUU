@@ -14,12 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.makeu.up.board.service.BoardServiceImpl;
 import co.makeu.up.board.service.BoardVO;
 import co.makeu.up.creator.service.CreatorServiceImpl;
+import co.makeu.up.faq.service.FaqServiceImpl;
+import co.makeu.up.faq.service.FaqVO;
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.qst.service.QstServiceImpl;
+import co.makeu.up.qst.service.QstVO;
 import co.makeu.up.refund.service.RefundServiceImpl;
 import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.sales.service.SalesService;
 import co.makeu.up.sales.service.SalesVO;
+import co.makeu.up.report.service.ReportServiceImpl;
+import co.makeu.up.report.service.ReportVO;
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
 
@@ -32,6 +38,9 @@ public class ExcelViewController {
 	@Autowired LectureServiceImpl lectureDao;
 	@Autowired RefundServiceImpl refundDao;
 	@Autowired BoardServiceImpl boardDao;
+  @Autowired ReportServiceImpl reportDao;
+	@Autowired FaqServiceImpl faqDao;
+	@Autowired QstServiceImpl qstDao;
 	
 	//매출관리
 	@RequestMapping("/admin/yearExcel") //연도별 매출
@@ -196,7 +205,7 @@ public class ExcelViewController {
 		String[] headers = new String[] { "tlsnNo", "id", "ttl", "regDate", "reqDate", "content", "pay", "rfStCode" };
 		vo.setPage(0);
 		System.out.println(vo.toString());
-		List<RefundVO> rlist = refundDao.adminRefundListSearch(vo);
+		List<RefundVO> rlist = refundDao.adminRefundListSearchPlus(vo);
 		for (RefundVO temp : rlist) {
 			if (temp.getRfStCode().equals("RF02") ) {
 				temp.setRfStCode("환불완료");
@@ -220,7 +229,7 @@ public class ExcelViewController {
 		String[] headers = new String[] { "ltNo", "upCtgr", "downCtgr", "creId", "name", "reqDate", "ltStCode"};
 		vo.setPage(0);
 		System.out.println(vo.toString());
-		List<LectureVO> llist = lectureDao.adminLectureList(vo);
+		List<LectureVO> llist = lectureDao.adminLectureListPlus(vo);
 		for (LectureVO temp : llist) {
 			if (temp.getLtStCode().equals("L02") ) {
 				temp.setLtStCode("강의등록대기");
@@ -232,7 +241,21 @@ public class ExcelViewController {
 		model.addAttribute("datas", converMapsList);
 		return "excelView";
 	}
-	
+	@RequestMapping("/admin/reportcl")
+	public String reportcl (Model model , ReportVO vo) 
+		throws IllegalArgumentException, IllegalAccessException, InstantiationException{
+		vo.setCtgr("RP02");
+		String [] headers = new String[] {"rpNo","reporter","ltNo","ctgr","rpdate","content","num","rpStCode","type","ttl","creid","star","ltStCode","recontent"};
+		List<ReportVO> list = reportDao.ex(vo);
+		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
+		model.addAttribute("fileName","reportlist");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		
+		
+		return "excelView";
+	}
+
 	//크리에이터 
 	@RequestMapping("/creator/creSaYearExcel")
 	public String creSaYearExcel(Model model,Principal pri) throws IllegalArgumentException, IllegalAccessException {
@@ -273,5 +296,46 @@ public class ExcelViewController {
 		model.addAttribute("datas", convertMapsList);
 		return "excelView";
 	}
+
+	@RequestMapping("/admin/reportc")
+	public String reportc (Model model , ReportVO vo) 
+		throws IllegalArgumentException, IllegalAccessException, InstantiationException{
+		vo.setCtgr("RP01");
+		String [] headers = new String[] {"rpNo","reporter","ltNo","ctgr","rpdate","content","num","rpStCode","type","ttl","creid","star","ltStCode","recontent"};
+		List<ReportVO> list = reportDao.ex(vo);
+		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
+		model.addAttribute("fileName","reportlist");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		
+		
+		return "excelView";
+	}
+
+	@RequestMapping("/admin/adminFaqExcel")
+	public String Faqexcel(Model model, FaqVO vo)
+			throws IllegalArgumentException, IllegalAccessException, InstantiationException {
+		String[] headers = new String[] { "fno", "ctgrName", "qcontent","wrdate", "acontent"};
+		List<FaqVO> flist = faqDao.faqListPlus(vo);
+		System.out.println(flist +" 이거 작동하나?");
+		List<Map<String, Object>> converMapsList = CommonExcelView.convertVOtoMaps(flist);
+		model.addAttribute("fileName", "excelFile");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		return "excelView";
+	}
 	
+	@RequestMapping("/admin/qstExcel")
+	public String Qstexcel(Model model, QstVO vo)
+			throws IllegalArgumentException, IllegalAccessException, InstantiationException {
+		String[] headers = new String[] { "qstNo", "writer", "ttl","qRegDate", "qstStCode"};
+		List<QstVO> qlist = qstDao.qstSelectListPlus(vo);
+		System.out.println(qlist +" 이거 작동하나?");
+		List<Map<String, Object>> converMapsList = CommonExcelView.convertVOtoMaps(qlist);
+		model.addAttribute("fileName", "excelFile");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		return "excelView";
+	}
+
 }
