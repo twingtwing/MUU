@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,8 +77,7 @@ td, th {
 									<th>크리에이터 ID</th>
 									<th>강의명</th>
 									<th>강의 등록일</th>
-									<th>강의 금액</th>
-									<th>키트 금액</th>
+									<th>키트여부</th>
 									<th>카테고리</th>
 									<th>처리상태</th>
 								</tr>
@@ -86,8 +86,8 @@ td, th {
 									<td>${adLecSel.creId }</td>
 									<td>${adLecSel.ttl }</td>
 									<td>${adLecSel.reqDate }</td>
-									<td>${adLecSel.prc }</td>
-									<td>${adLecSel.kitPrc }</td>
+									<td><c:if test="${not empty adLecSel.kitName }">키트있음</c:if>
+									<c:if test="${empty adLecSel.kitName }">키트없음</c:if></td>
 									<td><span>${adLecSel.highCtgr }</span> > <span>${adLecSel.lowCtgr }</span>
 									</td>
 									<td>처리대기중</td>
@@ -95,15 +95,23 @@ td, th {
 							</table>
 							<h5>강의 소개</h5>
 							<div class="border w-100 p-2 mb-5">${adLecSel.intro }</div>
-							<h5>수업 소개</h5>
+							<h5 class="text-center">수업 소개</h5>
+							<div class="text-center mb-2">
+							<a data-toggle="collapse" id="allCollapase" class="collapsePass ml-3" href="#Allclick"  
+							role="button" aria-expanded="false" aria-controls="collapseExample">전부 보기
+							</a>
+							</div>
+							<!-- <div class="text-center mb-2">
+								<button class="btn btn-secondary" id="onlyone">하나씩 보기</button>
+							</div> -->
 							<table class="table table-bordered mb-5 w-100" id="list">
 								<c:forEach items="${lessonList }" var="les">
 									<div style="display: none" id="lnsFIle">${les.lsnFile }</div>
 									<tr>
-										<td colspan="2"><a data-toggle="collapse"
-											href="#collapseExample${les.lsnNo }" role="button"
-											aria-expanded="false" aria-controls="collapseExample">
-												${les.ttl }</a></td>
+										<td colspan="2">
+										<a data-toggle="collapse" id="collapsePass" href="#collapseExample${les.lsnNo }" 
+										role="button" aria-expanded="false" aria-controls="collapseExample">
+											${les.ttl }</a></td>
 									</tr>
 									<tr>
 										<td class="p-0">
@@ -122,33 +130,43 @@ td, th {
 
 							<h5>키트 여부</h5>
 							<div class="mb-5 w-100 d-flex justify-content-center">
+							<c:if test="${not empty adLecSel.kitName }">
 								<table class="border mb-5 w-100" border="1">
 									<tr>
-										<th class="bg-light">강의명</th>
-										<td>${adLecSel.ttl }</td>
+										<th class="bg-light">키트이름</th>
+									</tr>
+									<tr>
+										<td>${adLecSel.kitName }</td>
+									</tr>
+									<tr>
+										<th class="bg-light">키트설명</th>
+									</tr>
+									<tr>
+										<td>${adLecSel.kitIntro }</td>
 									</tr>
 									<tr>
 										<th class="bg-light">키트 금액</th>
-										<td><span>${adLecSel.kitPrc }</span>원</td>
-									</tr>
-									<tr class="bg-light">
-										<th colspan="2">키트 설명</th>
 									</tr>
 									<tr>
-										<td colspan="2">${adLecSel.kitIntro }</td>
+										<td><fmt:formatNumber>${adLecSel.kitPrc }</fmt:formatNumber>원</td>
 									</tr>
 								</table>
+								</c:if>
+								<c:if test="${empty adLecSel.kitName }">
+								<h3>해당 강의는 키트등록을 신청하지 않았습니다.</h3></c:if>
 							</div>
 							<div
 								class="d-flex flex-column align-items-center justify-content-center w-100 mb-3">
 								<h4>
-									키트 금액 : <span>${adLecSel.kitPrc }</span>원
+									강의 금액 : <fmt:formatNumber>${adLecSel.prc }</fmt:formatNumber>원
 								</h4>
 								<h4>
-									강의 금액 : <span>${adLecSel.prc }</span>원
+									키트 금액 : 
+									<c:if test="${empty adLecSel.kitName }">0</c:if>
+									<fmt:formatNumber>${adLecSel.kitPrc }</fmt:formatNumber>원
 								</h4>
 								<h4 class="text-danger">
-									합 계 : <span>${adLecSel.prc + adLecSel.kitPrc }</span>원
+									합 계 : <span><fmt:formatNumber>${adLecSel.prc + adLecSel.kitPrc }</fmt:formatNumber></span>원
 								</h4>
 							</div>
 							<div class="d-flex justify-content-center w-100 mb-5">
@@ -172,9 +190,14 @@ td, th {
 	<!-- 내용 끝 -->
 	<!-- 바디 끝 -->
 	<script>
-    $('#reject').click(()=>{
-      $('#modal').modal('show');
+    $('#allCollapase').click('on',function(){
+    	if($('.collapse').hasClass('collapse')){
+    		$('.collapse').attr('class','show');
+    	}else{
+    		$('.show').attr('class','collapse');
+    	}
     })
+}
 </script>
 </body>
 </html>

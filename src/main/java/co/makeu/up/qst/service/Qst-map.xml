@@ -6,11 +6,46 @@
 			SELECT NVL(MAX(qst_no),0)+1 
 			FROM qst
 		</selectKey>
-		INSERT INTO QST(qst_no,ttl,content,q_reg_date,wirter,email,qst_st_code)
-		VALUES(#{qstNo},#{ttl},#{content},sysdate,#{wirter},#{email},'QS01')
+		INSERT INTO QST(qst_no,ttl,content,q_reg_date,writer,email,qst_st_code)
+		VALUES(#{qstNo},#{ttl},#{content},TRUNC(sysdate),#{writer},#{email},'QS01')
 	</insert>
 	
 	<select id="qstSelectList" parameterType="co.makeu.up.qst.service.QstVO" resultType="co.makeu.up.qst.service.QstVO">
+		SELECT * FROM (    
+	            SELECT ROWNUM RN, Q.* FROM (
+	            SELECT  QST_NO, TTL, CONTENT, Q_REG_DATE,QST_ST_CODE,WRITER, COUNT(*) OVER() AS LENGTH
+	            FROM QST
+	            WHERE 1=1 
+	            <if test="writer !=null and !writer.equals('')">
+	            AND	writer like '%'||#{writer}||'%'
+	            </if>
+	            <if test="ttl !=null and !ttl.equals('')">
+	            AND	TTL LIKE '%'||#{ttl}||'%'
+	            </if>
+	            <if test= "content != null and !content.equals('')">
+	            AND CONTENT LIKE '%'||#{content}||'%'
+	            </if>
+	            <if test= "ttlContent != null and !ttlContent.equals('')">
+	            AND (CONTENT LIKE '%'||#{ttlContent}||'%' OR TTL LIKE '%'||#{ttlContent}||'%')
+	            </if>
+	            <if test="startDate != null and !startDate.equals('')">
+	             AND TRUNC(#{startDate}) <![CDATA[<]]> TRUNC(Q_REG_DATE)
+	            </if>
+	            <if test="endDate != null and !endDate.equals('')">
+	             AND TRUNC(#{endDate}) <![CDATA[>]]> TRUNC(Q_REG_DATE)
+	            </if>
+	            <if test="qstStCode !=null and !qstStCode.equals('')">
+	            AND QST_ST_CODE = #{qstStCode}
+	            </if>
+	            ORDER BY QST_NO DESC
+	            ) Q
+	    )
+		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
+		AND RN <![CDATA[<=]]> #{page} * 10		    
+        
+	</select>
+	
+	<select id="qstSelectListPlus" parameterType="co.makeu.up.qst.service.QstVO" resultType="co.makeu.up.qst.service.QstVO">
 		SELECT * FROM (    
 	            SELECT ROWNUM RN, Q.* FROM (
 	            SELECT  QST_NO, TTL, CONTENT, Q_REG_DATE,QST_ST_CODE,WRITER, COUNT(*) OVER() AS LENGTH
@@ -36,8 +71,7 @@
 	            </if>
 	            ) Q
 	    )
-		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
-		AND RN <![CDATA[<=]]> #{page} * 10		    
+		WHERE 1=1	    
         
 	</select>
 	

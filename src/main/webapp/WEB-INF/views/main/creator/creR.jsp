@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,7 +127,7 @@ th, td {
 											<th style="width: 107px">결제일</th>
 											<th style="width: 107px">환불 요청일</th>
 											<th>환불사유</th>
-											<th style="width: 80px">결제금액</th>
+											<th style="width: 90px">결제금액</th>
 											<th style="width: 80px">처리상태</th>
 										</tr>
 									</thead>
@@ -140,7 +141,7 @@ th, td {
 												<td>${refundlist.regDate }</td>
 												<td>${refundlist.reqDate }</td>
 												<td>${refundlist.content }</td>
-												<td>${refundlist.pay }원</td>
+												<td><fmt:formatNumber>${refundlist.pay }</fmt:formatNumber>원</td>
 												<c:if test="${refundlist.rfStCode eq 'RF01'}">
 													<td class="font-weight-bold">환불신청대기</td>
 												</c:if>
