@@ -18,7 +18,28 @@ public class QstVO {
 	private Date endDate;
 	private int page;
 	private int length;
+	private int endrow;
+	private String orderColumn;
+	private String orderBy;
 	
+	public String getOrderColumn() {
+		return orderColumn;
+	}
+	public void setOrderColumn(String orderColumn) {
+		this.orderColumn = orderColumn;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public int getEndrow() {
+		return endrow;
+	}
+	public void setEndrow(int endrow) {
+		this.endrow = endrow;
+	}
 	public int getLength() {
 		return length;
 	}
