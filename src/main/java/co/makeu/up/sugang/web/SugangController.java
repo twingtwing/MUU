@@ -236,6 +236,14 @@ public class SugangController {
 	@PostMapping("/creator/shipNumUpdate")
 	@ResponseBody
 	public void shipNumUpdate(SugangVO vo) {
+		vo.setShipStCode("D02");
+		sugangDao.shipUpdate(vo);
+	}
+	//반송거부
+	@PostMapping("/creator/shipReject")
+	@ResponseBody
+	public void shipReject(SugangVO vo) {
+		vo.setShipStCode("D06");
 		sugangDao.shipUpdate(vo);
 	}
 }

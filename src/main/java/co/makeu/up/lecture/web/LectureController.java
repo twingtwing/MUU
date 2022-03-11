@@ -247,7 +247,12 @@ public class LectureController {
 	@RequestMapping("/creator/rLecL")
 	public String requestLecList(LectureVO vo, Model model, Principal principal) {
 		vo.setCreId(principal.getName());
-		model.addAttribute("rlists", lectureDao.requestLecture(vo));
+		List<LectureVO> list = lectureDao.requestLecture(vo); 
+		model.addAttribute("rlists", list);
+		if(list.isEmpty() != true) {
+			int listCnt = list.size();
+			model.addAttribute("listCnt", listCnt);
+		}
 		return "main/lecture/rLecL";
 	}
 	
@@ -255,7 +260,12 @@ public class LectureController {
 	@RequestMapping("/creator/oLecL")
 	public String openLecList(LectureVO vo, Model model, Principal principal) {
 		vo.setCreId(principal.getName());
-		model.addAttribute("olists", lectureDao.openLecture(vo));
+		List<LectureVO> list = lectureDao.openLecture(vo); 
+		model.addAttribute("olists", list);
+		if(list.isEmpty() != true) {
+			int listCnt = list.size();
+			model.addAttribute("listCnt", listCnt);
+		}
 		return "main/lecture/oLecL";
 	}
 	
@@ -263,7 +273,12 @@ public class LectureController {
 	@RequestMapping("/creator/clLecL")
 	public String closeLecList(LectureVO vo, Model model, Principal principal) {
 		vo.setCreId(principal.getName());
-		model.addAttribute("cllists", lectureDao.closeLecture(vo));
+		List<LectureVO> list = lectureDao.closeLecture(vo); 
+		model.addAttribute("cllists", list);
+		if(list.isEmpty() != true) {
+			int listCnt = list.size();
+			model.addAttribute("listCnt", listCnt);
+		}
 		return "main/lecture/clLecL";
 	}
 	
@@ -271,7 +286,13 @@ public class LectureController {
 	@RequestMapping("/creator/rpLecL")
 	public String reportLecList(LectureVO vo, Model model, Principal principal) {
 		vo.setCreId(principal.getName());
-		model.addAttribute("rplists", lectureDao.reportLecture(vo));
+		List<LectureVO> list = lectureDao.reportLecture(vo); 
+		model.addAttribute("rplists", list);
+		if(list.isEmpty() != true) {
+			int listCnt = list.size();
+			model.addAttribute("listCnt", listCnt);
+			System.out.println(listCnt);
+		}
 		return "main/lecture/rpLecL";
 	}
 	

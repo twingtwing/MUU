@@ -150,7 +150,7 @@
                       <option value="작성자ID">작성자ID</option>
                     </select>
                   </div>
-                  <input type="text" class="border" id="rvinput" spellcheck="false" placeholder="검색...">
+                  <input type="text" class="border" id="rvinput" onfocus="this.select()" spellcheck="false" placeholder="검색...">
                   <button type="button" id="rvsearchBtn" class="border px-4 mr-4">검색</button>
                 </div>
 

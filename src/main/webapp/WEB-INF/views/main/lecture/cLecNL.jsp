@@ -161,7 +161,7 @@
                           </select>
                       </div>
                       <input class="border mb-0 ml-1" id="tocval" style="height: 37px; width: 170px" type="text"
-                          placeholder="검색..." spellcheck=false onkeypress="if(event.keyCode==13){tocSearch();}">
+                          placeholder="검색..." spellcheck=false onfocus="this.select()" onkeypress="if(event.keyCode==13){tocSearch();}">
                       <a class="btn btn-outline-secondary search-a" onclick="tocSearch()"><i class="icon_search"></i></a>
 
                   </div>

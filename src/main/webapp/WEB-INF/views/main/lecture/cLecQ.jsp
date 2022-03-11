@@ -155,7 +155,7 @@
                             <!--여기서 부터임-->
                              <div class="row mr-1">
                                  <div>
-                                 	 <select id="qnayn">
+                                 	 <select id="qnayn" onchange="qnasearch()">
                                  	 	 <option value="">전체</option>
                                  	 	 <option value="Q02">처리</option>
                                  	 	 <option value="Q01">미처리</option>
@@ -166,7 +166,7 @@
                                      </select>
                                  </div>
                                  <input class="border mb-0 ml-1" id="qnainput" style="height: 37px; width: 170px" type="text"
-                                     placeholder="검색..." spellcheck=false onkeypress="if(event.keyCode==13){qnasearch();}">
+                                     placeholder="검색..." spellcheck=false onfocus="this.select()" onkeypress="if(event.keyCode==13){qnasearch();}">
                                  <a class="btn btn-outline-secondary search-a searchBtn" onclick="qnasearch()"><i class="icon_search"></i></a>
          
                              </div>
