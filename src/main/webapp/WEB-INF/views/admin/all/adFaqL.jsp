@@ -58,25 +58,33 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
-                                <form action="/admin/adFaqL" method="get">
+                                <form action="/admin/adFaqL" id="searchForm" method="get">
                                 	<div class="row position-relative">
 	                                    <table class="admin_search table table-bordered">
 	                                        <tr height="38">
 	                                            <th width="15%" class="align-middle">질문</th>
 	                                            <td width="35%" class="align-middle">
-	                                                <input class="w-100" type="text" name="qcontent" spellcheck="false">
+	                                                <input class="w-100" type="text" name="qcontent" spellcheck="false" value="${search.qcontent }">
 	                                            </td>
 	                                            <th class="align-middle">카테고리</th>
 	                                            <td>
 	                                                <div>
 	                                                    <select name="ctgr" class="text-center w-100">
-	                                                        <option value="" selected>전체</option>
-	                                                        <option value="CQ01">결제</option>
-	                                                        <option value="CQ02">배송</option>
-	                                                        <option value="CQ03">강의</option>
-	                                                        <option value="CQ04">회원정보/보안</option>
-	                                                        <option value="CQ05">오류</option>
-	                                                        <option value="CQ06">환불</option>
+	                                                        <option value="" selected
+	                                                        <c:if test="${search.ctgr eq ''}">checked="checked"</c:if> 
+	                                                        >전체</option>
+	                                                        <option value="CQ01"<c:if test="${search.ctgr eq 'CQ01'}">checked="checked"</c:if> 
+	                                                        >결제</option>
+	                                                        <option value="CQ02"<c:if test="${search.ctgr eq 'CQ02'}">checked="checked"</c:if> 
+	                                                        >배송</option>
+	                                                        <option value="CQ03"<c:if test="${search.ctgr eq 'CQ03'}">checked="checked"</c:if> 
+	                                                        >강의</option>
+	                                                        <option value="CQ04"<c:if test="${search.ctgr eq 'CQ04'}">checked="checked"</c:if> 
+	                                                        >회원정보/보안</option>
+	                                                        <option value="CQ05"<c:if test="${search.ctgr eq 'CQ05'}">checked="checked"</c:if> 
+	                                                        >오류</option>
+	                                                        <option value="CQ06"<c:if test="${search.ctgr eq 'CQ06'}">checked="checked"</c:if> 
+	                                                        >환불</option>
 	                                                    </select>
 	                                                </div>
 	                                            </td>
@@ -85,9 +93,9 @@
 	                                            <th class="align-middle">작성일</th>
 	                                            <td colspan="3">
 	                                                <div class="row ml-1">
-	                                                    <div><input name="start" type="date"></div>
+	                                                    <div><input name="start" type="date" value="${search.start }"></div>
 	                                                    <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
-	                                                    <div><input name="end" type="date"></div>
+	                                                    <div><input name="end" type="date" value="${search.end }"></div>
 	                                                </div>
 	                                            </td>
 	                                            
@@ -153,7 +161,7 @@
 		                                    <div class="position-absolute" style="right: 1px;">
 		                                        <button id="faqInsert" class="btn btn-dark">글 등록</button>
 		                                        <button class="btn btn-danger">PDF다운</button>
-		                                        <button class="btn btn-success">EXCEL다운</button>
+		                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
 		                                    </div>
 		                                </div>
                                     </div>
@@ -343,6 +351,13 @@
 
                 <!-- 바디 끝 -->
 	<script type="text/javascript">
+	$('#excel').click(()=>{
+		/* makeSearchData(1); */
+		$('#searchForm').attr('action','/admin/adminFaqExcel');
+		$('#searchForm').submit();
+		$('#searchForm').attr('action','/admin/adFaqL');
+	})
+	
 	// 수정
 	$('#qe').keyup(function(){
 		 btndisabled()

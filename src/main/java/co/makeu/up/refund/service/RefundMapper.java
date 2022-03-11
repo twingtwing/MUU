@@ -9,6 +9,7 @@ public interface RefundMapper {
 	List<RefundVO> RefundListSelect(RefundVO vo);
 	List<RefundVO> adminRefundList(RefundVO vo);
 	List<RefundVO> adminRefundListSearch(RefundVO vo);
+	List<RefundVO> adminRefundListSearchPlus(RefundVO vo);
 	void updateRefund(Map map);
 	/* int updateRefund(RefundVO vo); */
 	int adRefCancleUpdate(RefundVO vo);

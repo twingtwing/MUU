@@ -239,6 +239,15 @@
 </form>
 
 <script type="text/javascript">
+//엑셀 다운로드
+$('#excel').click(()=>{
+	/* makeSearchData(1); */
+	$('#searchForm').attr('action','/admin/qstExcel');
+	setSearchData(1)
+	$('#searchForm').submit();
+	$('#searchForm').attr('action','/admin/qstSelectListPlus');
+})
+
 $('#search').click(()=>{
 	setSearchData(1)
 	$('#searchForm').submit();

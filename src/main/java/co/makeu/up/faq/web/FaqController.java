@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.makeu.up.common.view.PageVo;
@@ -35,6 +34,12 @@ public class FaqController {
 		return faqDao.faqSelectList();
 	}
 	
+	@ResponseBody
+	@PostMapping("/faqSelectListSearch")
+	public List<FaqVO> faqSelectListSearch(FaqVO vo) {
+		return faqDao.faqListSearch(vo);
+	}
+	
 	//admin faq
 	@GetMapping("/admin/adFaqL")
 	public String adFaqL(FaqVO vo,Model model) {
@@ -45,6 +50,7 @@ public class FaqController {
 			length = list.get(0).getLength();
 		}
 		model.addAttribute("pageMaker",new PageVo(vo,length));
+		model.addAttribute("search", vo);
 		return "admin/all/adFaqL";
 	}
 	@ResponseBody
