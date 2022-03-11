@@ -93,10 +93,10 @@ background-color:#f5f5f5;
                                             <th>신고유형</th>
                                             <td>
                                                 <select name="type" id="ct" >
-                                                	<option value="" >전체</option>
-                                                    <option value="RPT01" >부적절한콘텐츠</option>
-                                                    <option value="RPT02">피싱또는스펨</option>
-                                                    <option value="RPT03">기타</option>
+                                                	<option value="" <c:if test="${ empty search.type }"> selected="selected"</c:if>>전체</option>
+                                                    <option value="RPT01"<c:if test="${ search.type eq 'RPT01' }"> selected="selected"</c:if>>부적절한콘텐츠</option>
+                                                    <option value="RPT02" <c:if test="${ search.type eq 'RPT02' }"> selected="selected"</c:if>>피싱또는스펨</option>
+                                                    <option value="RPT03" <c:if test="${ search.type eq 'RPT03' }"> selected="selected"</c:if>>기타</option>
                                                 </select>
                                             </td>
                                             
@@ -110,11 +110,14 @@ background-color:#f5f5f5;
                                             </td>
                                             <th>처리상태</th>
                                             <td class="text-left">
-                                                <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02">
+                                                <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02"
+                                                <c:if test ="${search.rpStCode eq 'RPS02'}">checked="checked" </c:if>>
                                                 <label for="t" class="mr-3 mb-0" >처리</label>
-                                                <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01">
+                                                <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01"
+                                                <c:if test ="${search.rpStCode eq 'RPS01'}">checked="checked" </c:if>>
                                                 <label for="r" class="mb-0">미처리</label>
-                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03">
+                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03"
+                                                 <c:if test ="${search.rpStCode eq 'RPS03'}">checked="checked" </c:if>>
                                                 <label for="r" class="mb-0">반려</label>
                                             </td>
                                         </tr>
@@ -133,7 +136,8 @@ background-color:#f5f5f5;
                                                 <th >강의명</th>
                                                 <th style="width: 130px;">신고자</th>
                                                 <th style="width: 120px;">신고날짜</th>
-                                                <th style="width: 100px;">상태</th>
+                                                <th style="width: 100px;">신고상태</th>
+                                                 <th style="width: 100px;">강의상태</th>
                                                 
                                             </tr>
                                         </thead>
@@ -155,27 +159,28 @@ background-color:#f5f5f5;
                                             <td>${list.ttl }</td>
                                             <td>${list.reporter }</td>
                                             <td>${list.rpdate }</td>
-                                            <td>
-                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
-	                                            	미처리
-	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L04' }">
-	                                            	 처리 - 신고
-	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode eq 'L06' }">
-	                                            	 처리 - 수정완료
-	                                            </c:if>
-	                                            <c:if test="${list.rpStCode eq 'RPS02' && list.ltStCode ne 'L04' && list.ltStCode ne 'L06'}">
-	                                            	 처리 - 정상처리
-	                                            </c:if>
-	                                             <c:if test="${list.rpStCode eq 'RPS03' }">
-	                                            	 반려
-	                                            </c:if>
-	                                            
-                                                
-                                           </td>
+                                            <c:if test = "${list.rpStCode eq 'RPS01' }">
+	                                        	<td>미처리</td>
+	                                            <td><i class="fas fa-minus"></i></td>
+	                                        </c:if>
+	                                        <c:if test="${list.rpStCode eq 'RPS02' }">
+	                                        	<td>처리</td>
+	                                            <c:if test = "${list.ltStCode ne 'L04' and list.ltStCode ne 'L06' }">
+		                                            <td>정상강의</td>
+		                                        </c:if>
+		                                        <c:if test = "${list.ltStCode eq 'L04' }">
+		                                        	<td>수정전</td>
+		                                        </c:if>
+		                                        <c:if test = "${list.ltStCode eq 'L06' }">
+		                                        	<td>수정후</td>
+		                                        </c:if>
+	                                       </c:if>
+	                                       <c:if test="${list.rpStCode eq 'RPS03' }">
+	                                            <td>반려</td>
+	                                            <td><i class="fas fa-minus"></i></td>
+	                                       </c:if>
                                         </tr>
-                                          </c:forEach>
+                                    </c:forEach>
                                     </tbody>
                                     </table>
                                 </div>
@@ -210,7 +215,7 @@ background-color:#f5f5f5;
                                     <div class="position-absolute" style="right: 1px;">
                                         
                                         <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
+                                        <button id="excel" class="btn btn-success">EXCEL다운</button>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +239,11 @@ $(".paginate_button a").on("click" , function(e) {
 function setCursor(str,str2){
     str.style.cursor = str2;
 }
-
+$('#excel').on('click',()=>{
+	console.log('hi')
+	$('#ser').attr('action','/admin/reportcl');
+	$('#ser').submit();
+    $('#ser').attr('action','/admin/adLRepL');
+})
 </script>
 </html>
