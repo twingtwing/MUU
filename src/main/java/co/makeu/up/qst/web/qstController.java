@@ -41,24 +41,17 @@ public class qstController {
 	//admin list
 	@GetMapping("/admin/adQstL")
 	public String adQstL(QstVO vo, Model model) {
-		vo.setPage(1);
-		vo.setWriter("");
+		if(vo.getPage()==0) {
+			vo.setPage(1);
+		}
 		List<QstVO> list = qstDao.qstSelectList(vo);
-		Pagination pagination = new Pagination(list.get(0).getLength(), 1);
+		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getLength() : 1, vo.getPage()); 
 		model.addAttribute("pages",pagination);
 		model.addAttribute("qstList",list);
+		model.addAttribute("searchData",vo);
 		return "admin/all/adQstL";
 	}
 	
-	@GetMapping("/admin/qstSearch")
-	public String adQstSearch(QstVO vo, Model model) {
-		List<QstVO> list = qstDao.qstSelectList(vo);
-		model.addAttribute("qstList",list);
-		model.addAttribute("searchData",vo);
-		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getLength() : 1, vo.getPage()); 
-		model.addAttribute("pages", pagination);
-		return "admin/all/adQstL";
-	}
 	
 	//admin select
 	@GetMapping("/admin/adQstS")

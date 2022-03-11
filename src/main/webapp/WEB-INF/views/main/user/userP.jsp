@@ -30,6 +30,9 @@
     .hided{
     	display: none;
     }
+    .more {
+    	cursor: pointer;
+    }
   </style>
 
 </head>

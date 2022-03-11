@@ -292,6 +292,14 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
+		
+		<!-- jasper(pdf) -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
