@@ -67,6 +67,12 @@ public class ReportServiceImpl implements ReportMapper{
 		return map.succode(vo);
 	}
 
+	@Override
+	public List<ReportVO> ex(ReportVO vo) {
+		// TODO Auto-generated method stub
+		return map.ex(vo);
+	}
+
 	
 	
 }

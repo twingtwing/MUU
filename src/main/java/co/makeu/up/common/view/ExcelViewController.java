@@ -15,6 +15,8 @@ import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.refund.service.RefundServiceImpl;
 import co.makeu.up.refund.service.RefundVO;
+import co.makeu.up.report.service.ReportServiceImpl;
+import co.makeu.up.report.service.ReportVO;
 import co.makeu.up.users.service.UsersServiceImpl;
 import co.makeu.up.users.service.UsersVO;
 
@@ -25,7 +27,7 @@ public class ExcelViewController {
 	@Autowired LectureServiceImpl lectureDao;
 	@Autowired RefundServiceImpl refundDao;
 	@Autowired BoardServiceImpl boardDao;
-	
+	@Autowired ReportServiceImpl reportDao;
 	@RequestMapping("/admin/userExcel")
 	public String excel(Model model, UsersVO vo) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		if(vo.getuGrdCodeList()==null) {
@@ -131,5 +133,33 @@ public class ExcelViewController {
 		model.addAttribute("datas", converMapsList);
 		return "excelView";
 	}
+	@RequestMapping("/admin/reportcl")
+	public String reportcl (Model model , ReportVO vo) 
+		throws IllegalArgumentException, IllegalAccessException, InstantiationException{
+		vo.setCtgr("RP02");
+		String [] headers = new String[] {"rpNo","reporter","ltNo","ctgr","rpdate","content","num","rpStCode","type","ttl","creid","star","ltStCode","recontent"};
+		List<ReportVO> list = reportDao.ex(vo);
+		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
+		model.addAttribute("fileName","reportlist");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		
+		
+		return "excelView";
+	}
 	
+	@RequestMapping("/admin/reportc")
+	public String reportc (Model model , ReportVO vo) 
+		throws IllegalArgumentException, IllegalAccessException, InstantiationException{
+		vo.setCtgr("RP01");
+		String [] headers = new String[] {"rpNo","reporter","ltNo","ctgr","rpdate","content","num","rpStCode","type","ttl","creid","star","ltStCode","recontent"};
+		List<ReportVO> list = reportDao.ex(vo);
+		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
+		model.addAttribute("fileName","reportlist");
+		model.addAttribute("headers", headers);
+		model.addAttribute("datas", converMapsList);
+		
+		
+		return "excelView";
+	}
 }

@@ -31,6 +31,7 @@ public class ReportController {
 		model.addAttribute("pageMaker",new PageVo(vo,length));
 		System.out.println(model.getAttribute("pageMaker"));
 		model.addAttribute("search",vo);
+		System.out.println(vo.toString() + "되냐?");
 		return "admin/report/adLRepL";
 	}
 	
@@ -52,6 +53,7 @@ public class ReportController {
 			length = list.get(0).getLength();
 		}
 		model.addAttribute("pageMaker",new PageVo(vo,length));
+		model.addAttribute("search",vo);
 		System.out.println(model.getAttribute("pageMaker"));
 		return "admin/report/adRRepL";
 	}

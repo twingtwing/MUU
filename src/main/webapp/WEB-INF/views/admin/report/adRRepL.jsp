@@ -81,81 +81,101 @@ background-color:#f5f5f5;
                                                 <div class="d-flex">
                                                     <div class="col-3 row align-items-center">
                                                         <select class="w-100" id="sel" onchange="chsel()">
-                                                        <option value="reporter">신고자</option>
-                                                        <option value="creid">크리에이터</option>
+                                                        <option value="reporter"
+                                                         <c:if test="${not empty search.reporter}">selected="selected"</c:if>
+                                                        >신고자</option>
+                                                        <option value="creid"
+                                                        <c:if test="${not empty search.creid}">selected="selected"</c:if>
+                                                        >크리에이터</option>
                                                     </select>
                                                     </div>
                                                     <div class="col-9">
-                                                        <input id="inp" class="w-100" type="text" spellcheck="false" name = "reporter">
+                                                        <input id="inp" class="w-100" type="text" spellcheck="false" name = "reporter" 
+                                                        <c:if test="${not empty search.reporter}">value = ${search.reporter }</c:if>
+                                                        <c:if test="${not empty search.creid}">value = ${search.creid }</c:if>
+                                                        >
                                                     </div>
                                                 </div>
                                             </td>
                                             <th width="15%" id="ttt">신고유형</th>
                                             <td width="35%" class="text-left">
                                                  <select name="type" class="w-100" id="ct" >
-                                                 	<option value="">전체</option>
-                                                    <option value="RPT01">부적절한콘텐츠</option>
-                                                    <option value="RPT02">피싱또는스펨</option>
-                                                    <option value="RPT03">기타</option>
+                                                 	<option value="" <c:if test="${ empty search.type }"> selected="selected"</c:if>>전체</option>
+                                                    <option value="RPT01"<c:if test="${ search.type eq 'RPT01' }"> selected="selected"</c:if>>부적절한콘텐츠</option>
+                                                    <option value="RPT02" <c:if test="${ search.type eq 'RPT02' }"> selected="selected"</c:if>>피싱또는스펨</option>
+                                                    <option value="RPT03" <c:if test="${ search.type eq 'RPT03' }"> selected="selected"</c:if>>기타</option>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>신고당한 리뷰</th>
                                             <td class="text-left">
-                                                <input class="w-100" type="text" spellcheck="false" name="recontent">
+                                                <input class="w-100" type="text" spellcheck="false" name="recontent" value ="${search.recontent }">
                                             </td>
                                             <th>처리상태</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS03">
-                                                    <label for="t" class="mr-3 ml-1 mb-0">반려</label>
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false "value="RPS02">
-                                                    <label for="r" class="mr-3 ml-1 mb-0">처리</label>
-                                                    <input type="radio" name="rpStCode" spellcheck="false" ondblclick="this.checked=false"value="RPS01">
-                                                    <label for="a" class="mr-3 ml-1 mb-0">대기</label>
+                                                     <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02"
+                                                <c:if test ="${search.rpStCode eq 'RPS02'}">checked="checked" </c:if>>
+                                                <label for="t" class="mr-3 mb-0" >처리</label>
+                                                <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01"
+                                                <c:if test ="${search.rpStCode eq 'RPS01'}">checked="checked" </c:if>>
+                                                <label for="r" class="mb-0">미처리</label>
+                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03"
+                                                 <c:if test ="${search.rpStCode eq 'RPS03'}">checked="checked" </c:if>>
+                                                <label for="r" class="mb-0">반려</label>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>강의명</th>
                                             <td class="text-left" >
-                                                <input class="w-100" type="text" spellcheck="false" name="ttl">
+                                                <input class="w-100" type="text" spellcheck="false" name="ttl" value = "${search.ttl }">
                                             </td>
                                             <th>신고날짜</th>
                                             <td class="text-left">
-                                                <input class="w-30" type="date" spellcheck="false" id="haq" name="start">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq" name="start" value = "${search.start }">
                                                 <i class="fas fa-minus"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="haq1" name="end">
+                                                <input class="w-30" type="date" spellcheck="false" id="haq1" name="end"  value = "${search.end }">
                                             </td>
                                         </tr>
                                         <tr height="38">
                                             <th>별점</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="d-flex align-items-center">
-                                                    <input type="radio" value="1" id="1" name=star ondblclick="this.checked=false">
+                                                    <input type="radio" value="1" id="1" name=star ondblclick="this.checked=false"
+                                                    	 <c:if test ="${search.star eq '1'}">checked="checked" </c:if>
+                                                    >
                                                     <label for="1" class="mb-0 ml-1 mr-2">
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                     </label>
-                                                    <input type="radio" value="2" id="2" name=star ondblclick="this.checked=false">
+                                                    <input type="radio" value="2" id="2" name=star ondblclick="this.checked=false"
+                                                    	 <c:if test ="${search.star eq '2'}">checked="checked" </c:if>
+                                                    >
                                                     <label for="2" class="mb-0 ml-1 mr-2">
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                     </label>
-                                                    <input type="radio" value="3" id="3" name=star ondblclick="this.checked=false">
+                                                    <input type="radio" value="3" id="3" name=star ondblclick="this.checked=false"
+                                                    	 <c:if test ="${search.star eq '3'}">checked="checked" </c:if>
+                                                    >
                                                     <label for="3" class="mb-0 ml-1 mr-2">
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                     </label>
-                                                    <input type="radio" value="4" id="4" name=star ondblclick="this.checked=false">
+                                                    <input type="radio" value="4" id="4" name=star ondblclick="this.checked=false"
+                                                    	 <c:if test ="${search.star eq '4'}">checked="checked" </c:if>
+                                                    >
                                                     <label for="4" class="mb-0 ml-1 mr-2">
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                     </label>
-                                                    <input type="radio" value="5" id="5" name=star ondblclick="this.checked=false">
+                                                    <input type="radio" value="5" id="5" name=star ondblclick="this.checked=false"
+                                                    	 <c:if test ="${search.star eq '5'}">checked="checked" </c:if>
+                                                    >
                                                     <label for="5" class="mb-0 ml-1 mr-2">
                                                         <i class="fa fa-star text-warning mr-0"></i>
                                                         <i class="fa fa-star text-warning mr-0"></i>
@@ -167,6 +187,7 @@ background-color:#f5f5f5;
                                             </td>
                                         </tr>
                                     </table>
+                                  
                                     <button class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;" type="submit">검색</button>
                                 </div>
                                     </form>
@@ -261,7 +282,7 @@ background-color:#f5f5f5;
                                     <div class="position-absolute" style="right: 1px;">
                                         
                                         <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
+                                        <button id="execl" class="btn btn-success">EXCEL다운</button>
                                     </div>
                                 </div>
                             </div>
@@ -290,5 +311,12 @@ $(".paginate_button a").on("click" , function(e) {
     function setCursor(str,str2){
         str.style.cursor = str2;
     }
+    $('#execl').on('click',()=>{
+    	console.log('hi')
+    	$('#ser').attr('action','/admin/reportc');
+    	$('#ser').submit();
+        $('#ser').attr('action','/admin/adRRepL');
+    })
+ 
 </script>
 </html>
