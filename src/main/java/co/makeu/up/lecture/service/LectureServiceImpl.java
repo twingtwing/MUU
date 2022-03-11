@@ -91,4 +91,9 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.adminLectureInfo(ltNo);
 	}
 
+	@Override
+	public List<LectureVO> adminLectureListPlus(LectureVO vo) {
+		return map.adminLectureListPlus(vo);
+	}
+
 }

@@ -7,4 +7,5 @@ public interface QstService {
 	List<QstVO> qstSelectList(QstVO vo);
 	QstVO qstSelect(int qstNo);
 	int qstUpdateStCode(QstVO vo);
+	List<QstVO> qstSelectListPlus(QstVO vo);
 }

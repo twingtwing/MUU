@@ -100,7 +100,7 @@
                                                 <div class="d-flex">
                                                     <!--상세 / 데이터필요-->
                                                     <select name="upCtgr" id="ctgr" class="border w-50">
-                                                        <option value="">전체(상위 카테고리)</option>
+                                                        <option value="" id="ctgrAll">전체(상위 카테고리)</option>
                                                         <option value="HC01" <c:if test="${search.upCtgr eq 'HC01'}">selected="selected"</c:if>>음악</option>
                                                         <option value="HC02" <c:if test="${search.upCtgr eq 'HC02'}">selected="selected"</c:if>>요리</option>
                                                         <option value="HC03" <c:if test="${search.upCtgr eq 'HC03'}">selected="selected"</c:if>>건강</option>
@@ -198,8 +198,12 @@
                                                 <c:if test="${g eq 'L03' }">
                                                 만료
                                                 </c:if>
+                                                <c:if test="${g eq 'L07' }">
+                                                등록 반려
+                                                </c:if>
                                                 </label>
-                                            	</c:forEach>    
+                                            	</c:forEach>   
+                                            	<button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button> 
                                             </td>
                                         </tr>
                                         
@@ -225,8 +229,8 @@
                                             </th>
                                             <th style="width: 200px;"data-col="up_ctgr">카테고리
                                             <i class=
-                                            "fa fa-caret-down 
-                                            <c:if test="${search.orderColumn eq 'ctgr' and search.orderBy eq 'asc'}">
+                                            "fa fa-caret-down
+                                            <c:if test="${search.orderColumn eq 'up_ctgr' and search.orderBy eq 'asc'}">
                                             fa-rotate-180
                                             </c:if>
                                             "                                            
@@ -366,6 +370,18 @@
 		searchSetting();
 		$('#searchForm').submit();
 	})
+	
+// 검색 초기화
+$('#resetAll').click(()=>{
+	$('#searchForm input[name=ttl]').val('');
+	$('.searchKey').val('');
+	$('#ctgrAll').prop('selected','selected');
+	$('#firstJdate').val(null);	
+	$('#lastJdate').val(null);
+	$('input[name=star]').prop('checked',null);
+	$('input[name=ltStCodeList]').prop('checked',null);
+})
+	
 	
 	const searchSetting = ()=>{
 		if($('.searchBox').val()==='id'){

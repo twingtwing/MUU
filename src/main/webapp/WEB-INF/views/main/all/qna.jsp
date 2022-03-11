@@ -189,7 +189,11 @@
                     console.log("이메일타입 " + this.inputEmailType);
                     console.log("아이디 " + this.inputid);
                     //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
-                    
+
+                    let intro = this.inputContent;
+        	   		intro = intro.replace(/\r\n/ig,'<br>');
+        	   		intro = intro.replace(/\\n/ig,'<br>');
+        	   		intro = intro.replace(/\n/ig,'<br>');
                     
                    $.ajax({
             		url : '/QstInsert',
@@ -200,12 +204,14 @@
             		},
             		data : {
             			ttl: this.inputTitle,
-               		    content : this.inputContent,
-               		    wirter : this.inputid,
+               		    content : intro,
+               		    writer : this.inputid,
                		  	email : this.inputEmailID + "@" + this.inputEmailType
             		},
             		success: function(jqXHR) {
             			console.log("성공")
+            			alert("문의해주셔서 감사합니다.")
+            			location.href="/home"
             		}
             	})
                 }

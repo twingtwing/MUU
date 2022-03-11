@@ -12,6 +12,9 @@ public class FaqVO {
 	private String fstcode;
 	private Date wrdate;
 	private String acontent;	
+	
+	//for user search
+	private String searchttl;
 
 	//for extend
 	private String ctgrName;

@@ -85,6 +85,39 @@
      width:500px;
      height:200px;
  }
+ 
+ .lecIprog{
+ 	font-size : xx-small;
+ }
+ .photobutton{
+ 	border:none important;
+ }
+ .photobutton label{
+ 	border : 1px solid grey;
+ 	border-radius : 5px;
+ 	background-color:white;
+ 	color: grey;
+ 	padding:5px;
+ 	cursor:pointer;
+ }
+ .photobutton label:hover{
+ 	color:white;
+ 	background-color:black;
+ }
+select {
+	border-radius:8px;
+	height:38px;
+ }
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
 </style>
 </head>
 <body>
@@ -221,10 +254,10 @@
                                         </td>
                                     <tr>
                                         <td colspan="2" style="text-align: center;">
-                                        	<div class="button">
+                                        	<p class="photobutton">
 	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
 	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
-                                        	</div>
+                                        	</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -243,10 +276,10 @@
                                     </tr>
                                     <tr>
                                         <td style="text-align:center;">
-                                        	<div class="button">
+                                        	<p class="photobutton">
 	                                        	<label class="phtLb" for="thPhtUp">썸네일 사진 업로드</label>
 	                                        	<input type="file" id="thPhtUp" name="thPhtUp" accept="image/*">
-                                        	</div>
+                                        	</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -255,13 +288,19 @@
                     </div>
                     
                     <div class="row col-12">
-                        <div class="col-4">
+                        <div class="col-2">
                             <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
-                        <div class="col-4 text-center mt-4">
-                            1/4
+                        <div class="col-8 text-center mt-4">
+	                        <button class="btn btn-outline-danger lecIprog active" style="border-radius:200px;" onclick="lecIpage0()">카테고리 / 사진 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage1()">강의정보 / 기간 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage2()">수업 등록</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
-                        <div class="col-4" style="text-align: right;">
+                        <div class="col-2" style="text-align: right;">
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage1();">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
@@ -285,10 +324,10 @@
                         <div class="col-6 ml-3 align-self-center" style="border-right:1px solid rgb(218, 218, 218)">
                             <form action="">
                                 <div class="mb-3">
-                                    <input type="text" id="lecTitle" maxlength="200" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요">
+                                    <input type="text" id="lecTitle" maxlength="200" onkeyup="fn_checkByte(this)" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" title="강의제목란">
                                 </div>
                                 <div class="">
-                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요"></textarea>
+                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의소개란"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -322,16 +361,22 @@
                     </div>
                     
                     <div class="row col-12">
-                        <div class="col-4">
+                        <div class="col-2">
                             <a href="#" onclick="lecIpage0()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
                             <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
-                        <div class="col-4 text-center mt-4">
-                            2/4
+                        <div class="col-8 text-center mt-4">
+                            <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage0()">카테고리 / 사진 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog active" style="border-radius:200px;" onclick="lecIpage1()">강의정보 / 기간 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage2()">수업 등록</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
-                        <div class="col-4" style="text-align: right;">
+                        <div class="col-2" style="text-align: right;">
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage2()"> 
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
@@ -364,16 +409,22 @@
                     </div>
                     
                     <div class="row col-12" style="padding-top:30px;">
-                        <div class="col-4">
+                        <div class="col-2">
                             <a href="#" onclick="lecIpage1()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
                             <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
-                        <div class="col-4 text-center mt-4">
-                            3/4
+                        <div class="col-8 text-center mt-4">
+                            <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage0()">카테고리 / 사진 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage1()">강의정보 / 기간 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog active" style="border-radius:200px;" onclick="lecIpage2()">수업 등록</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
-                        <div class="col-4" style="text-align: right;">
+                        <div class="col-2" style="text-align: right;">
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
                             <a href="#" onclick="lecIpage3()">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
@@ -428,10 +479,10 @@
                         <div class="row col-6 ml-3 justify-content-center align-items-center" style="height:400px; border-right:1px solid rgb(218, 218, 218);">
                             <form action="">
                                 <div class="row mb-3">
-                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요">
+                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요" title="키트이름란">
                                 </div>
                                 <div class="row">
-                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요"></textarea>
+                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요" title="키트설명란"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -439,10 +490,10 @@
                         <!--수업키트 금액 및 강의금액 입력란 / input type을 바꾸거나 백단에서 제한 둘 것-->
                         <div class="col-5 ml-3 mt-5 mb-5 align-self-center periodselect">
                             <div class="mb-5">
-                                <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요">
+                                <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요" title="키트금액란">
                             </div>
                             <div class="mb-2">
-                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" placeholder="강의 금액을 입력해주세요">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" placeholder="강의 금액을 입력해주세요" title="강의금액란">
                             </div>
                             <h6 class="periodsub">*만원단위이며 10~500만원 사이 금액만 등록 가능합니다.</h6>
                         </div>
@@ -455,34 +506,37 @@
                         <div class="col-12 mx-4">
                             <form method="" action="">
                                 <div >
-                                    <h6 class="mb-2 font-weight-bold">태그 선택</h6>
+                                    <h6 class="mb-2 font-weight-bold">태그 선택(최대 3개)</h6>
                                 </div>
                                 <div id="tagdiv">
-                                <!--
-                                    <label class="mr-2"><input type="checkbox" value="2">&nbsp;2번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="1">&nbsp;1번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="3">&nbsp;3번태그</label>
-                                    <label class="mr-2"><input type="checkbox" value="4">&nbsp;4번태그</label>
-                                  -->
                                 </div>
                             </form>
                         </div>
                     </div>
                     
                     <div class="row col-12">
-                        <div class="col-4">
+                        <div class="col-2">
                             <a href="#" onclick="lecIpage2()">
                                 <i class="arrow_left" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
                             <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
-                        <div class="col-4 text-center mt-4">
-                            4/4
+                        <div class="col-8 text-center mt-4">
+                            <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage0()">카테고리 / 사진 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage1()">강의정보 / 기간 설정</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage2()">수업 등록</button>
+	                        <i class="fa fa-caret-right" aria-hidden="true"></i><i class="fa fa-caret-right" aria-hidden="true"></i>
+	                        <button class="btn btn-outline-danger lecIprog active" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
-                        <div class="col-4" style="text-align: right;">
+                        <div class="col-2" style="text-align: right;">
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+                        </div>
+                        <div class="col-12" style="text-align:right;">
                             <button class="btn btn-outline-secondary" style="border-radius:100px;" onclick="lectureResisterF()">등록</button>        
                         </div>
+                        
                     </div>
                 </div>
 
@@ -496,7 +550,12 @@
 <script>
 	$(function(){
 		$('select').niceSelect('destroy');
+		$('#mainPhtUp').attr('style', 'display:none');
+		$('#thPhtUp').attr('style', 'display:none');
 	})
+	
+	
+	
 	
     //카테고리
     const Tcategory = {
@@ -583,21 +642,27 @@
     function lecIpage0(){
         $('#lecIpage1').attr('style', 'display:block');
         $('#lecIpage2').attr('style', 'display:none');
+        $('#lecIpage3').attr('style', 'display:none');
+        $('#lecIpage4').attr('style', 'display:none');
     }
 
     function lecIpage1(){
         $('#lecIpage1').attr('style', 'display:none');
         $('#lecIpage2').attr('style', 'display:block');
         $('#lecIpage3').attr('style', 'display:none');
+        $('#lecIpage4').attr('style', 'display:none');
     }
 
     function lecIpage2(){
+    	$('#lecIpage1').attr('style', 'display:none');
         $('#lecIpage2').attr('style', 'display:none');
         $('#lecIpage3').attr('style', 'display:block');
         $('#lecIpage4').attr('style', 'display:none');
     }
 
     function lecIpage3(){
+    	$('#lecIpage1').attr('style', 'display:none');
+    	$('#lecIpage2').attr('style', 'display:none');
         $('#lecIpage3').attr('style', 'display:none');
         $('#lecIpage4').attr('style', 'display:block');
     }
@@ -652,25 +717,8 @@
         .append("<div class='deleteBox'>[삭제]</div>")
 
         .find(".deleteBox").click(function() {
-            // var valueCheck = false;
-            
-            // $(this).parent().find('span').each(function() {
-            //     console.log(this);
-            //     console.log($(this).find('.itemClassName').innerText());
-            //     if($('.itemClassName').text() != '' && null) {
-            //         console.log(this);
-            //         valueCheck = true;
-            //         console.log(valueCheck);
-            //     }
-            // });
-
-            // if(valueCheck) {
-            //     var delCheck = confirm('입력하신 내용이 있습니다.\n삭제하시겠습니까?');
-            // }
-            // if(!valueCheck || delCheck == true) {
                 $(this).parent().remove();
                 reorder();
-            // }
         });
         // 번호 재정렬
         reorder();
@@ -793,7 +841,37 @@
 			this.value = 500;
 			alert('500만원을 초과할 수 없습니다');
 		}
-	}); 
+	});
+	
+	//강의제목 200바이트 제한
+     function fn_checkByte(obj){
+   	    const maxByte = 200; 
+   	    const text_val = obj.value;
+   	    const text_len = text_val.length;
+   	    
+   	    let totalByte=0;
+   	    for(let i=0; i<text_len; i++){
+   	    	const each_char = text_val.charAt(i);
+   	        const uni_char = escape(each_char) //유니코드 형식으로 변환
+   	        if(uni_char.length>4){
+   	            totalByte += 2;
+   	        }else{
+   	            totalByte += 1;
+   	        }
+   	    }
+   	    
+   	    if(totalByte>maxByte){
+   	    	alert('강의 제목이 너무 깁니다!');
+   	    	this.value 
+   	        	//document.getElementById("nowByte").text() = totalByte;
+   	            //document.getElementById("nowByte").style.color = "red";
+   	        }
+   	    	//else{
+   	        	//document.getElementById("nowByte").innerText = totalByte;
+   	            //document.getElementById("nowByte").style.color = "green";
+   	        //}
+   	  }
+    	
     
      //태그 체크
      $(function(){
@@ -805,6 +883,15 @@
 	     	}
 	     })
      })
+     
+     //메인사진 3장 알림
+     $('#mainPhtUp').on('change', function(){
+         if($("#mainPhtUp")[0].files.length != 3){
+         	alert('최초 사진 등록은 3장 하여야 합니다');
+         	return false;
+         }
+     })
+     
     
 		//시큐리티 토큰
 		let header = "${_csrf.headerName}";

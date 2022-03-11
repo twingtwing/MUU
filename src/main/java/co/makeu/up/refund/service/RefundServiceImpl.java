@@ -50,4 +50,9 @@ public class RefundServiceImpl implements RefundMapper {
 	public List<RefundVO> RefundListByCreator(String id) {
 		return map.RefundListByCreator(id);
 	}
+
+	@Override
+	public List<RefundVO> adminRefundListSearchPlus(RefundVO vo) {
+		return map.adminRefundListSearchPlus(vo);
+	}
 }

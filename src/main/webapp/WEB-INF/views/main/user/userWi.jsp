@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -140,7 +141,7 @@ i.fa-heart-o {
 																</div>
 															</td>
 															<td class="text-center align-middle">${wishlist.ttl }</td>
-															<td class="text-center align-middle">${wishlist.prc}</td>
+															<td class="text-center align-middle"><fmt:formatNumber>${wishlist.prc}</fmt:formatNumber>원</td>
 															<td class="text-center align-middle">${wishlist.ltStCode}</td>
 														</tr>
 													</c:forEach>
@@ -170,7 +171,7 @@ i.fa-heart-o {
 														</div>
 													</td>
 													<td id="ttl_sam" class="text-center align-middle">${wishlist.ttl }</td>
-													<td id="prc_sam" class="text-center align-middle">${wishlist.prc}</td>
+													<td id="prc_sam" class="text-center align-middle"><fmt:formatNumber>${wishlist.prc }</fmt:formatNumber>원</td>
 													<td id="code_sam" class="text-center align-middle">${wishlist.ltStCode}</td>
 												</tr>
 											</tbody>

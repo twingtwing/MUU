@@ -63,10 +63,10 @@
 			    AND GENDER = #{gender}
 			    </if>
 			    <if test="pastDate != null and !pastDate.equals('')">
-			    AND #{pastDate} <![CDATA[<]]> JOIN_DATE
+			    AND TRUNC(#{pastDate}) <![CDATA[<]]> TRUNC(JOIN_DATE)
 			    </if>
 			    <if test="recentDate !=null and !recentDate.equals('')">
-			    AND JOIN_DATE <![CDATA[<]]> #{recentDate}
+			    AND TRUNC(JOIN_DATE) <![CDATA[<]]> TRUNC(#{recentDate})
 			    </if>
 			    <if test="uStCode != null and !uStCode.equals('')">
 			    AND U_ST_CODE = #{uStCode}

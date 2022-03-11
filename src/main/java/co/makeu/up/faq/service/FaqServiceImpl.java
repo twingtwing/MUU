@@ -38,4 +38,16 @@ public class FaqServiceImpl implements FaqService {
 		return map.delfaq(vo);
 	}
 
+	@Override
+	public List<FaqVO> faqListPlus(FaqVO vo) {
+		
+		return map.faqListPlus(vo);
+	}
+
+	@Override
+	public List<FaqVO> faqListSearch(FaqVO vo) {
+		// TODO Auto-generated method stub
+		return map.faqListSearch(vo);
+	}
+
 }
