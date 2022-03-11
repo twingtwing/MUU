@@ -13,6 +13,8 @@ import co.makeu.up.board.service.BoardVO;
 
 import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
+import co.makeu.up.qst.service.QstServiceImpl;
+import co.makeu.up.qst.service.QstVO;
 import co.makeu.up.refund.service.RefundServiceImpl;
 import co.makeu.up.refund.service.RefundVO;
 import co.makeu.up.users.service.UsersServiceImpl;
@@ -25,6 +27,7 @@ public class ExcelViewController {
 	@Autowired LectureServiceImpl lectureDao;
 	@Autowired RefundServiceImpl refundDao;
 	@Autowired BoardServiceImpl boardDao;
+	@Autowired QstServiceImpl qstDao;
 	
 	@RequestMapping("/admin/userExcel")
 	public String excel(Model model, UsersVO vo) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException {

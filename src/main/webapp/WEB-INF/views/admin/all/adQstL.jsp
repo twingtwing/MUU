@@ -57,6 +57,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- 여기서부터 작성 -->
+                                <form action="/admin/adQstL" id="searchForm">
                                 <div class="row position-relative">
                                     <table class="admin_search table table-bordered">
                                         <tr height="38">
@@ -78,9 +79,9 @@
                                                     </div>
                                                     <div class="col-9 d-flex align-items-center pl-0">
                                                         <input class="ml-1 w-100 border selectSearch" type="text" spellcheck="false" 
-                                                        <c:if test="${not empty searchData.ttl }">value="${searchData.ttl }"</c:if> 
-                                                        <c:if test="${not empty searchData.content }">value="${searchData.content }"</c:if>
-                                                        <c:if test="${not empty searchData.ttlContent }">value="${searchData.ttlContent }"</c:if>
+                                                        <c:if test="${not empty searchData.ttl }">value="${searchData.ttl }" name="ttl"</c:if> 
+                                                        <c:if test="${not empty searchData.content }">value="${searchData.content }" name="content"</c:if>
+                                                        <c:if test="${not empty searchData.ttlContent }">value="${searchData.ttlContent }" name="ttlContent"</c:if>
                                                         >
                                                     </div>
                                                 </div>
@@ -104,36 +105,81 @@
                                         <tr height="38">
                                             <th>작성자</th>
                                             <td>
-                                                <input class="w-100 writer border m-0" style="vertical-align: middle;" type="text" 
+                                                <input class="w-100 writer border m-0" style="vertical-align: middle;" type="text" name="writer"
                                                 <c:if test="${not empty searchData.writer}">${searchData.writer }</c:if>
                                                 spellcheck="false">
                                             </td>
                                             <th>작성일</th>
                                             <td colspan="3" class="text-left">
                                                 <div class="row pl-3">
-                                                    <div><input type="date" class="startDate border"
+                                                    <div><input type="date" class="startDate border" name="startDate"
                                                     <c:if test="${not empty searchData.startDate}">value="${searchData.startDate }"</c:if>
                                                     ></div>
                                                     <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
-                                                    <div><input type="date" class="endDate border"
+                                                    <div><input type="date" class="endDate border" name="endDate"
                                                     <c:if test="${not empty searchData.endDate}">value="${searchData.endDate }"</c:if>
                                                     ></div>
                                                 </div>
                                             </td>
                                         </tr>
                                     </table>
-                                    <button class="btn btn-secondary position-absolute"
+                                   	<button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
+                                    <button type="button" class="btn btn-secondary position-absolute"
                                         style="width: 75px; height: 33px; right: 5px; bottom: 19px;" id="search">검색</button>
                                 </div>
+                                <input type="hidden" name="page" value="${searchData.page }">
+                                <input type="hidden" name="orderColumn" value="${searchData.orderColumn }">
+                                <input type="hidden" name="orderBy" value="${searchData.orderBy }">
+                                </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #eeeeee;">
-                                            <th width="100px">번호</th>
-                                            <th width="150px">작성자</th>
-                                            <th>제목</th>
-                                            <th width="130px">작성일</th>
-                                            <th width="130px">처리상태</th>
+                                            <th width="100px" data-col="qst_no">번호
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${searchData.orderColumn eq 'qst_no' and searchData.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th width="150px" data-col="writer">작성자
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${searchData.orderColumn eq 'writer' and searchData.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th data-col="ttl">제목
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${searchData.orderColumn eq 'ttl' and searchData.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th width="130px" data-col="q_reg_date">작성일
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${searchData.orderColumn eq 'q_reg_date' and searchData.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
+                                            <th width="130px" data-col="qst_st_code">처리상태
+                                            <i class=
+                                            "fa fa-caret-down 
+                                            <c:if test="${searchData.orderColumn eq 'qst_st_code' and searchData.orderBy eq 'asc'}">
+                                            fa-rotate-180
+                                            </c:if>
+                                            "                                            
+                                            aria-hidden="true"></i>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody class="qstList">
@@ -179,7 +225,7 @@
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
+                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
                             </div>
@@ -191,41 +237,66 @@
 <form action="/admin/adQstS" id="qstSelectForm">
 <input type="hidden" name="qstNo" id="qstNo">
 </form>
-<form action="/admin/qstSearch" id="searchForm">
-<input type="hidden" name="ttl" value="">
-<input type="hidden" name="content" value="">
-<input type="hidden" name="ttlContent" value="">
-<input type="hidden" name="writer" value="">
-<input type="hidden" name="qstStCode" value="">
-<input type="hidden" name="startDate" value=null>
-<input type="hidden" name="endDate" value=null>
-<input type="hidden" name="page" value="">
-</form>
+
 <script type="text/javascript">
 $('#search').click(()=>{
 	setSearchData(1)
 	$('#searchForm').submit();
 })
+
+// 검색 초기화
+$('#resetAll').click(()=>{
+	$('.selectSearch').val('');
+	$('.writer').val('');
+	$('.startDate').val(null);	
+	$('.endDate').val(null);
+	$('#all').prop('checked','checked');
+})
+
+$('.fa-caret-down').click((e)=>{
+	$(e.currentTarget).toggleClass('fa-rotate-180')
+	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+	$('#searchForm input[name=orderBy]').val('asc');
+	setSearchData($('input[name=page]').val())
+	$('#searchForm').submit();
+})
+$('.fa-rotate-180').click((e)=>{
+	$(e.currentTarget).toggleClass('fa-rotate-180')
+	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+	$('#searchForm input[name=orderBy]').val('desc');
+	setSearchData($('input[name=page]').val())
+	$('#searchForm').submit();
+})
+
+$('#excel').click(()=>{
+	makeSearchData(0);
+	$('#searchForm').attr('action','/admin/qstExcel');
+	$('#searchForm').submit();
+	$('#searchForm').attr('action','/admin/adQstL');
+})
+
 const setSearchData = (pageNum)=>{
 	if($('.searchType').val()==='ttl'){
-		$('#searchForm>input[name=ttl]').val($('.selectSearch').val())		
+		$('.selectSearch').attr('name','ttl');		
 	}
 	if($('.searchType').val()==='content'){
-		$('#searchForm>input[name=content]').val($('.selectSearch').val())		
+		$('.selectSearch').attr('name','content');
 	}
 	if($('.searchType').val()==='ttlContent'){
-		$('#searchForm>input[name=ttlContent]').val($('.selectSearch').val())		
+		$('.selectSearch').attr('name','ttlContent');	
 	}
-	$('#searchForm>input[name=writer]').val($('.writer').val())
-	$('#searchForm>input[name=qstStCode]').val($('td>input[type=radio][name=qstStCode]:checked').val())
 	let future = new Date();
 	future = new Date(future.setDate(future.getDate()+1)).toISOString().slice(0,10);
-	!$('.startDate').val() ? $('#searchForm>input[name=startDate]').val('2016-01-01') : $('#searchForm>input[name=startDate]').val($('.startDate').val())
-	!$('.endDate').val() ? $('#searchForm>input[name=endDate]').val(future) : $('#searchForm>input[name=endDate]').val($('.endDate').val())
+	if(!$('.startDate').val()){
+		 $('.startDate').val('2016-01-01');			
+	}
+	if(!$('.endDate').val()){
+		$('.endDate').val(future);				
+	}
 	$('#searchForm>input[name=page]').val(pageNum);
 }
 
-
+// 문의글 선택
 $('.qstList').click((e)=>{
 	let qstNo = e.target.parentElement.firstElementChild.textContent;
 	$('#qstNo').val(qstNo);
