@@ -572,6 +572,13 @@
             	}
             },
             methods :{
+            	brChg(val){
+            		let resultVal = val;
+            		resultVal = resultVal.replace(/\r\n/ig,'<br>');
+            		resultVal = resultVal.replace(/\\n/ig,'<br>');
+            		resultVal = resultVal.replace(/\n/ig,'<br>');
+            		return resultVal;
+            	},
             	updateErr(){
             		if($(event.target).val() ===''){
                         $(event.target).closest('div').find('.errDiv').removeClass('d-none');
@@ -586,6 +593,7 @@
             			$(event.target).closest('.qnaBox').find('.errDiv').removeClass('d-none');
             		}else{
             			$(event.target).closest('.qnaBox').find('.errDiv').addClass('d-none');
+            			 content = this.brChg(content);
 	            		 $.ajax({
 	            			url : '/user/updateMyqna',
 	            			data : {qnaNo : this.qnaList[index].qnaNo, qContent : content },
@@ -690,7 +698,8 @@
             		if(content == ''){
             			$('#revU .errDiv').removeClass('d-none');
             		}else{
-            			$('#revU .errDiv').addClass('d-none');            			
+            			$('#revU .errDiv').addClass('d-none');       
+            			content = this.brChg(content);
 	            		$.ajax({
 	            	  		url : '/user/updateReview',
 	            	  		type : 'post',
@@ -812,9 +821,9 @@
                     		alert("리뷰 작성을 위해 먼저 강의를 신청하셔야 합니다.");
                     		return;
                     	}
-                    	console.log(this.lecDetails.mySugang);
+                    	content = this.brChg(content);
                     	$.ajax({
-                    		url : '/user/userLRWrite',
+                    	  url : '/user/userLRWrite',
                       	  data : {writer : '', ltNo : '${ltNo}', star: $('.fas.selected').length, content: content},
                       	  type : 'post',
                       	  beforeSend : (xhr) =>{
@@ -838,7 +847,7 @@
                     		alert("질문 작성을 위해 먼저 강의를 신청하셔야 합니다.");
                     		return;
                     	}
-                    	console.log(this.lecDetails.mySugang);
+                    	content = this.brChg(content);
                     	$.ajax({
                             url: '/user/userInsertLQ',
                             data: {
@@ -868,7 +877,7 @@
                     		$('#lecReport textarea').val('');
                     		return;
                     	}
-                    	console.log(this.lecDetails.mySugang);
+                    	$('#lecReport textarea').val(this.brChg($('#lecReport textarea').val()));
                     	$.ajax({
                             url: '/user/insertLecReport',
                             data: $('#rptLecFrm').serialize(),
@@ -886,6 +895,7 @@
                 },
                 revReport(){//리뷰신고
                     if($('#revReport textarea').val() != ''){//빈칸체크
+                    	$('#revReport textarea').val(this.brChg($('#revReport textarea').val()));
                     	$.ajax({
                     		url : '/user/reportReview',
                     		data: $('#revRepFrm').serialize(),

@@ -28,8 +28,8 @@ public class AdminCreatorController {
 	//admin list
 	@GetMapping("/admin/adCreL")
 	public String adCreL(UsersVO vo, Model model) {
+		String[] grd = {"Family","VIP","VVIP"};
 		if(vo.getCreGrdCodeList()==null) {
-			String[] grd = {"Family","VIP","VVIP"};
 			vo.setCreGrdCodeList(grd);
 		}
 		if(vo.getPage()==0) {
@@ -38,6 +38,7 @@ public class AdminCreatorController {
 		vo.setAuthCode("A03");
 		List<UsersVO> list = userDao.usersList(vo);
 		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1,vo.getPage());
+		model.addAttribute("grd",grd);
 		model.addAttribute("creators",list);
 		model.addAttribute("pages",pagination);
 		model.addAttribute("search",vo);

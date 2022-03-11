@@ -108,20 +108,23 @@
                                             <th>등급</th>
                                             <td class="text-left">
                                             	<c:if test="${empty search.uGrdCodeList }">                                           	
-                                            	<input type="checkbox"id="normal" class="ml-2" spellcheck="false" value="일반" name="uGrdCodeList" >
-                                                <label for="normal" class="mr-3 mb-0">일반</label>
-                                                <input type="checkbox"id="sae" class="ml-2" value="새싹" spellcheck="false"name="uGrdCodeList">
-                                                <label for="sae" class="mr-3 mb-0">새싹</label>
-                                                <input type="checkbox"id="namu" value="나무" spellcheck="false"name="uGrdCodeList">
-                                                <label for="namu" class="mb-0 mr-3">나무</label>
-                                                <input type="checkbox"id="kod"spellcheck="false"value="꽃"name="uGrdCodeList">
-                                                <label for="kod" class="mb-0">꽃</label>
+	                                            	<input type="checkbox"id="normal" class="ml-2" spellcheck="false" value="일반" name="uGrdCodeList" >
+	                                                <label for="normal" class="mr-3 mb-0">일반</label>
+	                                                <input type="checkbox"id="sae" class="ml-2" value="새싹" spellcheck="false"name="uGrdCodeList">
+	                                                <label for="sae" class="mr-3 mb-0">새싹</label>
+	                                                <input type="checkbox"id="namu" value="나무" spellcheck="false"name="uGrdCodeList">
+	                                                <label for="namu" class="mb-0 mr-3">나무</label>
+	                                                <input type="checkbox"id="kod"spellcheck="false"value="꽃"name="uGrdCodeList">
+	                                                <label for="kod" class="mb-0">꽃</label>
                                             	</c:if>
                                             	<c:if test="${not empty search.uGrdCodeList }">
-                                            	<c:forEach items="${search.uGrdCodeList }" var="g">
-                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="uGrdCodeList" checked="checked">                                     	
-                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
-                                            	</c:forEach>      
+	                                            	<c:forEach items="${grd}" var="g" varStatus="var">
+		                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="uGrdCodeList" 
+		                                            	<c:forEach items="${search.uGrdCodeList}" var="u">
+		                                            		<c:if test="${u eq g }">checked="checked"</c:if>                                   	
+		                                            	</c:forEach>>  
+		                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
+	                                            	</c:forEach>      
                                             	</c:if>
                                             </td>
                                             <th>상태</th>

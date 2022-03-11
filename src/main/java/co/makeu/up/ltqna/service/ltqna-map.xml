@@ -34,7 +34,7 @@
 	
 	<insert id="insertQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
 		INSERT INTO LT_QNA VALUES(
-		NVL((SELECT MAX(QNA_NO) FROM LT_QNA)+1,1),NULL,#{qContent},#{ltNo},NULL,SYSDATE,'Q01',#{writer}
+		NVL((SELECT MAX(QNA_NO) FROM LT_QNA)+1,1),NULL,#{qContent},#{ltNo},NULL,TRUNC(SYSDATE),'Q01',#{writer}
 		)
 	</insert>
 	
@@ -50,23 +50,23 @@
 	</delete>
 
 	<select id="adminQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
-	SELECT * FROM (SELECT ROWNUM RN,QNA_NO,WRITER,A_CONTENT,Q_CONTENT,LT_NO,FINDLTCODE(QNA_ST_CODE) QNA_ST_CODE ,COUNT(*) OVER() CNT
-	FROM LT_QNA
-	WHERE LT_NO = #{ltNo}
-	<if test="writer != null and !writer.equals('')">
-	AND WRITER LIKE '%'||#{writer}||'%'
-	</if>
-	<if test="qContent != null and !qContent.equals('')">
-	AND Q_CONTENT LIKE '%'||#{qContent}||'%'
-	</if>
-	<if test="qnaStCode != null and !qnaStCode.equals('')">
-	AND QNA_ST_CODE = #{qnaStCode}
-	</if>
-	ORDER BY QNA_NO DESC)
-	<![CDATA[ 
-		WHERE RN > (#{page}-1) * 10
-		AND RN <= #{page} * 10
-	]]>
+		SELECT * FROM (SELECT ROWNUM RN,QNA_NO,WRITER,A_CONTENT,Q_CONTENT,LT_NO,FINDLTCODE(QNA_ST_CODE) QNA_ST_CODE ,COUNT(*) OVER() CNT
+		FROM LT_QNA
+		WHERE LT_NO = #{ltNo}
+		<if test="writer != null and !writer.equals('')">
+		AND WRITER LIKE '%'||#{writer}||'%'
+		</if>
+		<if test="qContent != null and !qContent.equals('')">
+		AND Q_CONTENT LIKE '%'||#{qContent}||'%'
+		</if>
+		<if test="qnaStCode != null and !qnaStCode.equals('')">
+		AND QNA_ST_CODE = #{qnaStCode}
+		</if>
+		ORDER BY QNA_NO DESC)
+		<![CDATA[ 
+			WHERE RN > (#{page}-1) * 10
+			AND RN <= #{page} * 10
+		]]>
 	</select>
 	
 	<update id="updateQnaAnswer" parameterType="co.makeu.up.ltqna.service.LtQnaVO">

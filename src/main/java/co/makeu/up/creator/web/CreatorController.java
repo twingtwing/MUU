@@ -62,11 +62,13 @@ public class CreatorController {
 		return "main/creator/cLecR";
 	}
 	
+	//크리에이터 매출
 	@GetMapping("/creator/creSaleYear")
 	public String creSalesYear(Model model,Principal pri) {
 		model.addAttribute("years",creatorDao.creSaYear(pri.getName()));
 		return "main/creator/creSaYear";
 	}
+	
 	@GetMapping("/creator/creSaleMonth")
 	public String creSalesMonth(Model model,Principal pri,SalesVO vo) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");

@@ -134,7 +134,7 @@
             </div>
             <div class="row col-12 mr-5 justify-content-end">
               <button class="border px-3 py-2 bg-danger text-white">PDF 다운</button>
-              <button class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL 다운</button>
+              <a href="/creator/creSaYearExcel" class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL 다운</a>
             </div>
           </div>
         </div>

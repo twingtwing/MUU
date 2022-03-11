@@ -103,10 +103,21 @@
                                         <tr height="38">
                                             <th>등급</th>
                                             <td class="text-left">
-                                            	<c:forEach items="${search.creGrdCodeList }" var="g">
-                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="creGrdCodeList" checked="checked">                                     	
-                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
+                                            	<c:if test="${empty search.creGrdCodeList }">     
+                                            		<c:forEach items="${grd}" var="g">
+	                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="creGrdCodeList" checked="checked">                                     	
+	                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
                                             	</c:forEach>
+                                            	</c:if>
+                                            	<c:if test="${not empty search.creGrdCodeList }">
+	                                            	<c:forEach items="${grd}" var="g" varStatus="var">
+		                                            	<input type="checkbox"id="${g }" class="ml-2" spellcheck="false" value="${g }" name="creGrdCodeList" 
+		                                            	<c:forEach items="${search.creGrdCodeList}" var="u">
+		                                            		<c:if test="${u eq g }">checked="checked"</c:if>                                   	
+		                                            	</c:forEach>>  
+		                                                <label for="${g }" class="mr-3 mb-0">${g }</label>
+	                                            	</c:forEach>      
+                                            	</c:if>
                                             </td>
                                             <th>상태</th>
                                             <td class="text-left">

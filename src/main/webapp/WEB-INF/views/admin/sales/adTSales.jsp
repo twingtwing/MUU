@@ -63,7 +63,7 @@
                           <c:forEach items="${years }" var="y">
 		                      <td>
 		                      	<span <c:if test="${y.year ne 0 }">class="yearCnt"</c:if>>
-		                      	${y.cnt }
+		                      		<fmt:formatNumber>${y.cnt }</fmt:formatNumber>
 		                      	</span> 개
 		                      </td>
                           </c:forEach>
@@ -81,7 +81,7 @@
                       </table>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
-                        <button class="btn btn-success mr-2">EXCEL다운</button>
+                        <a href="/admin/yearExcel" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>
                   </div>
@@ -129,7 +129,7 @@
                           <c:forEach items="${months }" var="mon">
                           	<td>
 		                      	<span class="<c:if test="${mon.month ne 0 }">monthCnt</c:if> chartCnt">
-		                      	${mon.cnt }
+		                      		<fmt:formatNumber>${mon.cnt }</fmt:formatNumber>
 		                      	</span> 개
 		                    </td>
                           </c:forEach>
@@ -147,7 +147,7 @@
                       </table>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
-                        <button class="btn btn-success mr-2">EXCEL다운</button>
+                        <a id="monthExcel" href="/admin/monthExcel?month=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>
                   </div>
@@ -260,7 +260,7 @@
                       <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
-                        <button class="btn btn-success mr-1">EXCEL다운</button>
+                        <a href="/admin/yearCtgrExcel" class="btn btn-success mr-1">EXCEL다운</a>
                       </div>
                     </div>
                   </div>
@@ -384,7 +384,7 @@
                       <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
                         <button class="btn btn-danger mr-2">PDF다운</button>
-                        <button class="btn btn-success mr-2">EXCEL다운</button>
+                        <a id="monthCtgrExcel" href="/admin/monthCtgrExcel?month=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>
                   </div>
@@ -500,6 +500,8 @@
     			$('.chartCnt').eq(i)[0].innerText = monthCnt[i]
     			$('.chartPay').eq(i)[0].innerText = monthPay[i]
     		}
+    		
+    		monthExcel.setAttribute('href','/admin/monthExcel?month='+$('#monthBox').val());
     	})
     })
 	
@@ -692,6 +694,8 @@
     			$('.ctgrChartPay06').eq(i)[0].innerText = hc06[i];
     			$('.ctgrChartPay07').eq(i)[0].innerText = hc07[i];
     		}
+    		
+    		monthCtgrExcel.setAttribute('href','/admin/monthCtgrExcel?month='+$('#ctgrMonthBox').val());
     	})
     })
   

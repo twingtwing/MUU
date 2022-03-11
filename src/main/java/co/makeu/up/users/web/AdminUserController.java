@@ -24,8 +24,8 @@ public class AdminUserController {
 	
 	@GetMapping("/admin/adUserL")
 	public String adUserL(Model model,UsersVO vo) {
+		String[] grd = {"일반","새싹","꽃","나무"};
 		if(vo.getuGrdCodeList()==null) {
-			String[] grd = {"일반","새싹","꽃","나무"};
 			vo.setuGrdCodeList(grd);
 		}
 
@@ -34,6 +34,7 @@ public class AdminUserController {
 		}
 		List<UsersVO> list = usersDao.usersList(vo);
 		Pagination pagination = new Pagination(list.size()!=0 ? list.get(0).getCnt() : 1, vo.getPage());
+		model.addAttribute("grd",grd);
 		model.addAttribute("pages",pagination);
 		model.addAttribute("users", list);
 		model.addAttribute("search",vo);

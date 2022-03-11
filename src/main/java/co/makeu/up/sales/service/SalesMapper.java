@@ -23,4 +23,9 @@ public interface SalesMapper {
 	List<SalesVO> countList();
 	List<SalesVO> recent7days();
 	List<SalesVO> thisYearSales();
+	
+	//excel
+	List<SalesVO> creYearExcel(SalesVO vo);
+	List<SalesVO> creMonthExcel(SalesVO vo);
+	
 }

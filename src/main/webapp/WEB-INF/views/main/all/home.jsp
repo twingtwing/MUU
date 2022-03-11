@@ -196,37 +196,13 @@
 	                                <h5>BEST TOP 3✨</h5>
 	                            </div>
 	                            <ul class="filter__controls">
-	                                <li data-filter="*"></li>
-	                                <li v-on:click="filterLick" class="active" data-filter=".day">Day</li>
+	                                <li v-on:click="filterLick" class="active" data-filter="*">ALL</li>
+	                                <li v-on:click="filterLick" data-filter=".day">Day</li>
 	                                <li v-on:click="filterLick" data-filter=".week">Week</li>
 	                                <li v-on:click="filterLick" data-filter=".month">Month</li>
 	                            </ul>
 	                            
-	                            <div class="filter__gallery filter_really d-none">
-	                                <div v-for="lec in popularLectureMonth" class="product__sidebar__view__item set-bg mix month" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
-	                                    <div class="view">
-	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
-	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
-	                                        </div>
-	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
-	                                </div>
-	                                <div v-for="lec in popularLectureWeek" class="product__sidebar__view__item set-bg mix week" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
-	                                    <div class="view">
-	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
-	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
-	                                        </div>
-	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
-	                                </div>
-	                                <div v-for="lec in popularLectureDay" class="product__sidebar__view__item set-bg mix day" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
-	                                    <div class="view">
-	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
-	                                            <i v-for="index in 5-lec.star" class="fa fa-star-o text-danger"></i>
-	                                        </div>
-	                                    <h5><a :href="'/lecD?ltNo='+lec.ltNo">{{lec.ttl}}</a></h5>
-	                                </div>
-	                            </div>
-	                            
-	                            <div class="filter__gallery filter_fake">
+	                            <div class="filter__gallery filter_really">
 	                                <div v-for="lec in popularLectureMonth" class="product__sidebar__view__item set-bg mix month" :style="'background-image : url('+lec.thumb+');'" :data-setbg="lec.thumb">
 	                                    <div class="view">
 	                                            <i v-for="index in lec.star" class="fa fa-star text-danger"></i>
@@ -301,13 +277,15 @@
     		},
     		methods :{
     			filterLick(){
-    				console.log($(event.target));
+    				
     				$('.filter__controls li').removeClass('active');
     				$($(event.target)[0]).addClass('active');
-			   		if($('.filter_really').hasClass('d-none')){
-			        	$('.filter_fake').addClass('d-none');
-			        	$('.filter_really').removeClass('d-none');
-			        }
+			   		
+                	if ($('.filter__gallery').length > 0) {
+        				var containerEl = document.querySelector('.filter__gallery');
+        				var mixer = mixitup(containerEl);
+        			}
+
     			}
     		},
     		beforeCreate : function () {
@@ -321,17 +299,12 @@
                 	this.popularLectureDay = result.popularLectureDay;
                 	this.popularLectureWeek = result.popularLectureWeek;
                 	this.popularLectureMonth = result.popularLectureMonth;
-        			
+                	
                 	/* 안되면,,,beforCreate 등 해야함 */
                 	$(".loader").fadeOut();
         			$("#preloder").delay(200).fadeOut("slow");
-        				
-        			if ($('.filter__gallery').length > 0) {
-        				var containerEl = document.querySelector('.filter__gallery');
-        				var mixer = mixitup(containerEl);
-        			}
 
-                	$('.set-bg').each(function () {
+        			$('.set-bg').each(function () {
 			            var bg = $(this).data('setbg');
 			            console.log($(this))
 			            $(this).css('background-image', 'url(' + bg + ')');

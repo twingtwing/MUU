@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,19 +36,23 @@
                 <!-- 년별 매출 -->
                 <div class="col-lg-12 pb-5 pt-3">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 연도별 회사 매출</h5>
-	              <form action="/admin/adCSales" method="get">
+	              <form id="yearFrm" action="/admin/adCSales" method="get">
 	                  <div class="row mt-4 justify-content-between mb-3">
 	                      <select name="selectYear" class="select border px-3 py-2">
 		                  	<c:forEach begin="${2016}" end="${thisyear }" var="y">
-		                    	<option value="${y }"<c:if test="${selectYear eq y}">selected="selected"</c:if>>${y }년</option>
+		                    	<option value="${y }"<c:if test="${search.selectYear eq y}">selected="selected"</c:if>>${y }년</option>
 		                  	</c:forEach>
 	                      </select>
 	                      <div>
 		                  	<select id="searchYear" class="border px-3 py-2">
-		                    	<option value="yearId">아이디</option>
-		                        <option value="yearName">이름</option>
+		                    	<option value="yearId" <c:if test="${not empty search.yearId}">selected="selected"</c:if> >아이디</option>
+		                        <option value="yearName" <c:if test="${not empty search.yearName}">selected="selected"</c:if> >이름</option>
 		                   	</select>
-		                    <input type="text" id="inputSearch" name="yearId" placeholder="검색" class="border px-3 py-2">
+		                    <input type="text" id="inputSearch" 
+		                    <c:if test="${empty search.yearName}">name="yearId"</c:if>
+		                    <c:if test="${not empty search.yearId}">value="${search.yearId}"</c:if>
+		                    <c:if test="${not empty search.yearName}">name="yearName" value="${search.yearName}"</c:if>
+		                    placeholder="검색" class="border px-3 py-2">
 		                    <button type="submit" class="border px-3 py-2">검색</button>
 	                      </div>
 	                  </div>
@@ -73,9 +78,9 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td>${cre.creCnt }</td>
-	                      		<td>${cre.cnt }</td>
-	                      		<td>${cre.pay } 만 원</td>
+	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
                       </c:if>
@@ -108,7 +113,7 @@
                     </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button class="btn btn-danger">PDF다운</button>
-                      <button class="btn btn-success">EXCEL다운</button>
+                      <button id="yearExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
                     
                   </div>
@@ -117,19 +122,23 @@
 				<!-- 월별 매출 -->
                  <div class="col-lg-12 pb-5 pt-3">
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 월별 회사 매출 <span>(${thisyear }년)</span></h5>
-                  <form action="/admin/adCSales" method="get">
+                  <form id="monthFrm" action="/admin/adCSales" method="get">
 	                  <div class="row mt-4 justify-content-between mb-3">
 	                  	<select name="month" class="select border px-3 py-2">
 			                <c:forEach begin="${1}" end="${thisMonth }" var="y">
-			                	<option value="${y }"<c:if test="${month eq y}">selected="selected"</c:if>>${y }월</option>
+			                	<option value="${y }"<c:if test="${search.month eq y}">selected="selected"</c:if>>${y }월</option>
 			            	</c:forEach>
 		                </select>
 	                    <div>
 	                      <select id="searchMonth" class="border px-3 py-2">
-	                        <option value="monthId">아이디</option>
-	                        <option value="monthName">이름</option>
+	                        <option value="monthId" <c:if test="${not empty search.monthId}">selected="selected"</c:if>>아이디</option>
+	                        <option value="monthName" <c:if test="${not empty search.monthName}">selected="selected"</c:if>>이름</option>
 	                      </select>
-	                      <input id="inputMonth" type="text" name="monthId" placeholder="검색" class="border px-3 py-2">
+	                      <input id="inputMonth" type="text"
+	                      	<c:if test="${empty search.monthName}">name="monthId"</c:if>
+							<c:if test="${not empty search.monthId}">value="${search.monthId}"</c:if>
+		                    <c:if test="${not empty search.monthName}">name="monthName" value="${search.monthName}"</c:if>
+							placeholder="검색" class="border px-3 py-2">
 	                      <button type="submit" class="border px-3 py-2">검색</button>
 	                    </div>
 	                  </div>
@@ -155,9 +164,9 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td>${cre.creCnt }</td>
-	                      		<td>${cre.cnt }</td>
-	                      		<td>${cre.pay } 만 원</td>
+	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
                       </c:if>
@@ -190,9 +199,8 @@
                     </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button class="btn btn-danger">PDF다운</button>
-                      <button class="btn btn-success">EXCEL다운</button>
+                      <button id="monthExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
-  
                     
                   </div>
                  </div>
@@ -224,6 +232,19 @@
 			$('#Month').find("input[name='pageMonthNum']").val($(this).attr("href"));
 			$('#Month').submit();
 		});
+      	
+     	// 엑셀 다운
+      	$('#yearExcel').click(()=>{
+      		$('#yearFrm').attr('action','/admin/yearCreExcel');
+      		$('#yearFrm').submit();
+      		$('#yearFrm').attr('action','/admin/adCSales');
+      	})
+      	
+		$('#monthExcel').click(()=>{
+			$('#monthFrm').attr('action','/admin/monthCreExcel');
+			$('#monthFrm').submit();
+			$('#monthFrm').attr('action','/admin/adCSales');
+		})
 
       </script>
 </body>

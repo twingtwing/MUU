@@ -71,4 +71,14 @@ public class SalesServiceImpl implements SalesService{
 	@Override
 	public List<SalesVO> genderList() {
 		return map.genderList();
+	}
+
+	@Override
+	public List<SalesVO> creYearExcel(SalesVO vo) {
+		return map.creYearExcel(vo);
+	}
+
+	@Override
+	public List<SalesVO> creMonthExcel(SalesVO vo) {
+		return map.creMonthExcel(vo);
 	}}
