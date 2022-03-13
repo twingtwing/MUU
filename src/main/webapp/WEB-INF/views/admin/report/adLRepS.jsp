@@ -151,7 +151,7 @@
 	                                            	미처리
 	                                            </c:if>
 	                                            <c:if test="${report.rpStCode eq 'RPS02' }">
-	                                            	 신고
+	                                            	 완료
 	                                            </c:if>
 	                                          
 	                                             <c:if test="${report.rpStCode eq 'RPS03' }">
