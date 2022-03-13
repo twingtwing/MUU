@@ -250,7 +250,7 @@
 								<div class="card">
 									<div class="card-header" id="headingOne">
 										<h2 class="mb-0">
-											<button class="btn btn-link btn-block text-left text-danger"
+											<button id="FaqSelect" class="btn btn-link btn-block text-left text-danger"
 												type="button" data-toggle="collapse"
 												data-target="#collapseOne" aria-expanded="true"
 												aria-controls="collapseOne">하나만 존재하면 되는데</button>
@@ -359,13 +359,19 @@
 	          url: 'faqSelectListSearch',
 	          type: 'post',
 	          datatype: 'json',
- 	          data : {"qcontent" : "ㄷㄷ"},
+ 	          data : {"acontent" : "ㄷㄷ"},
+	          beforeSend: function (xhr) {
+	             xhr.setRequestHeader(header, token);
+	          },
 	          success(res){
 	        	  console.log("성공");
 	        	  console.log(res);
-	          },
-	          beforeSend: function (xhr) {
-	             xhr.setRequestHeader(header, token);
+	        	  console.log(res.length);
+	        	  for(let i=0; i<res.length; i++){
+	        	  	$('#FaqSelect').text(res[i].qcontent);
+	        	  	$('#collapseOne').text(res[i].acontent);
+	              }
+	        	  
 	          }
 	       })
       })

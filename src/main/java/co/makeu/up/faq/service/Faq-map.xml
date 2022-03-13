@@ -11,7 +11,7 @@
 		SELECT * FROM FAQ
 		WHERE F_ST_CODE = 'F01'
 		<if test="qcontent != null and qcontent != ''">
-		AND q_content LIKE '%' || #{qcontent}  || '%'
+		AND a_content LIKE '%' || #{acontent}  || '%'
 		</if>
 		ORDER BY F_NO
 	</select>
