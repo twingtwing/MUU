@@ -203,28 +203,22 @@
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr>
-                                        <th rowspan="2" style="border-right : 1px rgb(214, 214, 214) solid">
-                                            <div class="image-show" style="width:auto; height: 400px; border-radius: 10px;">
-                                            	<img id="imgShow0"/>
-                                            </div>
+                                        <th rowspan="2" style="vertical-align: middle; border-right : 1px rgb(214, 214, 214) solid">
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow0"/>
                                         </th>
                                         <td>
-                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
-                                            	<img id="imgShow1"/>
-                                            </div>
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow1"/>
                                         </td>
                                     </tr>
                                         <td>
-                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
-                                            	<img id="imgShow2"/>
-                                            </div>
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow2"/>
                                         </td>
                                     <tr>
                                         <td colspan="2" style="text-align: center;">
-                                        	<div class="button">
+                                        	<p class="photobutton">
 	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
 	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
-                                        	</div>
+                                        	</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -235,10 +229,8 @@
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr rowspan="2">
-                                        <td style="text-align: -webkit-center;">
-                                            <div class="thimage-show" style="width: 200px; height:200px; border-radius: 10px;">
-                                            	<img id="thImgShow"/>
-                                            </div>
+                                    	<td style="width:inherit; text-align: -webkit-center;">
+                                           	<img src="/resources/img/lecturePreview.png" class="thimage-show" id="thImgShow"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -752,14 +744,12 @@
     		return false;
         } else {
     	    var contents 
-    	        = "<div class='itemBox'>"
-    	        + "<div style='float:left;'>"
+    	    	= "<div class='row itemBox'>"
     	        + "<span class='itemNum'></span> "
-    	        + "<span class='itemClassName'><input type='text' class='classTtl' style='width:300px;'/></span>"
-    	        + "<span>"
+    	        + "&nbsp&nbsp&nbsp"
+    	        + "<span class='itemClassName'><input type='text' maxlength='100' class='classTtl' style='width:300px;'></span>"
+    	        + "&nbsp&nbsp&nbsp"
     	        + "<input type='file' class='classUp' accept='video/*'>"
-    	        + "</span>"
-    	        + "</div>"
     	        + "</div>";
     	    return contents;
         }
@@ -884,10 +874,12 @@
     	let downctgr = $('#downctgr option:selected').val();
     	let ttl = $('#lecTitle').val();
     	let intro = $('#lecIntro').val();
+    	intro = lineMaker(intro);
     	let openterm = $('#lecP option:selected').val();
     	let tlsnterm = $('#coP option:selected').val();
     	let kitname = $('#kitname').val();
     	let kitintro = $('#kitintro').val();
+    	kitintro = lineMaker(kitintro);
     	let kitprc = $('#kitprc').val();
     	let prc = $('#prc').val();
     	let tag1 = null;
@@ -967,6 +959,15 @@
         	alert('강의 소개를 입력해주세요');
 			return false;	
         }
+		//3페이지 영상 체크(OT필수로 넣도록)
+        else if($('#itemBoxWrap').hasClass('classUp') == false){
+        	alert('OT영상은 필수로 등록하여야합니다');
+        	return false;
+        }
+        else if($('.classUp')[0].files[0] == null){
+        	alert('OT영상은 필수로 등록하여야합니다');
+        	return false;
+        }
         
         $.ajax({
             url : "/creator/lectureResister",
@@ -998,10 +999,12 @@
         	let downctgr = $('#downctgr option:selected').val();
         	let ttl = $('#lecTitle').val();
         	let intro = $('#lecIntro').val();
+        	intro = lineMaker(intro);
         	let openterm = $('#lecP option:selected').val();
         	let tlsnterm = $('#coP option:selected').val();
         	let kitname = $('#kitname').val();
         	let kitintro = $('#kitintro').val();
+        	kitintro = lineMaker(kitintro);
         	let kitprc = $('#kitprc').val();
         	let prc = $('#prc').val();
         	let tag1 = null;
@@ -1071,5 +1074,24 @@
             });
         })
      
+        
+        
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
 </script>
 </html>

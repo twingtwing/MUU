@@ -32,6 +32,9 @@
         img{
             cursor:pointer;
         }
+        .lec_ph img:hover{
+        	opacity:0.4;
+        }
         
     </style>
 </head>
@@ -143,59 +146,17 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- 사진 각각 단일 업로드 / 미리보기 / 크기 고정하거나 맞게 되도록 조정할 필요 있음-->
-                    <div class="row mt-2">
-                        <div class="col-7" >
-                            <table class="table lec_ph" style="table-layout:fixed">
-                                <tbody>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: middle; border-right : 1px rgb(214, 214, 214) solid">
-                                            <img id="lecpht1" src="${lecinfo.pht1 }" class="card-img-left img-thumbnail" onclick='imgUpload1()'>
-                                        </th>
-                                        <td>
-                                            <img id="lecpht2" src="${lecinfo.pht2 }" class="card-img-left img-thumbnail" onclick='imgUpload2()'>
-                                        </td>
-                                    </tr>
-                                        <td>
-                                            <img id="lecpht3" src="${lecinfo.pht3 }" class="card-img-left img-thumbnail" onclick='imgUpload3()'>    
-                                        </td>
-                                    <tr>
-                                        <td colspan="2" style="text-align: center;">
-                                            <!-- <button class="btn btn-outline-danger">대표 사진 업로드</button> -->
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="col-5" style="border-left:1px rgb(200, 200, 200) solid">
-                            <table class="table lec_ph" style="table-layout:fixed">
-                                <tbody>
-                                    <tr rowspan="2">
-                                        <td style="width:inherit; text-align: -webkit-center;">
-                                            <img id="lecthumb" src="${lecinfo.thumb }" class="card-img-left img-thumbnail" onclick='imgthUpload()'>    
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:center;">
-                                            <!-- <button class="btn btn-outline-danger">썸네일 업로드</button> -->
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
+                    
                     <div class="row">
                         <!--강의제목, 소개글 등록란-->
                         <div class="col-7 align-self-center" style="border-right:1px solid rgb(200, 200, 200)">
                             <form action="">
                                 <div class="mb-3">
+                                	<input hidden="hidden">
                                     <input id="lecttl" type="text" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" value="${lecinfo.ttl }">
                                 </div>
-                                <div class="">
-                                    <textarea id="lecintro" rows="7" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요">${lecinfo.intro }</textarea>
+                                <div>
+                                    <textarea id="lecintro" rows="7" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -213,6 +174,57 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 사진 각각 단일 업로드 / 미리보기 / 크기 고정하거나 맞게 되도록 조정할 필요 있음-->
+                    <div class="row mt-2">
+                        <div class="col-7" >
+                            <table class="table lec_ph" style="table-layout:fixed">
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="2" style="vertical-align: middle; border-right : 1px rgb(214, 214, 214) solid">
+    	                                    <img id="lecpht1" src="${lecinfo.pht1 }" class="card-img-left img-thumbnail" onclick='imgUpload1()'>
+                                        </th>
+                                        <td>
+                                            <img id="lecpht2" src="${lecinfo.pht2 }" class="card-img-left img-thumbnail" onclick='imgUpload2()'>
+                                        </td>
+                                    </tr>
+                                        <td>
+                                            <img id="lecpht3" src="${lecinfo.pht3 }" class="card-img-left img-thumbnail" onclick='imgUpload3()'>    
+                                        </td>
+                                    <tr>
+                                        <td colspan="2" style="text-align: center;">
+                                            <!-- <button class="btn btn-outline-danger">대표 사진 업로드</button> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                		<td colspan="2" style="font-size:x-small; text-align:right;">*클릭시 이미지 수정</td>
+                                	</tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+
+                        <div class="col-5" style="border-left:1px rgb(200, 200, 200) solid">
+                            <table class="table lec_ph" style="table-layout:fixed">
+                                <tbody>
+                                    <tr rowspan="2">
+                                        <td style="width:inherit; text-align: -webkit-center;">
+                                            <img id="lecthumb" src="${lecinfo.thumb }" class="card-img-left img-thumbnail" onclick='imgthUpload()'>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <!-- <button class="btn btn-outline-danger">썸네일 업로드</button> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                		<td style="font-size:x-small; text-align:right;">*클릭시 이미지 수정</td>
+                                	</tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     
                     <div class="row mt-3 mx-1 justify-content-between">
                         <button type="button" class="btn btn-outline-danger" onclick="history.back();">뒤로가기</button>
@@ -447,12 +459,14 @@
     	$('input[type="checkbox"]:checked').each(function(ind,v){
     		tagchecklist.push($(v).val());
     	})
+    	let intro = $('#lecintro').val();
+    	intro = lineMaker(intro);
     	
     	let form = new FormData();
     	
     	form.append("ltNo", ${lecinfo.ltNo});
     	form.append("ttl", $('#lecttl').val());
-    	form.append("intro", $('#lecintro').val());
+    	form.append("intro", intro);
     	form.append("upCtgr", $('#ctgr option:selected').val());
     	form.append("downCtgr", $('#downctgr option:selected').val());
     	form.append("tag1", tagchecklist[0]);
@@ -483,6 +497,31 @@
 	         }
         });
     }
+    
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
+//강의정보란 입력
+$(function(){
+	let intro = '${lecinfo.intro }';
+	let resultVal = brDel(intro);
+	$('#lecintro').val(resultVal);
+})
                         
 </script>
 
