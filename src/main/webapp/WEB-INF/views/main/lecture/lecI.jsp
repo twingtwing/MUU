@@ -42,7 +42,7 @@
 
  .itemBox {
      border:solid 1px rgb(200, 200, 200);
-     width:600px;
+     width:770px;
      height:50px;
      padding:10px;
      margin-bottom:10px;
@@ -236,21 +236,15 @@ select {
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr>
-                                        <th rowspan="2" style="border-right : 1px rgb(214, 214, 214) solid">
-                                            <div class="image-show" style="width:auto; height: 400px; border-radius: 10px;">
-                                            	<img id="imgShow0"/>
-                                            </div>
+                                        <th rowspan="2" style="vertical-align: middle; border-right : 1px rgb(214, 214, 214) solid">
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow0"/>
                                         </th>
                                         <td>
-                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
-                                            	<img id="imgShow1"/>
-                                            </div>
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow1"/>
                                         </td>
                                     </tr>
                                         <td>
-                                        	<div class="image-show" style="width:auto; height: 200px; border-radius: 10px;">
-                                            	<img id="imgShow2"/>
-                                            </div>
+                                           	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow2"/>
                                         </td>
                                     <tr>
                                         <td colspan="2" style="text-align: center;">
@@ -268,10 +262,8 @@ select {
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr rowspan="2">
-                                        <td style="text-align: -webkit-center;">
-                                            <div class="thimage-show" style="width: 200px; height:200px; border-radius: 10px;">
-                                            	<img id="thImgShow"/>
-                                            </div>
+                                    	<td style="width:inherit; text-align: -webkit-center;">
+                                           	<img src="/resources/img/lecturePreview.png" class="thimage-show" id="thImgShow"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -322,14 +314,12 @@ select {
                     <div class="row align-self-center" style="height:400px">
                         <!--강의제목, 소개글 등록란-->
                         <div class="col-6 ml-3 align-self-center" style="border-right:1px solid rgb(218, 218, 218)">
-                            <form action="">
-                                <div class="mb-3">
-                                    <input type="text" id="lecTitle" maxlength="200" onkeyup="fn_checkByte(this)" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" title="강의제목란">
-                                </div>
-                                <div class="">
-                                    <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의소개란"></textarea>
-                                </div>
-                            </form>
+                            <div class="mb-3">
+                                <input type="text" id="lecTitle" maxlength="200" onkeyup="fn_checkByte(this)" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" title="강의제목란">
+                            </div>
+                            <div class="">
+                                <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의소개란"></textarea>
+                            </div>
                         </div>
     
                         <!--강의게시기간, 강의수강기간 등록란 / 수강기간이 강의게시기간보다 길수 없게 설정해야함 !-->
@@ -477,8 +467,9 @@ select {
                     <div class="row d-flex h-400" style="height:400px">
                         <!--수업 키트 입력란-->
                         <div class="row col-6 ml-3 justify-content-center align-items-center" style="height:400px; border-right:1px solid rgb(218, 218, 218);">
-                            <form action="">
+                            <form>
                                 <div class="row mb-3">
+                                	<input hidden="hidden">
                                     <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요" title="키트이름란">
                                 </div>
                                 <div class="row">
@@ -504,13 +495,11 @@ select {
                     <div class="row mb-5 mx-5">
                         <div class="row col-12 mt-3 mb-3" style="border-bottom:1px solid rgb(200, 200, 200)"></div>
                         <div class="col-12 mx-4">
-                            <form method="" action="">
-                                <div >
-                                    <h6 class="mb-2 font-weight-bold">태그 선택(최대 3개)</h6>
-                                </div>
-                                <div id="tagdiv">
-                                </div>
-                            </form>
+                           <div>
+                               <h6 class="mb-2 font-weight-bold">태그 선택(최대 3개)</h6>
+                           </div>
+                           <div id="tagdiv">
+                           </div>
                         </div>
                     </div>
                     
@@ -736,13 +725,11 @@ select {
         } else {
     	    var contents 
     	        = "<div class='itemBox'>"
-    	        + "<div style='float:left;'>"
     	        + "<span class='itemNum'></span> "
-    	        + "<span class='itemClassName'><input type='text' class='classTtl' style='width:300px;'/></span>"
-    	        + "<span>"
+    	        + "&nbsp&nbsp&nbsp"
+    	        + "<span class='itemClassName'><input type='text' maxlength='100' class='classTtl' style='width:300px;'></span>"
+    	        + "&nbsp&nbsp&nbsp"
     	        + "<input type='file' class='classUp' accept='video/*'>"
-    	        + "</span>"
-    	        + "</div>"
     	        + "</div>";
     	    return contents;
         }
@@ -815,6 +802,9 @@ select {
 			this.value = this.value.replace(/\D/g, '');
 			alert('숫자만 입력가능합니다.');
 		}		
+//    	let cmval = comma($(this).val());
+//    	$(this).val(cmval);
+//    	console.log($(this).val());
 	});
     
     //키트 설명란 체크
@@ -823,7 +813,7 @@ select {
     		this.value = this.value.replace(this.value,'');
     		alert('키트명을 먼저 입력해주세요');
     	} else {
-    		$('#kitprc').val('1000');
+    		//$('#kitprc').val('1000');
     	}
 	});
     
@@ -901,16 +891,18 @@ select {
         //강의 등록 / 이미지 업로드
 	    let form = new FormData();
 	    
-		//변수 선언, lecture-map insert 순으로 data입력, parameter통일
+		//변수 선언, parameter통일
 		let creid = '${id}';
 		let upctgr = $('#ctgr option:selected').val();
 		let downctgr = $('#downctgr option:selected').val();
 		let ttl = $('#lecTitle').val();
 		let intro = $('#lecIntro').val();
+		intro = lineMaker(intro);
 		let openterm = $('#lecP option:selected').val();
 		let tlsnterm = $('#coP option:selected').val();
 		let kitname = $('#kitname').val();
 		let kitintro = $('#kitintro').val();
+		kitintro = lineMaker(kitintro);
 		let kitprc = $('#kitprc').val();
 		let prc = $('#prc').val();
 		let tag1 = null;
@@ -927,6 +919,7 @@ select {
 				tag3 = $(this).val();
 			}
 		})
+		
 		for(var i = 0; i < $('.classUp').length; i++){
 			form.append("lsnNo", $('.itemNum').eq(i).text());
 			form.append("classTtl", $('.classTtl').eq(i).val());
@@ -991,6 +984,22 @@ select {
 			return false;	
         }
         
+        //3페이지 영상 체크(OT필수로 넣도록)
+        else if($('#itemBoxWrap').hasClass('classUp') == false){
+        	alert('OT영상은 필수로 등록하여야합니다');
+        	return false;
+        }
+//        else if($('.classUp')[0].files[0] == null){
+//        	alert('OT영상은 필수로 등록하여야합니다');
+//        	return false;
+//        }
+		for(var i = 0; i < $('.classUp').length; i++){
+			if($('.classUp')[i].files[0] == null){
+				alert('영상이 없는 수업이 있습니다');
+				return false;
+			}
+		}
+        
         $.ajax({
             url : "/creator/lectureResister",
           	method : "post",
@@ -1016,16 +1025,17 @@ select {
             //강의 등록 / 이미지 업로드
 		    let form = new FormData();
 		    
-			//변수 선언, lecture-map insert 순으로 data입력, parameter통일
 			let creid = '${id}';
 			let upctgr = $('#ctgr option:selected').val();
 			let downctgr = $('#downctgr option:selected').val();
 			let ttl = $('#lecTitle').val();
 			let intro = $('#lecIntro').val();
+			intro = lineMaker(intro);
 			let openterm = $('#lecP option:selected').val();
 			let tlsnterm = $('#coP option:selected').val();
 			let kitname = $('#kitname').val();
 			let kitintro = $('#kitintro').val();
+			kitintro = lineMaker(kitintro);
 			let kitprc = $('#kitprc').val();
 			let prc = $('#prc').val();
 			let tag1 = null;
@@ -1096,6 +1106,36 @@ select {
         })
         
         
+        
+        
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
+//금액 콤마 생성/제거
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
         
          
 

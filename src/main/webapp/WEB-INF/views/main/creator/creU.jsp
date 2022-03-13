@@ -96,7 +96,7 @@
                                             </li>
                                             <li class="list-group-item">
                                                 <label for="" class="font-weight-bold">소개</label>
-                                                <textarea id="creIntro" rows="7" spellcheck="false" class="border pl-3 pr-3">${creIntro }</textarea>
+                                                <textarea id="creIntro" rows="7" spellcheck="false" class="border pl-3 pr-3"></textarea>
                                             </li> 
                                         </ul>
                                     </div>      
@@ -139,6 +139,8 @@
     //크리에이터 정보 수정 데이터 넘겨주기
     function creatorUpdate(){
     	let creIntro = $('#creIntro').val();
+    	creIntro = lineMaker(creIntro);
+    	
     	$.ajax({
     		url:'/creator/creU',
     		method:'post',
@@ -150,14 +152,40 @@
     			creIntro : creIntro
     		},
     		success:function(){
-    			alert('수정되었습니다.')
+    			alert('수정되었습니다.');
     			location.href='/creator/creS';
     		},
     		error: function(e){
     			console.log('실패'+ e);
     		}
     	});
+    	
     }
+    
+    //줄바꿈
+    const lineMaker = (e)=>{
+    	let inputVal = e;
+    	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+    	inputVal = inputVal.replace(/\\n/ig,'<br>');
+    	inputVal = inputVal.replace(/\n/ig,'<br>');
+    	return inputVal;
+    }
+    
+    //br없애기
+    const brDel = (e)=>{
+    	let inputVal = e;
+    	inputVal = inputVal.replace(/<br>/ig,'\n');
+    	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+    	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+    	return inputVal
+    }
+    
+    //크리에이터 수정란
+    $(function(){
+    	let creIntro = '${creIntro }';
+    	let resultVal = brDel(creIntro);
+    	$('#creIntro').val(resultVal);
+    })
 	
 
 </script>
