@@ -30,7 +30,7 @@ public class RefundController {
 		if(refundDao.insertRefund(vo) != 1) {
 			return "환불할 수 없습니다.";
 		} else {
-			//sugangDao.sugangRefundUpdate(vo.getTlsnNo());
+			sugangDao.sugangRefundUpdate(vo.getTlsnNo());
 			return "환불 신청이 완료되었습니다.";			
 		}
 	}

@@ -129,10 +129,7 @@
             </div>
           </div>
           
-          
-          
-          
-          
+  
           <div class="col-lg-12">
             <div class="row justify-content-center">
               <div class="col-lg-12 p-0">
@@ -209,7 +206,7 @@
     $('#reason').change((e)=>{
       if(!e.currentTarget.value){
         $('.reasonbox').append(
-          $('<input>').attr('type','text').addClass('border w-100 p-2 my-3 etc')
+          $('<input>').attr('type','text').addClass('border w-100 p-2 my-3 etc').attr('spellcheck','false')
         )
       } else {
         $('.reasonbox').children().remove();

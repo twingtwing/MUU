@@ -130,6 +130,12 @@
                                 <input type="hidden" name="page" value="${searchData.page }">
                                 <input type="hidden" name="orderColumn" value="${searchData.orderColumn }">
                                 <input type="hidden" name="orderBy" value="${searchData.orderBy }">
+                                <input type="hidden" name="state" 
+								<c:choose>
+								<c:when test="${not empty state }">value="${state }"</c:when>
+								<c:otherwise>value="false"</c:otherwise>
+								</c:choose>
+								id="searchState">
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
@@ -249,6 +255,7 @@ $('#excel').click(()=>{
 })
 
 $('#search').click(()=>{
+	$('#searchState').val(true);
 	setSearchData(1)
 	$('#searchForm').submit();
 })
@@ -260,9 +267,13 @@ $('#resetAll').click(()=>{
 	$('.startDate').val(null);	
 	$('.endDate').val(null);
 	$('#all').prop('checked','checked');
+	$('#searchState').val(false);
 })
 
 $('.fa-caret-down').click((e)=>{
+	if(!JSON.parse($('#searchState').val())){
+		$('#resetAll').click();
+	}
 	$(e.currentTarget).toggleClass('fa-rotate-180')
 	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
 	$('#searchForm input[name=orderBy]').val('asc');
@@ -270,6 +281,9 @@ $('.fa-caret-down').click((e)=>{
 	$('#searchForm').submit();
 })
 $('.fa-rotate-180').click((e)=>{
+	if(!JSON.parse($('#searchState').val())){
+		$('#resetAll').click();
+	}
 	$(e.currentTarget).toggleClass('fa-rotate-180')
 	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
 	$('#searchForm input[name=orderBy]').val('desc');
@@ -320,7 +334,9 @@ $('.page-item').click((e)=>{
 	if(isNaN(pageNum)){
 		return;
 	}
-	console.log(pageNum)
+	if(!JSON.parse($('#searchState').val())){
+		$('#resetAll').click();
+	}
 	setSearchData(pageNum);
 	$('#searchForm').submit();
 })

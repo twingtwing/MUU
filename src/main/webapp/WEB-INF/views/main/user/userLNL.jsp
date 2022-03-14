@@ -253,8 +253,8 @@
 			searchData.page = pageNum;
 			searchPageAjax(searchData);
 		}
-		$('.paging').removeClass('current-page');
-		$(e.currentTarget).addClass('current-page'); 
+		$('.current-page').removeClass('current-page');
+	    $(e.target).addClass('current-page');
 	})
 	
   // 페이지네이션 DOM 조작 함수

@@ -44,18 +44,17 @@ public class LtQnaController {
 		checkvo = sugangDao.sugangCheckDate(checkvo);
 		if(Objects.isNull(checkvo)) {
 			logger.info("사용자의 잘못된 접근");
-			model.addAttribute("accessBan","사용자가 잘못된 방식으로 만료된 강의에 접근하려고 합니다.");
 			return "redirect:/accessError";
 		} else {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			model.addAttribute("sugang",checkvo);
 		}	
 		
-		vo.setPage(0);
+		vo.setPage(1);
 		vo.setWriter(pri.getName());
 		List<LtQnaVO> mylist = ltqnaDao.selectMyQnaList(vo);
 		List<LtQnaVO> list = ltqnaDao.selectQnaList(vo);
-		Pagination pagination = new Pagination(ltqnaDao.qnaListCnt(vo.getLtNo()),1);
+		Pagination pagination = new Pagination(ltqnaDao.qnaListCnt(vo.getLtNo()),vo.getPage());
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("myList",mylist);
 		model.addAttribute("qnaList",list);
