@@ -276,7 +276,7 @@
       if ($('#wr').text() === '작성') {
     	let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
     	if(length>=3999){
-    		window.alert('4000자 내외로 작성해주세요.');
+    		window.alert('1000자 내외로 작성해주세요.');
     		return;
     	}
         let data = {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -23,32 +24,49 @@ import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
 import co.makeu.up.progress.service.ProgressServiceImpl;
 import co.makeu.up.progress.service.ProgressVO;
+import co.makeu.up.sugang.service.SugangServiceImpl;
+import co.makeu.up.sugang.service.SugangVO;
 
 @Controller
 public class LessonController {
 	Logger logger = LoggerFactory.getLogger(LessonController.class);
-	@Autowired LessonServiceImpl lessonDao;
-	@Autowired ProgressServiceImpl progressDao;
+	@Autowired
+	LessonServiceImpl lessonDao;
+	@Autowired
+	ProgressServiceImpl progressDao;
+	@Autowired
+	SugangServiceImpl sugangDao;
+
 	@PostMapping("/user/userLW")
 	public String userLessonWatch(LessonVO vo, Model model, Principal pri) {
-		vo.setId(pri.getName());
-		model.addAttribute("firstLesson",lessonDao.ajaxLessonSelect(vo.getSerialNo()));
-		model.addAttribute("lessons",lessonDao.lessonList(vo.getLtNo()));
-		ProgressVO progressvo = new ProgressVO();
-		progressvo.setId(pri.getName());
-		progressvo.setSerialNo(vo.getSerialNo());
-		progressvo = progressDao.selectProgress(progressvo);
-		if(progressvo==null) {
-			logger.info("null값입니다! ");
-			ProgressVO pgrvo = new ProgressVO();
-			pgrvo.setId(pri.getName());
-			pgrvo.setSerialNo(vo.getSerialNo());
-			pgrvo.setProgPct(0);
-			progressDao.insertProgress(pgrvo);
+		SugangVO checkvo = new SugangVO();
+		checkvo.setLtNo(vo.getLtNo());
+		checkvo.setId(pri.getName());
+		checkvo = sugangDao.sugangCheckDate(checkvo);
+		if (Objects.isNull(checkvo)) {
+			logger.info("사용자의 잘못된 접근");
+			model.addAttribute("accessBan", "잘못된 접근입니다.");
+			return "redirect:/accessError";
+		} else {
+			vo.setId(pri.getName());
+			model.addAttribute("firstLesson", lessonDao.ajaxLessonSelect(vo.getSerialNo()));
+			model.addAttribute("lessons", lessonDao.lessonList(vo.getLtNo()));
+			ProgressVO progressvo = new ProgressVO();
+			progressvo.setId(pri.getName());
+			progressvo.setSerialNo(vo.getSerialNo());
+			progressvo = progressDao.selectProgress(progressvo);
+			if (progressvo == null) {
+				logger.info("null값입니다! ");
+				ProgressVO pgrvo = new ProgressVO();
+				pgrvo.setId(pri.getName());
+				pgrvo.setSerialNo(vo.getSerialNo());
+				pgrvo.setProgPct(0);
+				progressDao.insertProgress(pgrvo);
+			}
+			return "main/user/userLW";
 		}
-		return "main/user/userLW";
 	}
-	
+
 	// 수업 누르면 영상바뀌게
 	@ResponseBody
 	@GetMapping("/user/userLWselect")
@@ -58,24 +76,24 @@ public class LessonController {
 		progressvo.setSerialNo(serialNo);
 		progressvo = progressDao.selectProgress(progressvo);
 		System.out.println(progressvo);
-		if(progressvo==null) {
+		if (progressvo == null) {
 			ProgressVO pgrvo = new ProgressVO();
 			pgrvo.setId(pri.getName());
 			pgrvo.setSerialNo(vo.getSerialNo());
 			pgrvo.setProgPct(0);
 			progressDao.insertProgress(pgrvo);
-		}	
+		}
 		vo = lessonDao.ajaxLessonSelect(serialNo);
 		return vo;
 	}
-	
-	//수업 영상 관리 페이지
+
+	// 수업 영상 관리 페이지
 	@RequestMapping("/creator/lesU")
 	public String lessonUpdatePage(LessonVO vo, Model model) {
 		model.addAttribute("lesinfo", lessonDao.lessonList(vo.getLtNo()));
 		return "main/lecture/lesU";
 	}
-	
+
 //	@PostMapping("/creator/lessonUpdate")
 //	@ResponseBody
 //	public void lessonUpdate(LessonVO vo, MultipartHttpServletRequest multi) {
