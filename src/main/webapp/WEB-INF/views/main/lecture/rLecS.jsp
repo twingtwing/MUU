@@ -144,7 +144,9 @@
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rlists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-outline-danger" type="button">재신청</button>
+                                <c:if test="${rlists.ltStCode == 'L07' }">
+                                	<button class="btn btn-outline-danger" type="button" onclick="lectureReResister(${rlists.ltNo })">재신청</button>
+                                </c:if>
                             </div>
                         </div>
 
@@ -222,6 +224,9 @@
                                     <c:if test="${rlists.tag3 != 'null' }">
                                     	<span class="badge bg-dark px-2 py-1 mr-1">${rlists.tag3 }</span>
                                     </c:if>
+                                    <c:if test="${rlists.tag1 ==null && rlists.tag2 ==null && rlists.tag3 ==null }">
+	                                	<span class="badge bg-dark px-2 py-1 mr-1">태그없음</span>
+	                                </c:if>  
                                 </div>
                             </div>
                         </div>
@@ -233,17 +238,26 @@
                         <div class="row col-12 align-items-end">
                             <div class="col-10">
                                 <div class="row">
+                                	<c:if test="${rlists.kitName != null }">
                                     <h6 class="font-weight-bold">${rlists.kitName }</h6>
+                                    </c:if>
+                                    <c:if test="${rlists.kitName == null}">
+                                    <h6 class="font-weight-bold">키트 없음</h6>
+                                    </c:if>
                                 </div>
+                                <c:if test="${rlists.kitIntro != null}">
                                 <div class="row mt-3" style="border-left: 4px solid grey">
                                     <p class="mb-0 ml-3 my-1">
                                         ${rlists.kitIntro }
                                     </p>
                                 </div>
+                                </c:if>
                             </div>
                             <div class="col-2">
                                 <div class="row align-self-end">
+                                	<c:if test="${rlists.kitPrc != null }">
                                     <p class="mb-0">키트 가격 : ${rlists.kitPrc }원</p>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -283,6 +297,31 @@ function lessonInfo(e){
 	$('.sendltno').val(e);
 	$('#frm').attr("action", "/creator/lesU");
 	$('#frm').submit();
+}
+
+//시큐리티 토큰
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+//재신청
+function lectureReResister(e){
+	let ltNo = e;
+	
+	$.ajax({
+		url : "/creator/lecReResister",
+		method : "post",
+		dataType: "text",
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+         },
+		data : {
+			ltNo : ltNo
+		},
+		success : function(){
+			alert('재신청하였습니다');
+			location.reload();
+		}
+	})
 }
 </script>
 </html>

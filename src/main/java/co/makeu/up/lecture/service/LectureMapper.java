@@ -2,6 +2,8 @@ package co.makeu.up.lecture.service;
 
 import java.util.List;
 
+import co.makeu.up.report.service.ReportVO;
+
 public interface LectureMapper {
 	int lectureInsert(LectureVO vo);
 	LectureVO lectureSelect(int ltNo);
@@ -10,6 +12,10 @@ public interface LectureMapper {
 	List<LectureVO> closeLecture(LectureVO vo);
 	List<LectureVO> reportLecture(LectureVO vo);
 	int lectureUpdate(LectureVO vo);
+	int lectureReResister(LectureVO vo);
+	int lectureReportCheck(LectureVO vo);
+	List<ReportVO> reportLesson(ReportVO vo);
+	int lectureReInsert(LectureVO vo);
 
 	LectureVO lectureInsertTemp(LectureVO vo);
 	int lectureUpdateTemp(LectureVO vo);
