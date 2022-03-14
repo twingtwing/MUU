@@ -89,7 +89,7 @@
                             </div>
                             <div class="row d-flex justify-content-between mx-1 mt-2">
                                 <button onclick="history.back()" class="btn btn-outline-secondary"><i class="arrow_left"></i>뒤로가기</button>
-                                <a href="/user/userWishList" class="btn btn-outline-secondary">워시리스트로 이동</a>
+                                <a href="/user/userWishList" class="btn btn-outline-secondary">위시리스트로 이동</a>
                             </div>
                         </div>
                         <div class="col-lg-5">

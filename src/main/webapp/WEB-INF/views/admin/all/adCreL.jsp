@@ -144,6 +144,12 @@
                                 <input type="hidden" name="page" value="${search.page }">
                                 <input type="hidden" name="orderBy" value="${search.orderBy }">
                                 <input type="hidden" name="orderColumn" value="${search.orderColumn }">
+                                <input type="hidden" name="state" 
+								<c:choose>
+								<c:when test="${not empty state }">value="${state }"</c:when>
+								<c:otherwise>value="false"</c:otherwise>
+								</c:choose>
+								id="searchState">
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
@@ -296,6 +302,7 @@ $('#resetAll').click(()=>{
 	$('#code_all').prop('checked','checked');
 	$('#code_1').prop('checked','checked');
 	$('input[name=creGrdCodeList]').prop('checked',null);
+	$('#searchState').val(false);
 })
 
 
@@ -336,6 +343,9 @@ $('.creatorListBoard').click((e)=>{
 })
 
 $('.fa-caret-down').click((e)=>{
+	if(!JSON.parse($('#searchState').val())){
+		$('#resetAll').click();
+	}
 	$(e.currentTarget).toggleClass('fa-rotate-180')
 	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
 	$('#searchForm input[name=orderBy]').val('asc');
@@ -343,6 +353,9 @@ $('.fa-caret-down').click((e)=>{
 	$('#searchForm').submit();
 })
 $('.fa-rotate-180').click((e)=>{
+	if(!JSON.parse($('#searchState').val())){
+		$('#resetAll').click();
+	}
 	$(e.currentTarget).toggleClass('fa-rotate-180')
 	$('#searchForm input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
 	$('#searchForm input[name=orderBy]').val('desc');
@@ -352,12 +365,16 @@ $('.fa-rotate-180').click((e)=>{
 	
 	// pagination
 	$('.page-item').click((e)=>{
+		if(!JSON.parse($('#searchState').val())){
+			$('#resetAll').click();
+		}
 		let pageNum = e.currentTarget.dataset.num;
 		makeSearchData(pageNum);
 		$('#searchForm').submit();
 	})
 		
 	$('#creSearch').click(()=>{
+		$('#searchState').val(true);
 		makeSearchData(1);
 		$('#searchForm').submit();
 	})	

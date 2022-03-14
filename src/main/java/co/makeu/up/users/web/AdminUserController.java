@@ -3,6 +3,7 @@ package co.makeu.up.users.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,12 @@ public class AdminUserController {
 	@Autowired SugangServiceImpl sugangDao;
 	
 	@GetMapping("/admin/adUserL")
-	public String adUserL(Model model,UsersVO vo) {
+	public String adUserL(Model model,UsersVO vo, @Param("state") boolean state) {
+		if(!state) {
+			model.addAttribute("state", false);
+		} else {
+			model.addAttribute("state", true);
+		}
 		String[] grd = {"일반","새싹","꽃","나무"};
 		if(vo.getuGrdCodeList()==null) {
 			vo.setuGrdCodeList(grd);

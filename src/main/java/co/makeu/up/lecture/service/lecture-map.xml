@@ -206,7 +206,7 @@
 				<if test="ltStCodeList != null and ltStCodeList.length != 0">
 				AND LT_ST_CODE IN
 				<foreach collection="ltStCodeList" item="ltStCodeList" open="(" close=")" separator=",">
-			    		#{ltStCodeList}
+			    	#{ltStCodeList}
 			    </foreach>
 				</if>
 				<if test="orderColumn != null and !orderColumn.equals('')">

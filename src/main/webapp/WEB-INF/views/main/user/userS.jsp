@@ -429,7 +429,11 @@ td, th {
     	  }
 		  const formData = new FormData();
 		  formData.append("uploadFile", e.target.files[0]);
-		  formData.append("beforeFileName",$('#profile').attr('src'));
+		  if($('#profile').attr('src')){
+			  formData.append("beforeFileName",$('#profile').attr('src'));			  
+		  } else {
+			  formData.append("beforeFileName","no");		
+		  }
 		  $.ajax({
 			  type : 'post',
 			  url :"/user/uploadProfile",
@@ -445,33 +449,7 @@ td, th {
 			  err : (err) => console.log(err)
 		  })
       })
-      
-      
-      // profile img change
-      $('#file').change((e)=>{
-    	  const imgreg = /\.(jpg|jpeg|png|bmp)$/;
-    	  let fileName = e.target.files[0].name;
-    	  if(!imgreg.test(fileName)){
-    		  window.alert('이미지 파일만 올릴 수 있습니다.');
-    		  return;
-    	  }
-		  const formData = new FormData();
-		  formData.append("uploadFile", e.target.files[0]);
-		  $.ajax({
-			  type : 'post',
-			  url :"/user/uploadProfile",
-			  processData : false,
-			  contentType : false,
-			  beforeSend : (xhr) =>{
-			      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-			  },
-			  data : formData,
-			  success : (result) =>{
-				  $('#profile').attr('src',result);
-			  },
-			  err : (err) => console.log(err)
-		  })
-      })
+           
       $('#profile').mouseover(()=>{
     	  $('.imgwindow').css('display','block');
       })

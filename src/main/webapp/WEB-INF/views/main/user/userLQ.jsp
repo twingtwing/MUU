@@ -152,8 +152,8 @@
                 <thead>
                   <tr class="bg-light">
                     <th>질문 내용</th>
-                    <th>작성일</th>
-                    <th>답변여부</th>
+                    <th style="width:120px">작성일</th>
+                    <th style="width:120px">답변여부</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -189,16 +189,16 @@
                   <option value="content">내용</option>
                   <option value="writer">작성자</option>
                 </select>
-                <input type="text" class="border" id="lqSearchKey">
+                <input type="text" class="border" id="lqSearchKey" spellcheck="false">
                 <button type="button" class="border px-4" id="searchQna">검색</button>
               </div>
               <table class="bg-light w-100 mt-3 text-center border">
                 <thead>
                   <tr>
                     <th>질문 내용</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>답변여부</th>
+                    <th style="width:150px">작성자</th>
+                    <th style="width:120px">작성일</th>
+                    <th style="width:100px">답변여부</th>
                   </tr>
                 </thead>
 
@@ -206,7 +206,7 @@
                   <c:forEach items="${qnaList}" var="list">
                     <tr data-qnano=${list.qnaNo}>
                       <td>${list.qContent }</td>
-                      <td>${list.writer }</td>
+                      <td >${list.writer }</td>
                       <td>${list.qRegDate }</td>
                       <c:if test="${list.qnaStCode eq 'Q01'}">
                         <th class="font-weight-bold text-danger">답변 대기 중</th>
@@ -226,7 +226,7 @@
                 <c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="page">
                   <c:choose>
                     <c:when test="${page eq pagination.currPage}">
-                      <a class="paging">${page}</a>
+                      <a class="paging current-page">${page}</a>
                     </c:when>
                     <c:otherwise>
                       <a class="paging">${page}</a>
@@ -236,7 +236,6 @@
                 <c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
                   <a><i class="fa fa-angle-double-right"></i></a>
                 </c:if>
-                <a href="#"><i class="fa fa-angle-double-right"></i></a>
               </div>
 
             </div>
@@ -269,10 +268,17 @@
     })
 
     
+    
+    
     let qnanoForMod;
     // 질문 등록 및 수정
     $('#wr').click((e) => {
       if ($('#wr').text() === '작성') {
+    	let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+    	if(length>=3999){
+    		window.alert('4000자 내외로 작성해주세요.');
+    		return;
+    	}
         let data = {
           qContent: $('#myquestion').val(),
           ltNo: ${ltNo}
@@ -300,9 +306,15 @@
             )
           })
       } else if($('#wr').text() === '수정'){
+    	  let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+      	  if(length>=3999){
+      		window.alert('1000자 내외로 작성해주세요.');
+      		return;
+      	  }
     	  let data = {qnaNo : qnanoForMod, qContent : $('#myquestion').val()}
     	  updateQna(data);
     	  window.alert('수정이 완료되었습니다.')
+    	  $('.modify').click()
     	  $('#qstbox').addClass('d-none');
       }
     })
@@ -349,7 +361,7 @@
 
     // 페이지네이션
     $('.paging').click((e) => {
-      let pageNum = +e.currentTarget.textContent - 1;
+      let pageNum = +e.currentTarget.textContent;
       const data = {
         ltNo: ${ltNo},
         writerSearchKey: '',
@@ -362,11 +374,15 @@
         let searchData = makeSearchData(pageNum);
         pagination(searchData);
       }
+      $('.current-page').removeClass('current-page');
+      $(e.target).addClass('current-page');
     })
+    
     $('#searchQna').click(() => {
-      let data = makeSearchData(0);
+      let data = makeSearchData(1);
       pagination(data);
     });
+    
     const makeSearchData = (p) => {
       const data = {
         ltNo: ${ltNo},
@@ -384,6 +400,7 @@
       }
       return data;
     }
+    
     $('#lqSearchKey').keyup((e) => {
       if (e.key === 'Enter') {
         $('#searchQna').click();
@@ -412,7 +429,7 @@
           val.color = 'text-success';
         }
         let tr = $('<tr>').append(
-          $('<td>').text(val.qContent),
+          $('<td>').html(val.qContent),
           $('<td>').text(val.writer),
           $('<td>').text(new Date(val.qRegDate).toISOString().slice(0, 10)),
           $('<th>').text(val.qnaStCode).addClass(val.color),

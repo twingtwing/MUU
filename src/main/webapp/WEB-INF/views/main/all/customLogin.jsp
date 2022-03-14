@@ -84,7 +84,7 @@
 							<!-- 너 값 없는 놈이야-->
 							<div style="text-align: center; font-weight: bold;" class="text-danger d-flex justify-content-center"><c:out value="${error}"/></div>
 							<div class="d-flex flex-column">
-								<button type="submit" class="site-btn px-5">Login</button>
+								<button type="submit" class="site-btn px-5">로그인</button>
 								<a href="/forget" style="color: black; text-align: center; margin-top:3px; font-weight: bold;">아이디/비밀번호 찾기</a>
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

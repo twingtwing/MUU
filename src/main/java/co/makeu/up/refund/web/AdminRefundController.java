@@ -57,14 +57,12 @@ public class AdminRefundController {
 	@ResponseBody
 	@RequestMapping(value="/admin/adRefUpdate" , method=RequestMethod.POST)
 	public Map<String, Object> adRefUpdate(RefundVO been, HttpServletResponse response) {
-		System.out.println("되냐??");
 		Map<String, Object> map= new HashMap<>();
 		map.put("tlsnNo", been.getTlsnNo());
 		map.put("usePoint", been.getUsePoint());
 		map.put("Point", been.getPoint());
 		map.put("Id", been.getId());
-		refundDao.updateRefund(map);
-		System.out.println("여기까지 작동하냐?");
+		refundDao.updateRefund(map); 
 		return map;		
 	}
 	

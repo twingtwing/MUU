@@ -22,7 +22,7 @@ td {
 }
 
 #alert, .pwAlert, .idAlert {
-	color: var(- -danger);
+	color: var(--danger);
 	font-weight: bold;
 	transition: all 0.3s;
 }
@@ -42,6 +42,7 @@ td {
 table {
 	text-align: center;
 }
+
 </style>
 </head>
 
@@ -200,7 +201,7 @@ table {
 	<script>
 		let chkState = false;
 		let timer;	
-		const idreg = /^[a-zA-Z0-9]{5,12}$/;
+		const idreg = /^[a-z]+[a-z0-9]{5,19}$/g;
 		$('#id, .emailAddr').change((e)=>{
 			if(timer){
 				clearTimeout(timer);
@@ -212,7 +213,7 @@ table {
 					return;
 				}
 				if(!idreg.test($('#id').val())){
-					$('.idAlert').text('영문자를 조합해 5~12자로 맞춰주세요.');
+					$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
 					return;
 				}
 					$.ajax({
