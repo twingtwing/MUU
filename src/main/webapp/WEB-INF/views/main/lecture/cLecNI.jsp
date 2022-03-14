@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <textarea name="" id="content" cols="130" rows="10" spellcheck="false"></textarea>
+                                <textarea id="content" cols="130" rows="10" spellcheck="false"></textarea>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <div class="d-flex align-items-center">
@@ -234,9 +234,11 @@ let token = "${_csrf.token}";
 //글 등록
 $('#insertBtn').on('click', function(){
 	let form = new FormData();
+	let content = $('#content').val();
+	content = lineMaker(content);
 	form.append('ltNo', ${lecinfo.ltNo});
 	form.append('ttl', $('#ttl').val());
-	form.append('content', $('#content').val());
+	form.append('content', content);
 	
 	for(obj of $('#multiFile')[0].files){
 		 form.append("files",obj);
@@ -298,6 +300,24 @@ $('#insertBtn').on('click', function(){
     	$('.sendltno').val(e);
     	$('#frm').attr("action", "/creator/cLecSt");
     	$('#frm').submit();
+    }
+    
+    //줄바꿈
+    const lineMaker = (e)=>{
+    	let inputVal = e;
+    	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+    	inputVal = inputVal.replace(/\\n/ig,'<br>');
+    	inputVal = inputVal.replace(/\n/ig,'<br>');
+    	return inputVal;
+    }
+    
+    //br없애기
+    const brDel = (e)=>{
+    	let inputVal = e;
+    	inputVal = inputVal.replace(/<br>/ig,'\n');
+    	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+    	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+    	return inputVal
     }
 
 </script>
