@@ -40,6 +40,13 @@
     a{
     	cursor : pointer;
     }
+    .compl{
+    	width:30px;
+    }
+    .comple{
+    	width:40px;
+    }
+    
     
 </style>
 </head>
@@ -141,7 +148,7 @@
           <hr class="font-weight-bold">  
           <div class="row col-12 mb-5 ml-3">
             <!-- 제목 입력 / 제목 가져오기-->
-            <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+            <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
   
             <div class="row col-12">
               <div class="row col-12 mt-3 mb-3 justify-content-around">
@@ -211,7 +218,7 @@
 		                      <div class="shipbox justify-content-center position-absolute">
 		                        <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
 		                        <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
-		                        <button class="border cancel">취소</button>
+		                        <button class="border compl cancel">취소</button>
 		                      </div>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D02' }">
@@ -225,8 +232,8 @@
 	                         <div class="shipbox justify-content-center position-absolute">
 		                         <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
 		                         <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
-		                         <button class="border compl" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
-		                         <button class="border cancel">취소</button>
+		                         <button class="border comple" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
+		                         <button class="border compl cancel">취소</button>
 	                         </div>
 	                     </c:if>
 	                     <c:if test="${list.shipStCode == 'D06' }">
@@ -272,7 +279,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content p-3">
           <div class="modal-header">
-            <h5 class="modal-title"><span>박복자</span>수강생 결제내역</h5>
+            <h5 class="modal-title">수강생 결제내역</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

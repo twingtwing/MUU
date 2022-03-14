@@ -26,7 +26,7 @@
 		WHERE LT_NO = #{ltNo}
 		AND LSN_NO = 1
 	</select>
-	<update id="lessonUpdate">
+	<update id="lessonUpdate" parameterType="java.util.List">
 	begin
 	<foreach collection="list" item="item">
 		merge into
