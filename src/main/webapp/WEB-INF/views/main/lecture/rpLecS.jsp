@@ -168,10 +168,25 @@
                                 <c:if test="${rplists.ltStCode eq 'L04' }"><strong class="text-danger">신고됨</strong></c:if>
                         		<c:if test="${rplists.ltStCode eq 'L06' }"><strong class="text-warning">검토중</strong></c:if>
                                 </h5>
-                                <p class="mr-5 mb-0">문제가 있는 수업번호 : {}</p>
+                                <p class="mr-5 mb-0">문제가 있는 수업번호 : [
+                                <c:forEach items="${rplesson}" var="list" varStatus="status">
+                                ${list.num } 
+                                </c:forEach>
+                                ]</p>
                             </div>
                             <div class="row mr-5 ml-2 p-3 mt-3 border">
-                                <p class="mb-0">너의 강의는 신고당했다.</p>
+                            	<c:forEach items="${rplesson}" var="list" varStatus="status">
+                            	<c:if test="${list.type == 'RPT01' }">
+                            	<p class="mb-0">[부적절한 콘텐츠]</p>&nbsp;&nbsp;
+                            	</c:if>
+                            	<c:if test="${list.type == 'RPT02' }">
+                            	<p class="mb-0">[피싱 또는 스팸]</p>&nbsp;&nbsp;
+                            	</c:if>
+                            	<c:if test="${list.type == 'RPT03' }">
+                                <p class="mb-0">[기타]</p>&nbsp;&nbsp;
+                            	</c:if>
+                                </c:forEach>
+                                사유로 인해 신고당하였습니다.
                             </div>
                         </div>
                         
@@ -182,7 +197,7 @@
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rplists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-outline-success" type="button">재검토</button>
+                                <button class="btn btn-outline-success" type="button" onclick="lecCheck(${rplists.ltNo})">재검토</button>
                             </div>
                         </div>
                         
@@ -197,7 +212,7 @@
                             <div class="col-8">
                                 <div class="col-12 mt-2">
                                     <p>
-                                        ${rplist.intro }
+                                        ${rplists.intro }
                                     </p>
                                 </div>         
                             </div>
@@ -259,6 +274,9 @@
 	                                <c:if test="${rplists.tag3 !='null' }">    
 	                                    <span class="badge bg-dark px-2 py-1 mr-1">${rplists.tag3 }</span>
 	                                </c:if>   
+	                                <c:if test="${rplists.tag1 ==null && rplists.tag2 ==null && rplists.tag3 ==null }">
+	                                	<span class="badge bg-dark px-2 py-1 mr-1">태그없음</span>
+	                                </c:if>
                                 </div>
                             </div>
                         </div>
@@ -270,17 +288,26 @@
                         <div class="row col-12 align-items-end">
                             <div class="col-10">
                                 <div class="row">
+                                	<c:if test="${rplists.kitName != null }">
                                     <h6 class="font-weight-bold">${rplists.kitName }</h6>
+                                    </c:if>
+                                    <c:if test="${rplists.kitName == null}">
+                                    <h6 class="font-weight-bold">키트 없음</h6>
+                                    </c:if>
                                 </div>
+                                <c:if test="${rplists.kitIntro != null}">
                                 <div class="row mt-3" style="border-left: 4px solid grey">
                                     <p class="mb-0 ml-3 my-1">
                                         ${rplists.kitIntro }
                                     </p>
                                 </div>
+                                </c:if>
                             </div>
                             <div class="col-2">
                                 <div class="row align-self-end">
+                                	<c:if test="${rplists.kitPrc != null }">
                                     <p class="mb-0">키트 가격 : ${rplists.kitPrc }원</p>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -332,6 +359,32 @@
     	$('.sendltno').val(e);
     	$('#frm').attr("action", "/creator/lesU");
     	$('#frm').submit();
+    }
+    
+    //시큐리티 토큰
+    let header = "${_csrf.headerName}";
+    let token = "${_csrf.token}";
+    
+    //신고강의 재검토 업데이트
+    function lecCheck(e){
+   		let ltNo = e;
+   		
+    	$.ajax({
+    		url : "/creator/lecRpCheck",
+    		method : "post",
+    		dataType:"text",
+    		beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+    		data:{
+    			ltNo : ltNo
+    		},
+    		success : function(){
+    			alert('재검토 신청하였습니다');
+    			location.href="/creator/rLecL?ltNo="+e;
+    		}
+    		
+    	})
     }
     
 

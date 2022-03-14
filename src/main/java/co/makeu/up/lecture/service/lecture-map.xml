@@ -41,6 +41,14 @@
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
 		ORDER BY l.LT_NO DESC
 	</select>
+	<select id="reportLesson" parameterType="co.makeu.up.report.service.ReportVO" resultType="co.makeu.up.report.service.ReportVO">
+		SELECT R.*
+		FROM CNAMELECTURE C JOIN REPORT R
+		ON C.LT_NO = R.LT_NO
+		WHERE RP_ST_CODE = 'RPS02'
+		AND R.CTGR = 'RP02'
+		AND R.LT_NO = #{ltNo}
+	</select>
 	<update id="lectureUpdate" parameterType="co.makeu.up.lecture.service.LectureVO">
 		UPDATE LECTURE SET
 		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr},
@@ -82,6 +90,24 @@
 		ON P.LT_NO = L.LT_NO
 		WHERE L.CRE_ID = #{ID}
 	</select>
+	<update id="lectureReResister" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L02'
+		WHERE LT_NO = #{ltNo} 
+	</update>
+	
+	<update id="lectureReportCheck" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L02'
+		WHERE LT_NO = #{ltNo} 
+	</update>
+	<update id="lectureReInsert" parameterType="co.makeu.up.lecture.service.LectureVO">
+		update lecture set
+		open_term = #{openTerm}, req_date = sysdate, lt_st_code = 'L02', 
+		exp_date = (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), start_date = sysdate
+		where lt_no = #{ltNo}
+		
+	</update>
 
 	<select id="adminLectureList" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM(
@@ -225,7 +251,7 @@
 				<if test="ltStCodeList != null and ltStCodeList.length != 0">
 				AND LT_ST_CODE IN
 				<foreach collection="ltStCodeList" item="ltStCodeList" open="(" close=")" separator=",">
-			    		#{ltStCodeList}
+			    	#{ltStCodeList}
 			    </foreach>
 				</if>
 				<if test="orderColumn != null and !orderColumn.equals('')">

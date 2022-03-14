@@ -3,6 +3,7 @@ package co.makeu.up.users.web;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class UsersController {
 	@ResponseBody
 	public int emailVerify(@RequestParam(value="email", required=false) String email) {
 		System.out.println(email);
-		Random r = new Random();
+		SecureRandom r = new SecureRandom();
 		int num = r.nextInt(999999);
 		String fromEamil = "muuproject.up@gmail.com";
 		String toEamil = email;// comma넣으면 여러개 가능함
@@ -147,17 +148,17 @@ public class UsersController {
 	@ResponseBody
 	public void userUploadProfile(MultipartFile uploadFile, Principal pri, UsersVO vo,HttpServletResponse res, String beforeFileName) throws IOException {
 		String uploadFolder = "C:\\uploadTest";
-		Random r = new Random();
+		SecureRandom r = new SecureRandom();
 		int num = r.nextInt(999999);
-		
+		logger.info(beforeFileName);
 		// 기존에 있던 프로필사진 삭제
-		File oldimg = new File(uploadFolder+"\\"+beforeFileName.substring(beforeFileName.lastIndexOf("/")+1));
-		oldimg.delete();
+		if(!beforeFileName.equals("no")) {			
+			File oldimg = new File(uploadFolder+"\\"+beforeFileName.substring(beforeFileName.lastIndexOf("/")+1));
+			oldimg.delete();
+		}
 		
-		logger.info("파일 원래이름: "+uploadFile.getOriginalFilename());
 		String uploadFileName = uploadFile.getOriginalFilename();
 		uploadFileName = num+uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-		logger.info("실제 저장 파일명: "+uploadFileName);
 		File saveFile = new File(uploadFolder,uploadFileName);
 		String id = pri.getName();
 		try {

@@ -29,8 +29,8 @@ public class LessonServiceImpl implements LessonMapper {
 	}
 
 	@Override
-	public int lessonUpdate(LessonVO vo) {
-		return map.lessonUpdate(vo);
+	public int lessonUpdate(List<LessonVO> list) {
+		return map.lessonUpdate(list);
 	}
 
 	@Override

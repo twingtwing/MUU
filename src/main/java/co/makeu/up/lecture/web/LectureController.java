@@ -25,6 +25,7 @@ import co.makeu.up.lecture.service.LectureServiceImpl;
 import co.makeu.up.lecture.service.LectureVO;
 import co.makeu.up.lesson.service.LessonServiceImpl;
 import co.makeu.up.lesson.service.LessonVO;
+import co.makeu.up.report.service.ReportVO;
 
 @Controller
 public class LectureController {
@@ -319,8 +320,9 @@ public class LectureController {
 		
 	//신고된 강의 상세 페이지
 	@RequestMapping("/creator/rpLecS")
-	public String reportLecSelect(LectureVO vo, Model model) {
+	public String reportLecSelect(LectureVO vo, ReportVO rvo, Model model) {
 			model.addAttribute("rplists", lectureDao.lectureSelect(vo.getLtNo()));
+			model.addAttribute("rplesson", lectureDao.reportLesson(rvo));
 		return "main/lecture/rpLecS";
 	}
 	
@@ -372,6 +374,27 @@ public class LectureController {
 		}
 		
 		lectureDao.lectureUpdate(vo);
+	}
+	
+	//신청페이지 재신청
+	@RequestMapping("/creator/lecReResister")
+	public String lecReResister(LectureVO vo) {
+		lectureDao.lectureReResister(vo);
+		return "main/lecture/rLecS";
+	}
+	
+	//신고페이지 재검토
+	@PostMapping("/creator/lecRpCheck")
+	@ResponseBody
+	public void lecRpCheck(LectureVO vo) {
+		lectureDao.lectureReportCheck(vo);
+	}
+	
+	//종료페이지 재등록
+	@PostMapping("/creator/lecReInsert")
+	@ResponseBody
+	public void lecReInsert(LectureVO vo) {
+		lectureDao.lectureReInsert(vo);
 	}
 
 }

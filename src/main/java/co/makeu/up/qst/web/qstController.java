@@ -5,6 +5,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,8 +32,6 @@ public class qstController {
 	@ResponseBody
 	@PostMapping("/QstInsert")
 	public String QstInsert(QstVO vo) {
-		System.out.println("도착은 한거니?");
-		System.out.println("아니 아직멀었어");
 		System.out.println(vo.toString());
 		qstDao.QstInsert(vo);
 		return "main/all/qna";
@@ -40,7 +39,12 @@ public class qstController {
 	
 	//admin list
 	@GetMapping("/admin/adQstL")
-	public String adQstL(QstVO vo, Model model) {
+	public String adQstL(QstVO vo, Model model, @Param("state") boolean state) {
+		if(!state) {
+			model.addAttribute("state", false);
+		} else {
+			model.addAttribute("state", true);
+		}
 		if(vo.getPage()==0) {
 			vo.setPage(1);
 		}

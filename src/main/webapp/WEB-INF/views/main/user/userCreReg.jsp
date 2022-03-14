@@ -40,7 +40,7 @@
 <form action="/user/userTocreator" method="post" id="updateForm">
 	<section class="d-flex flex-column align-items-center">
 		<h4>크리에이터 등록</h4>
-		<textarea name="creIntro" rows="15" class="border w-25 mt-5 mb-2 p-3" spellcheck="false" placeholder="멋진 자기소개를 작성해주세요!" id="creIntro"></textarea>
+		<textarea name="creIntro" rows="15" class="border w-25 mt-5 mb-2 p-3" spellcheck="false" placeholder="멋진 자기소개를 작성해주세요!" id="creIntro" maxlength="500"></textarea>
 		<input type="text" id="tel" name="tel" placeholder="전화번호 ('-'제외)" class="border w-25 m-2 p-3" spellcheck="false">
 		<input type="password" id="pw1" class="border w-25 m-2 p-3" placeholder="비밀번호" name="pw"> 
 		<input type="password" id="pw2" class="border w-25 m-2 p-3" placeholder="비밀번호 확인">
@@ -84,7 +84,7 @@ const lineMaker = ()=>{
 }
 
 const telReg = /^010\d{8}$/;
-$('#register').click((e)=>{
+	$('#register').click((e)=>{
 	if(!$('#creIntro').val() || !$('#tel').val() || !$('#pw1').val() || !$('#pw2').val()){
 		$('#alert').text('빠진 항목이 없는지 확인해주세요.')
 		return;
@@ -99,6 +99,11 @@ $('#register').click((e)=>{
 	} 
 	if($('#creIntro').val() && $('#tel').val() && $('#pw1').val() && $('#pw2').val() && telReg.test($('#tel').val())&& $('#pw1').val()===$('#pw2').val()){
 		$('#alert').text('')
+	}
+	let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+	if(length>=500){
+		window.alert('500자 이내로 작성해주세요.');
+		return;
 	}
 	passwordChk($('#pw1').val());
 })

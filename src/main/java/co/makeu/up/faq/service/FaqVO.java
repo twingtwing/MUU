@@ -11,7 +11,7 @@ public class FaqVO {
 	private String qcontent;
 	private String fstcode;
 	private Date wrdate;
-	private String acontent;	
+	private String acontent;
 	
 	//for user search
 	private String searchttl;

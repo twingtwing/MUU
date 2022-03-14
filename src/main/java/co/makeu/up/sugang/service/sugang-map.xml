@@ -6,7 +6,7 @@
 		SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO 
 		WHERE ID = #{id}
-		AND TLSN_ST_CODE != 'SU03'
+		AND TLSN_ST_CODE IN('SU01','SU02')
 		ORDER BY S.REG_DATE DESC
 	</select>
 	<select id="sugangCheckDate" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">		
@@ -19,7 +19,7 @@
 	</select>
 	<update id="sugangRefundUpdate" parameterType="Integer">
 		UPDATE SUGANG 
-		SET TLSN_ST_CODE = 'SU03'
+		SET TLSN_ST_CODE = 'SU04'
 		WHERE TLSN_NO = #{tlsnNo}
 	</update>
 	<select id="sugangBeforeRefund" resultType="Integer" parameterType="co.makeu.up.sugang.service.SugangVO">
@@ -37,7 +37,7 @@
 		AND S.REG_DATE <![CDATA[>]]> #{regDateSearch}
         AND S.EXP_DATE <![CDATA[<]]> #{expDateSearch}
 	</if>
-		ORDER BY S.REG_DATE) P LEFT OUTER JOIN REFUND R
+		ORDER BY S.REG_DATE DESC) P LEFT OUTER JOIN REFUND R
         ON R.TLSN_NO = P.TLSN_NO
 	</select>
 	

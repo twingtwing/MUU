@@ -213,6 +213,12 @@
                                 </div>
                                 <input type="hidden" value="${search.orderColumn }" name="orderColumn">
                                 <input type="hidden" value="${search.orderBy }" name="orderBy">
+                                <input type="hidden" name="state" 
+								<c:choose>
+								<c:when test="${not empty state }">value="${state }"</c:when>
+								<c:otherwise>value="false"</c:otherwise>
+								</c:choose>
+								id="searchState">
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
@@ -367,6 +373,7 @@
             <!-- 바디 끝 -->
 <script>
 	$('#searchBtn').click((e)=>{
+		$('#searchState').val(true);
 		searchSetting();
 		$('#searchForm').submit();
 	})
@@ -380,6 +387,7 @@ $('#resetAll').click(()=>{
 	$('#lastJdate').val(null);
 	$('input[name=star]').prop('checked',null);
 	$('input[name=ltStCodeList]').prop('checked',null);
+	$('#searchState').val(false);
 })
 	
 	
@@ -407,6 +415,9 @@ $('#resetAll').click(()=>{
 	})
 
 	$('.fa-caret-down').click((e)=>{
+		if(!JSON.parse($('#searchState').val())){
+			$('#resetAll').click();
+		}
 		searchSetting();
 		$(e.currentTarget).toggleClass('fa-rotate-180')
 		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
@@ -414,6 +425,9 @@ $('#resetAll').click(()=>{
 		$('#searchForm').submit();
 	})
 	$('.fa-rotate-180').click((e)=>{
+		if(!JSON.parse($('#searchState').val())){
+			$('#resetAll').click();
+		}
 		searchSetting();
 		$(e.currentTarget).toggleClass('fa-rotate-180')
 		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
@@ -426,6 +440,9 @@ $('#resetAll').click(()=>{
 	// 페이지네이션
 	$('.page-item').click((e)=>{
 		let pageNum = +e.currentTarget.dataset.num;
+		if(!JSON.parse($('#searchState').val())){
+			$('#resetAll').click();
+		}
 		$('#searchForm>input[name=page]').val(pageNum)
 		searchSetting();
 		$('#searchForm').submit();
@@ -451,11 +468,10 @@ $('#resetAll').click(()=>{
     
 
     //카테고리 셀박
-    // 나중에 카테고리 항목 고치기
     const category = {
-		'음악' : ['클래식','재즈','락','힙합/랩','기타/베이스','동양','보컬','기타'],
+		'음악' : ['클래식','재즈/락','힙합/랩','기타/베이스','동양','보컬','기타'],
 		 '요리': ['한식','양식','일식','중식','베이킹','가정식','기타'],
-		 '건강': ['홈트레이닝','필라테스','요가','정신건강','기타'],
+		 '건강': ['홈 트레이닝','필라테스','요가','정신건강','기타'],
 		 '아트': ['2D/애니메이션','드로잉','수채화/유화','동양화','사진','메이크업/분장','기타'],
 		 'IT/컴퓨터': ['Java','Python','C언어','웹 프로그래밍','Unity','Photoshop/Illustrator','기타'],
 		 '외국어': ['영어','일본어','중국어','스페인어','아랍어','러시아어','기타'],

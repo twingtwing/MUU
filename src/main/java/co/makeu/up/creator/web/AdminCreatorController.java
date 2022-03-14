@@ -2,6 +2,7 @@ package co.makeu.up.creator.web;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,12 @@ public class AdminCreatorController {
 	
 	//admin list
 	@GetMapping("/admin/adCreL")
-	public String adCreL(UsersVO vo, Model model) {
+	public String adCreL(UsersVO vo, Model model,  @Param("state") boolean state) {
+		if(!state) {
+			model.addAttribute("state", false);
+		} else {
+			model.addAttribute("state", true);
+		}
 		String[] grd = {"Family","VIP","VVIP"};
 		if(vo.getCreGrdCodeList()==null) {
 			vo.setCreGrdCodeList(grd);
