@@ -197,7 +197,7 @@
                                                 </div>
                                             </div>
                                             <div class="row d-flex justify-content-end mx-1">
-                                                <h6 class="card-title mb-0">{{lecture.prc + lecture.kitPrc}}원</h6>
+                                                <h6 class="card-title mb-0">{{commaPrc(index)}}원</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +293,16 @@
                 }
             },
             methods : {
-               lecSearch(){
+            	commaPrc(index){
+            		let val = 0;
+            		if(this.lectures[index].kitName != null){
+            			val = Number(this.lectures[index].prc) + Number(this.lectures[index].kitPrc);
+            		}else{
+            			val = Number(this.lectures[index].prc);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	},
+               	lecSearch(){
                    this.lectures = this.originLectures.filter(obj => obj.ttl.indexOf(this.searchTTL)!== -1)
                 },
                 lecDetail(index){

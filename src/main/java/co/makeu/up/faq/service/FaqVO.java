@@ -23,11 +23,15 @@ public class FaqVO {
 	//for search
 	private String start;
 	private String end;
+	private String searchFlag;
 	
 	//for page
 	private int length;
 	private int pageNum;
 	private int amount;
+	
+	private String orderColumn;
+	private String orderBy;
 
 	public FaqVO(){
 		this (1,10);

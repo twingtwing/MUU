@@ -99,12 +99,15 @@
                                 <div class="col-lg-8">
                                     <div class="row mx-5">
                                         <div class="col-lg-12">
-                                            <div class="row mt-2 mb-3">
-                                                <h5 class="font-weight-bold">{{lecDetails.creIntro}}</h5>
+                                            <div class="row mt-2 mb-3" style="border-left:4px solid black">
+                                            	<div class="col-lg-12">
+                                            	<h5 class="font-weight-bold my-2">크리에이터 소개</h5>
+                                                <p class="mt-3" v-html="lecDetails.creIntro"></p>
+                                            	</div>
                                             </div>
                                             <div class="row d-flex justify-content-between mb-4">
                                                 <div class="row ml-2">
-                                                    <img class="rounded-circle" src="/resources/img/blog/blog-4.jpg" alt="크리에이터이미지" style="width: 75px;">
+                                                    <img class="rounded-circle" :src="lecDetails.pht" alt="크리에이터이미지" style="width: 75px; height: 75px">
                                                     <div class="d-flex align-items-center ml-3">
                                                         <h5 class="mb-0">{{lecDetails.name}}</h5>
                                                     </div>
@@ -148,7 +151,7 @@
                                                             </div>
                                                             </div>
                                                             <div class="row my-3">
-                                                                <p>{{notice.content}}</p>
+                                                                <p v-html="notice.content"></p>
                                                             </div>
                                                             <div v-if="notice.fileList.length != 0" class="row">
                                                                 <div class="d-flex align-items-center">
@@ -183,13 +186,13 @@
                                                             </div>
                                                             <div class="row mt-3">
                                                                 <div class="col-lg-12 px-2">
-                                                                    <div v-if="lecDetails.kitName !=''" class="d-flex justify-content-between">
+                                                                    <div v-if="lecDetails.kitName != null" class="d-flex justify-content-between">
                                                                         <p>키트가격 :</p>
-                                                                        <p class="mb-2">{{lecDetails.kitPrc}} 원</p>
+                                                                        <p class="mb-2">{{commakitPrc}} 원</p>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between">
                                                                         <p>전체 총 가격 : </p> 
-                                                                        <p class="mb-4 text-right">{{lecDetails.prc + lecDetails.kitPrc}} 원</p>
+                                                                        <p class="mb-4 text-right">{{commaPrc}} 원</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -304,6 +307,25 @@
                 	noticeList : [],
                 	moreNotice : [],
                 }
+            },
+            computed:{
+            	commakitPrc(){
+            		if(this.lecDetails.kitName !== null){
+	            		return String(this.lecDetails.kitPrc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            		}else{
+            			return '';
+            		}
+            	},
+            	commaPrc(){
+            		let val = 0;
+            		if(this.lecDetails.kitName !== null){
+            			val = Number(this.lecDetails.prc) + Number(this.lecDetails.kitPrc);
+            			console.log(val);
+            		}else{
+            			val = Number(this.lecDetails.prc);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	}
             },
             methods :{
             	heartClick(){

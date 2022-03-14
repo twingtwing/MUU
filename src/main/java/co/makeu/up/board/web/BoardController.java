@@ -68,7 +68,6 @@ public class BoardController {
 		}
 		model.addAttribute("pageMaker",new PageVo(vo,length));
 		model.addAttribute("search",vo);
-		System.out.println("dddddd");
 		return "admin/adbad/adBadLi";
 	}
 	
@@ -88,7 +87,7 @@ public class BoardController {
 				DetafileVO fileVo = new DetafileVO();
 				String oriFileName = fileList.get(i).getOriginalFilename();
 				String safeFile = UUID.randomUUID().toString() + oriFileName;
-
+				
 				try {
 					fileList.get(i).transferTo(new File(saveDir + safeFile));
 				} catch (IllegalStateException e) {
@@ -117,7 +116,7 @@ public class BoardController {
 				DetafileVO fileVo = new DetafileVO();
 				String oriFileName = fileList.get(i).getOriginalFilename();
 				String safeFile = UUID.randomUUID().toString() + oriFileName;
-
+				
 				try {
 					fileList.get(i).transferTo(new File(saveDir + safeFile));
 				} catch (IllegalStateException e) {

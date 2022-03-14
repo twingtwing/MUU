@@ -29,8 +29,13 @@ public class ReportVO {
 	private String ltStCode;
 	private String rvcode;
 
+	private String searchFlag;
+	
 	private int pageNum;
 	private int amount;
+	
+	private String orderColumn;
+	private String orderBy;	
 	
 	public ReportVO(){
 		this (1,10);

@@ -49,12 +49,49 @@
              AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (WR_DATE)
              ]]>
             </if>
-            ORDER BY B_NO DESC) W
+			<if test="orderColumn !=null and !orderColumn.equals('')">
+		    	ORDER BY ${orderColumn} ${orderBy}
+		    </if>
+		    <if test="orderColumn == null or orderColumn.equals('')">
+		    	ORDER BY B_NO DESC
+		    </if>            
+            ) W
         )
         <![CDATA[
 	    WHERE RN > (#{pageNum}-1) * #{amount} 
 	    AND RN <= #{pageNum} * #{amount}
 	      ]]>
+	</select>
+	
+	<select id="excelList" parameterType="co.makeu.up.board.service.BoardVO" resultType="co.makeu.up.board.service.BoardVO">
+		SELECT B_NO, TTL, CONTENT, WR_DATE, HITS ,NVL(FILE_NO,-1) FILE_NO, B_ST_CODE
+        FROM BOARD
+        WHERE 1=1
+        <if test="mix !=null and mix != ''">
+            AND	( TTL LIKE '%' || #{mix}  || '%' OR CONTENT LIKE '%' || #{mix}  || '%')
+            </if>
+            <if test="ttl !=null and ttl != ''">
+            AND	TTL LIKE '%' || #{ttl}  || '%'
+            </if>
+            <if test= "content != null and content !=''">
+            AND CONTENT LIKE '%' || #{content}  || '%'
+            </if>
+            <if test="start != null and start != ''">
+             <![CDATA[
+             AND TO_DATE(#{start}, 'YYYY-MM-DD') <= trunc (WR_DATE)
+             ]]>
+            </if>
+            <if test="end != null and end != ''">
+            <![CDATA[
+             AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (WR_DATE)
+             ]]>
+            </if>
+			<if test="orderColumn !=null and !orderColumn.equals('')">
+		    	ORDER BY ${orderColumn} ${orderBy}
+		    </if>
+		    <if test="orderColumn == null or orderColumn.equals('')">
+		    	ORDER BY B_NO ${orderBy}
+		    </if>
 	</select>
 	
 	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">

@@ -35,6 +35,11 @@ table tr, table td {
 #amodal:hover {
 	text-decoration: underline;
 }
+        
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
 </style>
 </head>
 <body>
@@ -66,7 +71,7 @@ table tr, table td {
 				<div class="card">
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
-						<form action='/admin/adRefSearch' id='searchForm' method='get'>
+						<form action='/admin/adRef' id='searchForm' method='get'>
 							<div class="row position-relative">
 								<table class="admin_search table table-bordered">
 									<tr height="38">
@@ -75,8 +80,7 @@ table tr, table td {
 											<div class="d-flex col-12 px-0">
 												<div class="col-3 px-0">
 													<select class="ml-2 custom-select w-100" id="searchType" onchange="changeSelect()">
-														<option selected="selected" value="">전체</option>
-														<option value="name"<c:if test="${not empty search.name }"> selected="selected"</c:if>>이름</option>
+														<option value="name"<c:if test="${empty search.id }"> selected="selected"</c:if>>이름</option>
 														<option value="id"<c:if test="${not empty search.id }"> selected="selected"</c:if>>아이디</option>
 													</select>
 												</div>

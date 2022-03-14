@@ -165,8 +165,8 @@
                                     </div>
                                     <div class="mr-4">
                                     	<c:if test="${report.rpStCode eq 'RPS01' }">
-		                                	<button id="deleteBtn" type="button" class="btn btn-secondary" >삭제처리</button>
-		                                    <button id="retrunBtn" type="button" class="btn btn-secondary">반려</button>
+		                                	<button id="deleteBtn" type="button" class="btn btn-secondary" >신고처리</button>
+		                                    <button id="retrunBtn" type="button" class="btn btn-secondary">신고반려</button>
                                     	</c:if>
                                     
                                     </div>
