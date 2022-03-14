@@ -74,10 +74,10 @@
                                                             <p class="text-right mr-2">( 수강기간 : {{lectureDetail.tlsnTerm}}개월 )</p>
                                                         </div>
                                                         <div class="w-100 mb-1">
-                                                            <p class="text-right mr-2">키트 : {{lectureDetail.kitPrc}}원</p>
-                                                            <p class="text-right mr-2">강의 : {{lectureDetail.prc}}원</p>
+                                                            <p v-if="lectureDetail.kitName!=''" class="text-right mr-2">키트 : {{commakitPrc}}원</p>
+                                                            <p class="text-right mr-2">강의 : {{commalecPrc}}원</p>
                                                             <div class="row d-flex justify-content-end">
-                                                                <h5 class="mr-4 font-weight-bold">총합 : {{lectureDetail.kitPrc + lectureDetail.prc}}원</h5>
+                                                                <h5 class="mr-4 font-weight-bold">총합 : {{commaPrc}}원</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -189,10 +189,6 @@
                                     <div class="col-lg-12">
                                         <div class="mx-3 mt-2">
                                             <div class="row justify-content-between">
-                                                <p class="font-weight-bold">{{lectureDetail.ttl}}</p>
-                                                <p class="font-weight-bold">+ {{lectureDetail.kitPrc + lectureDetail.prc}}원</p>
-                                            </div>
-                                            <div class="row justify-content-between">
                                                 <p class="mb-0">사용할 적립금</p>
                                                 <div class="d-flex">
                                                     <p class="mb-0">-&nbsp;&nbsp;</p>
@@ -205,7 +201,7 @@
                                                 </div>
                                             </div>
                                             <div class="row justify-content-end">
-                                                <p class="text-muted">(현재 적립금 : {{userAddr.point}}원)</p>
+                                                <p class="text-muted">(현재 적립금 : {{comma(userAddr.point)}}원)</p>
                                             </div>
                                             <!-- 수수료는 크리에이터 등급에 따라 다르므로 총계+수수료가 아니라
                                             총계 - 수수료 = 매출이 되어야함
@@ -216,7 +212,7 @@
                                             </div>
                                             <div class="row justify-content-between">
                                                 <p class="mb-0">적립 예정 적립금</p>
-                                                <p class="mb-0">+ {{Math.round(prcSum*gradePer)}}원</p>
+                                                <p class="mb-0">+ {{comma(expPoint)}}원</p>
                                             </div>
                                             <div class="row justify-content-end">
                                                 <p class="text-muted mb-0">현재 등급 <strong>{{grade}}</strong> ({{gradePer * 100}}%)</p>
@@ -309,8 +305,33 @@
                 }
             },
             computed :{
+            	commakitPrc(){
+            		if(this.lectureDetail.kitName != null){
+	            		return String(this.lectureDetail.kitPrc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            		}else{
+            			return '';
+            		}
+            	},
+            	commalecPrc(){
+	            	return String(this.lectureDetail.prc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	},
+            	commaPrc(){
+            		let val = 0;
+            		if(this.lectureDetail.kitName != null){
+            			val = Number(this.lectureDetail.prc) + Number(this.lectureDetail.kitPrc);
+            		}else{
+            			val = Number(this.lectureDetail.prc);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	},
                 prcSum : function(){
-                    return this.lectureDetail.prc + this.lectureDetail.kitPrc - this.payPoint;
+                	let val = 0;
+            		if(this.lectureDetail.kitName != null){
+            			val = Number(this.lectureDetail.prc) + Number(this.lectureDetail.kitPrc) - Number(this.payPoint);
+            		}else{
+            			val = Number(this.lectureDetail.prc) - Number(this.payPoint);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 },
                 grade : function(){
                     let uGrdCode = this.userAddr.uGrdCode;
@@ -335,9 +356,17 @@
                     }else{
                     	return 0.1;
                     }
+                },
+            	expPoint : function(){
+            		let sum = Number(this.lectureDetail.prc) + Number(this.lectureDetail.kitPrc) - Number(this.payPoint);
+                	return Math.round( sum * Number(this.gradePer));
                 }
             },
             methods : {
+            	comma(val){
+            		val = Number(val);
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	},
             	payAjax(){
             		let tag =  $('.tab-pane.fade.active.show')
             		let tel, zip, addr, detaAddr;

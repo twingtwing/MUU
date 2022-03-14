@@ -78,6 +78,11 @@ public class BoardServiceImpl implements BoardService {
 		return map.upadbad(vo);
 	}
 
+	@Override
+	public List<BoardVO> excelList(BoardVO vo) {
+		return map.excelList(vo);
+	}
+
 
 
 	

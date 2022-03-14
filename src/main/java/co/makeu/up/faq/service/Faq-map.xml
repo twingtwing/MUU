@@ -31,15 +31,20 @@
 				  </if>
 				  <if test="start != null and start != ''">
 		          <![CDATA[
-		          AND TO_DATE(#{start}, 'YYYY-MM-DD') <  F.WR_DATE
+		          AND TO_DATE(#{start}, 'YYYY-MM-DD') <=  TRUNC(F.WR_DATE)
 		          ]]>
 		          </if>
 		          <if test="end != null and end != ''">
 		          <![CDATA[
-		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  > F.WR_DATE
+		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= TRUNC(F.WR_DATE)
 		          ]]>
 		          </if>
-				  ORDER BY F.F_NO DESC) W)
+		          <if test="orderColumn !=null and !orderColumn.equals('')">
+			    	ORDER BY ${orderColumn} ${orderBy}
+			     </if>
+			     <if test="orderColumn == null or orderColumn.equals('')">
+			     	ORDER BY F_NO DESC
+			     </if>) W)
 		 <![CDATA[
 	    WHERE RN > (#{pageNum}-1) * #{amount} 
 	    AND RN <= #{pageNum} * #{amount}
@@ -77,15 +82,20 @@
 				  </if>
 				  <if test="start != null and start != ''">
 		          <![CDATA[
-		          AND TO_DATE(#{start}, 'YYYY-MM-DD') <  F.WR_DATE
+		          AND TO_DATE(#{start}, 'YYYY-MM-DD') <=  TRUNC(F.WR_DATE)
 		          ]]>
 		          </if>
 		          <if test="end != null and end != ''">
 		          <![CDATA[
-		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  > F.WR_DATE
+		          AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= TRUNC(F.WR_DATE)
 		          ]]>
 		          </if>
-				  ORDER BY F.F_NO DESC) W)
+				  <if test="orderColumn !=null and !orderColumn.equals('')">
+			    	ORDER BY ${orderColumn} ${orderBy}
+			      </if>
+			      <if test="orderColumn == null or orderColumn.equals('')">
+			     	ORDER BY F_NO DESC
+			      </if>) W)
 		 <![CDATA[
 	    WHERE 1=1
 	    ]]>

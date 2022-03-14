@@ -184,11 +184,8 @@ public class ExcelViewController {
 	//공지사항 관리
 	@RequestMapping("/admin/adBadexcel")
 	public String adBadexcel(Model model, BoardVO vo) throws IllegalArgumentException, IllegalAccessException , InstantiationException{
-		vo.setPageNum(0);
 		String [] headers = new String[] {"bNo","ttl","content","bStCode","wrDate","hits"};
-		vo.setAmount(10);
-		vo.setPageNum(1);
-		List<BoardVO> list = boardDao.selectadbad(vo);
+		List<BoardVO> list = boardDao.excelList(vo);
 		List<Map<String , Object>> converMapsList  = CommonExcelView.convertVOtoMaps(list);
 		model.addAttribute("fileName","boardList");
 		model.addAttribute("headers", headers);
@@ -312,6 +309,7 @@ public class ExcelViewController {
 		return "excelView";
 	}
 
+	//자주 묻는 질문
 	@RequestMapping("/admin/adminFaqExcel")
 	public String Faqexcel(Model model, FaqVO vo)
 			throws IllegalArgumentException, IllegalAccessException, InstantiationException {

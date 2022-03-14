@@ -2,8 +2,6 @@ package co.makeu.up.lecture.service;
 
 import java.sql.Date;
 
-import lombok.Data;
-
 public class LectureVO {
 	private int ltNo;
 	private String creId;
@@ -31,9 +29,11 @@ public class LectureVO {
 	private float avgStar;
 	private int studentCount;
 	private int endrow;
+	
+	private String searchFlag;
+	
 	private String orderColumn;
 	private String orderBy;
-	
 	
 	public int getEndrow() {
 		return endrow;
@@ -54,6 +54,13 @@ public class LectureVO {
 		this.orderBy = orderBy;
 	}
 	
+	public String getSearchFlag() {
+		return searchFlag;
+	}
+	public void setSearchFlag(String searchFlag) {
+		this.searchFlag = searchFlag;
+	}
+
 	//extended vo --> 딴데서 재활용해도됨
 	private int star;//별점 평균
 	private int rCount;//별점 갯수

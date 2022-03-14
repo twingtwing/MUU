@@ -45,22 +45,25 @@
 				<if test="star != null and star != ''">
 				and star = #{star}
 				</if>
-			<if test="start != null  and start != ''">
-             <![CDATA[
-             and TO_DATE(#{start}, 'YYYY-MM-DD') <= trunc (RP_DATE)  
-             ]]>
-            </if>
-            <if test="end != null and end != ''">
-            <![CDATA[
-             and TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (RP_DATE) 
-             ]]>
-             </if>
-    order by rp_no desc) w
-    )
-      <![CDATA[
-	    where rn > (#{pageNum}-1) * #{amount} 
-	    and rn <= #{pageNum} * #{amount}
-	      ]]>
+				<if test="start != null  and start != ''">
+	             <![CDATA[
+	             and TO_DATE(#{start}, 'YYYY-MM-DD') <= trunc (RP_DATE)  
+	             ]]>
+	            </if>
+	            <if test="end != null and end != ''">
+	            <![CDATA[
+	             and TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (RP_DATE) 
+	             ]]>
+	             </if><if test="orderColumn !=null and !orderColumn.equals('')">
+			    	ORDER BY ${orderColumn} ${orderBy}
+			     </if>
+			     <if test="orderColumn == null or orderColumn.equals('')">
+			     	ORDER BY RP_NO DESC
+			     </if>) w)
+	      <![CDATA[
+		    where rn > (#{pageNum}-1) * #{amount} 
+		    and rn <= #{pageNum} * #{amount}
+		      ]]>
 	</select>
 	
 	<select id="selectreports" resultType="co.makeu.up.report.service.ReportVO" parameterType="co.makeu.up.report.service.ReportVO">
@@ -154,7 +157,12 @@
              and TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (RP_DATE) 
              ]]>
              </if>
-    order by rp_no desc) w
+    		 <if test="orderColumn !=null and !orderColumn.equals('')">
+			 	ORDER BY ${orderColumn} ${orderBy}
+			 </if>
+			 <if test="orderColumn == null or orderColumn.equals('')">
+			    ORDER BY RP_NO DESC
+			 </if>) w
     )
     where 1=1
 	
