@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.makeu.up.report.service.ReportVO;
+
 @Repository("lectureDao")
 public class LectureServiceImpl implements LectureMapper {
 
@@ -94,6 +96,26 @@ public class LectureServiceImpl implements LectureMapper {
 	@Override
 	public List<LectureVO> adminLectureListPlus(LectureVO vo) {
 		return map.adminLectureListPlus(vo);
+	}
+
+	@Override
+	public int lectureReResister(LectureVO vo) {
+		return map.lectureReResister(vo);
+	}
+
+	@Override
+	public int lectureReportCheck(LectureVO vo) {
+		return map.lectureReportCheck(vo);
+	}
+
+	@Override
+	public List<ReportVO> reportLesson(ReportVO vo) {
+		return map.reportLesson(vo);
+	}
+
+	@Override
+	public int lectureReInsert(LectureVO vo) {
+		return map.lectureReInsert(vo);
 	}
 
 }

@@ -170,11 +170,11 @@
               <table class="w-100 mt-3 text-center">
                 <thead>
                   <tr class="table-secondary border-top-0">
-                    <th>글번호</th>
+                    <th width="78px">글번호</th>
                     <th>제목</th>
-                    
-                    <th>작성날짜</th>
-                    <th>조회수</th>
+                    <th width="200px">작성날짜</th>
+                    <th width="80px">첨부파일</th>
+                    <th width="78px">조회수</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -183,6 +183,12 @@
                     <td>${list.ntNo }</td>
                     <td>${list.ttl }</td>
                     <td>${list.wrDate }</td>
+                    <c:if test="${list.fileNo != 0}">
+                    <td><i class="fa fa-download mx-1"></i></td>
+					</c:if>
+					<c:if test="${list.fileNo == 0}">
+                    <td></td>
+					</c:if>
                     <td>${list.hits }</td>
                   </tr>
                  </c:forEach>
