@@ -119,6 +119,10 @@ public class UsersController {
 		model.addAttribute("id",email);
 		return "main/all/changePwForm";
 	}
+	@GetMapping("/user/userPwForm")
+	public String userPwForm(Principal pri) {
+		return "main/user/userPwForm";
+	}
 	
 
 	// 비밀번호 변경
@@ -127,6 +131,15 @@ public class UsersController {
 		vo.setPw(pwEncoder.encode(vo.getPw()));
 		usersDao.changePw(vo);
 		return "main/all/home";
+	}
+	@PostMapping("/user/changePw")
+	public String userChangePw(UsersVO vo, Principal pri) {
+		System.out.println(vo.getPw());
+		vo.setPw(pwEncoder.encode(vo.getPw()));
+		System.out.println(vo.getPw());
+		vo.setId(pri.getName());
+		usersDao.changePw(vo);
+		return "redirect:/user/userSelect";
 	}
 	
 	@GetMapping("/user/userSelect")

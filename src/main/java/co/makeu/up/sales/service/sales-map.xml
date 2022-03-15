@@ -93,7 +93,8 @@
 	
 	<select id="salesCreator" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
 		SELECT * FROM (    
-            SELECT ROWNUM RN, W.*
+			SELECT ROWNUM RN, R.* FROM (
+            SELECT W.*
             FROM (
 			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
 			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
@@ -132,15 +133,25 @@
 				AND U.NAME LIKE '%' || #{yearName}  || '%'
 			</if>
 			) W
+			<if test="orderYearColumn !=null and !orderYearColumn.equals('')">
+	    		ORDER BY ${orderYearColumn} ${orderYearBy}
+			</if>
+		    <if test="orderYearColumn == null or orderYearColumn.equals('')">
+				ORDER BY W.RANK
+			</if>
+        )R
+	    <![CDATA[
+	    WHERE ROWNUM <=  #{pageYearNum} * #{amountYear}
+	      ]]>
         )
         <![CDATA[
-	    WHERE RN > (#{pageYearNum}-1) * #{amountYear} 
-	    AND RN <= #{pageYearNum} * #{amountYear}
-	      ]]>
+	    WHERE RN > (#{pageYearNum}-1) * #{amountYear}
+	      ]]>	
 	</select>
 	
 	<select id="creYearExcel" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
-		SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
+		SELECT * FROM
+		(SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
 		FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 		                        FROM LECTURE 
 			                    <if test="selectYear != null and selectYear != ''">
@@ -175,13 +186,19 @@
 		</if>
 		<if test="yearName != null and yearName != ''">
 			AND U.NAME LIKE '%' || #{yearName}  || '%'
+		</if>)
+		<if test="orderYearColumn !=null and !orderYearColumn.equals('')">
+	   		ORDER BY ${orderYearColumn} ${orderYearBy}
+		</if>
+	    <if test="orderYearColumn == null or orderYearColumn.equals('')">
+			ORDER BY RANK
 		</if>
 	</select>	
 	
 	<select id="salesCreMonth" parameterType="co.makeu.up.sales.service.SalesVO" resultType="co.makeu.up.sales.service.SalesVO">
 		SELECT * FROM (    
-            SELECT ROWNUM RN, W.*
-            FROM (
+			SELECT ROWNUM RN, R.* FROM (  
+            SELECT  W.* FROM (
 			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
 			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 			                        FROM LECTURE 
@@ -221,10 +238,19 @@
 				AND U.NAME LIKE '%' || #{monthName}  || '%'
 			</if>
 			) W
+			<if test="orderMonthColumn !=null and !orderMonthColumn.equals('')">
+		   		ORDER BY ${orderMonthColumn} ${orderMonthBy}
+			</if>
+		    <if test="orderMonthColumn == null or orderMonthColumn.equals('')">
+				ORDER BY W.RANK
+			</if>
+        )R
+        <![CDATA[
+	    WHERE ROWNUM <=  #{pageMonthNum} * #{amountMonth}
+	      ]]>
         )
         <![CDATA[
-	    WHERE RN > (#{pageMonthNum}-1) * #{amountMonth} 
-	    AND RN <= #{pageMonthNum} * #{amountMonth}
+	    WHERE RN > (#{pageMonthNum}-1) * #{amountMonth}
 	      ]]>	
 	</select>
 
@@ -266,6 +292,12 @@
 		</if>
 		<if test="monthName != null and monthName != ''">
 			AND U.NAME LIKE '%' || #{monthName}  || '%'
+		</if>
+		<if test="orderMonthColumn !=null and !orderMonthColumn.equals('')">
+	   		ORDER BY ${orderMonthColumn} ${orderMonthBy}
+		</if>
+	    <if test="orderMonthColumn == null or orderMonthColumn.equals('')">
+			ORDER BY RANK
 		</if>
 	</select>
 	

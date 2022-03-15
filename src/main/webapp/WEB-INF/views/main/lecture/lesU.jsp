@@ -83,6 +83,7 @@
 </head>
 <body>
 <!-- 배너 시작-->
+!!!이거 복붙 해온거라 충돌나면 제거 지우면 됩니다 !!!
     <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
@@ -193,9 +194,9 @@
             </div>
         </div>
     </section>
-	<div id="newvideoIn" style="display:none;">
-		<input type="file" class="videoIn" accept="video/*">
-	</div>
+   <div id="newvideoIn" style="display:none;">
+      <input type="file" class="videoIn" accept="video/*">
+   </div>
 <!-- Js Plugins -->
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </body>
@@ -278,15 +279,17 @@
     }
     )
 
+    
+    
     // 아이템을 구성할 태그를 반환합니다.
     // itemBox 내에 번호를 표시할 itemNum 과 입력필드가 있습니다.
     function createBox() {
         //var className = $("#className").val();
         var lastCtitle = $('#itemBoxWrap').find('input[type=text]:last').val();
-    	var lastInput = $('#itemBoxWrap').find('input[type=file]:last').val();
+       var lastInput = $('#itemBoxWrap').find('input[type=file]:last').val();
         if(lastInput == '' || lastCtitle == ''){
-        	alert('이전 수업추가를 완료해주세요');
-    		return false;
+           alert('이전 수업추가를 완료해주세요');
+          return false;
         } else {
     	    var contents 
     	    	= "<div class='itemBox'>"
@@ -374,9 +377,7 @@
     	})
     } */
 	
-	
-    
-    
+
     
                             
               

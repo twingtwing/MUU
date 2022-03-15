@@ -203,8 +203,7 @@ i.fa-heart-o {
 									<!-- onclick="location.href='./결제창.html'" -->
 									<button type="button" onclick="paymentCheck()" class="site-btn"
 										style="padding: 8px 20px;">결제</button>
-									<button type="button" onclick="deleteCheck()"
-										class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
+									<button type="button" onclick="deleteCheck()" class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
 								</div>
 							</div>
 							<!-- 본편 끝-->
@@ -272,7 +271,6 @@ i.fa-heart-o {
 		let token = "${_csrf.token}";
 		
 		let checkboxArr=[]
-		/* console.log($('.checkbox').is(':checked')); */
 		$("input[name=checkbox]:checked").each(function(){
 			let check = $(this).val();
 			console.log(check)
@@ -293,17 +291,27 @@ i.fa-heart-o {
             success : function(res){
             	console.log("성공")
             	location.reload();
+            },
+            error:function(){
+				alert("위시리스트에서 하나라도 체크해야 합니다.");        	
             }
         });
 	}
 		function paymentCheck(event){
+			console.log(event);
 			let header = "${_csrf.headerName}";
 			let token = "${_csrf.token}";
 			let checkboxArr=[];
+			
 			const ary = $("input[name=checkbox]:checked");
 			
 			//each/for 구문 돌려서 for var i of ary $(i).closest('tr').children().last().text() == '불가';
 			console.log(ary);
+			if(ary.length == 0){
+				alert("위시리스트에서 하나라도 체크해야 합니다.")
+				return;
+			}
+			
 			if(ary.length > 1){
 				alert("워시리스트에서 결제는 1개씨만 가능합니다.");
 				ary[0].checked=false;

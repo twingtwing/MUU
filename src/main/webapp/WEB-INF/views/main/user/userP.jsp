@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,7 +181,8 @@
                   </div>
                   <div class="row">
                     <div class="col-lg-12">
-                      <div class="mt-5 mb-2 d-flex justify-content-end">
+                      <div class="mt-5 mb-2 d-flex justify-content-end align-items-center">
+                        <span class="small mx-2 text-secondary"> (결제일 기준) </span>
                         <div class="form-group mb-0">
                           <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" id="date1">
@@ -201,6 +203,7 @@
                             </div>
                           </div>
                         </div>
+                        <button class="border p-2 ml-2" id="dateSearch">검색</button>
                       </div>
                       <table class="table border-bottom">
                         <thead class="text-center">
@@ -247,7 +250,9 @@
                           </c:forEach>   
                         </tbody>
                       </table>
-                    <div class="more text-center">더보기</div>            
+               <c:if test="${fn:length(review) > 6}">              
+                  <div class="more text-center">더보기</div>            
+               </c:if>
                   </div>
                 </div>
               </div>
@@ -328,13 +333,14 @@
     
     
     // 날짜검색
-    $('#date2').on('input', (e)=>{
-    	if(!$('#date1').val()){
+    $('#dateSearch').on('click', (e)=>{
+    	if(!$('#date1').val() || !$('#date2').val()){
+    		window.alert('날짜를 입력해주세요.')
     		return;
     	}
     	$.ajax({
     		url : '/user/userPaySearch',
-    		data : {regDateSearch : new Date($('#date1').val()).toISOString().slice(0,10), expDateSearch : new Date($('#date2').val()).toISOString().slice(0,10)},
+    		data : {regDateSearch : $('#date1').val(), expDateSearch : $('#date2').val()},
     	})
     	.done((r)=>{
     		removeAll();

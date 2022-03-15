@@ -138,59 +138,13 @@
 	                                            </td>
 	                                            <th>신고날짜</th>
 	                                            <td class="text-left">
-	                                                <input class="w-30 start" type="date" spellcheck="false" id="haq" name="start" value = "${search.start }">
+	                                                <input style="width: 30%" type="date" spellcheck="false" id="haq" name="start" value = "${search.start }">
 	                                                <i class="fas fa-minus"></i>
-	                                                <input class="w-30 end" type="date" spellcheck="false" id="haq1" name="end"  value = "${search.end }">
-	                                            </td>
-	                                        </tr>
-	                                        <tr height="38">
-	                                            <th>별점</th>
-	                                            <td colspan="3" class="text-left">
-	                                                <div class="d-flex align-items-center">
-	                                                    <input type="radio" value="1" id="1" name=star ondblclick="this.checked=false"
-	                                                    	 <c:if test ="${search.star eq '1'}">checked="checked" </c:if>
-	                                                    >
-	                                                    <label for="1" class="mb-0 ml-1 mr-2">
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                    </label>
-	                                                    <input type="radio" value="2" id="2" name=star ondblclick="this.checked=false"
-	                                                    	 <c:if test ="${search.star eq '2'}">checked="checked" </c:if>
-	                                                    >
-	                                                    <label for="2" class="mb-0 ml-1 mr-2">
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                    </label>
-	                                                    <input type="radio" value="3" id="3" name=star ondblclick="this.checked=false"
-	                                                    	 <c:if test ="${search.star eq '3'}">checked="checked" </c:if>
-	                                                    >
-	                                                    <label for="3" class="mb-0 ml-1 mr-2">
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                    </label>
-	                                                    <input type="radio" value="4" id="4" name=star ondblclick="this.checked=false"
-	                                                    	 <c:if test ="${search.star eq '4'}">checked="checked" </c:if>
-	                                                    >
-	                                                    <label for="4" class="mb-0 ml-1 mr-2">
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                    </label>
-	                                                    <input type="radio" value="5" id="5" name=star ondblclick="this.checked=false"
-	                                                    	 <c:if test ="${search.star eq '5'}">checked="checked" </c:if>
-	                                                    >
-	                                                    <label for="5" class="mb-0 ml-1 mr-2">
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                        <i class="fa fa-star text-warning mr-0"></i>
-	                                                    </label>
+	                                                <input style="width: 30%" type="date" spellcheck="false" id="haq1" name="end"  value = "${search.end }">
 	                                                   <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
-	                                                </div>
 	                                            </td>
 	                                        </tr>
+	                                        
 	                                    </table>
                                     	<button id="serachBtn" class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;" type="submit">검색</button>
                                 	</div>
@@ -306,7 +260,6 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger">PDF다운</button>
                                         <button id="execl" class="btn btn-success">EXCEL다운</button>
                                     </div>
                                 </div>

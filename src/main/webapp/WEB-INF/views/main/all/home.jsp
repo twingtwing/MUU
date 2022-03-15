@@ -289,7 +289,8 @@
     			}
     		},
     		beforeCreate : function () {
-    			fetch('/homeLecture')
+    			let path = '/homeLecture';
+    			fetch(path)
                 .then(response => response.json())
                 .then(result => {
                 	this.thisWeekLecture = result.thisWeekLecture;

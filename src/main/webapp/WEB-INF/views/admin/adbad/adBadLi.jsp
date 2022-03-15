@@ -179,7 +179,6 @@
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-dark" onclick="location.href='/admin/adBadl'">글 등록</button>
-                                        <button type="button" class="btn btn-danger">PDF다운</button>
 										<button type="button" class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>

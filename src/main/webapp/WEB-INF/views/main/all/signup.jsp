@@ -79,10 +79,10 @@ table {
 							<tbody>
 								<tr>
 									<td class="pilsu"><input type="text"
-										class="border px-10 py-2" placeholder="이메일" required name="id"
+										class="border px-10 py-2" placeholder="아이디" required name="id"
 										id="id" spellcheck="false"> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
-									<td><select class="custom-select emailAddr">
+									<td><select class="custom-select emailAddr p-0 px-2">
 											<option value="" disabled selected>주소 선택</option>
 											<option value="@naver.com">@naver.com</option>
 											<option value="@google.com">@google.com</option>
@@ -99,7 +99,7 @@ table {
 										placeholder="비밀번호" required name="pw" id="pw"
 										spellcheck="false"> <i class="fa fa-check-circle"
 										aria-hidden="true"></i> <span class="d-flex"> ※ 영문자와
-											숫자를 포함한 8~16자로 입력해주세요.</span></td>
+											숫자를 포함한 8~20자로 입력해주세요.</span></td>
 								</tr>
 								<tr>
 									<td colspan="2" class="pilsu"><input
@@ -123,7 +123,7 @@ table {
 										name="birthDate" id="birthDate" required> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td class="pilsu"><select
-										class="custom-select px-10 py-2 gender" name="gender">
+										class="custom-select px-10 py-0 gender" name="gender">
 											<option value="" selected disabled>성별</option>
 											<option value="W">여성</option>
 											<option value="M">남성</option>
@@ -134,7 +134,7 @@ table {
 								</tr>
 								<tr>
 									<td colspan="2"><input class="border px-10 py-2"
-										spellcheck="false" type="number"
+										spellcheck="false" type="text"
 										placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel" id="tel"></td>
 								</tr>
 								<tr>
@@ -200,65 +200,79 @@ table {
 	<!-- js -->
 	<script>
 		let chkState = false;
+		let pwState = false;
 		let timer;	
-		const idreg = /^[a-z]+[a-z0-9]{5,19}$/g;
+		const idreg = /^[A-za-z0-9]{6,20}$/;
+		$('#id').keyup(()=>{
+			if(!idreg.test($('#id').val())){
+				$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
+				return;
+			} else {
+				$('.idAlert').text('');
+			}
+		})
 		$('#id, .emailAddr').change((e)=>{
+			let currid = $('#id').val() + $('.emailAddr option:selected').val();
+			if(!currid.endsWith('.com') || !$('#id').val()){
+				return;
+			}
+			if(!idreg.test($('#id').val())){
+				$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
+				return;
+			}
 			if(timer){
 				clearTimeout(timer);
 			}
-			timer = setTimeout((e)=>{
-				// ajax
-				let currid = $('#id').val() + $('.emailAddr option:selected').val();
-				if(!currid.endsWith('.com') || !$('#id').val()){
-					return;
-				}
-				if(!idreg.test($('#id').val())){
-					$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
-					return;
-				}
-					$.ajax({
-					url : 'idchk',
-					data : {
-						id : currid 
-					},
-					success : (result)=>{
-						if(result){
-							$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
-							chkState = true;
-						} else{
-							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
-							chkState = flase;
-						}
-					},	
-				})
-			},500)
+			timer = setTimeout((e)=>{idajaxChk()},800)
 		})
+		
+		const idajaxChk = ()=>{		
+			let currid = $('#id').val() + $('.emailAddr option:selected').val();
+			$.ajax({
+			url : 'idchk',
+			data : {
+				id : currid 
+			},
+			success : (result)=>{
+				if(result){
+					$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
+					chkState = true;
+				} else{
+					$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
+					chkState = flase;
+				}
+			},	
+		})
+		} 
+		
 	
 		$('.site-btn').click((e) => {
 			e.preventDefault();
 		})
 		
-		$('#pw').keyup((e) => {
-			const pwreg = /^[a-zA-z0-9+]{8,16}$/;
+		$('#pw, #pw2').keyup((e) => {
+			const pwreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 			if(!pwreg.test($('#pw').val())){
 				$('.pwAlert').text('비밀번호 양식을 지켜주시기 바랍니다.')
-			} else {
-				$('.pwAlert').text('')	
-			}					
-		})
-		
-		$('#pw2').keyup((e) => {
+			}				
 			if ($('#pw').val() != $('#pw2').val()) {
-				$('.pwAlert').text('비밀번호가 맞지 않습니다.')
+				$('.pwAlert').text('비밀번호 확인이 맞지 않습니다.')
 			}
-			if ($('#pw').val() === $('#pw2').val()) {
+			if ($('#pw').val() === $('#pw2').val() && pwreg.test($('#pw').val())) {
 				$('.pwAlert').text('')
+				pwState=true;
 			}
 		})
 		
+		
+		const telreg = /^010\d{8}$/;
+		const birthreg = /\d{4}$/;
+		$('#tel').keyup(()=>{
+			if($('#tel').val()){
+				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
+			}
+		})
 		$('#sbmt').click((e) => {
-			const telreg = /^010\d{8}$/;
-			const birthreg = /^19\d{2}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
 				$('#alert').text('개인정보 처리방침에 동의해주세요.');
@@ -281,7 +295,7 @@ table {
 			} else {
 				$('#alert').text('');
 			}
-			if(chkState && $('#alert').text()==''){
+			if(chkState && !$('#alert').text() && pwState){
 				$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 				$('#sample4_postcode').val(+$('#sample4_postcode').val());
 				$('#signupForm').submit();

@@ -42,7 +42,7 @@
 	<script type="text/javascript">
 	
 	$('#smt').click(()=>{
-		const pwreg = /^[a-zA-z0-9+]{8,16}$/;
+		const pwreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 		if(!pwreg.test($('#pw').val())){
 			$('.alert').text('비밀번호 양식을 지켜주시기 바랍니다.');
 			return;
@@ -53,8 +53,9 @@
 			$('.alert').text('비밀번호 확인이 틀렸습니다.');
 			return;
 		}
-		console.log(document.querySelector('#frm'))
-		$('#frm').submit(); 
+		if(!$('.alert').val()){
+			$('#frm').submit(); 			
+		}
 	})
 	</script>
 </body>

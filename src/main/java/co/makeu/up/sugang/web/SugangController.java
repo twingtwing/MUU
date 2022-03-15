@@ -131,8 +131,6 @@ public class SugangController {
 	@GetMapping("/user/userPaySearch")
 	public List<SugangVO> userPaySearch(Principal pri, SugangVO vo) {
 		vo.setId(pri.getName());	
-		System.out.println(vo.getRegDate());
-		System.out.println(vo.getExpDate());
 		return sugangDao.sugangPay(vo);
 	}
 	
