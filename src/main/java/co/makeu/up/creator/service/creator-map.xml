@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.creator.service.CreatorMapper">
 	<select id="creatorSelect" parameterType="co.makeu.up.creator.service.CreatorVO" resultType="co.makeu.up.creator.service.CreatorVO">
-		select id, name, pht as photo, nvl(cre_intro,'소개가 없습니다.') as creIntro, cre_grd_code as creGrdCode 
+		select id, name, pht, nvl(cre_intro,'소개가 없습니다.') as cre_intro, cre_grd_code
 		from users
 		where id=#{id}
 	</select>

@@ -32,7 +32,7 @@ public class CreatorController {
 			model.addAttribute("name", vo.getName());
 			model.addAttribute("creIntro", vo.getCreIntro());
 //			model.addAttribute("creCode", vo.getCreGrdCode());
-//			model.addAttribute("photo", vo.getPht());
+			model.addAttribute("photo", vo.getPht());
 		return "main/creator/creS";
 	}
 	
@@ -46,7 +46,7 @@ public class CreatorController {
 			model.addAttribute("name", vo.getName());
 			model.addAttribute("creIntro", vo.getCreIntro());
 //			model.addAttribute("creCode", vo.getCreGrdCode());
-//			model.addAttribute("photo", vo.getPht());
+			model.addAttribute("photo", vo.getPht());
 		return "main/creator/creU";
 	}
 	

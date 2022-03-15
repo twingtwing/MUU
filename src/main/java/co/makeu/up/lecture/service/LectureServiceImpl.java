@@ -118,4 +118,9 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.lectureReInsert(vo);
 	}
 
+	@Override
+	public int lectureDelete(LectureVO vo) {
+		return map.lectureDelete(vo);
+	}
+
 }

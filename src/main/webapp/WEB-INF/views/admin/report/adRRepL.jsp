@@ -138,9 +138,9 @@
 	                                            </td>
 	                                            <th>신고날짜</th>
 	                                            <td class="text-left">
-	                                                <input class="w-30" type="date" spellcheck="false" id="haq" name="start" value = "${search.start }">
+	                                                <input class="w-30 start" type="date" spellcheck="false" id="haq" name="start" value = "${search.start }">
 	                                                <i class="fas fa-minus"></i>
-	                                                <input class="w-30" type="date" spellcheck="false" id="haq1" name="end"  value = "${search.end }">
+	                                                <input class="w-30 end" type="date" spellcheck="false" id="haq1" name="end"  value = "${search.end }">
 	                                            </td>
 	                                        </tr>
 	                                        <tr height="38">
@@ -387,6 +387,23 @@
     	$('#ser').attr('action','/admin/reportc');
     	$('#ser').submit();
         $('#ser').attr('action','/admin/adRRepL');
+    })
+    //가입날짜 시작날짜/마지막날짜 disable
+    $('.start').on('change', function(){
+        let pastDate = $('.start').val();
+        $('.end').attr('min', pastDate);
+    })
+    
+    $('.end').on('change', function(){
+        let recentDate = $('.end').val();
+        $('.start').attr('max', recentDate);
+    })
+    
+    $(function(){
+    	let date = new Date();
+    	let today = date.toISOString().substring(0, 10);
+    	$('.start').attr('max', today);
+    	$('.end').attr('max', today);
     })
  
 </script>

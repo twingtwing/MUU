@@ -319,5 +319,22 @@ background-color:#f5f5f5;
 		$('#ser').submit();
 	    $('#ser').attr('action','/admin/adLRepL');
 	})
+	//가입날짜 시작날짜/마지막날짜 disable
+    $('#start').on('change', function(){
+        let pastDate = $('#start').val();
+        $('#end').attr('min', pastDate);
+    })
+    
+    $('#end').on('change', function(){
+        let recentDate = $('#end').val();
+        $('#start').attr('max', recentDate);
+    })
+    
+    $(function(){
+    	let date = new Date();
+    	let today = date.toISOString().substring(0, 10);
+    	$('#start').attr('max', today);
+    	$('#end').attr('max', today);
+    })
 </script>
 </html>

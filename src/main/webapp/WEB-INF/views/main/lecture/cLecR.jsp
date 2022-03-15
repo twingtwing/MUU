@@ -203,7 +203,7 @@
 	                          <i class="fa fa-ban report text-danger ml-2" aria-hidden="true"
 	                          data-toggle="modal" data-target="#revReport"
 	                          data-reporter='${list.writer }' data-ltno='${list.ltNo}'
-	                          data-content='${list.content }' data-num='${list.rvNo }'></i>
+	                          data-content='${list.content }' data-num='${list.rvNo }' title="클릭 시 신고창"></i>
 	                        </span>
 	                        <input type="hidden" id="avgStarinput" value="${list.avgStar }">
 	                      </div>

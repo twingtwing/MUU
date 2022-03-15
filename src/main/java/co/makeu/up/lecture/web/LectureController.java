@@ -396,5 +396,12 @@ public class LectureController {
 	public void lecReInsert(LectureVO vo) {
 		lectureDao.lectureReInsert(vo);
 	}
+	
+	//임시저장 값 삭제
+	@RequestMapping("/creator/lecDelete")
+	public String lecDelete(LectureVO vo) {
+		lectureDao.lectureDelete(vo);
+		return "redirect:/creator/creS";
+	}
 
 }

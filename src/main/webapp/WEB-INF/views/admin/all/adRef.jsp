@@ -149,13 +149,13 @@ table tr, table td {
 										<td colspan="3" class="justify-content-start row border-0">
 											<div class="row pl-4 d-flex justify-content-center">
 												<div>
-													<input type="date" name="start" class="w-100" value="${search.start }">
+													<input type="date" id="start" name="start" class="w-100" value="${search.start }">
 												</div>
 												<div class="ml-3 mr-3">
 													<i class="fa fa-minus"></i>
 												</div>
 												<div>
-													<input type="date" name="end" class="w-100" value="${search.end }">
+													<input type="date" id="end" name="end" class="w-100" value="${search.end }">
 												</div>
 											</div>
 										</td>
@@ -475,5 +475,22 @@ table tr, table td {
 			}
 		})
 	})
+	//가입날짜 시작날짜/마지막날짜 disable
+    $('#start').on('change', function(){
+        let pastDate = $('#start').val();
+        $('#end').attr('min', pastDate);
+    })
+    
+    $('#end').on('change', function(){
+        let recentDate = $('#end').val();
+        $('#start').attr('max', recentDate);
+    })
+    
+    $(function(){
+    	let date = new Date();
+    	let today = date.toISOString().substring(0, 10);
+    	$('#start').attr('max', today);
+    	$('#end').attr('max', today);
+    })
 </script>
 </html>
