@@ -114,18 +114,15 @@
 
 
  <script>
- console.log('${board}');
  function btn(){
-	 
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
+	 	if(confirm("삭제하시겠습니까?.")){
 			var bNo = document.getElementById('bNo').innerHTML;
         	 $.ajax ({
             	 url:'/admin/deladbad',
             	 type:'post',
             	 data:{bNo:bNo,fileNo : '${board.fileNo}'},
             	 beforeSend: function(xhr) {
-         			xhr.setRequestHeader(header, token);
+         			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
          		},
             	 success:function(result){
             		 console.log(result)
@@ -139,8 +136,8 @@
             	 }
              })
         
- }   
-            
+ 		}   
+	 }
           
         </script>
 

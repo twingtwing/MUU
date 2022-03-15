@@ -78,8 +78,8 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
-	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.creCnt }</fmt:formatNumber> 개</td>
+	                      		<td><fmt:formatNumber>${cre.cnt }</fmt:formatNumber> 개</td>
 	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
@@ -164,8 +164,8 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
-	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.creCnt }</fmt:formatNumber> 개</td>
+	                      		<td><fmt:formatNumber>${cre.cnt }</fmt:formatNumber> 개</td>
 	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
