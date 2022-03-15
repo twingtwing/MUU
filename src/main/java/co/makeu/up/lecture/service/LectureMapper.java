@@ -16,6 +16,7 @@ public interface LectureMapper {
 	int lectureReportCheck(LectureVO vo);
 	List<ReportVO> reportLesson(ReportVO vo);
 	int lectureReInsert(LectureVO vo);
+	int lectureDelete(LectureVO vo);
 
 	LectureVO lectureInsertTemp(LectureVO vo);
 	int lectureUpdateTemp(LectureVO vo);

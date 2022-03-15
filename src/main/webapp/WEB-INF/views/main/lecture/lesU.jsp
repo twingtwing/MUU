@@ -315,14 +315,38 @@
     
 		
 	function test(){
+		for(var i = 0; i<$('.itemBox').length; i++){
+			console.log(${ltNo});
+			
+		}
 		
 		//console.log($('.itemBox').length);
+		
+		
+		
+		
+	}
+	
+	//수업수정
+	/* function lessonUpdate(){
+		let form = new formData();
+		
+		if(hasClass("classUp")){
+			for(var i = 0; i<$('.classUp').length; i++){
+				form.append("lsnNo", $('.itemNum').eq(i).text());
+				form.append("ttl", $('.classTtl').eq(i).val());
+				if($('.classUp')[i].files[0]
+				form.append("lsnFile", $('.classUp')[i].files[0]);
+			}
+		}
+		
 		for(var i = 0; i<$('.itemBox').length; i++){
+			form.append("ltNo", ${ltNo});
+			form.append("lsnNo", $('.itemNum').eq(i).text());
+			form.append("ttl", $('.classTtl').eq(i).val());
 			
-			//console.log($('.itemNum').eq(i).text());
-			//console.log($('.classTtl').eq(i).val());
-			console.log($('.itemBox')[i].children.length);
 			if($('.itemBox')[i].children.length == 5 ){
+				
 				console.log($('.itemlsnFile').eq(i).val());
 			} else if ($('.itemBox')[i].children.length == 4) {
 				console.log($($('.itemBox')[i]).find('.classUp')[0]);
@@ -330,8 +354,28 @@
 		}
 		
 		
-		
-	}
+    	let list = {"ltNo":, "lsnNo":, "ttl":, "lsnFile":}
+    	
+    	$.ajax({
+    		url : "/creator/lessonUpdate",
+    		method : "post",
+    		dataType : "",
+    		processData : false,
+            contentType : false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+    		data : {
+    			
+    		},
+    		success : function(){
+    			alert('수업이 수정되었습니다');
+    			history.go(-1);
+    		}
+    		
+    		
+    	})
+    } */
 	
 
     

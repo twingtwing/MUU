@@ -73,9 +73,11 @@ public class LessonController {
 	@RequestMapping("/creator/lesU")
 	public String lessonUpdatePage(LessonVO vo, Model model) {
 		model.addAttribute("lesinfo", lessonDao.lessonList(vo.getLtNo()));
+		model.addAttribute("ltNo", vo.getLtNo());
 		return "main/lecture/lesU";
 	}
 	
+	//수업 수정
 //	@PostMapping("/creator/lessonUpdate")
 //	@ResponseBody
 //	public void lessonUpdate(LessonVO vo, MultipartHttpServletRequest multi) {

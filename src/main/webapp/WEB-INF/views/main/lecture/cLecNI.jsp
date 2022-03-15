@@ -254,16 +254,14 @@ $('#insertBtn').on('click', function(){
             xhr.setRequestHeader(header, token);
          },
         data : form,
-        success:function() {
+        success:function(e) {
           alert("글이 등록되었습니다");
+          location.href = "/creator/cLecNS?ntNo="+e.ntNo;
         },
          error: function (jqXHR) { 
            alert(jqXHR.responseText); 
          }
     })
-    .done(function(e){
-        location.href = "/creator/cLecNS?ntNo="+e.ntNo;
-	});
 })
 	  //열린강의정보 페이지 이동
 	  function gooLecture(e){

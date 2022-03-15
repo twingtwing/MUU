@@ -195,8 +195,10 @@
                             <div class="col-12 text-right align-items-right">
                                 <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${rplists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
+                                <!-- 
                                 <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rplists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
+                                 -->
                                 <button class="btn btn-outline-success" type="button" onclick="lecCheck(${rplists.ltNo})">재검토</button>
                             </div>
                         </div>

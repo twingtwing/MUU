@@ -159,7 +159,7 @@
                     <hr class="font-weight-bold">
                     <!-- 강의 하나에 대한 상세정보페이지-->
                     <div class="row col-12 mb-2 ml-3">
-                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
 
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
@@ -236,6 +236,9 @@
             </div>
         </div>
     </div>
+    <form id="frma">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
+    </form>
     <form id="frm">
     	<input class="sendltno" type="hidden" name="ltNo" value="">
     	<input class="sendntno" type="hidden" name="ntNo" value="">
@@ -344,8 +347,8 @@ function goQna(e){
 //공지사항 페이지 이동
 function goNotice(e){
 	$('.sendltno').val(e);
-	$('#frm').attr("action", "/creator/cLecNL");
-	$('#frm').submit();
+	$('#frma').attr("action", "/creator/cLecNL");
+	$('#frma').submit();
 }
 //리뷰 페이지 이동
 function goReview(e){

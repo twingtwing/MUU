@@ -379,14 +379,21 @@ $('.fa-rotate-180').click((e)=>{
 	})	
 	
 	    //가입날짜 시작날짜/마지막날짜 disable
-	    $('#firstJdate').change(function(){
-	        let firstJdate = $('#firstJdate').val();
-	        $('#lastJdate').attr('min', firstJdate);
+	    $('.pastDate').on('change', function(){
+	        let pastDate = $('.pastDate').val();
+	        $('.recentDate').attr('min', pastDate);
 	    })
 	    
-	    $('#lastJdate').change(function(){
-	        let lastJdate = $('#lastJdate').val();
-	        $('#firstJdate').attr('max', lastJdate);
+	    $('.recentDate').on('change', function(){
+	        let recentDate = $('.recentDate').val();
+	        $('.pastDate').attr('max', recentDate);
+	    })
+	    
+	    $(function(){
+	    	let date = new Date();
+	    	let today = date.toISOString().substring(0, 10);
+	    	$('.pastDate').attr('max', today);
+	    	$('.recentDate').attr('max', today);
 	    })
 	
 </script>         
