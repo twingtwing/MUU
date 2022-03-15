@@ -108,7 +108,7 @@
             </div>
 			<div class="row col-12 mr-5">
 				<table class="text-center table">
-					<tr>
+					<tr id="label">
 		            	<th></th>
 		                <c:forEach items="${lecs }" var="lec">
 			            	<c:if test="${lec.ttl ne null }">
@@ -117,21 +117,21 @@
 		                </c:forEach>
 		                <th>전 체</th>
 		            </tr>
-					<tr>
+					<tr id="chartCnt">
 		                	<td>판매량</td>
 		                	<c:forEach items="${lecs }" var="lec">
 		                    	<td>
-				                	<span class="<c:if test="${lec.ttl ne '' }">lecCnt</c:if> chartCnt">
+				                	<span class="<c:if test="${lec.ttl ne '' }">lecCnt</c:if>">
 				                      	${lec.cnt }
 				                 	</span>
 				               </td>
 		                     </c:forEach>
 		            </tr>
-					<tr>
+					<tr id="chartPay">
 		                	<td>매출액</td>
 		                    <c:forEach items="${lecs }" var="lec">
 		                     	<td>
-				                	<span class="<c:if test="${lec.ttl ne '' }">lecPay</c:if> chartPay">
+				                	<span class="<c:if test="${lec.ttl ne '' }">lecPay</c:if>">
 				                    	${lec.pay }
 				                    </span>
 			                    </td>
@@ -140,9 +140,8 @@
 				</table>
 			</div>
             <!-- 시간 되면 테이블 추가 -->
-            <div class="row col-12 mr-5 justify-content-end">
-              <button class="border px-3 py-2 bg-danger text-white">PDF 다운</button>
-              <a id="creSaLecExcel" href="/creator/creSaLecExcel?start=&end=" class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL 다운</a>
+            <div class="row col-12 justify-content-end">
+              <a id="creSaLecExcel" href="/creator/creSaLecExcel?start=&end=" class="border ml-1 px-3 py-2 bg-success text-white">EXCEL 다운</a>
             </div>
           </div>
         </div>
@@ -221,24 +220,23 @@
     		myChart.update();
 
     		// 테이블값도 바꾸기
+    		$('#label').empty();
+    		$('#label').append($('<th>'));
     		for(let i = 0; i < lecLabel.length; i++){
-    			$('.lecLabel').eq(i)[0].innerText = lecLabel[i]
+    			$('#label').append($('<th>').text(lecLabel[i]));
     		}
-    		for(let i = lecLabel.length-1; i < $('.lecLabel').length; i++){
-    			$('.lecLabel').eq(i).remove();
+    		$('#label').append($('<th>').text('전 체'));
+
+    		$('#chartCnt').empty();
+    		$('#chartCnt').append($('<td>').text('판매량'));
+    		for(let i = 0; i < lecCnt.length; i++){
+    			$('#chartCnt').append($('<td>').text(lecCnt[i]));
     		}
     		
-    		for(let i = 0; i < lecCnt.length; i++){
-    			$('.chartCnt').eq(i)[0].innerText = lecCnt[i]
-    			$('.chartPay').eq(i)[0].innerText = lecPay[i]
-    		}
-    		console.log(lecCnt.length);
-    		console.log($('.chartCnt').length);
-    		for(let i = lecCnt.length; i < $('.chartCnt').length; i++){
-    			console.log($('.chartCnt').eq(i)[0]);
-    			$('.chartCnt').eq(i)[0].closest('td').remove();
-    			$('.chartPay').eq(i)[0].closest('td').remove();
-    			i--;
+    		$('#chartPay').empty();
+    		$('#chartPay').append($('<td>').text('매출액'));
+    		for(let i = 0; i < lecPay.length; i++){
+    			$('#chartPay').append($('<td>').text(lecPay[i]));
     		}
     		
     		creSaLecExcel.setAttribute('href','/creator/creSaLecExcel?start='+$('#start').val()+'&end='+$('#end').val());

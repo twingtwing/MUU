@@ -96,7 +96,7 @@
 			SELECT ROWNUM RN, R.* FROM (
             SELECT W.*
             FROM (
-			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
+			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
 			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 			                        FROM LECTURE 
 			                        <if test="selectYear != null and selectYear != ''">
@@ -151,7 +151,7 @@
 	
 	<select id="creYearExcel" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
 		SELECT * FROM
-		(SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
+		(SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
 		FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 		                        FROM LECTURE 
 			                    <if test="selectYear != null and selectYear != ''">
@@ -199,7 +199,7 @@
 		SELECT * FROM (    
 			SELECT ROWNUM RN, R.* FROM (  
             SELECT  W.* FROM (
-			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
+			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
 			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 			                        FROM LECTURE 
 			                        WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
@@ -255,7 +255,7 @@
 	</select>
 
 	<select id="creMonthExcel" parameterType="co.makeu.up.sales.service.SalesVO" resultType="co.makeu.up.sales.service.SalesVO">
-		SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,L.CRE_CNT,S.CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
+		SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
 		FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
 		                        FROM LECTURE 
 			                    WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
