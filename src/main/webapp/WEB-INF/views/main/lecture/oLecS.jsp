@@ -228,7 +228,10 @@
 	                                </c:if>
 	                                <c:if test="${olists.tag3 !='null' }">    
 	                                    <span class="badge bg-dark px-2 py-1 mr-1">${olists.tag3 }</span>
-	                                </c:if>    
+	                                </c:if>
+	                                <c:if test="${olists.tag1 ==null && olists.tag2 ==null && olists.tag3 ==null }">
+	                                	<span class="badge bg-dark px-2 py-1 mr-1">태그없음</span>
+	                                </c:if>       
                                 </div>
                             </div>
                         </div>
@@ -240,17 +243,26 @@
                         <div class="row col-12 align-items-end">
                             <div class="col-10">
                                 <div class="row">
+                                	<c:if test="${olists.kitName != null }">
                                     <h6 class="font-weight-bold">${olists.kitName }</h6>
+                                    </c:if>
+                                    <c:if test="${olists.kitName == null}">
+                                    <h6 class="font-weight-bold">키트 없음</h6>
+                                    </c:if>
                                 </div>
+                                <c:if test="${olists.kitIntro != null}">
                                 <div class="row mt-3" style="border-left: 4px solid grey">
                                     <p class="mb-0 ml-3 my-1">
                                         ${olists.kitIntro }
                                     </p>
                                 </div>
+                                </c:if>
                             </div>
                             <div class="col-2">
                                 <div class="row align-self-end">
+                                	<c:if test="${olists.kitPrc != null }">
                                     <p class="mb-0">키트 가격 : ${olists.kitPrc }원</p>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

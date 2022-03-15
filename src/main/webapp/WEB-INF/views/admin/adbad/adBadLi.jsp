@@ -25,6 +25,11 @@
         #ho:hover{
         background-color:#f5f5f5;
         }
+        
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
     </style>
 
 </head>
@@ -81,32 +86,44 @@
 	                                     					<c:if test="${not empty search.ttl }">value="${search.ttl }"</c:if>
 	                                     					<c:if test="${not empty search.content }">value="${search.content }"</c:if>
 	                                     					<c:if test="${not empty search.mix }">value="${search.mix }"</c:if>>
-                                            
 	                                                    </div>
 	                                                </div>
 	                                            </td>
 	                                            <th class="align-middle">등록일</th>
 	                                            <td class="text-left align-middle">
 	                                                <div class="row pl-4 d-flex justify-content-start">
-	                                                    <input type="date" name = "start" value = "${search.start }">
+	                                                    <input type="date" id="start" name = "start" value = "${search.start }">
 	                                                    <div class="mx-2 d-flex align-self-center justify-content-center"><i class="fa fa-minus m-0"></i></div>
-	                                                    <input type="date" name = 'end' value  = "${search.end }">
+	                                                    <input type="date" id="end" name = 'end' value  = "${search.end }">
+	                                                	<button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
 	                                                </div>
 	                                            </td>
 	                                        </tr>
 	                                    </table>
-	                                    <button id="but"  type = "submit" class="btn btn-secondary position-absolute"
-	                                        style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
+	                                    <button id="but"  type = "button" class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
 	                                </div>
+	                                <input type="hidden" name="searchFlag" id="searchFlag" value="${search.searchFlag }">
+	                                <input type="hidden" name="orderColumn" value="${search.orderColumn }">
+									<input type="hidden" name="orderBy" value="${search.orderBy }">
+	                                <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vo.pageNum }'>
+	                                <input type = 'hidden' name = 'amount' value = '${pageMaker.vo.amount }'>
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                     	<thead>
                                         <tr style="background-color: #eeeeee;">
-                                            <th width="100px">번호</th>
-                                            <th>제목</th>
-                                            <th width="130px">작성자</th>
-                                            <th width="150px">작성일</th>
+                                            <th data-col="b_no" width="100px">
+                                            	번호
+                                            	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'b_no' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                            </th>
+                                            <th data-col="ttl" class="d-flex justify-content-center">
+                                            	제목
+                                            	<i class="fa fa-caret-down ml-1 <c:if test="${search.orderColumn eq 'ttl' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                            </th>
+                                            <th data-col="wr_date" width="150px">
+                                            	작성일
+                                            	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'wr_date' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                            </th>
                                             <th width="130px">첨부파일</th>
                                         </tr>
                                         </thead>
@@ -121,7 +138,6 @@
 		                                        <tr id="ho" class="boardSelect" data-no="${board.getBNo() }" onmouseover = "setCursor(this,'pointer')">
 		                                            <td>${board.getBNo() }</td>
 		                                            <td class="text-left">${board.ttl}</td>
-		                                            <td>관리자</td>
 		                                            <td>${board.wrDate }</td>
 		                                            <td>
 		                                            	<c:if test="${board.fileNo eq -1}">
@@ -161,10 +177,6 @@
                                         	</c:if>
                                         </ul>
                                     </div>
-                                    <form id='actionFrom' method = 'get' action = '/admin/adBadLi'>
-	                                    <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vo.pageNum }'>
-	                                    <input type = 'hidden' name = 'amount' value = '${pageMaker.vo.amount }'>
-                                    </form>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button class="btn btn-dark" onclick="location.href='/admin/adBadl'">글 등록</button>
 										<button type="button" class="btn btn-success" id="excel">EXCEL다운</button>
@@ -182,22 +194,61 @@
             <!-- End Page wrapper -->
 </body>
 <script type="text/javascript">
+	//검색 초기화
+	$('#resetAll').click(()=>{
+		$('#searchFlag').val('');
+		$('#sel').val('ttl');
+		$('#inp').attr('name','ttl').val('');
+		$('#start').val(null);	
+		$('#end').val(null);
+	})
+	
+	$('.fa-caret-down').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#ser>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#ser>input[name=orderBy]').val('asc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#ser').submit();
+	})
+	
+	$('.fa-rotate-180').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#ser>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#ser>input[name=orderBy]').val('desc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#ser').submit();
+	})
+	
+	$('#but').click((e)=>{
+		e.preventDefault();
+		
+		$('#searchFlag').val('Y');
+		$('#ser').find("input[name='pageNum']").val(1);
+		$('#ser').submit();
+	})	
+	
 	$("table .boardSelect").on('click',function(){
 		location.href="/admin/adBadS?bNo="+$(this).attr('data-no');
 	})
 	
-$(".paginate_button a").on("click" , function(e) {
-	e.preventDefault();
-	console.log('click');
-	
-	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
-	$('#actionFrom').submit();
-});
+	$(".paginate_button a").on("click" , function(e) {
+		e.preventDefault();
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		
+		$('#ser').find("input[name='pageNum']").val($(this).attr("href"));
+		$('#ser').submit();
+	});
 
-	
 	function chsel(){
 		var ssel = $("#sel option:selected").val();
-		
 		document.getElementById( 'inp' ).setAttribute( 'name', ssel);
 	}
 	function setCursor(str,str2){

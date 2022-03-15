@@ -35,6 +35,11 @@ table tr, table td {
 #amodal:hover {
 	text-decoration: underline;
 }
+        
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
 </style>
 </head>
 <body>
@@ -66,7 +71,7 @@ table tr, table td {
 				<div class="card">
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
-						<form action='/admin/adRefSearch' id='searchForm' method='get'>
+						<form action='/admin/adRef' id='searchForm' method='get'>
 							<div class="row position-relative">
 								<table class="admin_search table table-bordered">
 									<tr height="38">
@@ -75,15 +80,15 @@ table tr, table td {
 											<div class="d-flex col-12 px-0">
 												<div class="col-3 px-0">
 													<select class="ml-2 custom-select w-100" id="searchType" onchange="changeSelect()">
-														<option selected="selected" value="">전체</option>
-														<option value="name"<c:if test="${not empty search.name }"> selected="selected"</c:if>>이름</option>
+														<option value="name"<c:if test="${empty search.id }"> selected="selected"</c:if>>이름</option>
 														<option value="id"<c:if test="${not empty search.id }"> selected="selected"</c:if>>아이디</option>
 													</select>
 												</div>
 												<div class="col-9 d-flex align-items-center">
-													<input id=input name="searchKey" class="w-100" type="text" spellcheck="false"
+													<input id=input  class="w-100" type="text" spellcheck="false"
+													<c:if test="${empty search.name }">name="id"</c:if>
 													<c:if test="${not empty search.id }">value="${search.id }"</c:if>
-                                                    <c:if test="${not empty search.name }">value="${search.name }"</c:if>
+                                                    <c:if test="${not empty search.name }">name="name" value="${search.name}"</c:if>
 													>
 												</div>
 											</div>
@@ -116,7 +121,7 @@ table tr, table td {
 										<th>환불사유</th>
 										<td>
 											<select class="ml-2 custom-select w-100" id="searchTypeRefund" onchange="changeSelectRefund()">
-												<option selected="selected" value=""
+												<option value=""
 												<c:if test="${empty search.content}">selected="selected"</c:if>
                                             	>전체</option>
 												<option value="강의가 만족스럽지 못함"
@@ -145,34 +150,61 @@ table tr, table td {
 										<td colspan="3" class="justify-content-start row border-0">
 											<div class="row pl-4 d-flex justify-content-center">
 												<div>
-													<input type="date" name="start" class="w-100" value="${search.start }">
+													<input type="date" id="start" name="start" class="w-100" value="${search.start }">
 												</div>
 												<div class="ml-3 mr-3">
 													<i class="fa fa-minus"></i>
 												</div>
 												<div>
-													<input type="date" name="end" class="w-100" value="${search.end }">
+													<input type="date" id="end" name="end" class="w-100" value="${search.end }">
 												</div>
+												<button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
 											</div>
 										</td>
 									</tr>
 								</table>
 								<button class="btn btn-secondary position-absolute"
 									style="width: 75px; height: 33px; right: 5px; bottom: 19px;"
-									id="but" type="submit">검색</button>
+									id="but" type="button">검색</button>
 							</div>
+							<input type="hidden" name="searchFlag" id="searchFlag" value="${search.searchFlag }">
+							<input type="hidden" name="orderColumn" value="${search.orderColumn }">
+							<input type="hidden" name="orderBy" value="${search.orderBy }">
+							<input type='hidden' name='pageNum' value='${pageMaker.rvo.pageNum }'> 
+							<input type='hidden' name='amount' value='${pageMaker.rvo.amount }'>
 						</form>
 						<div class="row">
 							<table class="table table-bordered table-hover">
 								<thead>
 									<tr style="background-color: #eeeeee;">
-										<th>번호</th>
-										<th>아이디</th>
-										<th>이름</th>
-										<th class="w-25">강의명</th>
-										<th class="w-25">환불사유</th>
-										<th>환불요청날짜</th>
-										<th>환불요청</th>
+										<th data-col="r.tlsn_no">
+											번호
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'r.tlsn_no' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th data-col="u.id">
+											아이디
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'u.id' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th data-col="u.name">
+											이름
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'u.name' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th class="w-25" data-col="l.ttl">
+											강의명
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'l.ttl' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th class="w-25" data-col="r.content">
+											환불사유
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'r.content' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th data-col="r.req_date">
+											환불요청날짜
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'r.req_date' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
+										<th data-col="r.rf_st_code">
+											환불요청
+											<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'r.rf_st_code' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -256,10 +288,6 @@ table tr, table td {
 								</ul>
 							</div>
 						</div>
-						<form id='actionFrom' method='get' action='/admin/adRef'>
-							<input type='hidden' name='pageNum' value='${pageMaker.rvo.pageNum }'> 
-							<input type='hidden' name='amount' value='${pageMaker.rvo.amount }'>
-						</form>
 						<div class="position-absolute" style="right: 10px; bottom: 35px">
 							<button class="btn btn-success" id="excel">EXCEL다운</button>
 						</div>
@@ -339,30 +367,69 @@ table tr, table td {
 		/* makeSearchData(1); */
 		$('#searchForm').attr('action','/admin/refundExcel');
 		$('#searchForm').submit();
-		$('#searchForm').attr('action','/admin/adRefSearch');
+		$('#searchForm').attr('action','/admin/adRef');
 	})
+	//검색 초기화
+		$('#resetAll').click(()=>{
+			$('#searchFlag').val('');
+			$('#searchType').val('name');
+			$('#input').attr('name','id').val('');
+			$('#ttl').val('');
+			$('#searchTypeRefund').val('');
+			$('#a').prop('checked','checked');
+			$('#start').val(null);	
+			$('#end').val(null);
+		})	
 
 	//페이징 처리
-	$(".paginate_button a").on(
-			"click",
-			function(e) {
-				e.preventDefault();
-				console.log('click');
-				$('#actionFrom').find("input[name='pageNum']").val(
-						$(this).attr("href"));
-				$('#actionFrom').submit();
-			});
+	$(".paginate_button a").on("click", function(e) {
+		e.preventDefault();
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		
+		$('#searchForm').find("input[name='pageNum']").val($(this).attr("href"));
+	    $('#searchForm').submit();
+	});	
 
+	$('.fa-caret-down').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('asc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#searchForm').submit();
+	})
+	
+	$('.fa-rotate-180').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('desc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#searchForm').submit();
+	})
+	
+	$('#but').click((e)=>{
+		e.preventDefault();
+				
+		$('#searchFlag').val('Y');
+		$('#searchForm').find("input[name='pageNum']").val(1);
+		$('#searchForm').submit();
+	})		
+	
 	//select value값 처리 함수
 	function changeSelect() {
-		var searchType = $("#searchType option:selected").val();
-		console.log(searchType)
+		var searchType = $("#searchType").val();
 		document.getElementById('input').setAttribute('name', searchType);
 	}
 	//환불이유 select value값 처리 함수	
 	function changeSelectRefund() {
-		var searchTypeRefund = $("#searchTypeRefund option:selected").val();
-		console.log(searchTypeRefund)
+		var searchTypeRefund = $("#searchTypeRefund").val();
 		document.getElementById('hiddeninput').setAttribute('value',
 				searchTypeRefund);
 	}

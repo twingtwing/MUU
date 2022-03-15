@@ -193,7 +193,7 @@
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <p> ${noinfo.content }</p>
+                                <p id="inputcontent">${noinfo.content}</p>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <c:if test="${not empty noinfo.fileList }">
@@ -376,6 +376,25 @@ $('#deleteNotice').on('click', function(){
 	$('#deleteFrm').attr("action", "/creator/cLecNdelete");
 	$('#deleteFrm').submit();
 })
+
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
 
 </script>
 </html>

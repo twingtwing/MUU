@@ -4,7 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<style type="text/css">
+		.fa-caret-down, .fa-caret-up{
+        	cursor: pointer;
+        	float: right;
+        }
+        .year_table td,.year_table th{
+        	text-align: center;
+        }
+	</style>
 </head>
 <body>
       <!-- 페이지명-->
@@ -38,14 +47,14 @@
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 연도별 회사 매출</h5>
 	              <form id="yearFrm" action="/admin/adCSales" method="get">
 	                  <div class="row mt-4 justify-content-between mb-3">
-	                      <select name="selectYear" class="select border px-3 py-2">
+	                      <select id="selectYear" name="selectYear" class="select border px-3 py-2">
 		                  	<c:forEach begin="${2016}" end="${thisyear }" var="y">
 		                    	<option value="${y }"<c:if test="${search.selectYear eq y}">selected="selected"</c:if>>${y }년</option>
 		                  	</c:forEach>
 	                      </select>
 	                      <div>
 		                  	<select id="searchYear" class="border px-3 py-2">
-		                    	<option value="yearId" <c:if test="${not empty search.yearId}">selected="selected"</c:if> >아이디</option>
+		                    	<option value="yearId" <c:if test="${empty search.yearName}">selected="selected"</c:if> >아이디</option>
 		                        <option value="yearName" <c:if test="${not empty search.yearName}">selected="selected"</c:if> >이름</option>
 		                   	</select>
 		                    <input type="text" id="inputSearch" 
@@ -53,19 +62,46 @@
 		                    <c:if test="${not empty search.yearId}">value="${search.yearId}"</c:if>
 		                    <c:if test="${not empty search.yearName}">name="yearName" value="${search.yearName}"</c:if>
 		                    placeholder="검색" class="border px-3 py-2">
-		                    <button type="submit" class="border px-3 py-2">검색</button>
+		                    <button type="button" class="btn bg-white border" style="width: 65px; height: 39px;" id="resetYear">초기화</button>
+		                    <button id="yearBtn" type="button" class="border px-3 py-2">검색</button>
 	                      </div>
 	                  </div>
+	                  <input type="hidden" name="searchYearFlag" id="searchYearFlag" value="${search.searchYearFlag }">
+					  <input type="hidden" name="orderYearColumn" value="${search.orderYearColumn }">
+					  <input type="hidden" name="orderYearBy" value="${search.orderYearBy }">
+	                  <input type = 'hidden' name = 'pageYearNum' value = '${page.salesVo.pageYearNum }'>
+	                  <input type = 'hidden' name = 'amountYear' value = '${page.salesVo.amountYear }'>
+	                  <input type = 'hidden' name = 'pageMonthNum' value = '1'>
+	                  <input type = 'hidden' name = 'amountMonth' value = '10'>
 	              </form>
                   <div class="row">
-                    <table class="table table-bordered">
+                    <table class="year_table table table-bordered">
                       <tr style="background-color: #eeeeee;">
-                        <th>순위</th>
-                        <th>아이디</th>
-                        <th>이름</th>
-                        <th>강의 수</th>
-                        <th>판매량</th>
-                        <th>총 매출</th>
+                      <!-- 클릭 이벤트,,,? -->
+                        <th data-col="rank">
+                        	순위
+                        	<i class="fa fa-caret-up <c:if test="${search.orderYearColumn eq 'rank' and search.orderYearBy eq 'desc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="id">
+                        	아이디
+                        	<i class="fa fa-caret-down <c:if test="${search.orderYearColumn eq 'id' and search.orderYearBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="name">
+                        	이름
+                        	<i class="fa fa-caret-down <c:if test="${search.orderYearColumn eq 'name' and search.orderYearBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="cre_cnt">
+                        	강의 수
+                        	<i class="fa fa-caret-down <c:if test="${search.orderYearColumn eq 'cre_cnt' and search.orderYearBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="cnt">
+                        	판매량
+                        	<i class="fa fa-caret-down <c:if test="${search.orderYearColumn eq 'cnt' and search.orderYearBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="pay">
+                        	총 매출
+                        	<i class="fa fa-caret-down <c:if test="${search.orderYearColumn eq 'pay' and search.orderYearBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
                       </tr>
 	                  <c:if test="${empty creYear }">
 	                  	<tr>
@@ -78,8 +114,8 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
-	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.creCnt }</fmt:formatNumber> 개</td>
+	                      		<td><fmt:formatNumber>${cre.cnt }</fmt:formatNumber> 개</td>
 	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
@@ -107,10 +143,6 @@
                             </c:if>
                     	</ul>
                     </div>
-                    <form id='Year' method = 'get' action = '/admin/adCSales'>
-	                	<input type = 'hidden' name = 'pageYearNum' value = '${page.salesVo.pageYearNum }'>
-	                	<input type = 'hidden' name = 'amountYear' value = '${page.salesVo.amountYear }'>
-                    </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button id="yearExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
@@ -123,14 +155,14 @@
                   <h5 class="bg-dark px-3 py-2 mb-0 text-white" style="border-radius: 13px;">크리에이터별 월별 회사 매출 <span>(${thisyear }년)</span></h5>
                   <form id="monthFrm" action="/admin/adCSales" method="get">
 	                  <div class="row mt-4 justify-content-between mb-3">
-	                  	<select name="month" class="select border px-3 py-2">
+	                  	<select id="month" name="month" class="select border px-3 py-2">
 			                <c:forEach begin="${1}" end="${thisMonth }" var="y">
 			                	<option value="${y }"<c:if test="${search.month eq y}">selected="selected"</c:if>>${y }월</option>
 			            	</c:forEach>
 		                </select>
 	                    <div>
 	                      <select id="searchMonth" class="border px-3 py-2">
-	                        <option value="monthId" <c:if test="${not empty search.monthId}">selected="selected"</c:if>>아이디</option>
+	                        <option value="monthId" <c:if test="${empty search.monthName}">selected="selected"</c:if>>아이디</option>
 	                        <option value="monthName" <c:if test="${not empty search.monthName}">selected="selected"</c:if>>이름</option>
 	                      </select>
 	                      <input id="inputMonth" type="text"
@@ -138,19 +170,44 @@
 							<c:if test="${not empty search.monthId}">value="${search.monthId}"</c:if>
 		                    <c:if test="${not empty search.monthName}">name="monthName" value="${search.monthName}"</c:if>
 							placeholder="검색" class="border px-3 py-2">
-	                      <button type="submit" class="border px-3 py-2">검색</button>
-	                    </div>
+	                      	<button type="button" class="btn bg-white border" style="width: 65px; height: 39px;" id="resetMonth">초기화</button>
+		                    <button id="monthBtn" type="button" class="border px-3 py-2">검색</button>
+	                      </div>
 	                  </div>
+	                  <input type="hidden" name="searchMonthFlag" id="searchMonthFlag" value="${search.searchMonthFlag }">
+					  <input type="hidden" name="orderMonthColumn" value="${search.orderMonthColumn }">
+					  <input type="hidden" name="orderMonthBy" value="${search.orderMonthBy }">
+	                  <input type = 'hidden' name = 'pageMonthNum' value = '${page.salesVo.pageMonthNum }'>
+	                  <input type = 'hidden' name = 'amountMonth' value = '${page.salesVo.amountMonth }'>
+	                  <input type = 'hidden' name = 'pageYearNum' value = '1'>
+	                  <input type = 'hidden' name = 'amountYear' value = '10'>
                   </form>
                   <div class="row">
-                    <table class="table table-bordered">
+                    <table class="month_table table table-bordered">
                       <tr style="background-color: #eeeeee;">
-                        <th>순위</th>
-                        <th>아이디</th>
-                        <th>이름</th>
-                        <th>강의 수</th>
-                        <th>판매량</th>
-                        <th>총 매출</th>
+                        <th data-col="rank">
+                        	순위
+                        	<i class="fa fa-caret-up <c:if test="${search.orderMonthColumn eq 'rank' and search.orderMonthBy eq 'desc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="id">
+                        	아이디
+                        	<i class="fa fa-caret-down <c:if test="${search.orderMonthColumn eq 'id' and search.orderMonthBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="name">
+                        	이름
+                        	<i class="fa fa-caret-down <c:if test="${search.orderMonthColumn eq 'name' and search.orderMonthBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="cre_cnt">
+                        	강의 수
+                        	<i class="fa fa-caret-down <c:if test="${search.orderMonthColumn eq 'cre_cnt' and search.orderMonthBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="cnt">
+                        	판매량
+                        	<i class="fa fa-caret-down <c:if test="${search.orderMonthColumn eq 'cnt' and search.orderMonthBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
+                        </th>
+                        <th data-col="pay">
+                        	총 매출
+                        	<i class="fa fa-caret-down <c:if test="${search.orderMonthColumn eq 'pay' and search.orderMonthBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>
                       </tr>
                       <c:if test="${empty creMonth }">
 	                  	<tr>
@@ -163,8 +220,8 @@
 	                      		<td>${cre.rank }</td>
 	                      		<td>${cre.id }</td>
 	                      		<td>${cre.name }</td>
-	                      		<td><fmt:formatNumber>${cre.creCnt } 개</fmt:formatNumber></td>
-	                      		<td><fmt:formatNumber>${cre.cnt } 개</fmt:formatNumber></td>
+	                      		<td><fmt:formatNumber>${cre.creCnt }</fmt:formatNumber> 개</td>
+	                      		<td><fmt:formatNumber>${cre.cnt }</fmt:formatNumber> 개</td>
 	                      		<td><fmt:formatNumber>${cre.pay }</fmt:formatNumber> 만 원</td>
 	                      	</tr>
 	                      </c:forEach>
@@ -192,10 +249,6 @@
                             </c:if>
                     	</ul>
                     </div>
-                    <form id='Month' method = 'get' action = '/admin/adCSales'>
-	                	<input type = 'hidden' name = 'pageMonthNum' value = '${page.salesVo.pageMonthNum }'>
-	                	<input type = 'hidden' name = 'amountMonth' value = '${page.salesVo.amountMonth }'>
-                    </form>
                     <div class="position-absolute" style="right: 1px;">
                       <button id="monthExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
@@ -209,27 +262,153 @@
         </div>
       </div>
       <script type="text/javascript">
-      	$('#searchYear').on('change',function(){
+  	//검색 초기화
+		$('#resetYear').click(()=>{
+			$('#searchYearFlag').val('');
+			$('#selectYear').val('${thisyear}');
+			$('#searchYear').val('yearId');
+			$('#inputSearch ').attr('name','yearId').val('');
+		})	
+		
+		$('#resetMonth').click(()=>{
+			$('#searchMonthFlag').val('');
+			$('#month').val(Number('${thisMonth}'));
+			$('#searchMonth').val('monthId');
+			$('#inputMonth').attr('name','monthId').val('');
+		})
+
+		//페이징 처리
+		$(".year_ul .paginate_button a").on("click", function(e) {
+			e.preventDefault();
+			if($('#searchYearFlag').val() !== 'Y'){
+				$('#resetYear').click();
+			}
+			
+			$('#yearFrm').find("input[name='pageYearNum']").val($(this).attr("href"));
+		    $('#yearFrm').submit();
+		});			
+	      	
+		$(".month_ul .paginate_button a").on("click", function(e) {
+			e.preventDefault();
+			if($('#searchMonthFlag').val() !== 'Y'){
+				$('#resetMonth').click();
+			}
+			
+			$('#monthFrm').find("input[name='pageMonthNum']").val($(this).attr("href"));
+		    $('#monthFrm').submit();
+		});	 	
+  	
+		$('.year_table .fa-caret-down').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#yearFrm>input[name=orderYearColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#yearFrm>input[name=orderYearBy]').val('asc');
+			
+			if($('#searchYearFlag').val() !== 'Y'){
+				$('#resetYear').click();
+			}
+			$('#yearFrm').submit();
+		})
+		
+		$('.year_table .fa-caret-down.fa-rotate-180').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#yearFrm>input[name=orderYearColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#yearFrm>input[name=orderYearBy]').val('desc');
+			
+			if($('#searchYearFlag').val() !== 'Y'){
+				$('#resetYear').click();
+			}
+			$('#yearFrm').submit();
+		})
+		
+		$('.year_table .fa-caret-up').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#yearFrm>input[name=orderYearColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#yearFrm>input[name=orderYearBy]').val('desc');
+			
+			if($('#searchYearFlag').val() !== 'Y'){
+				$('#resetYear').click();
+			}
+			$('#yearFrm').submit();
+		})
+		
+		$('.year_table .fa-caret-up.fa-rotate-180').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#yearFrm>input[name=orderYearColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#yearFrm>input[name=orderYearBy]').val('asc');
+			
+			if($('#searchYearFlag').val() !== 'Y'){
+				$('#resetYear').click();
+			}
+			$('#yearFrm').submit();
+		})
+  
+		$('.month_table .fa-caret-down').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#monthFrm>input[name=orderMonthColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#monthFrm>input[name=orderMonthBy]').val('asc');
+			
+			if($('#searchMonthFlag').val() !== 'Y'){
+				$('#resetMonth').click();
+			}
+			$('#monthFrm').submit();
+		})
+		
+		$('.month_table .fa-caret-down.fa-rotate-180').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#monthFrm>input[name=orderMonthColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#monthFrm>input[name=orderMonthBy]').val('desc');
+			
+			if($('#searchMonthFlag').val() !== 'Y'){
+				$('#resetMonth').click();
+			}
+			$('#monthFrm').submit();
+		})
+		
+		$('.month_table .fa-caret-up').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#monthFrm>input[name=orderMonthColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#monthFrm>input[name=orderMonthBy]').val('desc');
+			
+			if($('#searchMonthFlag').val() !== 'Y'){
+				$('#resetMonth').click();
+			}
+			$('#monthFrm').submit();
+		})
+		
+		$('.month_table .fa-caret-up.fa-rotate-180').click((e)=>{
+			$(e.currentTarget).toggleClass('fa-rotate-180')
+			$('#monthFrm>input[name=orderMonthColumn]').val(e.currentTarget.parentElement.dataset.col)
+			$('#monthFrm>input[name=orderMonthBy]').val('asc');
+			
+			if($('#searchMonthFlag').val() !== 'Y'){
+				$('#resetMonth').click();
+			}
+			$('#monthFrm').submit();
+		})
+		
+      $('#searchYear').on('change',function(){
       		$('#inputSearch').attr('name',$('#searchYear').val());
       	})
+
+		$('#yearBtn').click((e)=>{
+			e.preventDefault();
+					
+			$('#searchYearFlag').val('Y');
+			$('#yearFrm').find("input[name='pageYearNum']").val(1);
+			$('#yearFrm').submit();
+		})	  
+		
+		$('#monthBtn').click((e)=>{
+			e.preventDefault();
+					
+			$('#searchMonthFlag').val('Y');
+			$('#monthFrm').find("input[name='pageYearNum']").val(1);
+			$('#monthFrm').submit();
+		})	
       	
       	$('#searchMonth').on('change',function(){
       		$('#inputMonth').attr('name',$('#searchMonth').val());
       	})
-      	
-      	$(".year_ul .paginate_button a").on("click" , function(e) {
-			e.preventDefault();
-			
-			$('#Year').find("input[name='pageYearNum']").val($(this).attr("href"));
-			$('#Year').submit();
-		});
-      	
-      	$(".month_ul .paginate_button a").on("click" , function(e) {
-			e.preventDefault();
-			
-			$('#Month').find("input[name='pageMonthNum']").val($(this).attr("href"));
-			$('#Month').submit();
-		});
       	
      	// 엑셀 다운
       	$('#yearExcel').click(()=>{

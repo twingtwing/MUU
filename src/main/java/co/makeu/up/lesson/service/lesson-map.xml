@@ -26,4 +26,24 @@
 		WHERE LT_NO = #{ltNo}
 		AND LSN_NO = 1
 	</select>
+	<update id="lessonUpdate" parameterType="java.util.List">
+	begin
+	<foreach collection="list" item="item">
+		merge into
+		    lesson
+		using dual
+		      on(lt_no = #{item.ltNo} and lsn_no = #{item.lsnNo})
+		      when matched then
+		          update set 
+		                ttl = #{item.ttl},
+		                lsn_file = #{item.lsnFile},
+		                mod_date = sysdate
+		      when not matched then
+		          insert(serial_no, ttl, lsn_file, lt_no, reg_date, mod_date, lsn_no)
+		          values((SELECT NVL(MAX(SERIAL_NO), 0)+1 FROM LESSON), #{item.ttl}, #{item.lsnFile}, 
+		          #{item.ltNo}, sysdate, null, (SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON where lt_no = #{item.ltNo}));
+	</foreach>
+	end;
+	</update>
+	
 </mapper>

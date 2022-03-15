@@ -41,6 +41,14 @@
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
 		ORDER BY l.LT_NO DESC
 	</select>
+	<select id="reportLesson" parameterType="co.makeu.up.report.service.ReportVO" resultType="co.makeu.up.report.service.ReportVO">
+		SELECT R.*
+		FROM CNAMELECTURE C JOIN REPORT R
+		ON C.LT_NO = R.LT_NO
+		WHERE RP_ST_CODE = 'RPS02'
+		AND R.CTGR = 'RP02'
+		AND R.LT_NO = #{ltNo}
+	</select>
 	<update id="lectureUpdate" parameterType="co.makeu.up.lecture.service.LectureVO">
 		UPDATE LECTURE SET
 		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr},
@@ -82,6 +90,24 @@
 		ON P.LT_NO = L.LT_NO
 		WHERE L.CRE_ID = #{ID}
 	</select>
+	<update id="lectureReResister" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L02'
+		WHERE LT_NO = #{ltNo} 
+	</update>
+	
+	<update id="lectureReportCheck" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L02'
+		WHERE LT_NO = #{ltNo} 
+	</update>
+	<update id="lectureReInsert" parameterType="co.makeu.up.lecture.service.LectureVO">
+		update lecture set
+		open_term = #{openTerm}, req_date = sysdate, lt_st_code = 'L02', 
+		exp_date = (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), start_date = sysdate
+		where lt_no = #{ltNo}
+		
+	</update>
 
 	<select id="adminLectureList" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM(
@@ -93,7 +119,13 @@
         ON L.DOWN_CTGR = C.CTGR_ID 
         JOIN USERS U
 		ON L.CRE_ID =  U.ID 
-		WHERE L.LT_ST_CODE = 'L02'
+		WHERE 1 =1 
+		<if test="ltStCode == null or ltStCode ==''">
+			AND L.LT_ST_CODE IN ('L02','L07')
+		</if>
+		<if test="ltStCode != null and ltStCode !=''">
+			AND L.LT_ST_CODE = #{ltStCode}
+		</if>
 		<if test="name != null and name != ''">
 			and u.name like '%' || #{name}  || '%'
 		</if>
@@ -110,13 +142,17 @@
 			AND c.name = #{downCtgr}
 		</if>
 		<if test="start != null and start !=''">
-        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') <=  TRUNC(l.req_Date) ]]>
         </if>
         <if test="end != null and end !=''" >
-            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > l.req_Date ]]>
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  >=  TRUNC(l.req_Date) ]]>
         </if>
-		)W
-		ORDER BY LT_NO DESC)
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+			ORDER BY ${orderColumn} ${orderBy}
+		</if>
+		<if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY LT_NO DESC
+		</if>)W)
 		<![CDATA[
 	    where rn > (#{pageNum}-1) * #{amount} 
 	    and rn <= #{pageNum} * #{amount}
@@ -124,15 +160,20 @@
   </select>
   
   	<select id="adminLectureListPlus" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
-        SELECT *
-        FROM (SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+        SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
 		FROM LECTURE L JOIN (select c.* ,c2.name up_name
                                 from ctgr c join ctgr c2
                                 on c2.ctgr_id = c.up_ctgr) C
         ON L.DOWN_CTGR = C.CTGR_ID 
         JOIN USERS U
 		ON L.CRE_ID =  U.ID 
-		WHERE L.LT_ST_CODE = 'L02'
+		WHERE 1 =1 
+		<if test="ltStCode == null or ltStCode ==''">
+			AND L.LT_ST_CODE IN ('L02','L07')
+		</if>
+		<if test="ltStCode != null and ltStCode !=''">
+			AND L.LT_ST_CODE = #{ltStCode}
+		</if>
 		<if test="name != null and name != ''">
 			and u.name like '%' || #{name}  || '%'
 		</if>
@@ -143,19 +184,23 @@
 			and l.ttl like '%'||#{ttl}||'%'
 		</if>
 		<if test="upCtgr != null and upCtgr !=''">
-			AND c.up_name = #{upCtgr}
+			AND c.up_name  like '%'||#{upCtgr}||'%'
 		</if>
 		<if test="downCtgr != null and downCtgr !=''">
-			AND c.name = #{downCtgr}
+			AND c.name like '%'||#{downCtgr}||'%'
 		</if>
 		<if test="start != null and start !=''">
-        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < l.req_Date ]]>
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') <= TRUNC(l.req_Date) ]]>
         </if>
         <if test="end != null and end !=''" >
-            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > l.req_Date ]]>
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  >= TRUNC(l.req_Date) ]]>
         </if>
-		)
-		ORDER BY LT_NO DESC
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+			ORDER BY ${orderColumn} ${orderBy}
+		</if>
+		<if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY LT_NO DESC
+		</if>
   </select>
   
   <select id="AdminlectureSelect" resultType="co.makeu.up.lecture.service.LectureVO">

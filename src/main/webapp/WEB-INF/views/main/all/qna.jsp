@@ -96,16 +96,16 @@
 					</div>
 					<div>답변 이메일</div>
 					<div class="form-group ml-1 mt-3 row ">
-						<input name="email1" type="text" v-model="inputEmailID"> @
-						<input name="email2" type="text" v-model="inputEmailType">
+						<input name="email1" id="emailId" type="text" v-model="inputEmailID"> @
+						<input name="email2" id="emailType" type="text" v-on:keyup="chageEvent()" v-model="inputEmailType" >
 						<div class="ml-3">
-							<select name="select_email" onChange="selectEmail(this)">
-								<option readonly="true" value="" selected>선택하세요</option>
-								<option value="naver.com">naver.com</option>
-								<option value="gmail.com">gmail.com</option>
-								<option value="hanmail.com">hanmail.com</option>
-								<option value="1">직접입력</option>
-							</select>
+								<select v-model="inputEmailType">
+								  <option disabled value="">선택하세요</option>
+								  <option>naver.com</option>
+								  <option>gmail.com</option>
+								  <option>hanmail.net</option>
+								  <option>직접선택</option>
+								</select>
 						</div>
 					</div>
 				</div>
@@ -160,6 +160,7 @@
                     inputEmailID: '',
                     inputEmailType: '',
                     inputid : "${username}",
+                    selected : ''
   
                 }
             },
@@ -181,6 +182,14 @@
             			$('#qstBtn').removeAttr('disabled');
             		}
             	},
+            	chageEvent(){
+            		const emailType_rule = /^[a-zA-Z0-9.][a-zA-Z0-9.]*$/;
+            		console.log($('#emailType').val());
+            		if(!emailType_rule.test($('#emailType').val())){
+    					$('#emailType').val('');
+    					return;
+    				}
+            	},
             	QstInsertClick(index) {
                     console.log("선택 " + this.privacy);
                     console.log("제목 " + this.inputTitle);
@@ -194,7 +203,7 @@
         	   		intro = intro.replace(/\r\n/ig,'<br>');
         	   		intro = intro.replace(/\\n/ig,'<br>');
         	   		intro = intro.replace(/\n/ig,'<br>');
-                    
+        	   		
                    $.ajax({
             		url : '/QstInsert',
             		type : 'post',
@@ -214,8 +223,7 @@
             			location.href="/home"
             		}
             	})
-                }
-
+                },
             },
             beforeCreate: function () {
             	
@@ -226,19 +234,17 @@
     </script>
 
 	<script>
-        function selectEmail(ele) {
-            var $ele = $(ele);
-            var $email2 = $(
-                'input[name=email2]');
-            // '1'인 경우 직접입력 
-            if ($ele.val() == "1") {
-                $email2.attr('readonly', false);
-                $email2.val('');
-            } else {
-               	$email2.attr('v-model',"inputEmailType");
-                $email2.val($ele.val());
-            }
-        }
+	 	let emailType_rule = /^[a-zA-Z0-9]{5,12}$/
+		$(function(){
+	      $('select').niceSelect('destroy');
+	    })
+	    
+	    $("#emailId").keyup(function(event){ 
+			 if (!(event.keyCode >=37 && event.keyCode<=40)) {
+	    	    var inputVal = $(this).val();
+	    	    $(this).val(inputVal.replace(/[^a-z0-9]/gi,''));
+	    	   }
+	     });
     </script>
 </body>
 </html>

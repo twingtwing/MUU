@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <textarea name="" id="content" cols="130" rows="10" spellcheck="false">${noinfo.content }</textarea>
+                                <textarea id="content" cols="130" rows="10" spellcheck="false"></textarea>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <div class="d-flex align-items-center">
@@ -282,10 +282,11 @@ function fileChange(){
 //공지사항 수정
 function noticeUpdate(){
 	let form = new FormData();
-	
+	let content = $('#content').val();
+	content = lineMaker(content);
 	form.append("ntNo", ${noinfo.ntNo});
 	form.append("ttl", $('#ttl').val());
-	form.append("content", $('#content').val());
+	form.append("content", content);
 	if(${noinfo.fileNo}!=''){
 		form.append("fileNo",${noinfo.fileNo});
 	}
@@ -310,6 +311,31 @@ function noticeUpdate(){
 	})
 	
 }
+
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
+//공지사항 수정란
+$(function(){
+	let content = '${noinfo.content}';
+	content = brDel(content);
+	$('#content').val(content);
+})
 
 </script>
 </html>

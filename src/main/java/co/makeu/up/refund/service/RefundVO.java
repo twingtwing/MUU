@@ -34,6 +34,11 @@ public class RefundVO {
 	// 페이지네이션을 위한 vo객체
 	private int page;
 	
+	private String searchFlag;
+	
+	private String orderColumn;
+	private String orderBy;	
+	
 	// 검색을 위한 객체
 	private String ttlSearchKey;
 	private String contentSearchKey;

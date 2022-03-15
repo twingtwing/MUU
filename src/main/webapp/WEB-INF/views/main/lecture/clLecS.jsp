@@ -181,7 +181,7 @@
                                 &nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-outline-info" type="button" onclick="lessonInfo(${clllists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#rereg">재등록</button>
+                                <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#rereg" data-ltNo="${cllists.ltNo }">재등록</button>
                                 
                             </div>      
                         </div>
@@ -195,19 +195,19 @@
                                         <div class="row mt-2 justify-content-center">강의를 재등록 하시겠습니까 ?</div>
                                         <div class="modal_close" data-dismiss="modal"><i class="icon_close"></i></div>
                                         <div class="row justify-content-center align-items-center mt-2 mb-2">게시기간 : &nbsp;
-                                            <select name="" id="test456">
-                                                <option value="1" selected>3개월</option>
-                                                <option value="2">6개월</option>   
-                                                <option value="3">9개월</option>
-                                                <option value="4">12개월</option>
+                                            <select name="" id="openTerm">
+                                                <option value="3" selected>3개월</option>
+                                                <option value="6">6개월</option>   
+                                                <option value="9">9개월</option>
+                                                <option value="12">12개월</option>
                                             </select>
                                         </div>
                                         <div class="row justify-content-center align-items-center">
-                                            <input type="checkbox" id="test123" value="">
+                                            <input type="checkbox" id="openTermCheck" value="">
                                             &nbsp;<small>이전 게시기간과 동일합니다.</small> 
                                         </div>
                                         <div class="row justify-content-center mt-2 mb-1">
-                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="padding: 3px 10px;">확인</button>
+                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="padding: 3px 10px;" onclick="closerToRe()">확인</button>
                                         </div>
                                     </div>
                                 </div>
@@ -288,6 +288,9 @@
 	                                </c:if>
 	                                <c:if test="${cllists.tag3 !='null' }">    
 	                                    <span class="badge bg-dark px-2 py-1 mr-1">${cllists.tag3 }</span>
+	                                </c:if>
+	                                <c:if test="${cllists.tag1 ==null && cllists.tag2 ==null && cllists.tag3 ==null }">
+	                                	<span class="badge bg-dark px-2 py-1 mr-1">태그없음</span>
 	                                </c:if>   
                                 </div>
                             </div>
@@ -300,17 +303,26 @@
                         <div class="row col-12 align-items-end">
                             <div class="col-10">
                                 <div class="row">
+                                	<c:if test="${cllists.kitName != null }">
                                     <h6 class="font-weight-bold">${cllists.kitName }</h6>
+                                    </c:if>
+                                    <c:if test="${cllists.kitName == null}">
+                                    <h6 class="font-weight-bold">키트 없음</h6>
+                                    </c:if>
                                 </div>
+                                <c:if test="${cllists.kitIntro != null}">
                                 <div class="row mt-3" style="border-left: 4px solid grey">
                                     <p class="mb-0 ml-3 my-1">
                                         ${cllists.kitIntro }
                                     </p>
                                 </div>
+                                </c:if>
                             </div>
                             <div class="col-2">
                                 <div class="row align-self-end">
+                                	<c:if test="${cllists.kitPrc != null }">
                                     <p class="mb-0">키트 가격 : ${cllists.kitPrc }원</p>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -325,6 +337,7 @@
 
 </body>
 <script>
+	
     //mouseover 이벤트 : 사이드바 css변경
     $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
         $(this).css('background-color','#e53637');
@@ -339,16 +352,14 @@
     })
 
     //재등록 모달 체크박스시 게시기간 비활성화
-    let test1 = $('#test123');
-    let test2 = $('#test456');
-    test1.on('click', function(){
-        if(test1.is(":checked") == true){
-            console.log('t');
-            test2.attr('disabled', true).niceSelect('update');    
+    let openTermCheck = $('#openTermCheck');
+    let openTerm = $('#openTerm');
+    openTermCheck.on('click', function(){
+        if(openTermCheck.is(":checked") == true){
+        	openTerm.attr('disabled', true).niceSelect('update');    
         }
-        if(test1.is(":checked") == false){
-            console.log('f');
-            test2.attr('disabled', false).niceSelect('update');
+        if(openTermCheck.is(":checked") == false){
+        	openTerm.attr('disabled', false).niceSelect('update');
         }
     })
     
@@ -388,6 +399,40 @@
     	$('#frm').attr("action", "/creator/cLecSt");
     	$('#frm').submit();
     }
+    
+    //시큐리티 토큰
+    let header = "${_csrf.headerName}";
+    let token = "${_csrf.token}";
+    
+    //재등록
+    function closerToRe(){
+		let ltNo = ${cllists.ltNo};
+		let openTerm;
+		if($('#openTermCheck').is(":checked") == true){
+			openTerm = ${cllists.openTerm};
+		} else {
+   			openTerm = $('#openTerm option:selected').val();
+		}
+		
+		$.ajax({
+    		url : "/creator/lecReInsert",
+    		method : "post",
+    		dataType:"text",
+    		beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+    		data:{
+    			ltNo : ltNo,
+    			openTerm : openTerm
+    		},
+    		success : function(){
+    			alert('재등록 신청하였습니다');
+    			location.href="/creator/rLecL?ltNo="+ltNo;
+    		}
+    	})
+    	
+    }
+    
     
 
 </script>

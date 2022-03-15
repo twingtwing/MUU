@@ -165,10 +165,10 @@
 	                                         정상강의
 	                                         </c:if>
 	                                         <c:if test = "${report.ltStCode eq 'L04' }">
-	                                         수정전
+	                                         수정 전
 	                                         </c:if>
 	                                         <c:if test = "${report.ltStCode eq 'L06' }">
-	                                         수정후
+	                                         수정완료
 	                                         </c:if>
 	                                         </span>
 	                                         

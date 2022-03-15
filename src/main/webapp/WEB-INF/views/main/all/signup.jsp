@@ -119,7 +119,7 @@ table {
 								</tr>
 								<tr>
 									<td class="pilsu"><input class="border px-10 py-2"
-										spellcheck="false" type="text" placeholder="출생년도"
+										spellcheck="false" type="text" placeholder="출생년도 ..."
 										name="birthDate" id="birthDate" required> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td class="pilsu"><select
@@ -290,7 +290,7 @@ table {
 				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
 			}
 			if(!birthreg.test($('#birthDate').val())){
-				$('#alert').text('생년월일 양식에 맞게 작성해주세요.');	
+				$('#alert').text('출생년도 양식에 맞게 작성해주세요.');	
 				return;
 			} else {
 				$('#alert').text('');

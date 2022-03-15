@@ -24,11 +24,15 @@ public class BoardVO {
 	private String start;
 	private String end;
 	private String mix;
+	private String searchFlag;
 	
 	private List<DetafileVO> detaFileList;
 
 	private int pageNum;
 	private int amount;
+	
+	private String orderColumn;
+	private String orderBy;
 
 	public BoardVO(){
 		this (1,10);

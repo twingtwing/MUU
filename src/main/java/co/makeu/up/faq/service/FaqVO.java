@@ -11,7 +11,7 @@ public class FaqVO {
 	private String qcontent;
 	private String fstcode;
 	private Date wrdate;
-	private String acontent;	
+	private String acontent;
 	
 	//for user search
 	private String searchttl;
@@ -23,11 +23,15 @@ public class FaqVO {
 	//for search
 	private String start;
 	private String end;
+	private String searchFlag;
 	
 	//for page
 	private int length;
 	private int pageNum;
 	private int amount;
+	
+	private String orderColumn;
+	private String orderBy;
 
 	public FaqVO(){
 		this (1,10);

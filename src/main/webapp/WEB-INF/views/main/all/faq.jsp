@@ -9,7 +9,6 @@
 .card-body {
 	border: none;
 }
-
 .more_link {
 	color: black;
 }
@@ -18,6 +17,11 @@
 	text-decoration: underline;
 	color: red;
 	cursor: pointer;
+}
+
+#searchTest:hover p{
+	color:white;
+	font-weight: bold;
 }
 </style>
 </head>
@@ -239,27 +243,47 @@
 						<!--Tab 내용 끝-->
 					</div>
 				</div>
+				<hr>
 				<div class="col-lg-12">
-					<div class="row">
-						<div class="mt-5 ml-3 mb-3">
-							<input type="text">
-							<button type="button" id="searchTest">검색하기</button>
+					<div class="row justify-content-center">
+						<div class="mt-3 ml-3 mb-3">
+							<div class="blog__details__form pt-0 d-flex justify-content-end m-2">
+								<div class="row">
+								<form onsubmit="return false">
+									<div class="row mr-2">
+										<input id="acontentSearch" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
+											<a id="searchTest" v-on:click="search()" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="height: 50px; width:70px;">
+												<p class="mb-0">검색</p>
+											</a>
+										</div>
+								</form>
+								</div>
+							</div>
 						</div>
-						<div class="col-lg-12">
+						<div v-if="searchFaqMore[0] == '검색없음'">
+							<h2>찾으시는 검색어는 존재하지 않습니다.</h2>
+						</div>
+						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12">
 							<div class="accordion" id="accordionExample">
-								<div class="card">
-									<div class="card-header" id="headingOne">
+								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
+									<div class="card-header text-secondary bg-light" id="headingOne">
 										<h2 class="mb-0">
-											<button id="FaqSelect" class="btn btn-link btn-block text-left text-danger"
+											<button class="btn btn-link btn-block text-left text-secondary"
 												type="button" data-toggle="collapse"
-												data-target="#collapseOne" aria-expanded="true"
-												aria-controls="collapseOne">하나만 존재하면 되는데</button>
+												:data-target="'#collapse_search_'+faq.fno"
+												aria-expanded="false"
+												:aria-controls="'collapse_search_'+faq.fno">카테고리/{{faq.ctgrName}} Q.{{faq.qcontent}}</button>
 										</h2>
 									</div>
-									<div id="collapseOne" class="collapse show"
+									<div :id="'collapse_search_'+faq.fno" class="collapse"
 										aria-labelledby="headingOne" data-parent="#accordionExample">
-										<div class="card-body">여기에 내용이 들어오면 됩니다.</div>
+										<div class="card-body">A .{{faq.acontent}}</div>
 									</div>
+								</div>
+								<div v-if="searchFaq != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="searchFaq.length != 0"
+										v-on:click="searchMore">더보기</div>
 								</div>
 							</div>
 						</div>
@@ -281,17 +305,63 @@
             return {
                faqs: [],
                faqMore : [],
-               originFaq: [],
-               searchFaq:[]
+               searchFaq:[],
+               searchFaqMore:[]
             }
          },
          computed: {
 
          },
          methods: {
+        	search(){
+        	  let search = $('#acontentSearch').val()
+          	  console.log(search);
+      	      $.ajax({
+      	          url: 'faqSelectListSearch',
+      	          type: 'post',
+      	          datatype: 'json',
+       	          data : {"acontent" : search},
+      	          beforeSend: function (xhr) {
+      	             xhr.setRequestHeader(header, token);
+      	          }
+      	      })
+      	      .done(res =>{
+      	    	  if(res !==null){
+      	    		  if(res.length < 6){
+      	    			  this.searchFaqMore = res;
+      	    			  if(this.searchFaqMore[0] == null){
+      	    				let test = ['검색없음']
+      	    				this.searchFaqMore = test
+      	    				console.log(this.searchFaqMore);
+      	    			  }
+      	    			  console.log('test1')
+      	    		  }else{
+      	    			  console.log(res)
+      	    			  for(var j = 0; j < 5; j++){
+      	    				 console.log('test2')
+      	    				this.searchFaqMore.push(res[j]);
+      	    			  }
+      	    			  this.searchFaq = res.splice(5);
+      	    			 console.log('test3')
+      	    		  }
+      	    	  }else{
+      	    		 console.log('test4')
+      	    		  this.searchFaqMore = '없음';
+      	    	  }
+             })
+        	},
             more(num) {
             	this.faqMore[num] = this.faqMore[num].concat(this.faqs[num][0]);
             	this.faqs[num].splice(0,1);
+            },
+            searchMore() {
+            	console.log(this.searchFaq.length )
+            	if(this.searchFaq.length > 5){
+            		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq.splice(0,5));
+            	}else{
+            		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq);
+            		this.searchFaq = null;
+            	}
             }
          },
          beforeCreate: function () {
@@ -305,14 +375,6 @@
 
                })
                .done(result => {
-/*             	  this.originFaq = result;
-            	  for(let i=0; i< 6; i++){
-            		  this.searchFaq[i] = [;]
-            	  }
-            	  for(let Sfaq of originFaq){
-            		  faq.target
-            	  }
-            	   */
             	  for(var i =0; i< 6; i++){
             		  this.faqs[i] = [];
             	  }
@@ -354,28 +416,6 @@
             $('.collapse').collapse('hide');
          }
       });
-      $("#searchTest").click(function(){  
-	      $.ajax({
-	          url: 'faqSelectListSearch',
-	          type: 'post',
-	          datatype: 'json',
- 	          data : {"acontent" : "ㄷㄷ"},
-	          beforeSend: function (xhr) {
-	             xhr.setRequestHeader(header, token);
-	          },
-	          success(res){
-	        	  console.log("성공");
-	        	  console.log(res);
-	        	  console.log(res.length);
-	        	  for(let i=0; i<res.length; i++){
-	        	  	$('#FaqSelect').text(res[i].qcontent);
-	        	  	$('#collapseOne').text(res[i].acontent);
-	              }
-	        	  
-	          }
-	       })
-      })
-
    </script>
 </body>
 

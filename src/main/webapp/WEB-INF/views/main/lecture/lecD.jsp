@@ -114,8 +114,11 @@
                                 <div class="col-lg-8">
                                     <div class="row mx-5">
                                         <div class="col-lg-12">
-                                            <div class="row mt-2 mb-3">
-                                                <h5 class="font-weight-bold">{{lecDetails.creIntro}}</h5>
+                                            <div class="row mt-2 mb-3" style="border-left:4px solid black">
+                                            	<div class="col-lg-12">
+                                            	<h5 class="font-weight-bold my-2">크리에이터 소개</h5>
+                                                <p class="mt-3" v-html="lecDetails.creIntro"></p>
+                                            	</div>
                                             </div>
                                             <div class="row d-flex justify-content-between mb-4">
                                                 <div class="row ml-2">
@@ -151,7 +154,7 @@
                                             <div id="lec_intro" class="row">
                                                 <div class="col-lg-12">
                                                     <h5 class="font-weight-bold my-2">강의소개</h5>
-                                                    <p class="mx-2 mt-3 px-2 py-3" style="border-left:4px solid #dc3545">{{lecDetails.intro}}</p>
+                                                    <p class="mx-2 mt-3 px-2 py-3" style="border-left:4px solid #dc3545" v-html="lecDetails.intro"></p>
                                                     <h6 class="font-weight-bold mb-2 mx-4">&lt; OT영상 &gt;</h6>
                                                     <div v-if="lessonList.length !=0" class="row w-100">
     	                                             	<video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
@@ -232,13 +235,11 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div id="revD" class="row mx-3 my-2 pt-1">
-                                                                            {{myReview.content}}
-                                                                        </div>
+                                                                        <div id="revD" v-html="myReview.content" class="row mx-3 my-2 pt-1"></div>
                                                                         <div id="revU" class="row mx-3 my-2 pt-1 d-none position-rel position-relative">
                                                                         	<h3 class="row text-center position-absolute" style="bottom: -40px; left: 15px;">
 																	        </h3>
-                                                                        	<textarea v-on:change="updateErr" rows="3" cols="100">{{myReview.content}}</textarea>
+                                                                        	<textarea v-on:change="updateErr" rows="3" cols="100">{{testAreaRev}}</textarea>
                                                                         	<p class="w-100 text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                         	<input type="hidden" name="num" :value="myReview.rvNo">
                                                                         </div>
@@ -273,9 +274,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div v-if="review.rvCode == 'RE01'" class="row mx-4 my-2 pt-1">
-                                                                            {{review.content}}
-                                                                        </div>
+                                                                        <div v-if="review.rvCode == 'RE01'" v-html="review.content" class="row mx-4 my-2 pt-1"></div>
                                                                         <div v-if="review.rvCode == 'RE02'" class="row mx-4 my-2 pt-1 justify-content-center">
                                                                         	<p class="text-danger font-weight-bold">관리자에 의해 신고 처리된 리뷰입니다.</p>
                                                                         </div>
@@ -294,10 +293,10 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div id="lec_kit" class="row">
+                                            <div id="lec_kit" v-if="lecDetails.kitName != null" class="row">
                                                 <div class="col-lg-12">
                                                     <h5 class="font-weight-bold my-2">키트 소개</h5>
-                                                    <p class="mx-2">{{lecDetails.kitName}}</p>
+                                                    <p class="font-weight-bold mx-2">[ {{lecDetails.kitName}} ]</p>
                                                     <div class="mx-4 pl-2" style="border-left: 5px solid #070720;">
                                                         <p>{{lecDetails.kitIntro}}</p>
                                                     </div>
@@ -323,7 +322,7 @@
                                                             <!-- 반복 내질문 상단 노출할려고 했는데 생각 보다 값이 많아서 안함-->
                                                             <div class="row mx-0">
                                                                 <div class="col-lg-12">
-                                                                    <div v-for="(qna , index) in qnaList " class="py-1 px-2 mb-5" style="border: 0.15rem solid #afafaf; border-radius: 15px;">
+                                                                    <div v-for="(qna , index) in qnaList" class="py-1 px-2 mb-5" style="border: 0.15rem solid #afafaf; border-radius: 15px;">
                                                                         <div class="qnaBox">
                                                                         	<div class="row col-12 justify-content-between pr-0">
 	                                                                            <p class="font-weight-bold">Q. 
@@ -332,8 +331,8 @@
 	                                                                        	<span v-if="qna.qnaStCode == 'Q01'" class="text-primary mt-1 font-weight-bold">미답변</span>
 	                                                                        	<span v-if="qna.qnaStCode == 'Q02'" class="text-danger mt-1 font-weight-bold">답변완료</span>
                                                                         	</div>
-                                                                            <p class="mx-2 qnaP">{{qna.qContent}}</p>
-                                                                            <textarea v-on:change="updateErr" class="d-none w-100" rows="3">{{qna.qContent}}</textarea>
+                                                                            <p class="mx-2 qnaP" v-html="qna.qContent"></p>
+                                                                            <textarea v-on:change="updateErr" class="d-none w-100" rows="3">{{ textAreaFaQ(index) }}</textarea>
                                                                             <p class="text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                             <div v-if="qna.myQna =='Y'" class="row mx-0 justify-content-end upDiv">
                                                                             	<button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary mr-1 px-2 py-1" v-on:click="qnaUpt(1)" style="bottom: 45px; right: 12px;">수정</button>
@@ -346,7 +345,7 @@
                                                                         </div>
                                                                         <div v-if="qna.qnaStCode == 'Q02'" class="collapse" :id="'collapse_' + index">
                                                                             <p class="font-weight-bold">A. {{lecDetails.name}}</p>
-                                                                            <p class="mx-2">{{qna.aContent}}</p>
+                                                                            <p class="mx-2" v-html="qna.aContent"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div v-if="qnas != null" class="row d-flex justify-content-center">
@@ -377,23 +376,24 @@
                                                             </div>
                                                             <div class="row mt-3">
                                                                 <div class="col-lg-12 px-2">
-                                                                    <div v-if="lecDetails.kitName !=''" class="d-flex justify-content-between">
+                                                                    <div v-if="lecDetails.kitName !=null" class="d-flex justify-content-between">
                                                                         <p>키트가격 :</p>
-                                                                        <p class="mb-2">{{lecDetails.kitPrc}} 원</p>
+                                                                        <p class="mb-2">{{commakitPrc}} 원</p>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between">
                                                                         <p>전체 총 가격 : </p> 
-                                                                        <p class="mb-4 text-right">{{lecDetails.prc + lecDetails.kitPrc}} 원</p>
+                                                                        <p class="mb-4 text-right">{{commaPrc}} 원</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                             	<div class="col-lg-12">
                                                             		<div class="row">
-	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
+	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : id == lecDetails.creId}" v-bind:class="{'disabled' : lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
                                                             		</div>
                                                             		<div class="row justify-content-end mt-1">
 	                                                                	<small v-if="lecDetails.mySugang == 'Y'" class="font-weight-bold text-muted">해당 강의는 이미 수강중입니다.</small>
+	                                                                	<small v-if="id == lecDetails.creId" class="font-weight-bold text-muted">본인의 강의는 수강이 불가능합니다.</small>
                                                             		</div>
                                                             	</div>
                                                             </div>
@@ -546,10 +546,11 @@
     </div>
     <!-- body 의 body 끝 -->
     <!-- body 끝 -->
-    <script>
+    <script>    
         const lecD = Vue.createApp({
             data(){
                 return{
+                	id : '',
                     lecDetails :{},
                     lessonList :[],
                     ctgrList : {},
@@ -563,12 +564,28 @@
                 }
             },
             computed:{
-            	collapseId(no){
-            		console.log(no);
-            		return "collapse_"+ no;
+            	testAreaRev(){
+            		let resultVal = this.myReview.content;
+            		console.log(resultVal)
+            		resultVal = resultVal.replaceAll('<br>','\n');
+            		return resultVal;
             	},
-            	collapseHref(no){
-            		return "collapse_"+ no;
+            	commakitPrc(){
+            		if(this.lecDetails.kitName !== null){
+	            		return String(this.lecDetails.kitPrc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            		}else{
+            			return '';
+            		}
+            	},
+            	commaPrc(){
+            		let val = 0;
+            		if(this.lecDetails.kitName !== null){
+            			val = Number(this.lecDetails.prc) + Number(this.lecDetails.kitPrc);
+            			console.log(val);
+            		}else{
+            			val = Number(this.lecDetails.prc);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             	}
             },
             methods :{
@@ -577,6 +594,66 @@
             		resultVal = resultVal.replace(/\r\n/ig,'<br>');
             		resultVal = resultVal.replace(/\\n/ig,'<br>');
             		resultVal = resultVal.replace(/\n/ig,'<br>');
+            		return resultVal;
+            	},
+            	lecReport(){//강의신고
+                    let content = $('#lecReport textarea').val();
+                    if( content == ''){//빈칸체크
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
+
+                    }else{
+                    	if(this.lecDetails.mySugang == 'N'){//수강신청자 여부
+                    		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
+                    		$('#lecReport').modal('hide');
+                    		$('#lecReport textarea').val('');
+                    		return;
+                    	}
+                    	$('#lecReport textarea').val(this.brChg($('#lecReport textarea').val()));
+                    	$.ajax({
+                            url: '/user/insertLecReport',
+                            data: $('#rptLecFrm').serialize(),
+                            method: 'post',
+                            beforeSend: (xhr) => {
+                              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            },
+                        })
+                        .done((r) => {
+                        	$('#lecReport').modal('hide');
+                    		$('#lecReport textarea').val('');
+                        	alert("해당 강의를 신고하셨습니다.");
+                        })
+                    }
+                },
+                revReport(){//리뷰신고
+                    if($('#revReport textarea').val() != ''){//빈칸체크
+                    	$('#revReport textarea').val(this.brChg($('#revReport textarea').val()));
+                    	$.ajax({
+                    		url : '/user/reportReview',
+                    		data: $('#revRepFrm').serialize(),
+                    		method: 'post',
+                    		beforeSend: (xhr) => {
+                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            }
+                    	})
+                    	.done((r)=>{
+                    		console.log(r);
+                    		if(r){
+								alert("리뷰를 신고하기 전에 로그인하셔야 합니다.");
+								location.href="/customLogin";
+                    		}else{
+	                    		$('#revReport').modal('hide');
+	                    		$('#revReport textarea').val('');
+	                        	alert("해당 리뷰를 신고하셨습니다.");
+                    		}
+                    	})
+
+                    }else{
+                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
+                    }
+                },
+            	textAreaFaQ(index){
+            		let resultVal = this.qnaList[index].qContent;
+            		resultVal = resultVal.replaceAll('<br>','\n');
             		return resultVal;
             	},
             	updateErr(){
@@ -715,7 +792,7 @@
 	            	  	.done(()=>{
 	            	  		alert('해당 리뷰가 수정되었습니다.');
 	            	  		this.avgStar = this.avgStar - this.myReview.star + $('#revU h3 .text-warning').length;
-	            	  		this.myReview.content = $('#revU textarea').val();
+	            	  		this.myReview.content = content;
 	            	  		this.myReview.star = $('#revU h3 .text-warning').length;
 	            	  		$('#revU').addClass('d-none');
 	            			$('#revD').removeClass('d-none');
@@ -865,61 +942,6 @@
                         })
                     }
                 },
-                lecReport(){//강의신고
-                    let content = $('#lecReport textarea').val();
-                    if( content == ''){//빈칸체크
-                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
-
-                    }else{
-                    	if(this.lecDetails.mySugang == 'N'){//수강신청자 여부
-                    		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
-                    		$('#lecReport').modal('hide');
-                    		$('#lecReport textarea').val('');
-                    		return;
-                    	}
-                    	$('#lecReport textarea').val(this.brChg($('#lecReport textarea').val()));
-                    	$.ajax({
-                            url: '/user/insertLecReport',
-                            data: $('#rptLecFrm').serialize(),
-                            method: 'post',
-                            beforeSend: (xhr) => {
-                              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-                            },
-                        })
-                        .done((r) => {
-                        	$('#lecReport').modal('hide');
-                    		$('#lecReport textarea').val('');
-                        	alert("해당 강의를 신고하셨습니다.");
-                        })
-                    }
-                },
-                revReport(){//리뷰신고
-                    if($('#revReport textarea').val() != ''){//빈칸체크
-                    	$('#revReport textarea').val(this.brChg($('#revReport textarea').val()));
-                    	$.ajax({
-                    		url : '/user/reportReview',
-                    		data: $('#revRepFrm').serialize(),
-                    		method: 'post',
-                    		beforeSend: (xhr) => {
-                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-                            }
-                    	})
-                    	.done((r)=>{
-                    		console.log(r);
-                    		if(r){
-								alert("리뷰를 신고하기 전에 로그인하셔야 합니다.");
-								location.href="/customLogin";
-                    		}else{
-	                    		$('#revReport').modal('hide');
-	                    		$('#revReport textarea').val('');
-	                        	alert("해당 리뷰를 신고하셨습니다.");
-                    		}
-                    	})
-
-                    }else{
-                    	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
-                    }
-                },
                 revCopy(){//모달창에 신고대상 리뷰 복사
                     $('.report_object').html($($(event.target).closest('div.col-lg-12').find('.revCopy')).html());
                 },
@@ -965,6 +987,7 @@
                 fetch('/lectureDetail?ltNo='+'${ltNo}')
                 .then(response => response.json())
                 .then(result => {
+                	this.id = result.id;
                 	this.lecDetails = result.lectureDetail;
                 	this.lessonList = result.lessonList;
                 	

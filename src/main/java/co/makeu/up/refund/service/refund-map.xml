@@ -83,12 +83,17 @@
 		and r.content = #{content}
 		</if>
 		<if test="start != null and start !=''">
-        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < r.req_Date ]]>
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < TRUNC(r.req_Date) ]]>
         </if>
         <if test="end != null and end !=''" >
-            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > r.req_Date ]]>
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > TRUNC(r.req_Date)]]>
         </if>
-		ORDER BY R.TLSN_NO DESC)
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+	    	ORDER BY ${orderColumn} ${orderBy}
+		</if>
+	    <if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY R.TLSN_NO DESC
+		</if>)
 		<![CDATA[
 	    where rn > (#{pageNum}-1) * #{amount} 
 	    and rn <= #{pageNum} * #{amount}
@@ -124,7 +129,7 @@
 		ON L.LT_NO = S.LT_NO
         JOIN USERS U
         ON U.ID = S.ID
-        where 1=1
+         where 1=1
 		<if test="name != null and name != ''">
 		and u.name like '%' || #{name}  || '%'
 		</if>
@@ -141,12 +146,17 @@
 		and r.content = #{content}
 		</if>
 		<if test="start != null and start !=''">
-        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < r.req_Date ]]>
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') < TRUNC(r.req_Date) ]]>
         </if>
         <if test="end != null and end !=''" >
-            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > r.req_Date ]]>
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  > TRUNC(r.req_Date)]]>
         </if>
-		ORDER BY R.TLSN_NO DESC)
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+	    	ORDER BY ${orderColumn} ${orderBy}
+		</if>
+	    <if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY R.TLSN_NO DESC
+		</if>)
 		<![CDATA[
 		where 1=1
 	    ]]>

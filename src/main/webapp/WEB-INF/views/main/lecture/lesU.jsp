@@ -50,11 +50,12 @@
             background-color:rgb(255, 193, 193);
         }
 
-        .deleteBox {
+        .deleteBox, .deleteBoxa {
             float:right;
             display:none;
             cursor:pointer;
         }
+        
 
         .modal {
             text-align: center;
@@ -169,20 +170,23 @@
                         
                         <!-- 수업 드래그 앤 드롭  -->
                         <div class="" id="itemBoxWrap">
-                  <!--기존 수업 값 들고오기-->
+						<!--기존 수업 값 들고오기-->
                         <c:forEach items="${lesinfo }" var="list" varStatus="status">
-                        <div class="itemBox" onclick="videoInsert()">
-                           <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
-                           <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
-                           <span id="inputVideo"></span>
-                        </div>
+							<div class="itemBox"">
+					            <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
+					            <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
+					            <span id="inputVideo"></span>
+					            <input class="itemlsnFile" type="hidden" value="${list.lsnFile }">
+					            <span class='deleteBoxa' style="display:none;">[삭제]</span>
+				            </div>
                         </c:forEach>
                         </div>
                         
                     </div>
                     <div class="row col-12 justify-content-between">
-                       <button type="button" class="btn btn-danger mt-3" onclick="history.back();">뒤로가기</button>
+	                    <button type="button" class="btn btn-danger mt-3" onclick="history.back();">뒤로가기</button>
                         <button class="btn btn-danger mt-3" onclick="lessonUpdate()">수정</button>
+                        <button type="button" onclick="test()">asdf</button>
                     </div>
                 </div>
                 
@@ -263,6 +267,17 @@
         // 번호 재정렬
         reorder();
     }
+    
+    $(".deleteBoxa").on('click', function(){
+    	$(this).parent().remove();
+        reorder();
+    })
+    $(".itemBox").hover(function(){
+    	$(this).find('.deleteBoxa').show();
+    }, function(){
+    	$(this).find('.deleteBoxa').hide();
+    }
+    )
 
     
     
@@ -276,30 +291,49 @@
            alert('이전 수업추가를 완료해주세요');
           return false;
         } else {
-           var contents 
-              = "<div class='itemBox'>"
-               + "<span class='itemNum'></span> "
-               + "&nbsp&nbsp&nbsp"
-               + "<span class='itemClassName'><input type='text' maxlength='100' class='classTtl' style='width:300px;'></span>"
-               + "&nbsp&nbsp&nbsp"
-               + "<input type='file' class='classUp' accept='video/*'>"
-               + "</div>";
-           return contents;
+    	    var contents 
+    	    	= "<div class='itemBox'>"
+    	        + "<span class='itemNum'></span> "
+    	        + "&nbsp&nbsp&nbsp"
+    	        + "<span class='itemClassName'><input type='text' maxlength='100' class='classTtl' style='width:300px;'></span>"
+    	        + "&nbsp&nbsp&nbsp"
+    	        + "<input type='file' class='classUp' accept='video/*'>"
+    	        + "</div>";
+    	    return contents;
         }
     }
     
     function videoInsert(){
-       $('#videoIn').click();
-       console.log($('#videoIn')[0].files[0]);
-       console.log($('#videoIn')[0].files[1]);
+    	$('#videoIn').click();
+    	console.log($('#videoIn')[0].files[0]);
+    	console.log($('#videoIn')[0].files[1]);
     }
     
     //시큐리티 토큰
-   let header = "${_csrf.headerName}";
-   let token = "${_csrf.token}";
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
     
-    
-    
+		
+	function test(){
+		
+		//console.log($('.itemBox').length);
+		for(var i = 0; i<$('.itemBox').length; i++){
+			
+			//console.log($('.itemNum').eq(i).text());
+			//console.log($('.classTtl').eq(i).val());
+			console.log($('.itemBox')[i].children.length);
+			if($('.itemBox')[i].children.length == 5 ){
+				console.log($('.itemlsnFile').eq(i).val());
+			} else if ($('.itemBox')[i].children.length == 4) {
+				console.log($($('.itemBox')[i]).find('.classUp')[0]);
+			}
+		}
+		
+		
+		
+	}
+	
+
     
                             
               

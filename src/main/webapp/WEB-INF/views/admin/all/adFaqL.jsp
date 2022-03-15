@@ -29,6 +29,11 @@
         #ho:hover{
         background-color:#f5f5f5;
         }
+        
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
     </style>
 </head>
 <body>
@@ -64,26 +69,26 @@
 	                                        <tr height="38">
 	                                            <th width="15%" class="align-middle">질문</th>
 	                                            <td width="35%" class="align-middle">
-	                                                <input class="w-100" type="text" name="qcontent" spellcheck="false" value="${search.qcontent }">
+	                                                <input id="serachInput" class="w-100" type="text" name="qcontent" spellcheck="false" value="${search.qcontent }">
 	                                            </td>
 	                                            <th class="align-middle">카테고리</th>
 	                                            <td>
 	                                                <div>
-	                                                    <select name="ctgr" class="text-center w-100">
-	                                                        <option value="" selected
-	                                                        <c:if test="${search.ctgr eq ''}">checked="checked"</c:if> 
+	                                                    <select id="ctgrBox" name="ctgr" class="text-center w-100">
+	                                                        <option value="" 
+	                                                        <c:if test="${search.ctgr eq ''}">selected="selected"</c:if> 
 	                                                        >전체</option>
-	                                                        <option value="CQ01"<c:if test="${search.ctgr eq 'CQ01'}">checked="checked"</c:if> 
+	                                                        <option value="CQ01"<c:if test="${search.ctgr eq 'CQ01'}">selected="selected"</c:if> 
 	                                                        >결제</option>
-	                                                        <option value="CQ02"<c:if test="${search.ctgr eq 'CQ02'}">checked="checked"</c:if> 
+	                                                        <option value="CQ02"<c:if test="${search.ctgr eq 'CQ02'}">selected="selected"</c:if> 
 	                                                        >배송</option>
-	                                                        <option value="CQ03"<c:if test="${search.ctgr eq 'CQ03'}">checked="checked"</c:if> 
+	                                                        <option value="CQ03"<c:if test="${search.ctgr eq 'CQ03'}">selected="selected"</c:if> 
 	                                                        >강의</option>
-	                                                        <option value="CQ04"<c:if test="${search.ctgr eq 'CQ04'}">checked="checked"</c:if> 
+	                                                        <option value="CQ04"<c:if test="${search.ctgr eq 'CQ04'}">selected="selected"</c:if> 
 	                                                        >회원정보/보안</option>
-	                                                        <option value="CQ05"<c:if test="${search.ctgr eq 'CQ05'}">checked="checked"</c:if> 
+	                                                        <option value="CQ05"<c:if test="${search.ctgr eq 'CQ05'}">selected="selected"</c:if> 
 	                                                        >오류</option>
-	                                                        <option value="CQ06"<c:if test="${search.ctgr eq 'CQ06'}">checked="checked"</c:if> 
+	                                                        <option value="CQ06"<c:if test="${search.ctgr eq 'CQ06'}">selected="selected"</c:if> 
 	                                                        >환불</option>
 	                                                    </select>
 	                                                </div>
@@ -93,27 +98,44 @@
 	                                            <th class="align-middle">작성일</th>
 	                                            <td colspan="3">
 	                                                <div class="row ml-1">
-	                                                    <div><input name="start" type="date" value="${search.start }"></div>
+	                                                    <div><input id="start" name="start" type="date" value="${search.start }"></div>
 	                                                    <div class="ml-3 mr-3"><i class="fa fa-minus"></i></div>
-	                                                    <div><input name="end" type="date" value="${search.end }"></div>
+	                                                    <div><input id="end" name="end" type="date" value="${search.end }"></div>
+														<button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
 	                                                </div>
 	                                            </td>
 	                                            
 	                                        </tr>
 	                                    </table>
-	                                    <button type="submit" class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
+	                                    <button id="serachBtn" type="button" class="btn btn-secondary position-absolute" style="width: 75px; height: 33px; right: 5px; bottom: 19px;">검색</button>
                                 	</div>
+                                	<input type="hidden" name="searchFlag" id="searchFlag" value="${search.searchFlag }">
+	                                <input type="hidden" name="orderColumn" value="${search.orderColumn }">
+									<input type="hidden" name="orderBy" value="${search.orderBy }">
+	                                <input type = 'hidden' name = 'pageNum' value = '${pageMaker.fvo.pageNum }'>
+			                        <input type = 'hidden' name = 'amount' value = '${pageMaker.fvo.amount }'>
                                 </form>
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="row">
                                             <table id="faq_Table" class="table table-bordered">
                                                 <tr style="background-color: #eeeeee;">
-                                                    <th>번호</th>
-                                                    <th>카테고리</th>
-                                                    <th class="w-50">질문</th>
-                                                    <th>작성자</th>
-                                                    <th>작성일</th>
+                                                    <th data-col="f_no">
+	                                                    번호
+	                                            		<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'f_no' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                    </th>
+                                                    <th data-col="ctgr">
+                                                    	카테고리
+	                                            		<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'ctgr' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                    </th>
+                                                    <th data-col="q_content" class="w-50">
+                                                    	질문
+                                                    	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'q_content' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                    </th>
+                                                    <th data-col="wr_date">
+                                                    	작성일
+                                                    	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'wr_date' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                    </th>
                                                 </tr>
                                                 <c:if test="${empty list }">
                                                 	<tr>
@@ -126,7 +148,6 @@
 		                                                    <td class="fno">${faq.fno}</td>
 		                                                    <td class="ctgr" data-code="${faq.ctgr}">${faq.ctgrName}</td>
 		                                                    <td class="faq_chg qcontent">${faq.qcontent}</td>
-		                                                    <td>관리자</td>
 		                                                    <td class="wrdate"><fmt:formatDate value="${faq.wrdate}" pattern="yyyy-MM-dd"/></td>
 		                                                	<td class="d-none acontent">${faq.acontent}</td>
 		                                                </tr>
@@ -154,10 +175,6 @@
 		                                        	</c:if>
 		                                        </ul>
 		                                    </div>
-		                                    <form id='actionFrom' method = 'get' action = '/admin/adFaqL'>
-			                                    <input type = 'hidden' name = 'pageNum' value = '${pageMaker.fvo.pageNum }'>
-			                                    <input type = 'hidden' name = 'amount' value = '${pageMaker.fvo.amount }'>
-		                                    </form>
 		                                    <div class="position-absolute" style="right: 1px;">
 		                                        <button id="faqInsert" class="btn btn-dark">글 등록</button>
 		                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
@@ -350,8 +367,46 @@
 
                 <!-- 바디 끝 -->
 	<script type="text/javascript">
+	//검색 초기화
+	$('#resetAll').click(()=>{
+		$('#searchFlag').val('');
+		$('#serachInput').val('');
+		$('#ctgrBox').val('');
+		$('#start').val(null);	
+		$('#end').val(null);
+	})
+	
+	$('.fa-caret-down').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('asc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#searchForm').submit();
+	})
+	
+	$('.fa-rotate-180').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#searchForm>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#searchForm>input[name=orderBy]').val('desc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#searchForm').submit();
+	})	
+
+	$('#serachBtn').click((e)=>{
+		e.preventDefault();
+		
+		$('#searchFlag').val('Y');
+		$('#searchForm').find("input[name='pageNum']").val(1);
+		$('#searchForm').submit();
+	})	
+	
 	$('#excel').click(()=>{
-		/* makeSearchData(1); */
 		$('#searchForm').attr('action','/admin/adminFaqExcel');
 		$('#searchForm').submit();
 		$('#searchForm').attr('action','/admin/adFaqL');
@@ -527,9 +582,12 @@
 		
 		$(".paginate_button a").on("click" , function(e) {
 			e.preventDefault();
-			console.log('click');
-			$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
-			$('#actionFrom').submit();
+			if($('#searchFlag').val() !== 'Y'){
+				$('#resetAll').click();
+			}
+			
+			$('#searchForm').find("input[name='pageNum']").val($(this).attr("href"));
+			$('#searchForm').submit();
 		});
 	</script>
 </body>

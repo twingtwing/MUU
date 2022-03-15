@@ -41,6 +41,10 @@ background-color:#f5f5f5;
             text-align: left;
         }
 
+        .fa-caret-down{
+        	cursor: pointer;
+        	float: right;
+        }
     </style>
 </head>
 <body>
@@ -76,19 +80,19 @@ background-color:#f5f5f5;
                                         <tr height="38">
                                             <th width = "15%">신고자 ID</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text" value="${search.reporter }" name = "reporter" spellcheck="false" ondblclick="this.checked=false"> 
+                                                <input id="reporter" class="w-100" type="text" value="${search.reporter }" name = "reporter" spellcheck="false" ondblclick="this.checked=false"> 
                                             </td>
                                             
                                             <th width = "15%">크리에이터</th>
                                             <td width = "35%">
-                                                <input class="w-100" type="text" value ="${search.creid }"  name="creid" spellcheck="false" ondblclick="this.checked=false">
+                                                <input id="creid" class="w-100" type="text" value ="${search.creid }"  name="creid" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             
                                         </tr>
                                         <tr height="38">
                                             <th>강의명</th>
                                             <td>
-                                                <input name="ttl" value = "${search.ttl }" class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
+                                                <input id="ttl" name="ttl" value = "${search.ttl }" class="w-100" type="text" spellcheck="false" ondblclick="this.checked=false">
                                             </td>
                                             <th>신고유형</th>
                                             <td>
@@ -104,41 +108,72 @@ background-color:#f5f5f5;
                                         <tr height="38">
                                             <th>신고날짜</th>
                                             <td class="text-left">
-                                                <input class="w-30" value="${search.start }" type="date" spellcheck="false" id="haq" name="start" ondblclick="this.checked=false" >
+                                                <input id="start" class="w-30" value="${search.start }" type="date" spellcheck="false" id="haq" name="start" ondblclick="this.checked=false" >
                                                 <i class="fas fa-minus mx-1"></i>
-                                                <input class="w-30" type="date" spellcheck="false" id="haq1" value="${search.end }" name="end" ondblclick="this.checked=false">
+                                                <input id="end" class="w-30" type="date" spellcheck="false" id="haq1" value="${search.end }" name="end" ondblclick="this.checked=false">
                                             </td>
-                                            <th>처리상태</th>
+                                            <th>신고상태</th>
                                             <td class="text-left">
-                                                <input type="radio" class="ml-2" name=rpStCode id="t" spellcheck="false" ondblclick="this.checked=false" value="RPS02"
+                                            	<input type="radio" id="rpsAll" class="ml-2" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value=""
+                                                <c:if test ="${search.rpStCode eq ''}">checked="checked" </c:if>>
+                                                <label for="rpsAll" class="mr-3 mb-0" >전체</label>
+                                                <input type="radio" id="rps02" class="ml-2" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS02"
                                                 <c:if test ="${search.rpStCode eq 'RPS02'}">checked="checked" </c:if>>
-                                                <label for="t" class="mr-3 mb-0" >처리</label>
-                                                <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS01"
+                                                <label for="rps02" class="mr-3 mb-0" >처리</label>
+                                                <input type="radio" id="rps01" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS01"
                                                 <c:if test ="${search.rpStCode eq 'RPS01'}">checked="checked" </c:if>>
-                                                <label for="r" class="mb-0">미처리</label>
-                                                 <input type="radio" name="rpStCode" id="r" spellcheck="false" ondblclick="this.checked=false" value="RPS03"
+                                                <label for="rps01" class="mb-0">미처리</label>
+                                                 <input type="radio" id="rps03" name="rpStCode" spellcheck="false" ondblclick="this.checked=false" value="RPS03"
                                                  <c:if test ="${search.rpStCode eq 'RPS03'}">checked="checked" </c:if>>
-                                                <label for="r" class="mb-0">반려</label>
+                                                <label for="rps03" class="mb-0">반려</label>
+                                                <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
                                             </td>
                                         </tr>
                                     </table>
-                                    <button class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;">검색</button>
+                                    <button id="serachBtn" class="btn btn-secondary position-absolute" style="width: 70px; height: 33px; right: 5px; bottom: 19px;">검색</button>
                                 </div>
+                                <input type="hidden" name="searchFlag" id="searchFlag" value="${search.searchFlag }">
+	                            <input type="hidden" name="orderColumn" value="${search.orderColumn }">
+								<input type="hidden" name="orderBy" value="${search.orderBy}">
+	                            <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vot.pageNum }'>
+	                            <input type = 'hidden' name = 'amount' value = '${pageMaker.vot.amount }'>
                                 </form>
                                 <div class="row">
                                     <table class="table table-bordered">
                                         <thead>
-
                                             <tr style="background-color: #eeeeee;">
-                                                <th style="width: 100px;">번호</th>
-                                                <th style="width: 150px;">신고유형</th>
-                                                <th style="width: 130px;">크리에이터</th>
-                                                <th >강의명</th>
-                                                <th style="width: 130px;">신고자</th>
-                                                <th style="width: 120px;">신고날짜</th>
-                                                <th style="width: 100px;">신고상태</th>
-                                                 <th style="width: 100px;">강의상태</th>
-                                                
+                                                <th data-col="rp_no" style="width: 100px;">
+                                                	번호
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'rp_no' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="type" style="width: 150px;">
+                                                	신고유형
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'type' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="cre_id" style="width: 130px;">
+                                                	크리에이터
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'cre_id' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="ttl" >
+                                                	강의명
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'ttl' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="reporter" style="width: 130px;">
+                                                	신고자
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'reporter' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="rp_date" style="width: 120px;">
+                                                	신고날짜
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'rp_date' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="rp_st_code" style="width: 100px;">
+                                                	신고상태
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'rp_st_code' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
+                                                <th data-col="lt_st_code" style="width: 100px;">
+                                                	강의상태
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'lt_st_code' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                </th>
                                             </tr>
                                         </thead>
                                     <tbody id="mo" onmouseover = "setCursor(this,'pointer')">
@@ -146,7 +181,7 @@ background-color:#f5f5f5;
                                         <tr id="mod" onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
                                             <td>${list.rpNo }</td>
                                             <td>
-                                                   <c:if test="${list.type eq 'RPT01' }">
+                                                <c:if test="${list.type eq 'RPT01' }">
                                                 부적절한 컨텐츠
                                                 </c:if>
                                                 <c:if test="${list.type eq 'RPT02' }">
@@ -161,7 +196,7 @@ background-color:#f5f5f5;
                                             <td>${list.rpdate }</td>
                                             <c:if test = "${list.rpStCode eq 'RPS01' }">
 	                                        	<td>미처리</td>
-	                                            <td><i class="fas fa-minus"></i></td>
+	                                            <td><i class="fas fa-minus mr-0"></i></td>
 	                                        </c:if>
 	                                        <c:if test="${list.rpStCode eq 'RPS02' }">
 	                                        	<td>처리</td>
@@ -208,10 +243,6 @@ background-color:#f5f5f5;
                                         	</c:if>
                                         </ul>
                                     </div>
-                                    <form id='actionFrom' method = 'get' action = '/admin/adRRepL'>
-	                                    <input type = 'hidden' name = 'pageNum' value = '${pageMaker.vot.pageNum }'>
-	                                    <input type = 'hidden' name = 'amount' value = '${pageMaker.vot.amount }'>
-                                    </form>
                                     <div class="position-absolute" style="right: 1px;">
                                         <button id="excel" class="btn btn-success">EXCEL다운</button>
                                     </div>
@@ -226,22 +257,65 @@ background-color:#f5f5f5;
 </body>
 
 <script type="text/javascript">
-$(".paginate_button a").on("click" , function(e) {
-	e.preventDefault();
-	console.log('click');
+	$('#resetAll').click(()=>{
+		$('#searchFlag').val('');
+		$('#reporter').val('');
+		$('#creid').val('');
+		$('#ttl').val('');
+		$('#ct').val('');
+		$('#start').val(null);	
+		$('#end').val(null);
+		$('#rpsAll').prop('checked','checked');
+	})
 	
-	$('#actionFrom').find("input[name='pageNum']").val($(this).attr("href"));
-	$('#actionFrom').submit();
-});
-
-function setCursor(str,str2){
-    str.style.cursor = str2;
-}
-$('#excel').on('click',()=>{
-	console.log('hi')
-	$('#ser').attr('action','/admin/reportcl');
-	$('#ser').submit();
-    $('#ser').attr('action','/admin/adLRepL');
-})
+	$(".paginate_button a").on("click" , function(e) {
+		e.preventDefault();
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		
+		$('#ser').find("input[name='pageNum']").val($(this).attr("href"));
+		$('#ser').submit();
+	});
+	
+	$('.fa-caret-down').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#ser>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#ser>input[name=orderBy]').val('asc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#ser').submit();
+	})
+	
+	$('.fa-rotate-180').click((e)=>{
+		$(e.currentTarget).toggleClass('fa-rotate-180')
+		$('#ser>input[name=orderColumn]').val(e.currentTarget.parentElement.dataset.col)
+		$('#ser>input[name=orderBy]').val('desc');
+		
+		if($('#searchFlag').val() !== 'Y'){
+			$('#resetAll').click();
+		}
+		$('#ser').submit();
+	})		
+	
+	$('#serachBtn').click((e)=>{
+		e.preventDefault();
+		
+		$('#searchFlag').val('Y');
+		$('#ser').find("input[name='pageNum']").val(1);
+		$('#ser').submit();
+	})	
+	
+	function setCursor(str,str2){
+	    str.style.cursor = str2;
+	}
+	$('#excel').on('click',()=>{
+		console.log('hi')
+		$('#ser').attr('action','/admin/reportcl');
+		$('#ser').submit();
+	    $('#ser').attr('action','/admin/adLRepL');
+	})
 </script>
 </html>
