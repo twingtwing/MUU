@@ -104,7 +104,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <span>수업 수정</span>
                     </div>
                 </div>
@@ -170,23 +170,23 @@
                         
                         <!-- 수업 드래그 앤 드롭  -->
                         <div class="" id="itemBoxWrap">
-						<!--기존 수업 값 들고오기-->
-                        <c:forEach items="${lesinfo }" var="list" varStatus="status">
-							<div class="itemBox"">
-					            <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
-					            <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
-					            <span id="inputVideo"></span>
-					            <input class="itemlsnFile" type="hidden" value="${list.lsnFile }">
-					            <span class='deleteBoxa' style="display:none;">[삭제]</span>
-				            </div>
-                        </c:forEach>
+							<!--기존 수업 값 들고오기-->
+	                        <c:forEach items="${lesinfo }" var="list" varStatus="status">
+								<div class="itemBox" data-no="${list.ltNo }">
+						            <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
+						            <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
+						            <span id="inputVideo"></span>
+						            <input class="itemlsnFile" type="hidden" value="${list.lsnFile }">
+						            <span class='deleteBoxa' style="display:none;">[삭제]</span>
+					            </div>
+	                        </c:forEach>
                         </div>
+                        <div id="deleteBox" style="display: none;"></div>
                         
                     </div>
                     <div class="row col-12 justify-content-between">
 	                    <button type="button" class="btn btn-danger mt-3" onclick="history.back();">뒤로가기</button>
-                        <button class="btn btn-danger mt-3" onclick="lessonUpdate()">수정</button>
-                        <button type="button" onclick="test()">asdf</button>
+                        <button id="lesUpdate" class="btn btn-danger mt-3">수정</button>
                     </div>
                 </div>
                 
@@ -213,6 +213,69 @@
         $(this).find('.list-link').css('color','#000000');
         $(this).find('.list-link.active').css('color','#e53637');
     })
+    
+        
+    //시큐리티 토큰
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	
+     $('#lesUpdate').click(()=>{
+    	 //수강이 없을경우 
+	    	 const les = $('#itemBoxWrap .itemBox');
+	    	 if(les.length ==0){
+	    		 alert('OT영상은 필수로 등록하여야합니다');
+	    		 return;
+	    	 }
+	    	 
+	    	 let form = new FormData();
+	    	 form.append('ltNo',$(les[0]).attr('data-no'));
+	    	 
+	    	 for(var obj of les){
+	    	 	//제목/영상을 입력안했을 경우
+	    		if($(obj).find('.classTtl').val() == ''){
+	    			 alert('수업제목을 입력해주세요.');
+	    			 $(obj).find('.classTtl').focus();
+	    			 return;
+	    		}else{
+		    		form.append("lsnNos", $(obj).find('.itemNum').text());
+		    		form.append("ttls", $(obj).find('.classTtl').val());
+		    		if($(obj).find('.classUp').length > 0){
+		    			if(!$(obj).find('.classUp')[0].value){
+		    				alert('영상을 꼭 첨부해주셔야 합니다.');
+		    				return;
+		    			}else{
+		    				form.append("lsnFile", $(obj).find('.classUp')[0].files[0]);
+		    				form.append("oriFiles", 'N');
+		    			}
+		    		}else{
+		    			form.append("oriFiles", $(obj).find('.itemlsnFile').val());
+		    		}
+	    		}
+	    	 }
+	    	 
+	    	 let del = $('#deleteBox div');
+	    	 for (var obj of del) {
+	    	 	 form.append("delFiles", $(obj).find('.itemlsnFile').val());
+			}
+
+	    	 $.ajax({
+	          url : "/creator/lessonUpdate",
+	          method : "post",
+	          dataType : "",
+	          processData : false,
+	            contentType : false,
+	            beforeSend: function(xhr) {
+	                xhr.setRequestHeader(header, token);
+	             },
+	          data : form,
+	          success : function(){
+	             alert('수업이 수정되었습니다');
+	             history.go(-1);
+	          }
+	          
+       		}) 
+     	
+    });
 
     //여기서 부터 수업등록 / 드래그 앤 드롭
     $(function() {  
@@ -269,9 +332,11 @@
     }
     
     $(".deleteBoxa").on('click', function(){
+    	$('#deleteBox').append($('<div>').html($(this).parent().html()));
     	$(this).parent().remove();
         reorder();
     })
+    
     $(".itemBox").hover(function(){
     	$(this).find('.deleteBoxa').show();
     }, function(){
@@ -308,78 +373,7 @@
     	console.log($('#videoIn')[0].files[0]);
     	console.log($('#videoIn')[0].files[1]);
     }
-    
-    //시큐리티 토큰
-	let header = "${_csrf.headerName}";
-	let token = "${_csrf.token}";
-    
-		
-	function test(){
-		for(var i = 0; i<$('.itemBox').length; i++){
-			console.log(${ltNo});
-			
-		}
-		
-		//console.log($('.itemBox').length);
-		
-		
-		
-		
-	}
-	
-	//수업수정
-	/* function lessonUpdate(){
-		let form = new formData();
-		
-		if(hasClass("classUp")){
-			for(var i = 0; i<$('.classUp').length; i++){
-				form.append("lsnNo", $('.itemNum').eq(i).text());
-				form.append("ttl", $('.classTtl').eq(i).val());
-				if($('.classUp')[i].files[0]
-				form.append("lsnFile", $('.classUp')[i].files[0]);
-			}
-		}
-		
-		for(var i = 0; i<$('.itemBox').length; i++){
-			form.append("ltNo", ${ltNo});
-			form.append("lsnNo", $('.itemNum').eq(i).text());
-			form.append("ttl", $('.classTtl').eq(i).val());
-			
-			if($('.itemBox')[i].children.length == 5 ){
-				
-				console.log($('.itemlsnFile').eq(i).val());
-			} else if ($('.itemBox')[i].children.length == 4) {
-				console.log($($('.itemBox')[i]).find('.classUp')[0]);
-			}
-		}
-		
-		
-    	let list = {"ltNo":, "lsnNo":, "ttl":, "lsnFile":}
-    	
-    	$.ajax({
-    		url : "/creator/lessonUpdate",
-    		method : "post",
-    		dataType : "",
-    		processData : false,
-            contentType : false,
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-             },
-    		data : {
-    			
-    		},
-    		success : function(){
-    			alert('수업이 수정되었습니다');
-    			history.go(-1);
-    		}
-    		
-    		
-    	})
-    } */
-	
-
-    
-                            
+                         
               
 </script>
 </html>
