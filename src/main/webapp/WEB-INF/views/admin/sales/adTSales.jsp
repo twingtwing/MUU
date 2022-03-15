@@ -80,7 +80,6 @@
                         </tr>
                       </table>
                       <div class="row justify-content-end mt-3 w-100">
-                        <button class="btn btn-danger mr-2">PDF다운</button>
                         <a href="/admin/yearExcel" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>
@@ -146,7 +145,6 @@
                         </tr>
                       </table>
                       <div class="row justify-content-end mt-3 w-100">
-                        <button class="btn btn-danger mr-2">PDF다운</button>
                         <a id="monthExcel" href="/admin/monthExcel?month=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>
@@ -259,7 +257,6 @@
                       </table>
                       <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
-                        <button class="btn btn-danger mr-2">PDF다운</button>
                         <a href="/admin/yearCtgrExcel" class="btn btn-success mr-1">EXCEL다운</a>
                       </div>
                     </div>
@@ -383,7 +380,6 @@
                       </table>
                       <p class="text-right mt-1 mr-1 font-weight-bold text-muted">단위 : 만 원</p>
                       <div class="row justify-content-end mt-3 w-100">
-                        <button class="btn btn-danger mr-2">PDF다운</button>
                         <a id="monthCtgrExcel" href="/admin/monthCtgrExcel?month=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                       </div>
                     </div>

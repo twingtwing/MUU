@@ -112,7 +112,6 @@
 	                	<input type = 'hidden' name = 'amountYear' value = '${page.salesVo.amountYear }'>
                     </form>
                     <div class="position-absolute" style="right: 1px;">
-                      <button class="btn btn-danger">PDF다운</button>
                       <button id="yearExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
                     
@@ -198,7 +197,6 @@
 	                	<input type = 'hidden' name = 'amountMonth' value = '${page.salesVo.amountMonth }'>
                     </form>
                     <div class="position-absolute" style="right: 1px;">
-                      <button class="btn btn-danger">PDF다운</button>
                       <button id="monthExcel" class="btn btn-success">EXCEL다운</button>
                     </div>
                     

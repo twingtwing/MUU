@@ -261,7 +261,6 @@ table tr, table td {
 							<input type='hidden' name='amount' value='${pageMaker.rvo.amount }'>
 						</form>
 						<div class="position-absolute" style="right: 10px; bottom: 35px">
-							<button class="btn btn-danger">PDF다운</button>
 							<button class="btn btn-success" id="excel">EXCEL다운</button>
 						</div>
 					</div>

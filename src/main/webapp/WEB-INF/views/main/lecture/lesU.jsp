@@ -35,7 +35,7 @@
 
         .itemBox {
             border:solid 1px rgb(200, 200, 200);
-            width:600px;
+            width:770px;
             height:50px;
             padding:10px;
             margin-bottom:10px;
@@ -82,6 +82,7 @@
 </head>
 <body>
 <!-- 배너 시작-->
+!!!이거 복붙 해온거라 충돌나면 제거 지우면 됩니다 !!!
     <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
@@ -163,70 +164,35 @@
 
                     <div class="col-12" style="height:auto;">
                         <div class="text-right mb-3">
-                            <button class="btn btn-outline-secondary" id="addItem" data-toggle="modal" data-target="#insertClass">수업추가</button>
+                            <button class="btn btn-outline-secondary" onclick="createItem()">수업추가</button>
                         </div>
                         
                         <!-- 수업 드래그 앤 드롭  -->
                         <div class="" id="itemBoxWrap">
+                  <!--기존 수업 값 들고오기-->
                         <c:forEach items="${lesinfo }" var="list" varStatus="status">
-						<!--기존 수업 값 들고오기-->
-							<div class="itemBox" onclick="videoInsert()">
-					            <div style="float:left;">
-						            <span class="itemNum">${list.lsnNo }</span>
-						            <span><input class="itemClassName" type="text" value="${list.ttl }"></span>
-						            <span id="inputVideo"></span>
-					            </div>
-				            </div>
+                        <div class="itemBox" onclick="videoInsert()">
+                           <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
+                           <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
+                           <span id="inputVideo"></span>
+                        </div>
                         </c:forEach>
                         </div>
                         
                     </div>
-                    <div class="row col-12 justify-content-center">
-                        <button class="btn btn-danger mt-3">수정</button>
+                    <div class="row col-12 justify-content-between">
+                       <button type="button" class="btn btn-danger mt-3" onclick="history.back();">뒤로가기</button>
+                        <button class="btn btn-danger mt-3" onclick="lessonUpdate()">수정</button>
                     </div>
                 </div>
-
-<!--영상 정보 담을 공간 / 보낼 곳 필요-->
-                <!--수업 추가 모달-->
-                <div class="modal fade" id="insertClass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <input type="text" size="50" id="className" placeholder="강의제목을 입력하세요.">
-                            </div>
-                            <div class="modal-body">
-                                <div class="row ml-3">
-                                    <div class="col-8" style="border:1px solid rgb(255, 224, 224); height:168px;">
-                                        <div class="text-center" id="previewClass" style="padding-top:70px;">
-                                            미리보기 화면입니다.
-                                        </div>
-                                    </div>
-                                    <div class="col-4 align-self-center">
-                                        <button class="btn btn-danger" style="font-size:small;" onclick="">영상 업로드</button>
-                                    </div>
-                                    <div style="display:none">
-                                        (영상 정보 담을 곳)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="row col-12 justify-content-center mt-2 mb-2">
-                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="createItem();">수업추가</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
                 
 
             </div>
         </div>
     </section>
-	<div id="newvideoIn" style="display:none;">
-		<input type="file" class="videoIn" accept="video/*">
-	</div>
+   <div id="newvideoIn" style="display:none;">
+      <input type="file" class="videoIn" accept="video/*">
+   </div>
 <!-- Js Plugins -->
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </body>
@@ -291,63 +257,50 @@
         .append("<div class='deleteBox'>[삭제]</div>")
 
         .find(".deleteBox").click(function() {
-            // var valueCheck = false;
-            
-            // $(this).parent().find('span').each(function() {
-            //     console.log(this);
-            //     console.log($(this).find('.itemClassName').innerText());
-            //     if($('.itemClassName').text() != '' && null) {
-            //         console.log(this);
-            //         valueCheck = true;
-            //         console.log(valueCheck);
-            //     }
-            // });
-
-            // if(valueCheck) {
-            //     var delCheck = confirm('입력하신 내용이 있습니다.\n삭제하시겠습니까?');
-            // }
-            // if(!valueCheck || delCheck == true) {
                 $(this).parent().remove();
                 reorder();
-            // }
         });
         // 번호 재정렬
         reorder();
     }
 
+    
+    
     // 아이템을 구성할 태그를 반환합니다.
     // itemBox 내에 번호를 표시할 itemNum 과 입력필드가 있습니다.
     function createBox() {
         //var className = $("#className").val();
         var lastCtitle = $('#itemBoxWrap').find('input[type=text]:last').val();
-    	var lastInput = $('#itemBoxWrap').find('input[type=file]:last').val();
+       var lastInput = $('#itemBoxWrap').find('input[type=file]:last').val();
         if(lastInput == '' || lastCtitle == ''){
-        	alert('이전 수업추가를 완료해주세요');
-    		return false;
+           alert('이전 수업추가를 완료해주세요');
+          return false;
         } else {
-    	    var contents 
-    	        = "<div class='itemBox'>"
-    	        + "<div style='float:left;'>"
-    	        + "<span class='itemNum'></span> "
-    	        + "<span class='itemClassName'><input type='text' class='classTtl' style='width:300px;'/></span>"
-    	        + "<span>"
-    	        + "<input type='file' class='classUp' accept='video/*'>"
-    	        + "</span>"
-    	        + "</div>"
-    	        + "</div>";
-    	    return contents;
+           var contents 
+              = "<div class='itemBox'>"
+               + "<span class='itemNum'></span> "
+               + "&nbsp&nbsp&nbsp"
+               + "<span class='itemClassName'><input type='text' maxlength='100' class='classTtl' style='width:300px;'></span>"
+               + "&nbsp&nbsp&nbsp"
+               + "<input type='file' class='classUp' accept='video/*'>"
+               + "</div>";
+           return contents;
         }
     }
     
     function videoInsert(){
-    	$('#videoIn').click();
-    	console.log($('#videoIn')[0].files[0]);
-    	console.log($('#videoIn')[0].files[1]);
-    	
+       $('#videoIn').click();
+       console.log($('#videoIn')[0].files[0]);
+       console.log($('#videoIn')[0].files[1]);
     }
-    $(function(){
-    	//$('#videoIn').val().appendTo($('inputVideo'));
-    })
+    
+    //시큐리티 토큰
+   let header = "${_csrf.headerName}";
+   let token = "${_csrf.token}";
+    
+    
+    
+    
                             
               
 </script>

@@ -154,7 +154,7 @@
                     <th>질문 내용</th>
                     <th style="width:120px">작성일</th>
                     <th style="width:120px">답변여부</th>
-                    <th></th>
+                    <th style="width:100px;"></th>
                   </tr>
                 </thead>
                 <tbody class="qstboard myQstBoard">
@@ -259,8 +259,12 @@
     // 질문박스
     $('#qst').click((e) => {
       if ($('#qst').text() === '질문하기') {
+    	$('.delete').attr('disabled',true);
+    	$('.modify').attr('disabled',true);
         $('#qst').text('닫기')
       } else {
+    	$('.delete').attr('disabled',false);
+      	$('.modify').attr('disabled',false);
         $('#qst').text('질문하기')
       }
       $('#qstbox').toggleClass('d-none');
@@ -292,11 +296,16 @@
             },
           })
           .done((r) => {
+        	$('#qst').text('질문하기');
+        	$('#myquestion').val('')
+        	$('.delete').attr('disabled',false);
+      		$('.modify').attr('disabled',false);
+      		
             let today = new Date().toISOString().slice(0, 10)
             $('#qstbox').toggleClass('d-none');
             $('#qstbox').toggleClass('d-flex');
             window.alert('등록이 완료되었습니다.');
-            $('.qstboard').first().before(
+            $('.myQstBoard').first().prepend(
               $('<tr>').append($('<td>').text(r.qContent),
                 $('<td>').text(today),
                 $('<td>').text('답변 대기 중').addClass('font-weight-bold text-danger'),
@@ -316,6 +325,7 @@
     	  window.alert('수정이 완료되었습니다.')
     	  $('.modify').click()
     	  $('#qstbox').addClass('d-none');
+    	  $('#myquestion').val('')
       }
     })
 
@@ -323,7 +333,7 @@
     // 답변 조회
     const makeRow = (content) => {
       let row = $('<tr>').append(
-        $('<td>').attr('colspan', 4).text(content).addClass('clicked'));
+        $('<td>').attr('colspan', 4).html(content).addClass('clicked'));
       return row;
     }
     $('.qstboard').click((e) => {
@@ -338,7 +348,7 @@
 			  return;
     	  }
       } else {
-		  if(e.target.parentElement.nextElementSibling.children.length===1){
+		  if(e.target.parentElement.nextElementSibling?.children.length===1){
 
 			  e.target.parentElement.nextElementSibling.remove();
 			  return;
@@ -441,26 +451,27 @@
 
 
     // 수정버튼 클릭시
-    $('.myQstBoard .modify').click((e) => {
-    console.log(e.target)
-      if(e.target.textContent === '수정'){
-    	  e.target.textContent = '닫기'
-      } else {
-    	  e.target.textContent = '수정';
+    $('.myQstBoard').click((e) => {
+      if(e.target.className.includes('modify')){
+	      if(e.target.textContent === '수정'){
+	    	  e.target.textContent = '닫기'
+	      } else if (e.target.textContent === '닫기') {
+	    	  e.target.textContent = '수정';
+	      }
+	      let qnaNo = $(e.target).parent().parent().data('qnano');
+	      $('#qstbox').toggleClass('d-none');
+	      $('#qstbox').toggleClass('d-flex');
+	      $('#wr').text('수정')
+	      $.ajax({
+	    	  url : '/user/selectQna',
+	      	  data : { qnaNo: qnaNo },
+	          contentType: 'application/json;charset=utf-8'
+	      })
+	      .done((r)=>{
+	    	  $('#myquestion').val(r.qContent)
+	    	  qnanoForMod = qnaNo;  
+	      }) 
       }
-      let qnaNo = $(e.target).parent().parent().data('qnano');
-      $('#qstbox').toggleClass('d-none');
-      $('#qstbox').toggleClass('d-flex');
-      $('#wr').text('수정')
-      $.ajax({
-    	  url : '/user/selectQna',
-      	  data : { qnaNo: qnaNo },
-          contentType: 'application/json;charset=utf-8'
-      })
-      .done((r)=>{
-    	  $('#myquestion').val(r.qContent)
-    	  qnanoForMod = qnaNo;  
-      })
     })
     
 	const updateQna = (d) =>{

@@ -153,10 +153,7 @@
 				</div>
 				<div class="col-lg-5">
 					<div class="header__right d-flex justify-content-end">
-						<form action="#" id="searchForm">
-							<input type="text" class="border w-75 rounded mx-1"
-								placeholder="강의명, 태그로 검색"> <span class="icon_search text-white mx-1 mr-4" id="search"></span>
-						</form>
+	
 
 						<security:authorize access="isAnonymous()">
 							<a href="/customLogin" class="font-weight-bold mx-1">로그인<span
@@ -168,7 +165,7 @@
 								class="icon_profile"></span></a>
 						</security:authorize>
 						<security:authorize access="hasAuthority('A01')">
-							<a href="/admin/home" class="font-weight-bold">관리자 페이지로</a>
+							<a href="/admin/home" class="font-weight-bold text-danger">관리자 페이지로</a>
 						</security:authorize>
 						<security:authorize access="isAuthenticated()">
 							<form action="/logout" method="post" id="logout">

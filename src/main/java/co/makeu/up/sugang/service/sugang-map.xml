@@ -35,7 +35,7 @@
 		WHERE ID = #{id}
 	<if test="regDateSearch != null and expDateSearch != null">
 		AND S.REG_DATE <![CDATA[>]]> #{regDateSearch}
-        AND S.EXP_DATE <![CDATA[<]]> #{expDateSearch}
+        AND S.REG_DATE <![CDATA[<]]> #{expDateSearch}
 	</if>
 		ORDER BY S.REG_DATE DESC) P LEFT OUTER JOIN REFUND R
         ON R.TLSN_NO = P.TLSN_NO

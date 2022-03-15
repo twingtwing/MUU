@@ -213,10 +213,6 @@
                                 </div>
                                 <div class="row d-flex justify-content-between">
                                     <button class="btn btn-secondary" onclick="history.back()">뒤로가기</button>
-                                    <div>
-                                        <button class="btn btn-danger">PDF다운</button>
-                                        <button class="btn btn-success">EXCEL다운</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
