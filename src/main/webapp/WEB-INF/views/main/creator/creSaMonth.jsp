@@ -146,10 +146,8 @@
 							</table>
 						</div>
 
-						<div class="row col-12 mr-5 justify-content-end">
-							<button class="border px-3 py-2 bg-danger text-white">PDF
-								다운</button>
-							<a id="creSaMonthExcel" href="/creator/creSaMonthExcel?year=${thisyear }" class="border ml-1 mr-5 px-3 py-2 bg-success text-white">EXCEL
+						<div class="row col-12 justify-content-end">
+							<a id="creSaMonthExcel" href="/creator/creSaMonthExcel?year=${thisyear }" class="border ml-1 px-3 py-2 bg-success text-white">EXCEL
 								다운</a>
 						</div>
 					</div>

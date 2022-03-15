@@ -242,7 +242,7 @@
 	
 	<select id="randomLecture" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * 
-	    FROM(SELECT L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR
+	    FROM(SELECT L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR,L.LT_NO
 	         FROM LECTURE  L JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
 	                               FROM CTGR C JOIN CTGR U
 	                               ON C.UP_CTGR = U.CTGR_ID) C

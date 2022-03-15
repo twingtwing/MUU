@@ -74,7 +74,7 @@
                                                             <p class="text-right mr-2">( 수강기간 : {{lectureDetail.tlsnTerm}}개월 )</p>
                                                         </div>
                                                         <div class="w-100 mb-1">
-                                                            <p v-if="lectureDetail.kitName!=''" class="text-right mr-2">키트 : {{commakitPrc}}원</p>
+                                                            <p v-if="lectureDetail.kitName!=null" class="text-right mr-2">키트 : {{commakitPrc}}원</p>
                                                             <p class="text-right mr-2">강의 : {{commalecPrc}}원</p>
                                                             <div class="row d-flex justify-content-end">
                                                                 <h5 class="mr-4 font-weight-bold">총합 : {{commaPrc}}원</h5>
@@ -100,14 +100,14 @@
                                 <div class="card-body">
                                     <ul class="nav nav-tabs">
                                         <li class="nav-items">
-                                            <a class="nav-link py-1 px-2 active" href="#orgin" data-toggle="tab" ><small>기존배송지</small></a>
+                                            <a class="nav-link py-1 px-2" v-bind:class="[ addr == 'Y' ? 'active':'d-none']" href="#orgin" data-toggle="tab" ><small>기존배송지</small></a>
                                         </li>
                                         <li class="nav-items">
-                                            <a class="nav-link py-1 px-2" href="#another" data-toggle="tab" ><small>다른배송지</small></a>
+                                            <a class="nav-link py-1 px-2" v-bind:class="{ active : addr != 'Y'}" href="#another" data-toggle="tab" ><small>다른배송지</small></a>
                                         </li>
                                     </ul>
                                     <div class="tab-content border border-top-0">
-                                        <div id="orgin" class="tab-pane fade show active">
+                                        <div id="orgin" class="tab-pane fade" v-bind:class="[ addr == 'Y' ? 'active show':'d-none']">
                                             <div class="col-lg-12 px-0">
                                                 <table class="table mb-0">
                                                     <tr height= 55>
@@ -129,7 +129,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div id="another" class="tab-pane fade">
+                                        <div id="another" class="tab-pane fade" v-bind:class="{ 'active show' : addr != 'Y'}">
                                             <div class="blog__details__form pt-0 w-100">
                                                 <form onsubmit="return false">  
                                                     <table class="table mb-0">
@@ -139,7 +139,7 @@
                                                                     전화번호
                                                                 </th>
                                                                 <td class="border-top-0" colspan="2">
-                                                                    <input maxlength="11" v-on:change="valiTel" class="border mb-0 tel" type="text" spellcheck="false" style="height: 30px;">
+                                                                    <input id="tel_input" maxlength="11" v-on:change="valiTel" class="border mb-0 tel" type="text" spellcheck="false" style="height: 30px;">
                                                                     <div class="d-flex justify-content-end">
                                                                         <small id="telErr" class="d-none text-danger">숫자를 입력해주세요.</small>
                                                                         <small class="valErr d-none text-danger">값을 입력해주세요.</small>
@@ -269,7 +269,7 @@
                             <div class="w-100 d-flex justify-content-center">
                                 <div class="row mb-3">
                                     <div class="d-flex align-items-center">
-                                        <input v-on:click="checkModalClick" type="checkbox" name="" id="agreeModal">
+                                        <input v-on:click="checkModalClick" type="checkbox" id="agreeModal">
                                     </div>
                                     <label for="agreeModal" class="mb-0 ml-1">동의합니다.</label>
                                 </div>
@@ -301,7 +301,8 @@
                 return{
                     payPoint : 0,
                     lectureDetail : {},
-                    userAddr : {}
+                    userAddr : {},
+                    addr : 'N',
                 }
             },
             computed :{
@@ -371,7 +372,9 @@
             		let tag =  $('.tab-pane.fade.active.show')
             		let tel, zip, addr, detaAddr;
             		if(tag.attr('id') == 'another'){
-            			this.valForm();
+            			if(!this.valForm()){
+            				return;
+            			}
             			const input = tag.find('input');
             			tel = input[0].value;
             			zip = input[1].value;
@@ -435,17 +438,23 @@
             		const ary = $('#another input');
             		for(var input of ary){
             			if(input.value ==''){
+            				console.log(input)
+            				if($(input).attr('id')=='tel_input'){
+            					$('#telErr').addClass('d-none');
+            				}
             				$(input).closest('td').find('.valErr').removeClass('d-none');
-            				return;
+            				return false;;
             			}else{
             				$(input).closest('td').find('.valErr').addClass('d-none');
             			}
             		}
+            		return true;
             	},
                 valiTel(){
                     if(/[^0-9]/g.test(event.target.value)){
                         event.target.value = event.target.value.replaceAll(/[^0-9]/g, "");
                         $('#telErr').removeClass('d-none');
+                        $(event.target).closest('td').find('.valErr').addClass('d-none');
                     }else{
                         $('#telErr').addClass('d-none');
                     }
@@ -499,9 +508,11 @@
                 checkModalClick(){
                 	if(!agree.checked){
 	                    $('#payBtn').removeAttr('disabled');
+	                    agree.checked = true;
 	                    $('#checkModal').modal('hide');
                 	}else if(agree.checked){
 	                    $('#payBtn').attr('disabled','false');
+	                    agree.checked = false;
                 	}
                 }
             },
@@ -517,7 +528,10 @@
         		})
         		.done(result=>{
                 	this.lectureDetail = result.lectureDetail;
-					this.userAddr = result.userAddr;                
+					this.userAddr = result.userAddr;
+					if(this.userAddr.tel != null && this.userAddr.zip != null && this.userAddr.addr != null && this.userAddr.detaAddr != null){
+						this.addr = 'Y';
+					}
         		})
 				
             }

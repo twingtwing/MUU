@@ -208,7 +208,7 @@
 															          <span v-on:mouseover="revOver"  v-on:click="revClick" class="fas fa-star gr" data-num="3"></span>
 															          <span v-on:mouseover="revOver" v-on:click="revClick" class="fas fa-star gr" data-num="4"></span>
 															        </h5>
-                                                                    <textarea v-on:change="changeErr" class="border mb-0" rows="10" spellcheck="false"  placeholder="리뷰 작성..."></textarea>
+                                                                    <textarea v-on:change="changeErr" maxlength="500" spellcheck="false" class="border mb-0" rows="10" spellcheck="false"  placeholder="리뷰 작성..."></textarea>
                                                                     <button v-on:click="reviewInsert" class="btn btn-secondary position-absolute" style="bottom: 12px; right: 12px;">등록</button>
                                                                 </div>
                                                                 <div class="d-flex justify-content-end">
@@ -239,7 +239,7 @@
                                                                         <div id="revU" class="row mx-3 my-2 pt-1 d-none position-rel position-relative">
                                                                         	<h3 class="row text-center position-absolute" style="bottom: -40px; left: 15px;">
 																	        </h3>
-                                                                        	<textarea v-on:change="updateErr" rows="3" cols="100">{{testAreaRev}}</textarea>
+                                                                        	<textarea v-on:change="updateErr" spellcheck="false" maxlength="500" rows="3" cols="100">{{testAreaRev}}</textarea>
                                                                         	<p class="w-100 text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                         	<input type="hidden" name="num" :value="myReview.rvNo">
                                                                         </div>
@@ -288,7 +288,7 @@
                                                         </div>
                                                     </div>
                                                     <div v-if="reviews != null" class="row d-flex justify-content-center">
-                                                    	<span v-on:click="revMore"  v-bind:class="{'d-none':this.reviews.length > 3}"  class="revMore">더보기</span>
+                                                    	<span v-on:click="revMore"  v-bind:class="{'d-none':this.reviews.length < 3}"  class="revMore">더보기</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@
                                                     <div class="blog__details__form pt-2 mx-3 mb-4 w-100">
                                                         <form onsubmit="return false">  
                                                             <div class="row mr-2 position-relative">
-                                                                <textarea v-on:change="changeErr" class="border mb-0" name="" id=""rows="10" spellcheck="false"></textarea>
+                                                                <textarea v-on:change="changeErr" maxlength="500" spellcheck="false" class="border mb-0" name="" id=""rows="10" spellcheck="false"></textarea>
                                                                 <button v-on:click="qnaInsert" class="btn btn-secondary position-absolute" style="bottom: 5px; right: 5px;">등록</button>
                                                             </div>
                                                             <div class="d-flex justify-content-end">
@@ -326,13 +326,13 @@
                                                                         <div class="qnaBox">
                                                                         	<div class="row col-12 justify-content-between pr-0">
 	                                                                            <p class="font-weight-bold">Q. 
-	                                                                            	<a class="qna_collapse text-dark" data-toggle="collapse" :href="'#collapse_' + index" >{{qna.name}}</a>
+	                                                                            	<a class="qna_collapse text-primary" data-toggle="collapse" :href="'#collapse_' + index" >{{qna.name}}</a>
 	                                                                            </p>
 	                                                                        	<span v-if="qna.qnaStCode == 'Q01'" class="text-primary mt-1 font-weight-bold">미답변</span>
 	                                                                        	<span v-if="qna.qnaStCode == 'Q02'" class="text-danger mt-1 font-weight-bold">답변완료</span>
                                                                         	</div>
                                                                             <p class="mx-2 qnaP" v-html="qna.qContent"></p>
-                                                                            <textarea v-on:change="updateErr" class="d-none w-100" rows="3">{{ textAreaFaQ(index) }}</textarea>
+                                                                            <textarea v-on:change="updateErr" spellcheck="false" maxlength="500" class="d-none w-100" rows="3">{{ textAreaFaQ(index) }}</textarea>
                                                                             <p class="text-right text-danger errDiv d-none mb-0">내용을 꼭 적어주셔야합니다.</p>
                                                                             <div v-if="qna.myQna =='Y'" class="row mx-0 justify-content-end upDiv">
                                                                             	<button v-if="qna.qnaStCode =='Q01'" class="btn btn-secondary mr-1 px-2 py-1" v-on:click="qnaUpt(1)" style="bottom: 45px; right: 12px;">수정</button>
@@ -349,7 +349,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div v-if="qnas != null" class="row d-flex justify-content-center">
-                                                                        <span v-on:click="qnaMore"  v-bind:class="{'d-none':this.qnas.length > 5}"  class="qnaMore">더보기</span>
+                                                                        <span v-on:click="qnaMore"  v-bind:class="{'d-none':this.qnas.length < 5}"  class="qnaMore">더보기</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -389,7 +389,7 @@
                                                             <div class="row">
                                                             	<div class="col-lg-12">
                                                             		<div class="row">
-	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : id == lecDetails.creId}" v-bind:class="{'disabled' : lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
+	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : id == lecDetails.creId || lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
                                                             		</div>
                                                             		<div class="row justify-content-end mt-1">
 	                                                                	<small v-if="lecDetails.mySugang == 'Y'" class="font-weight-bold text-muted">해당 강의는 이미 수강중입니다.</small>
@@ -602,6 +602,11 @@
                     	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
 
                     }else{
+                    	if(this.id == null){
+                    		alert("강의 신고을 위해 먼저 로그인 하셔야합니다.");
+                    		location.href="/customLogin";
+                    		return ;
+                    	}
                     	if(this.lecDetails.mySugang == 'N'){//수강신청자 여부
                     		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
                     		$('#lecReport').modal('hide');
@@ -724,7 +729,7 @@
             			$('#upBtn').addClass('d-none');
             			$('#backBtn').removeClass('d-none');
             			$('#revU h3').empty();
-            			$('#revU textarea').val();
+            			$('#revU textarea').val(this.myReview.content);
             		}else if(num ==1){//수정 보여주기
             			$('#revU').removeClass('d-none');
             			$('#revD').addClass('d-none');
