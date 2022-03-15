@@ -263,8 +263,8 @@
 						<div v-if="searchFaqMore[0] == '검색없음'">
 							<h2>찾으시는 검색어는 존재하지 않습니다.</h2>
 						</div>
-						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12">
-							<div class="accordion" id="accordionExample">
+						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12" id="search">
+							<div class="accordion" id="accordionExampl">
 								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
 									<div class="card-header text-secondary bg-light" id="headingOne">
 										<h2 class="mb-0">
@@ -327,6 +327,9 @@
       	      })
       	      .done(res =>{
       	    	  if(res !==null){
+      	    		console.log("나오기는 하냐?")
+      	    		this.searchFaqMore = [];
+      	    		this.searchFaq = [];
       	    		  if(res.length < 6){
       	    			  this.searchFaqMore = res;
       	    			  if(this.searchFaqMore[0] == null){
@@ -336,7 +339,6 @@
       	    			  }
       	    			  console.log('test1')
       	    		  }else{
-      	    			  console.log(res)
       	    			  for(var j = 0; j < 5; j++){
       	    				 console.log('test2')
       	    				this.searchFaqMore.push(res[j]);

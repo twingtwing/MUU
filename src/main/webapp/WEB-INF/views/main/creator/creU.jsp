@@ -88,7 +88,7 @@
                                 <div class="card-body">
                                     <div class="row mb-3 ml-1">
                                         <div class="d-flex align-items-center">
-                                            <img src="/resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                            <img src="${photo }" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
                                         </div>
                                         <ul class="list-group list-group-flush ml-3 ">
                                             <li class="list-group-item">     

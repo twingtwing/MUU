@@ -748,7 +748,7 @@ select {
     });
  
     function handleImgFileSelect(e) {
-    	$('.image-show > img').removeAttr('src');
+    	$('.image-show').removeAttr('src');
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
@@ -773,7 +773,7 @@ select {
     });
  
     function handleThImgFileSelect(e) {
-    	$('.thimage-show > img').removeAttr('src');
+    	$('.thimage-show').removeAttr('src');
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
@@ -985,7 +985,7 @@ select {
         }
         
         //3페이지 영상 체크(OT필수로 넣도록)
-        else if($('#itemBoxWrap').hasClass('classUp') == false){
+        else if($('#itemBoxWrap').find('.classUp').length == 0){
         	alert('OT영상은 필수로 등록하여야합니다');
         	return false;
         }
@@ -1137,7 +1137,6 @@ function uncomma(str) {
     return str.replace(/[^\d]+/g, '');
 }
         
-         
 
 </script>
 </html>

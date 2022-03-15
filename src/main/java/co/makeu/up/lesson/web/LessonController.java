@@ -76,6 +76,7 @@ public class LessonController {
 	@RequestMapping("/creator/lesU")
 	public String lessonUpdatePage(LessonVO vo, Model model) {
 		model.addAttribute("lesinfo", lessonDao.lessonList(vo.getLtNo()));
+		model.addAttribute("ltNo", vo.getLtNo());
 		return "main/lecture/lesU";
 	}
 	
@@ -136,5 +137,6 @@ public class LessonController {
 			lessonDao.delLesson(vo);
 		}
 	}
+
 
 }

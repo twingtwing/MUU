@@ -359,7 +359,6 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger">PDF다운</button>
                                         <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
@@ -489,6 +488,23 @@ $('#resetAll').click(()=>{
                 $('#downctgr').append($('<option>').val(v).text(v));
                     
         });
+    })
+    //가입날짜 시작날짜/마지막날짜 disable
+    $('#firstJdate').on('change', function(){
+        let pastDate = $('#firstJdate').val();
+        $('#lastJdate').attr('min', pastDate);
+    })
+    
+    $('#lastJdate').on('change', function(){
+        let recentDate = $('#lastJdate').val();
+        $('#firstJdate').attr('max', recentDate);
+    })
+    
+    $(function(){
+    	let date = new Date();
+    	let today = date.toISOString().substring(0, 10);
+    	$('#firstJdate').attr('max', today);
+    	$('#lastJdate').attr('max', today);
     })
 
 

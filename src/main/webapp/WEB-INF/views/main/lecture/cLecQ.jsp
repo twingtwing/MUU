@@ -245,7 +245,7 @@
                     <div class="col-lg-12">
                         <div class="row mb-4 justify-content-between">
                             <div class="col-lg-9 pr-0" style="min-height: 103px;">
-                                <div class="h-100 p-2 d-flex align-items-center" style="border: 1px solid black; width:300px;">
+                                <div class="h-100 p-2 d-flex align-items-center" style="border: 1px solid black; width:280px;">
                                     <p class="mb-0" id="inputQ"></p>
                                 </div>
                             </div>

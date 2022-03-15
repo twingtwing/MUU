@@ -65,8 +65,8 @@ public class SugangVO {
 	private int progPct;
 	
 	// for search
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDateSearch;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expDateSearch;
 }

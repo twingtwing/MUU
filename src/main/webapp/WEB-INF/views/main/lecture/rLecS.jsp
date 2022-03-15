@@ -142,8 +142,10 @@
                             <div class="col-12 text-right align-items-right">
                                 <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${rlists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
+                                <!-- 
                                 <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rlists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
+                                 -->
                                 <c:if test="${rlists.ltStCode == 'L07' }">
                                 	<button class="btn btn-outline-danger" type="button" onclick="lectureReResister(${rlists.ltNo })">재신청</button>
                                 </c:if>
