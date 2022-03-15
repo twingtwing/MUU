@@ -14,7 +14,7 @@
 	<bean id="BCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<security:http>
 		<security:intercept-url pattern="/user/**"
-			access="hasAuthority('A02') or hasAuthority('A03')"/>
+			access="hasAuthority('A02') or hasAuthority('A03') or hasAuthority('A01')"/>
 		<security:intercept-url pattern="/creator/**"
 			access="hasAuthority('A03')"/>
 		<security:intercept-url pattern="/admin/**"

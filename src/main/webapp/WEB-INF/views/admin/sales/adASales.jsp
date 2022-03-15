@@ -98,7 +98,6 @@
                     </tr>
                   </table>
                   <div class="row justify-content-end mt-3 w-100">
-                    <button class="btn btn-danger mr-2">PDF다운</button>
                     <a id="genderExcel" href="/admin/genderExcel?year=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                   </div>
 
@@ -193,7 +192,6 @@
                     </tr>
                   </table>
                   <div class="row justify-content-end mt-3 w-100">
-                    <button class="btn btn-danger mr-2">PDF다운</button>
                     <a id="ageExcel" href="/admin/ageExcel?year=${thisyear }" class="btn btn-success mr-2">EXCEL다운</a>
                   </div>
                 </div>

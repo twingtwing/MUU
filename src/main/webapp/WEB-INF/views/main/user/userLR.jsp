@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -240,7 +242,9 @@
                 </c:choose>
                 </c:if>
                </c:forEach> 
+               <c:if test="${fn:length(review) > 6}">
                 <div class="text-secondary small" style="cursor:pointer;" id="more">더보기</div>              
+               </c:if>
               </div>  
             </div>
           </div>         
@@ -313,7 +317,7 @@
           <span class="fas fa-star gr" data-num="3"></span>
           <span class="fas fa-star gr" data-num="4"></span>
         </h2>
-        <textarea spellcheck="false" class="m-5 p-3 bg-white border wrbox" placeholder="리뷰를 작성해주세요"></textarea>
+        <textarea spellcheck="false" class="m-5 p-3 bg-white border wrbox" placeholder="리뷰를 작성해주세요" maxlength="200"></textarea>
         <div class="d-flex justify-content-center align-items-center">
           <button class="btn border mx-2" id="modalY">작성</button>
           <button class="btn border mx-2" type="button" data-dismiss="modal">취소</button>

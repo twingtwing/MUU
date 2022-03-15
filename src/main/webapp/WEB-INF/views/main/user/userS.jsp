@@ -191,7 +191,7 @@ td, th {
 												적립금은 구매 후 7일 뒤, 혹은 구매 확정 시 적립됩니다.</span>
 										</div>
 									</div>
-									<div class="d-flex justify-content-center border info">
+									<div class="d-flex justify-content-center border info w-75 py-4">
 										<table>
 											<tr>
 												<th>이름</th>
@@ -223,7 +223,8 @@ td, th {
 									<div class="d-flex justify-content-center mx-5 mb-5 mt-4">
 										<button class="border px-4 py-2 rounded"
 											onclick="location.href='/user/userUpdate'">회원정보수정</button>
-										<button class="border px-4 py-2 rounded" id="out">탈퇴</button>
+										<button class="border rounded px-4 -y-2" onclick="location.href='/user/userPwForm'">비밀번호 변경</button>
+										<button class="border px-4 py-2 bg-danger rounded" id="out" style="color:white;">탈퇴</button>
 									</div>
 								</div>
 								<!--card body end-->

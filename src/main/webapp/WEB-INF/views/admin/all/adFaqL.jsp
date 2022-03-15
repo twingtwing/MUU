@@ -177,7 +177,6 @@
 		                                    </div>
 		                                    <div class="position-absolute" style="right: 1px;">
 		                                        <button id="faqInsert" class="btn btn-dark">글 등록</button>
-		                                        <button class="btn btn-danger">PDF다운</button>
 		                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
 		                                    </div>
 		                                </div>
