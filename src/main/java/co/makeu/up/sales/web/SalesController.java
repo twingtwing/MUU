@@ -54,6 +54,7 @@ public class SalesController {
 		SimpleDateFormat month = new SimpleDateFormat("MM");
 		Calendar c1 = Calendar.getInstance();
 		
+		
 		List<SalesVO> yearList = salesDao.salesCreator(vo);
 		int lengthYear = 0;
 		if(yearList.size() != 0) {
@@ -75,7 +76,7 @@ public class SalesController {
 		if(vo.getMonth() == 0) {
 			vo.setMonth(Integer.parseInt(month.format(c1.getTime())));
 		}
-		
+
 		model.addAttribute("search",vo);
 		model.addAttribute("month",vo.getMonth()==0 ? month.format(c1.getTime()) : vo.getMonth() );
 		
