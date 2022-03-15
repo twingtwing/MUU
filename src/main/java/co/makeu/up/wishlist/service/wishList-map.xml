@@ -15,9 +15,9 @@
 		order by lt_no DESC
 	</select>
 
-	<select id="WishListCnt" parameterType="Integer"
-		resultType="Integer">
+	<select id="WishListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM WISHLIST
+		where id=#{id}
 	</select>
 	
 	<delete id="deleteWishList">

@@ -198,31 +198,37 @@
                     console.log("이메일타입 " + this.inputEmailType);
                     console.log("아이디 " + this.inputid);
                     //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
-
-                    let intro = this.inputContent;
-        	   		intro = intro.replace(/\r\n/ig,'<br>');
-        	   		intro = intro.replace(/\\n/ig,'<br>');
-        	   		intro = intro.replace(/\n/ig,'<br>');
-        	   		
-                   $.ajax({
-            		url : '/QstInsert',
-            		type : 'post',
-            		datatype : 'json',
-            		beforeSend: function(xhr) {
-            			xhr.setRequestHeader(header, token);
-            		},
-            		data : {
-            			ttl: this.inputTitle,
-               		    content : intro,
-               		    writer : this.inputid,
-               		  	email : this.inputEmailID + "@" + this.inputEmailType
-            		},
-            		success: function(jqXHR) {
-            			console.log("성공")
-            			alert("문의해주셔서 감사합니다.")
-            			location.href="/home"
-            		}
-            	})
+					
+                    if(this.inputTitle != '' && this.inputContent != '' && this.inputEmailID != ''
+                    	&& this.inputEmailType != ''){
+                    	let intro = this.inputContent;
+            	   		intro = intro.replace(/\r\n/ig,'<br>');
+            	   		intro = intro.replace(/\\n/ig,'<br>');
+            	   		intro = intro.replace(/\n/ig,'<br>');
+            	   		
+                       $.ajax({
+                		url : '/QstInsert',
+                		type : 'post',
+                		datatype : 'json',
+                		beforeSend: function(xhr) {
+                			xhr.setRequestHeader(header, token);
+                		},
+                		data : {
+                			ttl: this.inputTitle,
+                   		    content : intro,
+                   		    writer : this.inputid,
+                   		  	email : this.inputEmailID + "@" + this.inputEmailType
+                		},
+                		success: function(jqXHR) {
+                			console.log("성공")
+                			alert("문의해주셔서 감사합니다.")
+                			location.href="/home"
+                		}
+                	})
+                    	
+                    }else{
+                    	alert("작성하지 않은 부분이 존재합니다.")
+                    }
                 },
             },
             beforeCreate: function () {
