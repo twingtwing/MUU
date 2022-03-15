@@ -150,7 +150,7 @@
 	                                                            	<small class="text-muted ml-1">{{lec.wCount}}</small>
 	                                                            </p>
                                                         	</div>
-                                                            <h6 class="mb-2">{{lec.prc + lec.kitPrc}}원</h6>
+                                                            <h6 class="mb-2">{{commaPrc(index)}}원</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -175,6 +175,16 @@
                 }
             },
             methods : {
+            	commaPrc(index){
+            		this.creDetail.lectureList[index]
+            		let val = 0;
+            		if(this.creDetail.lectureList[index].kitName !== null){
+            			val = Number(this.creDetail.lectureList[index].prc) + Number(this.creDetail.lectureList[index].kitPrc);
+            		}else{
+            			val = Number(this.creDetail.lectureList[index].prc);
+            		}
+            		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            	},
                 heartClick(index){
                     let ltNo = this.creDetail.lectureList[index].ltNo;
                     let sum = 0;
