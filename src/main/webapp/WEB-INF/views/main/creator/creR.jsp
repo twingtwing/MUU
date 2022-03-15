@@ -334,6 +334,11 @@ th, td {
 	}
 	const changePage = (res) => {
 		console.log(res)
+		if(res.length == 0){
+			console.log("작동하나?")
+			$('#refundList').append('<tr><td colspan="8">해당되는 데이터가 존재하지 않습니다.</td><</tr>');
+			return;
+		}
 		res.forEach((val) => {
 			console.log(val)
 				$('#sampleTr #num_sam').text(val.tlsnNo);
