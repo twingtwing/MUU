@@ -18,6 +18,7 @@
 	cursor: pointer;
 }
 </style>
+
 </head>
 <body>
 	<section class="normal-breadcrumb set-bg"
@@ -85,8 +86,8 @@
 							<p class="download_link mb-0" v-for="(file,index) in board.detaFileList" v-on:click="downloadDetail(index)" class="text-muted ml-2">{{file.filePath}}</p>
 						</div>
 					</div>
-					<div class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh">
-						<p class="mb-3"></p>{{board.content}}
+					<div id="cont" class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh" name=linemak>
+						<p class="mb-3" v-html="board.content"></p>
 					</div>
 					<div class="border-top"></div>
 					<div v-if ="board.nextbno > -1" id="next" class="d-flex justify-content-start ml-5 mt-3">
@@ -136,6 +137,11 @@
                 },
             },
             beforeCreate: function () {
+            	
+            	
+          
+            	
+            	
             	$.ajax({
             		url : 'selectBoard',
             		type : 'post',
@@ -158,6 +164,9 @@
         })
         //mount vue
         const mountedBoard = board.mount('#board_search');
+        
+   
+         
         
     </script>
 
