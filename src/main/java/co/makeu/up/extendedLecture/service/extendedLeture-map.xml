@@ -220,7 +220,7 @@
 	          	WHERE TO_CHAR(REG_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE -1,'YYYY-MM-DD')
               </if>
               <if test="time == 'week'">
-              	WHERE TRUNC(REG_DATE) BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+              	WHERE to_char(reg_date, 'YYYYMMDD') BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
               </if>
               <if test="time == 'month'">
               	WHERE TO_CHAR(REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
