@@ -92,7 +92,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="d-flex justify-content-center">
+				<div class="d-flex justify-content-center mt-5">
 					<div class="login__register">
 						<span class="small mt-3">계정이 없으신가요?</span>
 						<h3 style="color: black;">회원가입 👇</h3>

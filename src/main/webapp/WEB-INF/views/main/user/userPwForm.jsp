@@ -17,6 +17,7 @@
 <input type="password" placeholder="현재 비밀번호" class="border rounded p-2 m-2 w-100" id="currPw">
 <input type="password" placeholder="새 비밀번호" name="pw" class="border rounded p-2 m-2 w-100" id="pw">
 <input type="password" placeholder="새 비밀번호 확인" class="border rounded p-2 m-2 w-100" id="pw2">
+<div class="small font-weight-bold text-danger">※ 영문자와 숫자를 포함한 8~20자로 입력해주세요.</div>
 <div id="alert"></div>
 <button type="button" class="border rounded px-5 py-2 m-2" id="btn">비밀번호 변경</button>
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -46,6 +47,7 @@ const passwordChk = (pw)=>{
 }
 
 $('#btn').click(()=>{
+	const pwreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 	passwordChk($('#currPw').val());
 	console.log(state)
 	if(!state){
@@ -54,6 +56,10 @@ $('#btn').click(()=>{
 	}
 	if($('#pw').val()!=$('#pw2').val()){
 		window.alert('비밀번호 확인이 맞지 않습니다.');
+		return;
+	}
+	if(!pwreg.test($('#pw').val())){
+		window.alert('비밀번호 양식에 맞지 않습니다.');
 		return;
 	}
 	$('#frm').submit();

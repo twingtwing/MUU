@@ -138,6 +138,7 @@ public class SugangController {
 	@ResponseBody
 	@PostMapping("/user/userSugangConfirm")
 	public void userSugangConfirm(SugangVO vo, Principal pri) {
+		vo = sugangDao.selectSugang(vo.getTlsnNo());
 		UsersVO uservo = new UsersVO();
 		uservo.setId(pri.getName());
 		String grd = userDao.selectUsers(uservo).getuGrdCode();

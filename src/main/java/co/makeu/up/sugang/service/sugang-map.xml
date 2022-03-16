@@ -149,4 +149,8 @@
 		ship_st_code = #{shipStCode}, ship_num = #{shipNum}
 		where tlsn_no = #{tlsnNo}
 	</update>
+	<select id="selectSugang" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM SUGANG
+		WHERE TLSN_NO = #{tlsnNo}
+	</select>
 </mapper>

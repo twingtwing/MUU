@@ -11,7 +11,7 @@ public interface SugangMapper {
 	int updateSugangConfirm(SugangVO vo);
 	List<SugangVO> sugangList(SugangVO vo);
 	int shipUpdate(SugangVO vo);
-	
+	SugangVO selectSugang(int tlsnNo);
 	int sugangInsert(SugangVO vo);
 	
 	// admin
