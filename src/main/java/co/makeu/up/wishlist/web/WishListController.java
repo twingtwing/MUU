@@ -28,25 +28,28 @@ public class WishListController {
 
 	@GetMapping("/user/userWishList")
 
-	public String wishListSearch(Model model, Principal pri, WishlistVO vo, @RequestParam("lec") int lec) {
+	public String wishListSearch(Model model, Principal pri, WishlistVO vo, @RequestParam(value="lec", required=false) String lec) {
 	
 		vo.setId(pri.getName());
 		List<WishlistVO> wlist = wishListDao.WishListSearch(vo);
 		model.addAttribute("ltno", vo.getLtNo());
-		model.addAttribute("wishlists", wlist);
 
 		boolean flag = false;
-		for (WishlistVO w : wlist) {
-			if(w.getLtNo() == lec) {
-				flag = true;
+		if(lec != null) {
+			for (WishlistVO w : wlist) {
+				if(w.getLtNo() == Integer.parseInt(lec)) {
+					flag = true;
+				}
+			}
+			if(!flag) {
+				WishlistVO wvo = new WishlistVO();
+				wvo.setLtNo(Integer.parseInt(lec));
+				wvo.setId(pri.getName());
+				wishListDao.heartInsert(wvo);
+				wlist = wishListDao.WishListSearch(vo);
 			}
 		}
-		if(lec != 0 && !flag) {
-			WishlistVO wvo = new WishlistVO();
-			wvo.setLtNo(lec);
-			wvo.setId(pri.getName());
-			wishListDao.heartInsert(wvo);
-		}
+		model.addAttribute("wishlists", wlist);
 
 		return "main/user/userWi";
 	}
