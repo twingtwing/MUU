@@ -18,7 +18,7 @@ thead {
 	background-color: lightgray;
 }
 
-tbody>tr {
+tbody > tr {
 	cursor: pointer;
 }
 
@@ -39,6 +39,7 @@ i.fa-heart-o {
 @keyframes rotate_image { 100% {
 	transform: rotate(360deg);
 }
+
 </style>
 </head>
 
@@ -86,7 +87,6 @@ i.fa-heart-o {
                     <div class="row mr-2" style="width:160px">
                       <ul class="list-group w-100">
                         <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                            <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
                           <a class="list-link" href="/user/userSelect">내 정보</a>
                         </li>
                         <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
@@ -121,92 +121,49 @@ i.fa-heart-o {
 												<thead class="text-center">
 												<tr>
 													<th style="width: 60px;">체크</th>
-													<th style="width: 300px;">강의사진test</th>
-													<th>강의제목</th>
+													<th style="width: 300px;">강의사진</th>
+													<th class="w-25">강의제목</th>
 													<th style="width: 120px;">강의비용</th>
-													<th>강의상태</th>
+													<th style="width: 88px">강의상태</th>
 												</tr>
 												</thead>
 												<tbody id="WishList">
-													<c:forEach items="${wishlists}" var="wishlist">
+												<c:if test="${empty wishlists}">
+													<tr>
+														<td colspan="5" class="text-center align-middle">위시리스트가 없습니다.</td>
+													</tr>
+												</c:if>
+												<c:forEach items="${wishlists}" var="wishlist">
 														<tr>
-															<td class="text-center align-middle"><input
-																onclick="FalseCheck(this)" type="checkbox" id="checkbox"
-																name="checkbox" class="form-check-input m-0 checkbox"
-																type="checkbox" value="${wishlist.ltNo }"></td>
+															<td id="ltNo" class="text-center align-middle">
+																<input onclick="FalseCheck(this)" type="checkbox" id="checkbox" 
+																name="checkbox" class="form-check-input m-0 checkbox" type="checkbox" value="${wishlist.ltNo }">
+																</td>
 															<td>
 																<div class="text-align-last:center">
 																	<img src="${wishlist.thumb }" alt="test중"
 																		class="rounded" style="height: 150px; width: 300px;">
 																</div>
 															</td>
-															<td class="text-center align-middle">${wishlist.ttl }</td>
-															<td class="text-center align-middle"><fmt:formatNumber>${wishlist.prc}</fmt:formatNumber>원</td>
+															<td class="text-center align-middle moveLecture">
+																<div style="display: inline-block; width: 250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${wishlist.ttl }</div>
+															</td>
+															<td class="text-right align-middle"><fmt:formatNumber>${wishlist.prc}</fmt:formatNumber>원</td>
 															<td class="text-center align-middle">${wishlist.ltStCode}</td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
 										</div>
-										<table style="display: none">
-											<thead class="text-center">
-											<tr>
-												<th style="width: 60px;">체크</th>
-												<th style="width: 300px;">강의사진test</th>
-												<th>강의제목</th>
-												<th style="width: 120px;">강의비용</th>
-												<th>강의상태</th>
-											</tr>
-											</thead>
-											<tbody id="sampleTr">
-												<tr>
-													<td id="check_sam" class="text-center align-middle"><input
-														onclick="FalseCheck(this)" type="checkbox" id="checkbox"
-														name="checkbox" class="form-check-input m-0 checkbox"
-														type="checkbox" value=""></td>
-													<td id="img_sam">
-														<div class="text-align-last:center">
-															<img src="" alt="test중" class="rounded"
-																style="height: 150px; width: 300px;">
-														</div>
-													</td>
-													<td id="ttl_sam" class="text-center align-middle">${wishlist.ttl }</td>
-													<td id="prc_sam" class="text-center align-middle"><fmt:formatNumber>${wishlist.prc }</fmt:formatNumber>원</td>
-													<td id="code_sam" class="text-center align-middle">${wishlist.ltStCode}</td>
-												</tr>
-											</tbody>
-										</table>
-										<div class="product__pagination d-flex justify-content-center">
-											<c:if test="${pagination.currRange ne 1}">
-												<a><i class="fa fa-angle-double-left"></i></a>
-											</c:if>
-											<c:forEach begin="${pagination.startPage }"
-												end="${pagination.endPage }" var="page">
-												<c:choose>
-													<c:when test="${page eq pagination.currPage}">
-														<a class="current-page paging">${page}</a>
-													</c:when>
-													<c:otherwise>
-														<a class="paging">${page}</a>
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-											<c:if
-												test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
-												<a><i class="fa fa-angle-double-right"></i></a>
-											</c:if>
-										</div>
 									</div>
 								</div>
-								<div class="row position-absolute"
-									style="right: 40px; bottom: 20px;">
+							</div>
+								<div class="row position-absolute" style="right: 40px; bottom: -1px">
 									<!-- onclick="location.href='./결제창.html'" -->
 									<button type="button" onclick="paymentCheck()" class="site-btn"
 										style="padding: 8px 20px;">결제</button>
-									<button type="button" onclick="deleteCheck()"
-										class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
+									<button type="button" onclick="deleteCheck()" class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
 								</div>
-							</div>
 							<!-- 본편 끝-->
 							<!--card body end-->
 						</div>
@@ -217,46 +174,13 @@ i.fa-heart-o {
 		</div>
 	</section>
 	<script>
-		// 일반 페이지네이션 함수
-		const normalPageAjax = (result) => {
-			$.ajax({
-					url: '/user/userWishListPage',
-					data: result,
-					contentType: 'application/json;charset=utf-8',
-				})
-				.done((res) => {
-					console.log(res)
-					removeAll();
-					changePage(res); 
-				})
-		}
-		
-		// 페이지네이션
-		$('.paging').click((e) => {
-			let pageNum = +e.currentTarget.textContent - 1;
-			const data = {page : pageNum, id : '${username}'};
-			normalPageAjax(data);
-			$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
-			$(e.currentTarget).addClass('current-page');
-		});
-		
-		// 페이지네이션 DOM 조작 함수
-		const removeAll = () => {
-			$('#WishList').children().remove();
-		}
-		const changePage = (res) => {
-			res.forEach((val) => {
-				console.log(val);
-					$('#sampleTr #check_sam input').val(val.ltNo);
-					$('#sampleTr #img_sam img').attr("src",val.thumb);
-					$('#sampleTr #ttl_sam').text(val.ttl);
-					$('#sampleTr #intro_sam').text(val.intro);
-					$('#sampleTr #prc_sam').text(val.prc+" 원");
-					$('#sampleTr #code_sam').text(val.ltStCode);
-					$('#WishList').append($('#sampleTr').html());
-			})
-		}
-		
+		 $('.moveLecture').click((e)=>{
+		  let ltNo = $(e.target).closest('tr').find('input').val()
+		  console.log($(e.target).closest('tr').find('input'))
+	      console.log(ltNo + "값들고 가냐?")
+ 	      location.href="/lecD?ltNo="+ltNo;
+	    });
+	
 		//check click 이벤트
 		function FalseCheck(event){
 		$(event).closest('tr').children().last()
@@ -272,7 +196,6 @@ i.fa-heart-o {
 		let token = "${_csrf.token}";
 		
 		let checkboxArr=[]
-		/* console.log($('.checkbox').is(':checked')); */
 		$("input[name=checkbox]:checked").each(function(){
 			let check = $(this).val();
 			console.log(check)
@@ -293,17 +216,27 @@ i.fa-heart-o {
             success : function(res){
             	console.log("성공")
             	location.reload();
+            },
+            error:function(){
+				alert("위시리스트에서 하나라도 체크해야 합니다.");        	
             }
         });
 	}
 		function paymentCheck(event){
+			console.log(event);
 			let header = "${_csrf.headerName}";
 			let token = "${_csrf.token}";
 			let checkboxArr=[];
+			
 			const ary = $("input[name=checkbox]:checked");
 			
 			//each/for 구문 돌려서 for var i of ary $(i).closest('tr').children().last().text() == '불가';
 			console.log(ary);
+			if(ary.length == 0){
+				alert("위시리스트에서 하나라도 체크해야 합니다.")
+				return;
+			}
+			
 			if(ary.length > 1){
 				alert("워시리스트에서 결제는 1개씨만 가능합니다.");
 				ary[0].checked=false;

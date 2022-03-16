@@ -157,12 +157,10 @@ public class LectureController {
 	@ResponseBody
 	public String classUploadTest(LectureVO vo, MultipartHttpServletRequest multi) {
 		List<MultipartFile> fileList = multi.getFiles("class");
-		System.out.println(fileList);
 		for (int i = 0; i < fileList.size(); i++) {
 			MultipartFile file = fileList.get(i);
 			if(file != null && file.getSize() > 0) {
 				String oriFileName = file.getOriginalFilename();
-				System.out.println(oriFileName);
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;				
 				
 				try {
@@ -292,7 +290,6 @@ public class LectureController {
 		if(list.isEmpty() != true) {
 			int listCnt = list.size();
 			model.addAttribute("listCnt", listCnt);
-			System.out.println(listCnt);
 		}
 		return "main/lecture/rpLecL";
 	}
@@ -352,7 +349,7 @@ public class LectureController {
 		for(int i = 0; i < filelist.size(); i++) {
 			if(filelist.get(i) != null) {
 				String oriFileName = filelist.get(i).getOriginalFilename();
-				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				String safeFile = saveDir + "/" + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
 					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 				} else if(i == 1) {
@@ -395,6 +392,13 @@ public class LectureController {
 	@ResponseBody
 	public void lecReInsert(LectureVO vo) {
 		lectureDao.lectureReInsert(vo);
+	}
+	
+	//임시저장 값 삭제
+	@RequestMapping("/creator/lecDelete")
+	public String lecDelete(LectureVO vo) {
+		lectureDao.lectureDelete(vo);
+		return "redirect:/creator/creS";
 	}
 
 }

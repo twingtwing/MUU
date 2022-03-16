@@ -35,7 +35,7 @@
 		WHERE ID = #{id}
 	<if test="regDateSearch != null and expDateSearch != null">
 		AND S.REG_DATE <![CDATA[>]]> #{regDateSearch}
-        AND S.EXP_DATE <![CDATA[<]]> #{expDateSearch}
+        AND S.REG_DATE <![CDATA[<]]> #{expDateSearch}
 	</if>
 		ORDER BY S.REG_DATE DESC) P LEFT OUTER JOIN REFUND R
         ON R.TLSN_NO = P.TLSN_NO
@@ -70,7 +70,7 @@
 		WHERE EXP_DATE <![CDATA[<]]> SYSDATE)
 	</select>
 	<select id="adminLecUserList" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
-		SELECT ROWNUM, W.* FROM (SELECT U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT
+		SELECT W.* FROM (SELECT ROWNUM RN, U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT
 		FROM SUGANG S JOIN USERS U
 		ON S.ID = U.ID
 		WHERE S.LT_NO = #{ltNo}
@@ -94,8 +94,8 @@
 		</if>
         ) W
         <![CDATA[ 
-		WHERE ROWNUM > (#{page}-1) * 10
-		AND ROWNUM <= #{page} * 10
+		WHERE RN > (#{page}-1) * 10
+		AND RN <= #{page} * 10
 		]]>
 	</select>
 	<select id="adminLecDeliver" resultType="co.makeu.up.sugang.service.SugangVO" parameterType="co.makeu.up.sugang.service.SugangVO">
@@ -141,6 +141,7 @@
 				  where lt_no = #{ltNo}
 				  and name LIKE '%'||#{nameSearchKey}||'%'
 				  AND ship_st_code LIKE '%'||#{shipStCodeSearchKey}||'%'
+				  and tlsn_st_code in ('SU01', 'SU03')
 				  order by tlsn_no desc) e)
 		where rn between (#{page}-1)*10 and 10*(#{page})
 	</select>
@@ -149,4 +150,8 @@
 		ship_st_code = #{shipStCode}, ship_num = #{shipNum}
 		where tlsn_no = #{tlsnNo}
 	</update>
+	<select id="selectSugang" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT * FROM SUGANG
+		WHERE TLSN_NO = #{tlsnNo}
+	</select>
 </mapper>

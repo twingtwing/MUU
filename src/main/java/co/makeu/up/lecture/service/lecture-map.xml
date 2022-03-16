@@ -22,21 +22,21 @@
 	</select>
 	<select id="openLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
-		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
 		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L01'
 		ORDER BY l.LT_NO DESC
 	</select>
 	<select id="closeLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
-		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
 		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L03'
 		ORDER BY l.LT_NO DESC
 	</select>
 	<select id="reportLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
-		(select count(*) from sugang s where l.lt_no = s.lt_no) as studentCount
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
 		FROM CNAMELECTURE l
 		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
 		ORDER BY l.LT_NO DESC
@@ -300,4 +300,8 @@
 		ON L.UP_CTGR = CU.CTGR_ID
 		WHERE L.LT_NO = #{ltNo}
 	</select>
+	<delete id="lectureDelete" parameterType="co.makeu.up.lecture.service.LectureVO">
+		delete from lecture
+		where lt_no = #{ltNo}
+	</delete>
 </mapper>

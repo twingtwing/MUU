@@ -222,11 +222,6 @@
                                     </thead>
                                         <!--크리에이터 정보 가져오기-->
                                         <tbody class="creatorListBoard">
-                                        <c:if test="${empty creators }">
-                                        <tr>
-                                        <td colspan="7">
-                                        검색 결과가 없습니다.</td></tr>
-                                        </c:if>
                                         <c:forEach items="${creators }" var="c">
                                         <tr>
                                             <td>${c.id }</td>
@@ -253,6 +248,11 @@
                                         </tr>
                                         </c:forEach>
                                         </tbody>
+                                         <c:if test="${empty creators }">
+                                        <tr>
+                                        <td colspan="7">
+                                        검색 결과가 없습니다.</td></tr>
+                                        </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
@@ -277,7 +277,6 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger">PDF다운</button>
                                         <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
@@ -380,14 +379,21 @@ $('.fa-rotate-180').click((e)=>{
 	})	
 	
 	    //가입날짜 시작날짜/마지막날짜 disable
-	    $('#firstJdate').change(function(){
-	        let firstJdate = $('#firstJdate').val();
-	        $('#lastJdate').attr('min', firstJdate);
+	    $('.pastDate').on('change', function(){
+	        let pastDate = $('.pastDate').val();
+	        $('.recentDate').attr('min', pastDate);
 	    })
 	    
-	    $('#lastJdate').change(function(){
-	        let lastJdate = $('#lastJdate').val();
-	        $('#firstJdate').attr('max', lastJdate);
+	    $('.recentDate').on('change', function(){
+	        let recentDate = $('.recentDate').val();
+	        $('.pastDate').attr('max', recentDate);
+	    })
+	    
+	    $(function(){
+	    	let date = new Date();
+	    	let today = date.toISOString().substring(0, 10);
+	    	$('.pastDate').attr('max', today);
+	    	$('.recentDate').attr('max', today);
 	    })
 	
 </script>         

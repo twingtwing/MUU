@@ -480,13 +480,18 @@ select {
     
                         <!--수업키트 금액 및 강의금액 입력란 / input type을 바꾸거나 백단에서 제한 둘 것-->
                         <div class="col-5 ml-3 mt-5 mb-5 align-self-center periodselect">
-                            <div class="mb-5">
+                            <div class="mb-2">
                                 <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요" title="키트금액란">
                             </div>
-                            <div class="mb-2">
-                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" placeholder="강의 금액을 입력해주세요" title="강의금액란">
+                            <div style="text-align:right;">
+                            	<h6 class="periodsub">*단위는 원</h6>
                             </div>
-                            <h6 class="periodsub">*만원단위이며 10~500만원 사이 금액만 등록 가능합니다.</h6>
+                            <div class="mt-5 mb-2">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" value="1000" placeholder="강의 금액을 입력해주세요" title="강의금액란">
+                            </div>
+                            <div style="text-align:right;">
+                            	<h6 class="periodsub">*단위는 원</h6>
+                            </div>
                         </div>
                     </div>
 
@@ -748,7 +753,7 @@ select {
     });
  
     function handleImgFileSelect(e) {
-    	$('.image-show > img').removeAttr('src');
+    	$('.image-show').removeAttr('src');
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
@@ -773,7 +778,7 @@ select {
     });
  
     function handleThImgFileSelect(e) {
-    	$('.thimage-show > img').removeAttr('src');
+    	$('.thimage-show').removeAttr('src');
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
@@ -794,17 +799,20 @@ select {
     
     //4페이지 유효성 검사(키트 null 가능)
     //키트금액 체크
-     $('#kitprc').on('keyup', function() {
+     $('#kitprc').on('keyup', function(obj) {
     	if ($('#kitname').val() == null || $('#kitname').val() == ''){
     		this.value = this.value.replace(this.value,'');
     		alert('키트에 대한 설명을 먼저 입력해주세요');
     	} else if (/\D/.test(this.value)) {
 			this.value = this.value.replace(/\D/g, '');
 			alert('숫자만 입력가능합니다.');
-		}		
-//    	let cmval = comma($(this).val());
-//    	$(this).val(cmval);
-//    	console.log($(this).val());
+		} else if (this.value < 1000) {
+			this.value = 1000;
+			alert('1000원 미만으로 등록할 수 없습니다');
+		} else if (this.value > 50000) {
+			this.value = 50000;
+			alert('50000만원을 초과할 수 없습니다');
+		}
 	});
     
     //키트 설명란 체크
@@ -813,7 +821,7 @@ select {
     		this.value = this.value.replace(this.value,'');
     		alert('키트명을 먼저 입력해주세요');
     	} else {
-    		//$('#kitprc').val('1000');
+    		$('#kitprc').val('1000');
     	}
 	});
     
@@ -821,15 +829,15 @@ select {
      $('#prc').on('keyup', function() {
 		if (/\D/.test(this.value)) {
 			this.value = this.value.replace(/\D/g, '');
-			alert('10~500만 입력가능합니다.');
+			alert('1000 ~ 300000 사이 값만 입력가능합니다.');
 		}
-		if (this.value < 10) {
-			this.value = 10;
-			alert('10만원 미만으로 등록할 수 없습니다');
+		if (this.value < 1000) {
+			this.value = 1000;
+			alert('1000원 미만으로 등록할 수 없습니다');
 		}
-		if (this.value > 500) {
-			this.value = 500;
-			alert('500만원을 초과할 수 없습니다');
+		if (this.value > 300000) {
+			this.value = 300000;
+			alert('300000만원을 초과할 수 없습니다');
 		}
 	});
 	
@@ -985,16 +993,15 @@ select {
         }
         
         //3페이지 영상 체크(OT필수로 넣도록)
-        else if($('#itemBoxWrap').hasClass('classUp') == false){
+        else if($('#itemBoxWrap').find('.classUp').length == 0){
         	alert('OT영상은 필수로 등록하여야합니다');
         	return false;
         }
-//        else if($('.classUp')[0].files[0] == null){
-//        	alert('OT영상은 필수로 등록하여야합니다');
-//        	return false;
-//        }
 		for(var i = 0; i < $('.classUp').length; i++){
-			if($('.classUp')[i].files[0] == null){
+			if($($('.classTtl')[i]).val() == ''){
+				alert('수업제목을 입력해주세요');
+				return false;
+			} else if($('.classUp')[i].files[0] == null){
 				alert('영상이 없는 수업이 있습니다');
 				return false;
 			}
@@ -1126,18 +1133,7 @@ const brDel = (e)=>{
 	return inputVal
 }
 
-//금액 콤마 생성/제거
-function comma(str) {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-}
 
-function uncomma(str) {
-    str = String(str);
-    return str.replace(/[^\d]+/g, '');
-}
-        
-         
 
 </script>
 </html>

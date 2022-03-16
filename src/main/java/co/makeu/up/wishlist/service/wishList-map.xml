@@ -9,15 +9,13 @@
 		ELSE '불가' END LT_ST_CODE
 		FROM LECTURE l JOIN WISHLIST w
 		ON l.lt_no = w.lt_no
-		WHERE ROWNUM <![CDATA[<=]]>5*(#{page}+1)
-		AND w.id=#{id})
-		WHERE RN <![CDATA[>=]]>(5*#{page})+1
+		where id=#{id})
 		order by lt_no DESC
 	</select>
 
-	<select id="WishListCnt" parameterType="Integer"
-		resultType="Integer">
+	<select id="WishListCnt" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM WISHLIST
+		where id=#{id}
 	</select>
 	
 	<delete id="deleteWishList">

@@ -40,6 +40,13 @@
     a{
     	cursor : pointer;
     }
+    .compl{
+    	width:30px;
+    }
+    .comple{
+    	width:40px;
+    }
+    
     
 </style>
 </head>
@@ -68,6 +75,7 @@
                   <div class="breadcrumb__links">
                       <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                       <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                      <span>${lecinfo.ttl }</span>
                   </div>
               </div>
           </div>
@@ -141,7 +149,7 @@
           <hr class="font-weight-bold">  
           <div class="row col-12 mb-5 ml-3">
             <!-- 제목 입력 / 제목 가져오기-->
-            <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+            <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
   
             <div class="row col-12">
               <div class="row col-12 mt-3 mb-3 justify-content-around">
@@ -164,7 +172,7 @@
             </div>
   
             <div class="row col-12 justify-content-end mt-3 mb-1">
-              <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색...">
+              <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색..." title="수강생 이름 입력">
               <button type="button" class="border px-4 mr-4" id="stBtn" onclick="stSearch()">검색</button>
                 <select id="shipcode" class="border px-4" onchange="stSearch()">
                   <option value="" selected>전체</option>
@@ -189,52 +197,59 @@
                 </thead>
                 <tbody>
                   <!-- for문 돌리기 -->
-                  <c:forEach items="${sglist }" var="list" varStatus="status">
-                  <tr data-toggle="modal" data-target="#stmodal" data-tlsnno="${list.tlsnNo }"
-                  data-name="${list.name }" data-lecttl="${lecinfo.ttl }"
-                  data-tel="${list.tel }" data-addr="${list.addr }"
-                  data-detaaddr="${list.detaAddr }" data-shipnum="${list.shipNum }"
-                  data-shipstcode="${shipStCode }" data-regdate="${list.regDate }"
-                  data-pay="${list.pay }">
-                    <td>${list.name }</td>
-                    <td><span>${list.regDate }<span> ~ <span>${list.expDate }</span></td>
-                    <td> ${list.prog }%</td>
-                    <c:if test="${list.rtnContent != null }">
-                    <td> ${list.rtnContent } </td>
-                    </c:if>
-                    <c:if test="${list.rtnContent == null || list.rtnContent == ''}">
-                    <td> -- </td>
-                    </c:if>
-                    <td class="position-relative" onclick="event.cancelBubble=true">
-	                    <c:if test="${list.shipStCode == 'D01' }">
-		                      <button class="border p-2 updateShip">배송 예정</button>
-		                      <div class="shipbox justify-content-center position-absolute">
-		                        <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
-		                        <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
-		                        <button class="border cancel">취소</button>
-		                      </div>
-	                     </c:if>
-	                     <c:if test="${list.shipStCode == 'D02' }">
-	                     	<span class="p-2 updateShip" style="cursor:default">배송 중</span>
-	                     </c:if>
-	                     <c:if test="${list.shipStCode == 'D03' }">
-	                     	<span class="p-2 updateShip" style="cursor:default">배송 완료</span>
-	                     </c:if>
-	                     <c:if test="${list.shipStCode == 'D05' }">
-	                   		 <button class="border p-2 updateShip">반송</button>
-	                         <div class="shipbox justify-content-center position-absolute">
-		                         <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
-		                         <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
-		                         <button class="border compl" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
-		                         <button class="border cancel">취소</button>
-	                         </div>
-	                     </c:if>
-	                     <c:if test="${list.shipStCode == 'D06' }">
-	                     	<span class="p-2 updateShip" style="cursor:default">반송 거부</span>
-	                     </c:if>
-                    </td>
-                  </tr>
-                  </c:forEach>
+                  <c:if test="${sglist == '[]' }">
+                  	<tr>
+                  		<td colspan="5">현재 수강중인 학생이 없습니다</td>
+                  	</tr>
+                  </c:if>
+                  <c:if test="${sglist != '[]' }">
+	                  <c:forEach items="${sglist }" var="list" varStatus="status">
+	                  <tr data-toggle="modal" data-target="#stmodal" data-tlsnno="${list.tlsnNo }"
+	                  data-name="${list.name }" data-lecttl="${lecinfo.ttl }"
+	                  data-tel="${list.tel }" data-addr="${list.addr }"
+	                  data-detaaddr="${list.detaAddr }" data-shipnum="${list.shipNum }"
+	                  data-shipstcode="${shipStCode }" data-regdate="${list.regDate }"
+	                  data-pay="${list.pay }">
+	                    <td>${list.name }</td>
+	                    <td><span>${list.regDate }<span> ~ <span>${list.expDate }</span></td>
+	                    <td> ${list.prog }%</td>
+	                    <c:if test="${list.rtnContent != null }">
+	                    <td> ${list.rtnContent } </td>
+	                    </c:if>
+	                    <c:if test="${list.rtnContent == null || list.rtnContent == ''}">
+	                    <td> -- </td>
+	                    </c:if>
+	                    <td class="position-relative" onclick="event.cancelBubble=true">
+		                    <c:if test="${list.shipStCode == 'D01' }">
+			                      <button class="border p-2 updateShip">배송 예정</button>
+			                      <div class="shipbox justify-content-center position-absolute">
+			                        <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
+			                        <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
+			                        <button class="border compl cancel">취소</button>
+			                      </div>
+		                     </c:if>
+		                     <c:if test="${list.shipStCode == 'D02' }">
+		                     	<span class="p-2 updateShip" style="cursor:default">배송 중</span>
+		                     </c:if>
+		                     <c:if test="${list.shipStCode == 'D03' }">
+		                     	<span class="p-2 updateShip" style="cursor:default">배송 완료</span>
+		                     </c:if>
+		                     <c:if test="${list.shipStCode == 'D05' }">
+		                   		 <button class="border p-2 updateShip">반송</button>
+		                         <div class="shipbox justify-content-center position-absolute">
+			                         <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
+			                         <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
+			                         <button class="border comple" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
+			                         <button class="border compl cancel">취소</button>
+		                         </div>
+		                     </c:if>
+		                     <c:if test="${list.shipStCode == 'D06' }">
+		                     	<span class="p-2 updateShip" style="cursor:default">반송 거부</span>
+		                     </c:if>
+	                    </td>
+	                  </tr>
+	                  </c:forEach>
+                  </c:if>
                 </tbody>
               </table>
             </div>
@@ -272,7 +287,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content p-3">
           <div class="modal-header">
-            <h5 class="modal-title"><span>박복자</span>수강생 결제내역</h5>
+            <h5 class="modal-title">수강생 결제내역</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

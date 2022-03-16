@@ -83,6 +83,7 @@
                     <div class="breadcrumb__links">
                         <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                        <span>${lecinfo.ttl }</span>
                     </div>
                 </div>
             </div>
@@ -159,7 +160,7 @@
                     <hr class="font-weight-bold">
                     <!-- 강의 하나에 대한 상세정보페이지-->
                     <div class="row col-12 mb-2 ml-3">
-                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">집에서 배우는...</strong></h5>
+                        <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
 
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
@@ -193,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <p> ${noinfo.content }</p>
+                                <p id="inputcontent">${noinfo.content}</p>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <c:if test="${not empty noinfo.fileList }">
@@ -236,6 +237,9 @@
             </div>
         </div>
     </div>
+    <form id="frma">
+    	<input class="sendltno" type="hidden" name="ltNo" value="">
+    </form>
     <form id="frm">
     	<input class="sendltno" type="hidden" name="ltNo" value="">
     	<input class="sendntno" type="hidden" name="ntNo" value="">
@@ -344,8 +348,8 @@ function goQna(e){
 //공지사항 페이지 이동
 function goNotice(e){
 	$('.sendltno').val(e);
-	$('#frm').attr("action", "/creator/cLecNL");
-	$('#frm').submit();
+	$('#frma').attr("action", "/creator/cLecNL");
+	$('#frma').submit();
 }
 //리뷰 페이지 이동
 function goReview(e){
@@ -376,6 +380,25 @@ $('#deleteNotice').on('click', function(){
 	$('#deleteFrm').attr("action", "/creator/cLecNdelete");
 	$('#deleteFrm').submit();
 })
+
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
 
 </script>
 </html>

@@ -29,6 +29,14 @@
         a {
         	cursor : pointer;
         }
+        table {
+        	table-layout : fixed;
+        }
+        td {
+        	text-overflow:ellipsis; 
+        	overflow:hidden; 
+        	white-space:nowrap;
+        } 
        
     </style>
 </head>
@@ -184,13 +192,19 @@
                                     </tr>
                                 </thead>
                                 <tbody id="mo" style="text-align:center">
+                                <c:if test="${qnalist == '[]'}">
+                                	<tr>
+                                		<td colspan="4">등록된 질문이 없습니다</td>
+                                	</tr>
+                                </c:if>
+                                <c:if test="${qnalist != '[]'}">
                                 	<c:forEach items="${qnalist}" var="list" varStatus="status">
 	                                    <tr data-toggle="modal" data-target="#qnamodal" 
 	                                    data-qcontent='${list.qContent }' data-qregdate='${list.qRegDate }'
 	                                    data-writer='${list.writer }' data-qnano='${list.qnaNo }'
 	                                    data-qnastcode='${list.qnaStCode }' data-acontent='${list.aContent }'
 	                                    style="cursor:pointer;">
-	                                        <td>${list.qContent }</td>
+	                                        <td id="qcontent">${list.qContent }</td>
 	                                        <td>${list.writer }</td>
 	                                        <td>${list.qRegDate }</td>
 	                                        <c:if test="${list.qnaStCode == 'Q01' }">
@@ -201,6 +215,7 @@
 	                                        </c:if>
 	                                    </tr>
 	                                </c:forEach>
+	                              </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -245,14 +260,14 @@
                     <div class="col-lg-12">
                         <div class="row mb-4 justify-content-between">
                             <div class="col-lg-9 pr-0" style="min-height: 103px;">
-                                <div class="w-100 h-100 p-2 d-flex align-items-center" style="border: 1px solid black;">
+                                <div class="h-100 p-2 d-flex align-items-center" style="border: 1px solid black; width:280px;">
                                     <p class="mb-0" id="inputQ"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 d-flex justify-content-end align-items-end pl-0"> 
                                 <div>
-                                    <p class="mb-0 text-right">작성자 : <strong id="inputWriter"></strong></p>
-                                    <p class="mb-0 text-right" id="inputQregdate"></p>
+                                    <p class="mb-0 text-left">작성자 : <strong id="inputWriter"></strong></p>
+                                    <p class="mb-0 text-left" id="inputQregdate"></p>
                                     <input type="hidden" id="inputqnaNo" value="">
                                 </div>
                             </div>
@@ -261,7 +276,7 @@
                             <div class="align-self-start" style="transform: rotate(180deg);">
                                 <i class="arrow_back" style="font-size: 70px;"></i>
                             </div>
-                            <textarea name="aw" id="qnAnswer" cols="30" rows="4" onkeypress="if(event.keyCode==13){aUpdate();}"></textarea> 
+                            <textarea name="aw" id="qnAnswer" cols="30" rows="4"></textarea> 
                             <button type="button" id="updateBtn" class="btn btn-outline-dark" onclick="aUpdate()">저장</button>
                         </div>
                     </div>
@@ -298,13 +313,22 @@ $(function(){
 
 //클릭한 QnA 정보
 $('#qnamodal').on('show.bs.modal', function(e){
-	$('#inputQ').text($(e.relatedTarget).data('qcontent'));
+	let acontent = $(e.relatedTarget).data('acontent');
+	acontent = brDel(acontent);
+	let qcontent = $(e.relatedTarget).data('qcontent');
+	qcontent = brDel(qcontent);
+	$('#inputQ').text(qcontent);
 	$('#inputWriter').text($(e.relatedTarget).data('writer'));
 	$('#inputQregdate').text($(e.relatedTarget).data('qregdate'));
 	$('#inputqnaNo').val($(e.relatedTarget).data('qnano'));
 	if($(e.relatedTarget).data('qnastcode')=='Q02'){
 		$('#updateBtn').attr('style','display:none');
-		$('#qnAnswer').val($(e.relatedTarget).data('acontent'));
+		$('#qnAnswer').val(acontent);
+		$('#qnAnswer').attr('readonly', true);
+	} else {
+		$('#updateBtn').attr('style','display:block');
+		$('#qnAnswer').val('');
+		$('#qnAnswer').attr('readonly', false);
 	}
 })
 
@@ -413,14 +437,14 @@ function qnasearch(){
 $(function(){
 	$('#qnayn option').prop('selected', false);
 	$('#qnasearch option').prop('selected', false);
-	if(${inputQnaStCode != ''}){
+	if('${inputQnaStCode}' != ''){
 		$($('#qnayn option[value="${inputQnaStCode}"]')).attr('selected', 'selected');
 	}
-	if(${inputContent != ''}){
+	if('${inputContent}' != ''){
 		$($('#qnasearch option[value="질문내용"]')).attr('selected', 'selected');
 		$('#qnainput').val('${inputContent}');
 	}
-	if(${inputWriter != ''}){
+	if('${inputWriter}' != ''){
 		$($('#qnasearch option[value="작성자"]')).attr('selected', 'selected');
 		$('#qnainput').val('${inputWriter}');
 	}
@@ -429,6 +453,7 @@ $(function(){
 //답변 업데이트
 function aUpdate(){
 	let aContent = $('#qnAnswer').val();
+	aContent = lineMaker(aContent);
 	let qnaNo = $('#inputqnaNo').val();
 	
 	$.ajax({
@@ -450,6 +475,31 @@ function aUpdate(){
 	})
 	
 }
+
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
+
+$(function(){
+	let tdval = $('#qcontent').text();
+	tdval = brDel(tdval);
+	$('#qcontent').text(tdval);
+})
+
 
 
     </script>

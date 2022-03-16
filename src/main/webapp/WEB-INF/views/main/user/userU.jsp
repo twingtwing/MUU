@@ -264,13 +264,11 @@ td, th {
         }
  
       const checkTel = ()=>{
-        const telreg = /^010\d{8}$/;
-        if(!telreg.test($('#tel').val())){
+  		const telreg = /^010\d{8}$/;
+        if($('#tel').val()&&!telreg.test($('#tel').val())){
           $('.alert').text('전화번호 양식을 지켜주세요.')
-          return false;
         } else {
           $('.alert').text('');
-          return true;
         }    	  
       }
       
@@ -281,15 +279,13 @@ td, th {
       // user info update
       $('#compl').click((e)=>{
     	 e.preventDefault();
-        if(!$('#detaAddr').val()){
+        if($('#sample4_roadAddress').val() && !$('#detaAddr').val()){
           $('.alert').text('상세 주소를 입력해주세요.');
           return;
         } else{
           $('.alert').text('');
         }
-        if(!checkTel()){
-        	return;
-        } else{        	
+        if(!$('.alert').text()){
         	$('.infoForm').submit();
         }
       })

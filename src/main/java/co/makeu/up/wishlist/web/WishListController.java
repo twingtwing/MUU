@@ -1,6 +1,7 @@
 package co.makeu.up.wishlist.web;
 
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -26,16 +27,30 @@ public class WishListController {
 	WishListServiceImpl wishListDao;
 
 	@GetMapping("/user/userWishList")
-	public String wishListSearch(Model model, Principal pri, WishlistVO vo) {
-		vo.setPage(0);
+
+	public String wishListSearch(Model model, Principal pri, WishlistVO vo, @RequestParam(value="lec", required=false) String lec) {
+	
 		vo.setId(pri.getName());
-		int listCnt = wishListDao.WishListCnt();
-		System.out.println(listCnt + " 있냐?");
-		PaginationFive pagination = new PaginationFive(listCnt,1);
 		List<WishlistVO> wlist = wishListDao.WishListSearch(vo);
 		model.addAttribute("ltno", vo.getLtNo());
-		model.addAttribute("pagination",pagination);
+
+		boolean flag = false;
+		if(lec != null) {
+			for (WishlistVO w : wlist) {
+				if(w.getLtNo() == Integer.parseInt(lec)) {
+					flag = true;
+				}
+			}
+			if(!flag) {
+				WishlistVO wvo = new WishlistVO();
+				wvo.setLtNo(Integer.parseInt(lec));
+				wvo.setId(pri.getName());
+				wishListDao.heartInsert(wvo);
+				wlist = wishListDao.WishListSearch(vo);
+			}
+		}
 		model.addAttribute("wishlists", wlist);
+
 		return "main/user/userWi";
 	}
 	
@@ -49,7 +64,6 @@ public class WishListController {
 	@ResponseBody
 	@RequestMapping("/user/deleteWishList")
 	public String deleteWishList(Principal pri,@RequestParam(value="ltNoArr[]") List<Integer> ltNoArr){
-		System.out.println("여기 오면 대박이야");
 		wishListDao.deleteWishList(ltNoArr, pri.getName());
 		return "redirect:/user/userWi";
 	}

@@ -82,6 +82,7 @@
 	                                <div class="row mb-2">
 	                                    <div class="col-lg-12">
 	                                        <div class="row p-2 w-100" style="background-color: #eeeeee; border-bottom: 1px solid black; border-top: 1px solid black;">
+                                				　
                                 				<c:if test="${not empty board.detaFileList }">
 		                                            <h6 class="mb-0"><i class="fa fa-download mx-1"></i></h6>
 		                                            <c:forEach items="${board.detaFileList }" var="file">
@@ -114,18 +115,15 @@
 
 
  <script>
- console.log('${board}');
  function btn(){
-	 
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
+	 	if(confirm("삭제하시겠습니까?.")){
 			var bNo = document.getElementById('bNo').innerHTML;
         	 $.ajax ({
             	 url:'/admin/deladbad',
             	 type:'post',
             	 data:{bNo:bNo,fileNo : '${board.fileNo}'},
             	 beforeSend: function(xhr) {
-         			xhr.setRequestHeader(header, token);
+         			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
          		},
             	 success:function(result){
             		 console.log(result)
@@ -139,8 +137,8 @@
             	 }
              })
         
- }   
-            
+ 		}   
+	 }
           
         </script>
 

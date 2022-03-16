@@ -18,6 +18,11 @@
 	color: red;
 	cursor: pointer;
 }
+
+#searchTest:hover p{
+	color:white;
+	font-weight: bold;
+}
 </style>
 </head>
 
@@ -57,7 +62,9 @@
 		<div class="container">
 			<div class="col-lg-12">
 				<div class="row ml-2">
-					<h3 class="font-weight-bold text-dark">F A Q</h3>
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-question"></i> F A Q
+					</h3>
 				</div>
 				<div class="row py-5">
 					<div class="col-lg-12">
@@ -238,17 +245,33 @@
 						<!--Tab 내용 끝-->
 					</div>
 				</div>
+				<hr>
 				<div class="col-lg-12">
-					<div class="row">
-						<div class="mt-5 ml-3 mb-3">
-							<input type="text" id="acontentSearch" name="acontent">
-							<button type="button" id="searchTest" v-on:click="search()">검색하기</button>
+					<div class="row mt-2">
+						<h3 class="font-weight-bold">
+							<i class="fa fa-search"></i> 검 색
+						</h3>
+					</div>
+					<div class="row justify-content-center">
+						<div class="mt-3 ml-3 mb-3">
+							<div class="blog__details__form pt-0 d-flex justify-content-end m-2">
+								<div class="row">
+								<form onsubmit="return false">
+									<div class="row mr-2">
+										<input id="acontentSearch" v-on:click="cursorSearch" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
+											<a id="searchTest" v-on:click="search()" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="height: 50px; width:70px;">
+												<p class="mb-0">검색</p>
+											</a>
+										</div>
+								</form>
+								</div>
+							</div>
 						</div>
 						<div v-if="searchFaqMore[0] == '검색없음'">
 							<h2>찾으시는 검색어는 존재하지 않습니다.</h2>
 						</div>
-						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12">
-							<div class="accordion" id="accordionExample">
+						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12" id="search">
+							<div class="accordion" id="accordionExampl">
 								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
 									<div class="card-header text-secondary bg-light" id="headingOne">
 										<h2 class="mb-0">
@@ -297,6 +320,9 @@
 
          },
          methods: {
+        	cursorSearch(){
+         		$(event.target).select();
+         	},
         	search(){
         	  let search = $('#acontentSearch').val()
           	  console.log(search);
@@ -311,6 +337,9 @@
       	      })
       	      .done(res =>{
       	    	  if(res !==null){
+      	    		console.log("나오기는 하냐?")
+      	    		this.searchFaqMore = [];
+      	    		this.searchFaq = [];
       	    		  if(res.length < 6){
       	    			  this.searchFaqMore = res;
       	    			  if(this.searchFaqMore[0] == null){
@@ -320,7 +349,6 @@
       	    			  }
       	    			  console.log('test1')
       	    		  }else{
-      	    			  console.log(res)
       	    			  for(var j = 0; j < 5; j++){
       	    				 console.log('test2')
       	    				this.searchFaqMore.push(res[j]);

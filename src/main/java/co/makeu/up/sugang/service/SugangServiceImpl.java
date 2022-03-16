@@ -79,4 +79,9 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.shipUpdate(vo);
 	}
 
+	@Override
+	public SugangVO selectSugang(int tlsnNo) {
+		return map.selectSugang(tlsnNo);
+	}
+
 }

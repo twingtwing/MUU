@@ -245,7 +245,6 @@
 							</div>
 						</div>
 						<div class="position-absolute" style="right: 10px; bottom: 35px">
-							<button class="btn btn-danger">PDF다운</button>
 							<button class="btn btn-success" id="excel">EXCEL다운</button>
 						</div>
 					</div>
@@ -367,6 +366,24 @@
 			$('#searchForm').submit();
 			$('#searchForm').attr('action','/admin/adLecAL');
 		})
+		
+		//가입날짜 시작날짜/마지막날짜 disable
+	    $('#start').on('change', function(){
+	        let pastDate = $('#start').val();
+	        $('#end').attr('min', pastDate);
+	    })
+	    
+	    $('#end').on('change', function(){
+	        let recentDate = $('#end').val();
+	        $('#start').attr('max', recentDate);
+	    })
+	    
+	    $(function(){
+	    	let date = new Date();
+	    	let today = date.toISOString().substring(0, 10);
+	    	$('#start').attr('max', today);
+	    	$('#end').attr('max', today);
+	    })
 
 	</script>
 </body>

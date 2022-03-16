@@ -46,7 +46,7 @@
 		SELECT L.*,NVL2(S.TLSN_NO,'Y','N') MY_SUGANG 
 		FROM LECT_DETA L LEFT JOIN (SELECT * FROM SUGANG 
 									WHERE ID = #{id} AND TLSN_ST_CODE = 'SU01'
-									AND EXP_DATE <![CDATA[>=]]> SYSDATE) S
+									AND TRUNC(EXP_DATE) <![CDATA[>=]]> TRUNC(SYSDATE)) S
 		ON L.LT_NO = S.LT_NO
 	</select>
 	
@@ -170,7 +170,7 @@
 	    FROM SUGANG S JOIN LECTURE L
 	    ON S.LT_NO = L.LT_NO
 	    <if test="time == 'week'">
-		    WHERE TRUNC(S.REG_DATE) BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+		    WHERE TO_CHAR(S.REG_DATE, 'YYYYMMDD') BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
 	    </if>
 	    <if test="time =='month'">
 		    WHERE TO_CHAR(S.REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
@@ -220,7 +220,7 @@
 	          	WHERE TO_CHAR(REG_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE -1,'YYYY-MM-DD')
               </if>
               <if test="time == 'week'">
-              	WHERE TRUNC(REG_DATE) BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+              	WHERE to_char(reg_date, 'YYYYMMDD') BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
               </if>
               <if test="time == 'month'">
               	WHERE TO_CHAR(REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
@@ -242,7 +242,7 @@
 	
 	<select id="randomLecture" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * 
-	    FROM(SELECT L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR
+	    FROM(SELECT L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR,L.LT_NO
 	         FROM LECTURE  L JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
 	                               FROM CTGR C JOIN CTGR U
 	                               ON C.UP_CTGR = U.CTGR_ID) C

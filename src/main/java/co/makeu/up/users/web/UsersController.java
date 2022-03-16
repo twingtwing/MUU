@@ -46,9 +46,12 @@ public class UsersController {
 	UsersServiceImpl usersDao;
 	@Inject
 	BCryptPasswordEncoder pwEncoder;
+	@Autowired
+	String saveDir;
 
 	@PostMapping("/login")
 	public void login(UsersVO vo) {
+		
 	}
 
 	@PostMapping("/logout")
@@ -119,6 +122,10 @@ public class UsersController {
 		model.addAttribute("id",email);
 		return "main/all/changePwForm";
 	}
+	@GetMapping("/user/userPwForm")
+	public String userPwForm(Principal pri) {
+		return "main/user/userPwForm";
+	}
 	
 
 	// 비밀번호 변경
@@ -127,6 +134,15 @@ public class UsersController {
 		vo.setPw(pwEncoder.encode(vo.getPw()));
 		usersDao.changePw(vo);
 		return "main/all/home";
+	}
+	@PostMapping("/user/changePw")
+	public String userChangePw(UsersVO vo, Principal pri) {
+		System.out.println(vo.getPw());
+		vo.setPw(pwEncoder.encode(vo.getPw()));
+		System.out.println(vo.getPw());
+		vo.setId(pri.getName());
+		usersDao.changePw(vo);
+		return "redirect:/user/userSelect";
 	}
 	
 	@GetMapping("/user/userSelect")
@@ -147,10 +163,9 @@ public class UsersController {
 	@PostMapping("/user/uploadProfile")
 	@ResponseBody
 	public void userUploadProfile(MultipartFile uploadFile, Principal pri, UsersVO vo,HttpServletResponse res, String beforeFileName) throws IOException {
-		String uploadFolder = "C:\\uploadTest";
+		String uploadFolder = saveDir;
 		SecureRandom r = new SecureRandom();
 		int num = r.nextInt(999999);
-		logger.info(beforeFileName);
 		// 기존에 있던 프로필사진 삭제
 		if(!beforeFileName.equals("no")) {			
 			File oldimg = new File(uploadFolder+"\\"+beforeFileName.substring(beforeFileName.lastIndexOf("/")+1));
@@ -160,6 +175,7 @@ public class UsersController {
 		String uploadFileName = uploadFile.getOriginalFilename();
 		uploadFileName = num+uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 		File saveFile = new File(uploadFolder,uploadFileName);
+		logger.info(uploadFolder);
 		String id = pri.getName();
 		try {
 			uploadFile.transferTo(saveFile);

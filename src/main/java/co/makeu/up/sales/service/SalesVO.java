@@ -56,6 +56,14 @@ public class SalesVO {
 	private String yearName;
 	private String monthId;
 	private String monthName;
+
+	private String searchYearFlag;
+	private String searchMonthFlag;
+	
+	private String orderYearColumn;
+	private String orderYearBy;		
+	private String orderMonthColumn;
+	private String orderMonthBy;	
 	
 	//FOR PAGE
 	private int length;

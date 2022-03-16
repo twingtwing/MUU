@@ -199,10 +199,9 @@
                                                             <div class="row">
                                                             	<div class="col-lg-12">
                                                             		<div class="row">
-	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
-                                                            		</div>
-                                                            		<div class="row justify-content-end mt-1">
-	                                                                	<small v-if="lecDetails.mySugang == 'Y'" class="font-weight-bold text-muted">해당 강의는 이미 수강중입니다.</small>
+	                                                                	<a v-if="id != lecDetails.creId && lecDetails.mySugang != 'Y'" :href="'/user/lecP?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">결제</a>
+	                                                                	<a v-if="lecDetails.mySugang == 'Y'" href="/user/userLectureList" class="btn btn-danger w-100" >수강 목록 이동</a>
+	                                                                	<a v-if="id == lecDetails.creId" :href="'/creator/oLecS?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">강의 이동</a>
                                                             		</div>
                                                             	</div>
                                                             </div>
@@ -306,6 +305,7 @@
                 	ctgrList : {},
                 	noticeList : [],
                 	moreNotice : [],
+                	id : '',
                 }
             },
             computed:{
@@ -373,6 +373,11 @@
                     	$(event.target).closest('form').find('.lecErr').removeClass('d-none');
 
                     }else{
+                    	if(this.id == null){
+                    		alert("강의 신고을 위해 먼저 로그인 하셔야합니다.");
+                    		location.href="/customLogin";
+                    		return ;
+                    	}
                     	if(this.lecDetails.mySugang == 'N'){//수강신청자 여부
                     		alert("강의 신고을 위해 먼저 강의를 신청하셔야 합니다.");
                     		$('#lecReport').modal('hide');
@@ -415,6 +420,7 @@
             	fetch('/lectureNotice?ltNo='+'${ltNo}')
                 .then(response => response.json())
                 .then(result => {
+                	this.id = result.id;
                 	this.lecDetails = result.lectureDetail;
                 	this.ctgrList = result.ctgrList[0];
                 	if(result.noticeList != null){

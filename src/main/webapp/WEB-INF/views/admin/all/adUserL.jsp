@@ -229,11 +229,6 @@
                                         </tr>
                                     </thead>
                                     <tbody class="userListBoard">
-                                    	<c:if test="${empty users }">
-                                        <tr>
-                                        <td colspan="7">
-                                        검색 결과가 없습니다.</td></tr>
-                                        </c:if>
                                         <c:forEach items="${users}" var="user">
 	                                        <tr id="ho">
 	                                            <td>${user.id }</td>
@@ -260,6 +255,11 @@
 	                                        </tr>
                                         </c:forEach>
                                     </tbody>
+                                    <c:if test="${empty users }">
+                                        <tr>
+                                        <td colspan="7">
+                                        검색 결과가 없습니다.</td></tr>
+                                    </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
@@ -284,7 +284,6 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger" id="pdf">PDF다운</button>
                                         <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
@@ -388,6 +387,24 @@ $('#usersSearch').click(()=>{
 		$('#userId').val(id);
 		$('#userSelectForm').submit();
 	})
+	
+	//가입날짜 시작날짜/마지막날짜 disable
+    $('.pastDate').on('change', function(){
+        let pastDate = $('.pastDate').val();
+        $('.recentDate').attr('min', pastDate);
+    })
+    
+    $('.recentDate').on('change', function(){
+        let recentDate = $('.recentDate').val();
+        $('.pastDate').attr('max', recentDate);
+    })
+    
+    $(function(){
+    	let date = new Date();
+    	let today = date.toISOString().substring(0, 10);
+    	$('.pastDate').attr('max', today);
+    	$('.recentDate').attr('max', today);
+    })
 </script>
 </body>
 </html>

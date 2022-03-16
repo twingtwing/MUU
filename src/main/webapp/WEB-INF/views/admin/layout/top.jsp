@@ -38,14 +38,8 @@
                     <a href="/home" class="text-white font-weight-bold" style="list-style-type: none; font-size: 1.125rem">홈페이지로 <i class="mx-2 mdi mdi-home"></i></a>        
                     <ul class="navbar-nav">           
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/resources/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/resources/img/profile.png" alt="user" class="rounded-circle" width="31" height="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:logout.submit()"><i class="fa fa-power-off m-r-5 m-l-5"></i> 로그아웃</a>
                                 <form action="/logout" method="post" id="logout">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

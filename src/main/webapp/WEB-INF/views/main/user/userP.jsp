@@ -117,6 +117,19 @@
                       <div>
                         <!-- 카드 반복 시작-->
                         <!-- 배송현황에는 구매확정이 안된 데이터들만 보이게 합니다. -->
+                        <c:if test="${empty delInfo}">
+                        	<div class="card" style="border-radius: 10px;">
+                          		<div class="card-body">
+                            		<div class="row">
+                              			<div class="col-lg-12">
+                                  			<div class="d-flex justify-content-center">
+                                  				<div class="text-center align-middle">배송 내역이 없습니다.</div>
+                                  			</div>
+                                  		</div>
+                                  </div>
+                      			</div>
+                      		</div>	  
+						</c:if>
                         <c:forEach items="${delInfo }" var="del">
                         <div class="card" style="border-radius: 10px;">
                           <div class="card-body">
@@ -165,8 +178,10 @@
                                     </div>
                                   </div>
                                   <div class="col-lg-2 align-self-end">
+                                  <c:if test="${del.shipStCode ne 'D05' }">
                                     <button type="button" class="site-btn mb-2 confirmBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }" >구매확정</button>
                                     <button type="button" class="site-btn refundBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }">반송신청</button>
+                                  </c:if>
                                   </div>
                                 </div>
                               </div>
@@ -180,7 +195,8 @@
                   </div>
                   <div class="row">
                     <div class="col-lg-12">
-                      <div class="mt-5 mb-2 d-flex justify-content-end">
+                      <div class="mt-5 mb-2 d-flex justify-content-end align-items-center">
+                        <span class="small mx-2 text-secondary"> (결제일 기준) </span>
                         <div class="form-group mb-0">
                           <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" id="date1">
@@ -201,6 +217,7 @@
                             </div>
                           </div>
                         </div>
+                        <button class="border p-2 ml-2" id="dateSearch">검색</button>
                       </div>
                       <table class="table border-bottom">
                         <thead class="text-center">
@@ -214,6 +231,11 @@
                         </tr>
                         </thead>
                         <tbody class="myPayList"> 
+                        <c:if test="${empty payInfo}">
+                        	<tr>
+                        		<td colspan="6" class="text-center align-middle">결제 내역이 없습니다.</td>
+                        	</tr>
+                        </c:if>
                         <c:forEach items="${payInfo }" var="pay" varStatus="st">   
                           <tr <c:if test="${st.count > 4 }">class="hided"</c:if>>
                             <td class="p-0">
@@ -247,7 +269,9 @@
                           </c:forEach>   
                         </tbody>
                       </table>
-                    <div class="more text-center">더보기</div>            
+               <c:if test="${payCnt  > 6}">              
+                  <div class="more text-center">더보기</div>            
+               </c:if>
                   </div>
                 </div>
               </div>
@@ -281,13 +305,10 @@
     });
 
     // 더보기
-    $('.more').click(()=>{
+    $('.more').click((e)=>{
     	let cards = document.querySelectorAll('.hided');
     	for(let i=0; i<6; i++){
-    		if(cards[i]){
-    		cards[i].classList.remove('hided');    			
-    		}
-    		console.log(cards[i])
+	    	cards.length == 0 ? e.currentTarget.remove() : cards[i].classList.remove('hided')
     	}
     })
     
@@ -308,7 +329,7 @@
 		    	node.remove();    		
 	    	} else if(data.shipStCode==='D05'){
 	    		$(node).addClass('bg-warning');
-	    		$(node).text('반송 신청됨')
+	    		$(node).text('반송 신청됨');
 	    	}
     	})
     }
@@ -324,17 +345,21 @@
     	let data = {tlsnNo : num, shipStCode : 'D05'};
     	let node = e.currentTarget.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling;
     	shipStateUpdate(data,'반송 신청이 접수되었습니다.', node);
+    	e.currentTarget.previousElementSibling.remove();
+    	e.currentTarget.remove();
+    	
     })
     
     
     // 날짜검색
-    $('#date2').on('input', (e)=>{
-    	if(!$('#date1').val()){
+    $('#dateSearch').on('click', (e)=>{
+    	if(!$('#date1').val() || !$('#date2').val()){
+    		window.alert('날짜를 입력해주세요.')
     		return;
     	}
     	$.ajax({
     		url : '/user/userPaySearch',
-    		data : {regDateSearch : new Date($('#date1').val()).toISOString().slice(0,10), expDateSearch : new Date($('#date2').val()).toISOString().slice(0,10)},
+    		data : {regDateSearch : $('#date1').val(), expDateSearch : $('#date2').val()},
     	})
     	.done((r)=>{
     		removeAll();

@@ -44,6 +44,11 @@
 	<section id="inquiry_insert" class="blog spad">
 		<div class="container">
 			<div class="col-lg-12">
+				<div class="row ml-1 mb-3">
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-rocketchat"></i> 문 의 글
+					</h3>
+				</div>
 				<div class="d-flex justify-content-start border-bottom border-dark">
 					<h5 class="font-weight-bold mb-2">01 고객동의</h5>
 				</div>
@@ -72,12 +77,11 @@
 					<h5 class="font-weight-bold mb-2">02 문의입력</h5>
 				</div>
 				<div class="mt-4">
-
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.username"
 							var="username" />
 					</security:authorize>
-					<div class="border-left border-danger">
+					<div>
 						아이디 : ${username} <input v-model="inputid"
 							data-id=${username
 							} placeholder="${username}"
@@ -91,13 +95,13 @@
 					<div class="form-group mt-3">
 						<label for="content">문의 내용</label>
 						<textarea style="white-space: pre-line" v-model="inputContent"
-							class="form-control" name="content" id="content" cols="30"
+							class="form-control" spellcheck="false" name="content" id="content" cols="30"
 							rows="10"></textarea>
 					</div>
 					<div>답변 이메일</div>
 					<div class="form-group ml-1 mt-3 row ">
-						<input name="email1" id="emailId" type="text" v-model="inputEmailID"> @
-						<input name="email2" id="emailType" type="text" v-on:keyup="chageEvent()" v-model="inputEmailType" >
+						<input name="email1" id="emailId" spellcheck="false" type="text" v-model="inputEmailID"> @
+						<input name="email2" id="emailType" spellcheck="false" type="text" v-on:keyup="chageEvent()" v-model="inputEmailType" >
 						<div class="ml-3">
 								<select v-model="inputEmailType">
 								  <option disabled value="">선택하세요</option>
@@ -198,31 +202,37 @@
                     console.log("이메일타입 " + this.inputEmailType);
                     console.log("아이디 " + this.inputid);
                     //location.href ="상세페이지?ltNo="+this.lectures[index].ltNo;
-
-                    let intro = this.inputContent;
-        	   		intro = intro.replace(/\r\n/ig,'<br>');
-        	   		intro = intro.replace(/\\n/ig,'<br>');
-        	   		intro = intro.replace(/\n/ig,'<br>');
-        	   		
-                   $.ajax({
-            		url : '/QstInsert',
-            		type : 'post',
-            		datatype : 'json',
-            		beforeSend: function(xhr) {
-            			xhr.setRequestHeader(header, token);
-            		},
-            		data : {
-            			ttl: this.inputTitle,
-               		    content : intro,
-               		    writer : this.inputid,
-               		  	email : this.inputEmailID + "@" + this.inputEmailType
-            		},
-            		success: function(jqXHR) {
-            			console.log("성공")
-            			alert("문의해주셔서 감사합니다.")
-            			location.href="/home"
-            		}
-            	})
+					
+                    if(this.inputTitle != '' && this.inputContent != '' && this.inputEmailID != ''
+                    	&& this.inputEmailType != ''){
+                    	let intro = this.inputContent;
+            	   		intro = intro.replace(/\r\n/ig,'<br>');
+            	   		intro = intro.replace(/\\n/ig,'<br>');
+            	   		intro = intro.replace(/\n/ig,'<br>');
+            	   		
+                       $.ajax({
+                		url : '/QstInsert',
+                		type : 'post',
+                		datatype : 'json',
+                		beforeSend: function(xhr) {
+                			xhr.setRequestHeader(header, token);
+                		},
+                		data : {
+                			ttl: this.inputTitle,
+                   		    content : intro,
+                   		    writer : this.inputid,
+                   		  	email : this.inputEmailID + "@" + this.inputEmailType
+                		},
+                		success: function(jqXHR) {
+                			console.log("성공")
+                			alert("문의해주셔서 감사합니다.")
+                			location.href="/home"
+                		}
+                	})
+                    	
+                    }else{
+                    	alert("작성하지 않은 부분이 존재합니다.")
+                    }
                 },
             },
             beforeCreate: function () {

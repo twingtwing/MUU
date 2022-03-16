@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group mt-3">
-                                    <textarea class="form-control"  rows="25" id="cont" name="cont">${board.content}</textarea>
+                                    <textarea class="form-control" spellcheck="false"  rows="25" id="cont" name="cont">${board.content}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -102,6 +102,13 @@
                 <!-- 바디 끝 -->
              <script type="text/javascript">
 				
+         	(function (){
+         		var con = document.getElementById('cont').value;
+         		var conn = con.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
+         		document.getElementById('cont').value = conn;
+         		console.log(conn);
+         	})()
+         	
         	 const lineMaker = ()=>{
       		   let intro = $('#cont').val();
       		   intro = intro.replace(/\r\n/ig,'<br>');
@@ -110,7 +117,6 @@
       		   $('#cont').val(intro);
       		   
       		}
-         
              
              
              

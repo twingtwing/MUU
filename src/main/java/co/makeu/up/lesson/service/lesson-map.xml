@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.lesson.service.LessonMapper">
+
 	<select id="lessonList" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
 		SELECT * FROM LESSON WHERE LT_NO = #{ltNo} ORDER BY 1
 	</select>
+	
 	<select id="ajaxLessonSelect" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
 		SELECT * FROM LESSON WHERE SERIAL_NO = #{serialNo}
 	</select>
@@ -21,12 +23,20 @@
 		AND (P.ID = #{id} OR P.PROG_PCT IS NULL)
 		ORDER BY L.SERIAL_NO
 	</select>
+	
 	<select id="LessonOTselect" parameterType="Integer" resultType="co.makeu.up.lesson.service.LessonVO">
 		SELECT * FROM LESSON
 		WHERE LT_NO = #{ltNo}
 		AND LSN_NO = 1
 	</select>
-	<update id="lessonUpdate">
+	
+	<delete id="delLesson" parameterType="co.makeu.up.lesson.service.LessonVO">
+		DELETE FROM LESSON
+		WHERE LT_NO = #{ltNo}
+		AND LSN_NO > #{lsnNo}
+	</delete>
+	
+	<update id="lessonUpdate" parameterType="java.util.List">
 	begin
 	<foreach collection="list" item="item">
 		merge into
@@ -37,11 +47,11 @@
 		          update set 
 		                ttl = #{item.ttl},
 		                lsn_file = #{item.lsnFile},
-		                mod_date = sysdate
+		                mod_date = trunc(sysdate)
 		      when not matched then
 		          insert(serial_no, ttl, lsn_file, lt_no, reg_date, mod_date, lsn_no)
 		          values((SELECT NVL(MAX(SERIAL_NO), 0)+1 FROM LESSON), #{item.ttl}, #{item.lsnFile}, 
-		          #{item.ltNo}, sysdate, null, (SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON where lt_no = #{item.ltNo}));
+		          #{item.ltNo}, TRUNC(sysdate), null, (SELECT NVL(MAX(LSN_NO), 0)+1 FROM LESSON where lt_no = #{item.ltNo}));
 	</foreach>
 	end;
 	</update>

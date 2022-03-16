@@ -10,4 +10,6 @@ public interface LessonMapper {
 	int lessonUpdate(List<LessonVO> list);
 	LessonVO LessonOTselect(int ltNo);
 	
+	int delLesson(LessonVO vo);
+	
 }

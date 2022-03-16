@@ -206,6 +206,11 @@
                                         </tr>
                                     </c:forEach>
                                     </tbody>
+                                    <c:if test="${empty qstList }">
+                                    	<tr>
+                                    		<td colspan="5">결과가 없습니다.</td>
+                                    	</tr>
+                                    </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
@@ -230,7 +235,6 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="right: 1px;">
-                                        <button class="btn btn-danger">PDF다운</button>
                                         <button class="btn btn-success" id="excel">EXCEL다운</button>
                                     </div>
                                 </div>
@@ -343,6 +347,24 @@ $('.page-item').click((e)=>{
 $('#zero_config_next').click((e)=>{
 	setSearchData(${pages.pageCnt});
 	$('#searchForm').submit();
+})
+
+//가입날짜 시작날짜/마지막날짜 disable
+$('.startDate').on('change', function(){
+    let pastDate = $('.startDate').val();
+    $('.endDate').attr('min', pastDate);
+})
+
+$('.endDate').on('change', function(){
+    let recentDate = $('.endDate').val();
+    $('.startDate').attr('max', recentDate);
+})
+
+$(function(){
+	let date = new Date();
+	let today = date.toISOString().substring(0, 10);
+	$('.startDate').attr('max', today);
+	$('.endDate').attr('max', today);
 })
 </script>
 </body>

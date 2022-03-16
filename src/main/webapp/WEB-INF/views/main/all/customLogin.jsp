@@ -90,27 +90,11 @@
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</form>
 					</div>
-					<div class="login__social pt-0">
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="login__social__links">
-									<ul>
-										<li><a href="#" class="kakao"><i
-												class="fa fa-facebook"></i>카카오톡으로 시작하기</a></li>
-										<li><a href="#" class="naver"><i
-												class="fa fa-twitter"></i>네이버로 시작하기</a>
-										<li><a href="#" class="google"><i
-												class="fa fa-google"></i>구글로 시작하기</a></li>
-
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<hr>
-				<div class="row d-flex justify-content-center">
+				<div class="d-flex justify-content-center mt-5">
 					<div class="login__register">
+						<span class="small mt-3">계정이 없으신가요?</span>
 						<h3 style="color: black;">회원가입 👇</h3>
 						<a href="/signupForm" class="primary-btn">회원가입</a>
 					</div>

@@ -177,7 +177,6 @@
 		                                    </div>
 		                                    <div class="position-absolute" style="right: 1px;">
 		                                        <button id="faqInsert" class="btn btn-dark">글 등록</button>
-		                                        <button class="btn btn-danger">PDF다운</button>
 		                                        <button class="btn btn-success" id="excel">EXCEL다운</button>
 		                                    </div>
 		                                </div>
@@ -267,7 +266,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -277,7 +276,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -333,7 +332,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -343,7 +342,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -590,6 +589,24 @@
 			$('#searchForm').find("input[name='pageNum']").val($(this).attr("href"));
 			$('#searchForm').submit();
 		});
+		
+		//가입날짜 시작날짜/마지막날짜 disable
+	    $('#start').on('change', function(){
+	        let pastDate = $('#start').val();
+	        $('#end').attr('min', pastDate);
+	    })
+	    
+	    $('#end').on('change', function(){
+	        let recentDate = $('#end').val();
+	        $('#start').attr('max', recentDate);
+	    })
+	    
+	    $(function(){
+	    	let date = new Date();
+	    	let today = date.toISOString().substring(0, 10);
+	    	$('#start').attr('max', today);
+	    	$('#end').attr('max', today);
+	    })
 	</script>
 </body>
 </html>

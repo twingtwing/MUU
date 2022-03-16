@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -240,7 +241,9 @@
                 </c:choose>
                 </c:if>
                </c:forEach> 
+               <c:if test="${length > 6}">
                 <div class="text-secondary small" style="cursor:pointer;" id="more">더보기</div>              
+               </c:if>
               </div>  
             </div>
           </div>         
@@ -313,7 +316,7 @@
           <span class="fas fa-star gr" data-num="3"></span>
           <span class="fas fa-star gr" data-num="4"></span>
         </h2>
-        <textarea spellcheck="false" class="m-5 p-3 bg-white border wrbox" placeholder="리뷰를 작성해주세요"></textarea>
+        <textarea spellcheck="false" class="m-5 p-3 bg-white border wrbox" placeholder="리뷰를 작성해주세요" maxlength="200"></textarea>
         <div class="d-flex justify-content-center align-items-center">
           <button class="btn border mx-2" id="modalY">작성</button>
           <button class="btn border mx-2" type="button" data-dismiss="modal">취소</button>
@@ -380,8 +383,20 @@
     // 리뷰작성 ajax
     $('#modalY').click((e)=>{
       if(num===0){
+    	  window.alert('별점을 매겨주세요.')
     	  return;
       }
+      // 길이제한
+      let length = $('.wrbox').val()?.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+  	  if(length>=200){
+  		window.alert('200자 이내로 작성해주세요.');
+  		return;
+  	  }
+  	  if(!$('.wrbox').val()){
+  		  window.alert('내용을 입력해주세요.');
+  		  return;
+  	  }
+      
       if($('#modalY').text()==='작성'){
 	      $.ajax({
 	    	  url : '/user/userLRWrite',
