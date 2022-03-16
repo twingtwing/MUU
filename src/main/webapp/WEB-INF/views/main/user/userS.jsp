@@ -218,7 +218,7 @@ td, th {
 										<button class="border px-4 py-2 rounded"
 											onclick="location.href='/user/userUpdate'">회원정보수정</button>
 										<button class="border rounded px-4 -y-2" onclick="location.href='/user/userPwForm'">비밀번호 변경</button>
-										<button class="px-4 py-2 bg-danger rounded" id="out" style="color:white;">탈퇴</button>
+										<button class="px-4 py-2 bg-danger rounded" id="out" style="color:white;border:none;">탈퇴</button>
 									</div>
 								</div>
 								<!--card body end-->
