@@ -117,6 +117,19 @@
                       <div>
                         <!-- 카드 반복 시작-->
                         <!-- 배송현황에는 구매확정이 안된 데이터들만 보이게 합니다. -->
+                        <c:if test="${empty delInfo}">
+                        	<div class="card" style="border-radius: 10px;">
+                          		<div class="card-body">
+                            		<div class="row">
+                              			<div class="col-lg-12">
+                                  			<div class="d-flex justify-content-center">
+                                  				<div class="text-center align-middle">배송 내역이 없습니다.</div>
+                                  			</div>
+                                  		</div>
+                                  </div>
+                      			</div>
+                      		</div>	  
+						</c:if>
                         <c:forEach items="${delInfo }" var="del">
                         <div class="card" style="border-radius: 10px;">
                           <div class="card-body">
@@ -218,6 +231,11 @@
                         </tr>
                         </thead>
                         <tbody class="myPayList"> 
+                        <c:if test="${empty payInfo}">
+                        	<tr>
+                        		<td colspan="6" class="text-center align-middle">결제 내역이 없습니다.</td>
+                        	</tr>
+                        </c:if>
                         <c:forEach items="${payInfo }" var="pay" varStatus="st">   
                           <tr <c:if test="${st.count > 4 }">class="hided"</c:if>>
                             <td class="p-0">

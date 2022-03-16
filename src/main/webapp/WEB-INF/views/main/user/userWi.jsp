@@ -128,7 +128,12 @@ i.fa-heart-o {
 												</tr>
 												</thead>
 												<tbody id="WishList">
-													<c:forEach items="${wishlists}" var="wishlist">
+												<c:if test="${empty wishlists}">
+													<tr>
+														<td colspan="5" class="text-center align-middle">위시리스트가 없습니다.</td>
+													</tr>
+												</c:if>
+												<c:forEach items="${wishlists}" var="wishlist">
 														<tr>
 															<td id="ltNo" class="text-center align-middle">
 																<input onclick="FalseCheck(this)" type="checkbox" id="checkbox" 
@@ -153,7 +158,7 @@ i.fa-heart-o {
 									</div>
 								</div>
 							</div>
-								<div class="row position-absolute" style="right: 40px; bottom: 1px">
+								<div class="row position-absolute" style="right: 40px; bottom: -1px">
 									<!-- onclick="location.href='./결제창.html'" -->
 									<button type="button" onclick="paymentCheck()" class="site-btn"
 										style="padding: 8px 20px;">결제</button>
