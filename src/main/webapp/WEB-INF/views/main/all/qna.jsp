@@ -44,6 +44,11 @@
 	<section id="inquiry_insert" class="blog spad">
 		<div class="container">
 			<div class="col-lg-12">
+				<div class="row ml-1 mb-3">
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-rocketchat"></i> 문 의 글
+					</h3>
+				</div>
 				<div class="d-flex justify-content-start border-bottom border-dark">
 					<h5 class="font-weight-bold mb-2">01 고객동의</h5>
 				</div>
