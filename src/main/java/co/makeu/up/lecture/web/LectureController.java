@@ -352,7 +352,7 @@ public class LectureController {
 		for(int i = 0; i < filelist.size(); i++) {
 			if(filelist.get(i) != null) {
 				String oriFileName = filelist.get(i).getOriginalFilename();
-				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				String safeFile = saveDir + "/" + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
 					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 				} else if(i == 1) {

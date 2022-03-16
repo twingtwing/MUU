@@ -6,15 +6,11 @@
 <head>
 <meta charset="UTF-8">
 	<style>
-        .product__item__pic{
-            cursor: pointer;
-        }
         .section-title h4,.product__sidebar .section-title h5, .product__item__text h5 a
-        ,.product__sidebar__comment__item__text h5 a,.primary-btn{
+        ,.product__sidebar__comment__item__text h5 a,.primary-btn, .product__sidebar__view__item h5 a{
             color: black;
         }
-
-
+        
         .product__item__text ul li,.product__sidebar__comment__item__text ul li{
             background-color: rgb(201 175 175) ;
         }

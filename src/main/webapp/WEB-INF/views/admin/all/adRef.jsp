@@ -36,10 +36,10 @@ table tr, table td {
 	text-decoration: underline;
 }
         
-        .fa-caret-down{
-        	cursor: pointer;
-        	float: right;
-        }
+.fa-caret-down{
+    cursor: pointer;
+    float: right;
+}
 </style>
 </head>
 <body>
@@ -236,7 +236,7 @@ table tr, table td {
 												<c:if test="${adminRefundList.rfStCode eq 'RF03'}">
 													<td style="display: none;">환불불가</td>
 												</c:if>
-												<td style="display: none;"><fmt:formatNumber>${adminRefundList.pay }</fmt:formatNumber>워ㅕㄴ</td>
+												<td style="display: none;"><fmt:formatNumber>${adminRefundList.pay }</fmt:formatNumber>원</td>
 												<td>
 													<div class="name">${adminRefundList.content }</div>
 												</td>

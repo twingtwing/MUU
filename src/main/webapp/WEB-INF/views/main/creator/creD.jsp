@@ -52,7 +52,7 @@
                     <div class="col-lg-12 text-center">
                         <div class="normal__breadcrumb__text">
                             <h2>크리에이터 정보</h2>
-                            <p>크리에이터 이름</p>
+                            <p>{{creDetail.name}}</p>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <div class="col-lg-12">
                         <div class="breadcrumb__links">
                             <a href="/Home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
-                            <span>크리에이이터 이름</span>
+                            <span>{{creDetail.name}}</span>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
 	                                        <p class="mb-0">총 강의 수 : {{creDetail.openCount + creDetail.reportCount +creDetail.closeCount}}개</p>
 	                                    </div>
 	                                    <div class="creIntro ml-3 border-danger">
-	                                        <p class="mb-0">{{creDetail.creIntro}}</p>
+	                                        <p class="mb-0" v-html="creDetail.creIntro"></p>
 	                                    </div>
                                 	</div>
                                 </div>
@@ -118,7 +118,7 @@
                     <hr class="font-weight-bold">
                     <div class="row py-3">
                         <div class="col-lg-12">
-                            <p class="font-weight-bold ml-3"><i class="fa fa-hashtag text-danger"></i> 니님의 강의 <b class="text-danger">LIST</b>&nbsp;({{creDetail.lectureList.length}}개)</p>
+                            <p class="font-weight-bold ml-3"><i class="fa fa-hashtag text-danger"></i>{{creDetail.name}}님의 강의 <b class="text-danger">LIST</b>&nbsp;({{creDetail.lectureList.length}}개)</p>
                             <div class="row">
                                 <div v-for="(lec,index) in creDetail.lectureList" class="col-lg-6 mb-4">
                                     <div class="card" style="border-radius:20px;">
