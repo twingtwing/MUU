@@ -133,7 +133,7 @@ public class UsersController {
 	public String changePw(UsersVO vo) {
 		vo.setPw(pwEncoder.encode(vo.getPw()));
 		usersDao.changePw(vo);
-		return "main/all/home";
+		return "redirect:/home";
 	}
 	@PostMapping("/user/changePw")
 	public String userChangePw(UsersVO vo, Principal pri) {

@@ -29,7 +29,7 @@
         AND TLSN_NO= #{tlsnNo}
 	</select>
 	<select id="sugangPay" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">
-		SELECT R.RF_ST_CODE, P.* FROM (SELECT S.*,L.TTL,L.INTRO,L.THUMB,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC,L.CRE_ID
+		SELECT FINDLTCODE(R.RF_ST_CODE) RF_ST_CODE, P.* FROM (SELECT S.*,FINDLTCODE(S.SHIP_ST_CODE)SHIP_ST_NAME,L.TTL,L.INTRO,L.THUMB,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC,L.CRE_ID
 		FROM SUGANG S JOIN LECTURE L
 		ON S.LT_NO = L.LT_NO
 		WHERE ID = #{id}

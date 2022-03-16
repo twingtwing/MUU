@@ -277,12 +277,13 @@
     let qnanoForMod;
     // 질문 등록 및 수정
     $('#wr').click((e) => {
+      let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
       if ($('#wr').text() === '작성') {
-    	let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
-    	if(length>=3999){
+    	if(length>=1000){
     		window.alert('1000자 내외로 작성해주세요.');
     		return;
     	}
+    	lineMaker($('#myquestion'));
         let data = {
           qContent: $('#myquestion').val(),
           ltNo: ${ltNo}
@@ -300,31 +301,27 @@
         	$('#myquestion').val('')
         	$('.delete').attr('disabled',false);
       		$('.modify').attr('disabled',false);
-      		
+      		console.log(r)
             let today = new Date().toISOString().slice(0, 10)
             $('#qstbox').toggleClass('d-none');
             $('#qstbox').toggleClass('d-flex');
             window.alert('등록이 완료되었습니다.');
-            $('.myQstBoard').first().prepend(
-              $('<tr>').append($('<td>').text(r.qContent),
-                $('<td>').text(today),
-                $('<td>').text('답변 대기 중').addClass('font-weight-bold text-danger'),
-                $('<td>').append(
-                	$('<button>').text('수정').addClass('modify border p-1 px-2'),$('<button>').text('삭제').addClass('delete border p-1 px-2 mx-1')	
-                )).css('fontSize','0.9rem')
-            )
+            location.reload();
           })
       } else if($('#wr').text() === '수정'){
-    	  let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
-      	  if(length>=3999){
+      	  if(length>=1000){
       		window.alert('1000자 내외로 작성해주세요.');
       		return;
       	  }
+      	  $('')
+      	  lineMaker($('#myquestion'));
     	  let data = {qnaNo : qnanoForMod, qContent : $('#myquestion').val()}
     	  updateQna(data);
+    	  location.reload()
     	  window.alert('수정이 완료되었습니다.')
     	  $('.modify').click()
     	  $('#qstbox').addClass('d-none');
+    	  $('#myquestion').val()    	  
     	  $('#myquestion').val('')
       }
     })
@@ -468,7 +465,7 @@
 	          contentType: 'application/json;charset=utf-8'
 	      })
 	      .done((r)=>{
-	    	  $('#myquestion').val(r.qContent)
+	    	  $('#myquestion').val(r.qContent.replaceAll(/(<br>|<br\/>|<br \/>)/g, '\r\n'));
 	    	  qnanoForMod = qnaNo;  
 	      }) 
       }
@@ -486,7 +483,11 @@
 	}
 
 	// 삭제버튼 클릭시
-	$('.myQstBoard .delete').click((e)=>{
+	$('.myQstBoard').click((e)=>{
+		console.log($(e.target).parent().parent().data('qnano'))
+		if(!e.target.className.includes('delete')){
+			return;
+		}
 		if(!window.confirm('정말로 삭제하시겠습니까?')){
 			return;
 		}
@@ -504,7 +505,13 @@
 		})
 	})
 	
-		
+	const lineMaker = (el)=>{
+		let content = el.val();
+		content = content.replace(/\r\n/ig,'<br>');
+		content = content.replace(/\\n/ig,'<br>');
+		content = content.replace(/\n/ig,'<br>');
+		el.val(content);
+	}
 		
     //mouseover 이벤트 : 사이드바 css변경
     $('#cctgr  .list-group-item:not(.mylist)').on('mouseover', function () {

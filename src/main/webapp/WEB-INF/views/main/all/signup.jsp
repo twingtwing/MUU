@@ -119,7 +119,7 @@ table {
 								</tr>
 								<tr>
 									<td class="pilsu"><input class="border px-10 py-2"
-										spellcheck="false" type="text" placeholder="출생년도"
+										spellcheck="false" type="text" placeholder="출생년도 4자리 ( 예시 : 1988 )"
 										name="birthDate" id="birthDate" required> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td class="pilsu"><select
@@ -161,7 +161,7 @@ table {
 								</tr>
 								<tr>
 									<td colspan="2"><br>
-										<div class="border p-5 text-muted">㈜재준과
+										<div class="border p-5 text-muted small">㈜재준과
 											아이들(http://localhost/ 이하 "회사"이라 함)은 귀하의 개인정보를 중요시하며, 『정보통신망
 											이용촉진 및 정보보호 등에 관한 법률』, 『개인정보 보호법』, 『통신비밀보호법』, 『전기통신사업법』 등
 											정보통신 서비스 제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하고 있습니다. 회사는 본
