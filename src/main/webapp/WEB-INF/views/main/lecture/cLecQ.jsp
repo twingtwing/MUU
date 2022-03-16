@@ -29,6 +29,14 @@
         a {
         	cursor : pointer;
         }
+        table {
+        	table-layout : fixed;
+        }
+        td {
+        	text-overflow:ellipsis; 
+        	overflow:hidden; 
+        	white-space:nowrap;
+        } 
        
     </style>
 </head>
@@ -184,13 +192,19 @@
                                     </tr>
                                 </thead>
                                 <tbody id="mo" style="text-align:center">
+                                <c:if test="${qnalist == '[]'}">
+                                	<tr>
+                                		<td colspan="4">등록된 질문이 없습니다</td>
+                                	</tr>
+                                </c:if>
+                                <c:if test="${qnalist != '[]'}">
                                 	<c:forEach items="${qnalist}" var="list" varStatus="status">
 	                                    <tr data-toggle="modal" data-target="#qnamodal" 
 	                                    data-qcontent='${list.qContent }' data-qregdate='${list.qRegDate }'
 	                                    data-writer='${list.writer }' data-qnano='${list.qnaNo }'
 	                                    data-qnastcode='${list.qnaStCode }' data-acontent='${list.aContent }'
 	                                    style="cursor:pointer;">
-	                                        <td>${list.qContent }</td>
+	                                        <td id="qcontent">${list.qContent }</td>
 	                                        <td>${list.writer }</td>
 	                                        <td>${list.qRegDate }</td>
 	                                        <c:if test="${list.qnaStCode == 'Q01' }">
@@ -201,6 +215,7 @@
 	                                        </c:if>
 	                                    </tr>
 	                                </c:forEach>
+	                              </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -422,14 +437,14 @@ function qnasearch(){
 $(function(){
 	$('#qnayn option').prop('selected', false);
 	$('#qnasearch option').prop('selected', false);
-	if(${inputQnaStCode != ''}){
+	if('${inputQnaStCode}' != ''){
 		$($('#qnayn option[value="${inputQnaStCode}"]')).attr('selected', 'selected');
 	}
-	if(${inputContent != ''}){
+	if('${inputContent}' != ''){
 		$($('#qnasearch option[value="질문내용"]')).attr('selected', 'selected');
 		$('#qnainput').val('${inputContent}');
 	}
-	if(${inputWriter != ''}){
+	if('${inputWriter}' != ''){
 		$($('#qnasearch option[value="작성자"]')).attr('selected', 'selected');
 		$('#qnainput').val('${inputWriter}');
 	}
@@ -478,6 +493,13 @@ const brDel = (e)=>{
 	inputVal = inputVal.replace(/<br\/>/ig,'\n');
 	return inputVal
 }
+
+$(function(){
+	let tdval = $('#qcontent').text();
+	tdval = brDel(tdval);
+	$('#qcontent').text(tdval);
+})
+
 
 
     </script>

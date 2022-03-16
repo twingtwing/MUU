@@ -368,7 +368,7 @@
         }
     }
     
-    function videoInsert(){
+    function videoInsert(){	
     	$('#videoIn').click();
     	console.log($('#videoIn')[0].files[0]);
     	console.log($('#videoIn')[0].files[1]);

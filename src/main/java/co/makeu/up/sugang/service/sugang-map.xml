@@ -141,6 +141,7 @@
 				  where lt_no = #{ltNo}
 				  and name LIKE '%'||#{nameSearchKey}||'%'
 				  AND ship_st_code LIKE '%'||#{shipStCodeSearchKey}||'%'
+				  and tlsn_st_code in ('SU01', 'SU03')
 				  order by tlsn_no desc) e)
 		where rn between (#{page}-1)*10 and 10*(#{page})
 	</select>

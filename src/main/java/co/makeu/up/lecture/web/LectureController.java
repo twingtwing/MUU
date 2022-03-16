@@ -157,12 +157,10 @@ public class LectureController {
 	@ResponseBody
 	public String classUploadTest(LectureVO vo, MultipartHttpServletRequest multi) {
 		List<MultipartFile> fileList = multi.getFiles("class");
-		System.out.println(fileList);
 		for (int i = 0; i < fileList.size(); i++) {
 			MultipartFile file = fileList.get(i);
 			if(file != null && file.getSize() > 0) {
 				String oriFileName = file.getOriginalFilename();
-				System.out.println(oriFileName);
 				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;				
 				
 				try {
@@ -292,7 +290,6 @@ public class LectureController {
 		if(list.isEmpty() != true) {
 			int listCnt = list.size();
 			model.addAttribute("listCnt", listCnt);
-			System.out.println(listCnt);
 		}
 		return "main/lecture/rpLecL";
 	}

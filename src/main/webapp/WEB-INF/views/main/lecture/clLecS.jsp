@@ -179,10 +179,8 @@
                             <div class="col-12 text-right align-items-right">
                                 <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${cllists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <!-- 
                                 <button class="btn btn-outline-info" type="button" onclick="lessonInfo(${clllists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
-                                 -->
                                 <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#rereg" data-ltNo="${cllists.ltNo }">재등록</button>
                                 
                             </div>      
