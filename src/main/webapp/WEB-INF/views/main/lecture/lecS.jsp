@@ -76,171 +76,176 @@
 </head>
 <body>
 
-    <!-- 배너 시작-->
-    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="normal__breadcrumb__text">
-                        <h2>강의</h2>
-                        <p>우리는 여러분의 자기개발을 언제 지원합니다!!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- 배너끝 -->
-
-    <!-- 카테고리 시작-->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
-                        <span>강의</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="lecture_search">
+	
+	    <!-- 배너 시작-->
+	    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12 text-center">
+	                    <div class="normal__breadcrumb__text">
+	                        <h2>강의</h2>
+	                        <p>우리는 여러분의 자기개발을 언제 지원합니다!!</p>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- 배너끝 -->
+	
+	    <!-- 카테고리 시작-->
+	    <div class="breadcrumb-option">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12">
+	                    <div class="breadcrumb__links">
+	                        <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+	                        <span v-if="ctgr.length > 1">{{ctgr[1].upName}}</span>
+	                        <span v-if="ctgr.length === 1">전체</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- 카테고리 끝-->
+	
+	    <!-- body 의 body-->
+	    <section class="blog spad">
+	        <div class="container">
+	            <div class="col-lg-12">
+	                <div class="row">
+	                    <div class="col-lg-2">
+	                        <div class="row mr-2">
+	                            <ul class="list-group w-100">
+	                                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == ''}" href="/lecS">전체</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC01'}" href="/lecS?upCtgr=HC01">음악</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC02'}" href="/lecS?upCtgr=HC02">요리</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC03'}" href="/lecS?upCtgr=HC03">건강</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC04'}" href="/lecS?upCtgr=HC04">아트</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC05'}" href="/lecS?upCtgr=HC05">IT/컴퓨터</a>
+	                                </li>
+	                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC06'}" href="/lecS?upCtgr=HC06">외국어</a>
+	                                </li>
+	                                <li class="list-group-item align-items-center d-flex" style="height: 55px;">
+	                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC07'}" href="/lecS?upCtgr=HC07">자기계발</a>
+	                                </li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-10">
+	                        <div class="product__page__title mb-0 mt-3">
+	                            <div class="row d-flex justify-content-between">
+	                                <div class="section-title mb-0 ml-3">
+	                                    <h5 v-if="ctgr.length === 1" class="text-dark">전체</h5>
+	                                    <h5 v-if="ctgr.length > 1" class="text-dark">{{ctgr[1].upName}}</h5>
+	                                </div>
+	                                <div class="blog__details__form pt-0 mr-3">
+	                                    <form onsubmit="return false">  
+	                                        <div class="row mr-2">
+	                                            <input v-model="searchTTL" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck = false>
+	                                            <a v-on:click="lecSearch" class="btn btn-outline-secondary" style="height: 35px;"><i class="icon_search"></i></a>
+	                                        </div>
+	                                    </form>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <hr class="mt-2">
+	                        <div class="row ml-2">
+	                            <div class="col-lg-10">
+	                                <div class="row">
+	                                    <!-- 선택 O : active 선택 x : active없음 => java-script혹은 jstl-->
+	                                    <a v-for="list in ctgrList" :href="list.href" class="btn btn-outline-danger mx-2" v-bind:class="{'active' : downCtgr == list.ctgrId}">{{list.name}}</a>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-2">
+	                                <button type="button" data-toggle="modal" data-target="#tag_modal" class="btn btn-outline-secondary"><i class="icon_tag"></i> 태그 검색</button>
+	                            </div>
+	                        </div>
+	                        <div class="row py-3">
+	                            <div class="col-lg-12">
+	                                <div class="row my-2">
+	                                    <!-- 카드 시작 -->
+	                                    <div v-for="(lecture,index) in lectures" class="card mx-2 mb-3 relative">
+	                                        <div class="stage">
+	                                            <div v-on:click="heartClick(index)" v-bind:class="{'is-active' : lecture.wash == 'Y'}" class="heart"></div>
+	                                        </div>
+	                                        <!-- 사진 나중에 넣어야함 -->
+	                                        <img v-on:click="lecDetail(index)" class="card-img-top" style="width: 250px; height: 300px;" :src="lecture.thumb" alt="강의 이미지">
+	                                        <div class="card-body">
+	                                            <p class="card-subtitle mb-1 text-muted">{{lecture.name}}</p>
+	                                            <h5 v-on:click="lecDetail(index)" class="card-title mb-1 text-dark font-weight-bold">{{lecture.ttl}}</h5>
+	                                            <div class="row">
+	                                                <div class="col-lg-5">
+	                                                    <p class="card-text text-muted mb-1"><i class="icon_heart_alt" style="color: pink;"></i> {{lecture.wCount}}</p>
+	                                                </div>
+	                                                <div class="col-lg-7 d-flex justify-content-end">
+	                                                    <p class="card-text text-muted mb-1">
+	                                                        <i v-for="index in lecture.star" class="icon_star" style="color: #ebeb00;"></i>
+	                                                        <i v-for="index in 5 - lecture.star" class="icon_star_alt" style="color: #ebeb00;"></i>
+	                                                        ({{lecture.rCount}})
+	                                                    </p>
+	                                                </div>
+	                                            </div>
+	                                            <div class="row d-flex justify-content-end mx-1">
+	                                                <h6 class="card-title mb-0">{{commaPrc(index)}}원</h6>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <!-- 카드 끝 -->
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	
+	        <!-- tag 모달창 -->
+	        <div class="modal fade" id="tag_modal" tabindex="-1" role="dialog">
+	            <div class="modal-dialog modal-dialog-centered" role="document">
+	                <div class="modal-content" style="border-radius: 30px;">
+	                    <div class="modal-header border-bottom-0 d-flex justify-content-center" style="position: relative;">
+	                        <h6 class="font-weight-bold mt-2"><i class="icon_tag"></i> 태그 검색</h6>
+	                        <div class="modal_close" data-dismiss="modal" v-on:click="modalClose"><i class="icon_close"></i></div>
+	                    </div>
+	                    <div class="modal-body border-bottom-0">
+	                        <div class="col-lg-12">
+	                            <div v-on:click="tagSelected" id="tag_list" class="row justify-content-center mx-2">
+	                                <span v-for="tag in tagList" :data-id="tag.tagId" class="btn btn-outline-danger tag-span mx-1 my-2">{{tag.tagName}}</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="modal-footer border-top-0 mt-5 mb-2">
+	                        <div class="col-lg-12">
+	                            <div class="row d-flex justify-content-center">
+	                                <p id="tag" class="text-muted d-none">태그를 선택해주세요!!</p>
+	                            </div>
+	                            <div class="row d-flex justify-content-center">
+	                                <button v-on:click="tagSearch" type="button" class="btn btn-outline-secondary mr-2">태그검색</button>
+	                                <button v-on:click="modalClose" type="button" class="btn btn-outline-secondary" data-dismiss="modal">검색취소</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	
+	    </section>
+	    
     </div>
-    <!-- 카테고리 끝-->
-
-    <!-- body 의 body-->
-    <section id="lecture_search" class="blog spad">
-        <div class="container">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <div class="row mr-2">
-                            <ul class="list-group w-100">
-                                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == ''}" href="/lecS">전체</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC01'}" href="/lecS?upCtgr=HC01">음악</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC02'}" href="/lecS?upCtgr=HC02">요리</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC03'}" href="/lecS?upCtgr=HC03">건강</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC04'}" href="/lecS?upCtgr=HC04">아트</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC05'}" href="/lecS?upCtgr=HC05">IT/컴퓨터</a>
-                                </li>
-                                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC06'}" href="/lecS?upCtgr=HC06">외국어</a>
-                                </li>
-                                <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                                    <a class="list-link" v-bind:class="{'active' : upCtgr == 'HC07'}" href="/lecS?upCtgr=HC07">자기계발</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-10">
-                        <div class="product__page__title mb-0 mt-3">
-                            <div class="row d-flex justify-content-between">
-                                <div class="section-title mb-0 ml-3">
-                                    <h5 v-if="ctgr.length === 1" class="text-dark">전체</h5>
-                                    <h5 v-if="ctgr.length > 1" class="text-dark">{{ctgr[1].upName}}</h5>
-                                </div>
-                                <div class="blog__details__form pt-0 mr-3">
-                                    <form onsubmit="return false">  
-                                        <div class="row mr-2">
-                                            <input v-model="searchTTL" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck = false>
-                                            <a v-on:click="lecSearch" class="btn btn-outline-secondary" style="height: 35px;"><i class="icon_search"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mt-2">
-                        <div class="row ml-2">
-                            <div class="col-lg-10">
-                                <div class="row">
-                                    <!-- 선택 O : active 선택 x : active없음 => java-script혹은 jstl-->
-                                    <a v-for="list in ctgrList" :href="list.href" class="btn btn-outline-danger mx-2" v-bind:class="{'active' : downCtgr == list.ctgrId}">{{list.name}}</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <button type="button" data-toggle="modal" data-target="#tag_modal" class="btn btn-outline-secondary"><i class="icon_tag"></i> 태그 검색</button>
-                            </div>
-                        </div>
-                        <div class="row py-3">
-                            <div class="col-lg-12">
-                                <div class="row my-2">
-                                    <!-- 카드 시작 -->
-                                    <div v-for="(lecture,index) in lectures" class="card mx-2 mb-3 relative">
-                                        <div class="stage">
-                                            <div v-on:click="heartClick(index)" v-bind:class="{'is-active' : lecture.wash == 'Y'}" class="heart"></div>
-                                        </div>
-                                        <!-- 사진 나중에 넣어야함 -->
-                                        <img v-on:click="lecDetail(index)" class="card-img-top" style="width: 250px; height: 300px;" :src="lecture.thumb" alt="강의 이미지">
-                                        <div class="card-body">
-                                            <p class="card-subtitle mb-1 text-muted">{{lecture.name}}</p>
-                                            <h5 v-on:click="lecDetail(index)" class="card-title mb-1 text-dark font-weight-bold">{{lecture.ttl}}</h5>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p class="card-text text-muted mb-1"><i class="icon_heart_alt" style="color: pink;"></i> {{lecture.wCount}}</p>
-                                                </div>
-                                                <div class="col-lg-7 d-flex justify-content-end">
-                                                    <p class="card-text text-muted mb-1">
-                                                        <i v-for="index in lecture.star" class="icon_star" style="color: #ebeb00;"></i>
-                                                        <i v-for="index in 5 - lecture.star" class="icon_star_alt" style="color: #ebeb00;"></i>
-                                                        ({{lecture.rCount}})
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row d-flex justify-content-end mx-1">
-                                                <h6 class="card-title mb-0">{{commaPrc(index)}}원</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 카드 끝 -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- tag 모달창 -->
-        <div class="modal fade" id="tag_modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" style="border-radius: 30px;">
-                    <div class="modal-header border-bottom-0 d-flex justify-content-center" style="position: relative;">
-                        <h6 class="font-weight-bold mt-2"><i class="icon_tag"></i> 태그 검색</h6>
-                        <div class="modal_close" data-dismiss="modal" v-on:click="modalClose"><i class="icon_close"></i></div>
-                    </div>
-                    <div class="modal-body border-bottom-0">
-                        <div class="col-lg-12">
-                            <div v-on:click="tagSelected" id="tag_list" class="row justify-content-center mx-2">
-                                <span v-for="tag in tagList" :data-id="tag.tagId" class="btn btn-outline-danger tag-span mx-1 my-2">{{tag.tagName}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer border-top-0 mt-5 mb-2">
-                        <div class="col-lg-12">
-                            <div class="row d-flex justify-content-center">
-                                <p id="tag" class="text-muted d-none">태그를 선택해주세요!!</p>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                                <button v-on:click="tagSearch" type="button" class="btn btn-outline-secondary mr-2">태그검색</button>
-                                <button v-on:click="modalClose" type="button" class="btn btn-outline-secondary" data-dismiss="modal">검색취소</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
 
     <!-- body 의 body 끝 -->
     <!-- body 끝 -->

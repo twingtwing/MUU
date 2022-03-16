@@ -62,7 +62,9 @@
 		<div class="container">
 			<div class="col-lg-12">
 				<div class="row ml-2">
-					<h3 class="font-weight-bold text-dark">F A Q</h3>
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-question"></i> F A Q
+					</h3>
 				</div>
 				<div class="row py-5">
 					<div class="col-lg-12">
@@ -245,13 +247,18 @@
 				</div>
 				<hr>
 				<div class="col-lg-12">
+					<div class="row mt-2">
+						<h3 class="font-weight-bold">
+							<i class="fa fa-search"></i> 검 색
+						</h3>
+					</div>
 					<div class="row justify-content-center">
 						<div class="mt-3 ml-3 mb-3">
 							<div class="blog__details__form pt-0 d-flex justify-content-end m-2">
 								<div class="row">
 								<form onsubmit="return false">
 									<div class="row mr-2">
-										<input id="acontentSearch" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
+										<input id="acontentSearch" v-on:click="cursorSearch" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
 											<a id="searchTest" v-on:click="search()" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="height: 50px; width:70px;">
 												<p class="mb-0">검색</p>
 											</a>
@@ -313,6 +320,9 @@
 
          },
          methods: {
+        	cursorSearch(){
+         		$(event.target).select();
+         	},
         	search(){
         	  let search = $('#acontentSearch').val()
           	  console.log(search);

@@ -199,11 +199,9 @@
                                                             <div class="row">
                                                             	<div class="col-lg-12">
                                                             		<div class="row">
-	                                                                	<a :href="'/user/lecP?ltNo='+lecDetails.ltNo" v-bind:class="{'disabled' : id == lecDetails.creId || lecDetails.mySugang == 'Y'}" class="btn btn-danger w-100">결제</a>
-                                                            		</div>
-                                                            		<div class="row justify-content-end mt-1">
-	                                                                	<small v-if="lecDetails.mySugang == 'Y'" class="font-weight-bold text-muted">해당 강의는 이미 수강중입니다.</small>
-	                                                                	<small v-if="id == lecDetails.creId" class="font-weight-bold text-muted">본인의 강의는 수강이 불가능합니다.</small>
+	                                                                	<a v-if="id != lecDetails.creId && lecDetails.mySugang != 'Y'" :href="'/user/lecP?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">결제</a>
+	                                                                	<a v-if="lecDetails.mySugang == 'Y'" href="/user/userLectureList" class="btn btn-danger w-100" >수강 목록 이동</a>
+	                                                                	<a v-if="id == lecDetails.creId" :href="'/creator/oLecS?ltNo='+lecDetails.ltNo" class="btn btn-danger w-100">강의 이동</a>
                                                             		</div>
                                                             	</div>
                                                             </div>
