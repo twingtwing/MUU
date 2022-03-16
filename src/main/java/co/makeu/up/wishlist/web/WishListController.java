@@ -27,14 +27,14 @@ public class WishListController {
 
 	@GetMapping("/user/userWishList")
 	public String wishListSearch(Model model, Principal pri, WishlistVO vo) {
-		vo.setPage(0);
+		//vo.setPage(0);
+		//int listCnt = wishListDao.WishListCnt();
+		//System.out.println(listCnt + " 있냐?");
+		//PaginationFive pagination = new PaginationFive(listCnt,1);
+		//model.addAttribute("pagination",pagination);
 		vo.setId(pri.getName());
-		int listCnt = wishListDao.WishListCnt();
-		System.out.println(listCnt + " 있냐?");
-		PaginationFive pagination = new PaginationFive(listCnt,1);
 		List<WishlistVO> wlist = wishListDao.WishListSearch(vo);
 		model.addAttribute("ltno", vo.getLtNo());
-		model.addAttribute("pagination",pagination);
 		model.addAttribute("wishlists", wlist);
 		return "main/user/userWi";
 	}
