@@ -36,16 +36,6 @@
   </style>
 </head>
 <body>
-	<div id="test">		
-		관리자아이디: admin123@naver.com / 비밀번호 : 관리자<br>
-		유저아이디 : user123@naver.com / 비밀번호 : 정혜윤<br>
-		크리에이터아이디 : test111@naver.com / 비밀번호 : 테스트111, gotohell@naver.com / 정혜윤, minicreator@naver.com/정혜윤<br>
-			
-		<a href="creator/creLectureReview">크리에이터리뷰페이지(임시)</a>	
-		<h5> 사용자 아이디: ${username }</h5>
-	</div>
-
-
 	<!-- slide benner -->
 	<section class="hero">
 		<div class="container">
