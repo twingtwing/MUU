@@ -72,12 +72,11 @@
 					<h5 class="font-weight-bold mb-2">02 문의입력</h5>
 				</div>
 				<div class="mt-4">
-
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.username"
 							var="username" />
 					</security:authorize>
-					<div class="border-left border-danger">
+					<div>
 						아이디 : ${username} <input v-model="inputid"
 							data-id=${username
 							} placeholder="${username}"
@@ -91,13 +90,13 @@
 					<div class="form-group mt-3">
 						<label for="content">문의 내용</label>
 						<textarea style="white-space: pre-line" v-model="inputContent"
-							class="form-control" name="content" id="content" cols="30"
+							class="form-control" spellcheck="false" name="content" id="content" cols="30"
 							rows="10"></textarea>
 					</div>
 					<div>답변 이메일</div>
 					<div class="form-group ml-1 mt-3 row ">
-						<input name="email1" id="emailId" type="text" v-model="inputEmailID"> @
-						<input name="email2" id="emailType" type="text" v-on:keyup="chageEvent()" v-model="inputEmailType" >
+						<input name="email1" id="emailId" spellcheck="false" type="text" v-model="inputEmailID"> @
+						<input name="email2" id="emailType" spellcheck="false" type="text" v-on:keyup="chageEvent()" v-model="inputEmailType" >
 						<div class="ml-3">
 								<select v-model="inputEmailType">
 								  <option disabled value="">선택하세요</option>

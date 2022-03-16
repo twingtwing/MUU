@@ -13,7 +13,7 @@
 #pre:hover {
 	background-color: #dee2e6;
 }
-.download_link:hover{
+.download_link:hover,.next_hover:hover{
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -92,18 +92,18 @@
 					<div class="border-top"></div>
 					<div v-if ="board.nextbno > -1" id="next" class="d-flex justify-content-start ml-5 mt-3">
 						<i class="fa fa-angle-double-up"></i>
-						<div v-on:click="boardNext()"> <div class="ml-2">다음글 : {{board.nextbttl}}</div></div>
+						<div v-on:click="boardNext()" class="next_hover"> <div class="ml-2">다음글 : {{board.nextbttl}}</div></div>
 					</div>
 					<div class="border-bottom mt-3"></div>
 					<div v-if="board.prebno > -1" id="pre" class="d-flex justify-content-start ml-5 mt-3">
 						<i class="fa fa-angle-double-down"></i>
-						<div v-on:click="boardPre()" class="rgba-green-slight"><div class="ml-2">이전글 :{{board.prebttl}} </div></div>
+						<div v-on:click="boardPre()" class="rgba-green-slight next_hover"><div class="ml-2">이전글 :{{board.prebttl}} </div></div>
 					</div>
 					<div class="border-bottom mt-3"></div>
 				</div>
 				<div class="d-flex justify-content-center m-3">
-					<button type="submit" class="btn btn-danger"
-						onclick="location.href='/boardL'">목록으로</button>
+					<a class="btn btn-danger"
+						href="/boardL">목록으로</a>
 				</div>
 			</div>
 		</section>

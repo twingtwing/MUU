@@ -52,11 +52,16 @@
 	<section id="title_search" class="blog spad">
 		<div class="container">
 			<div class="col-lg-12 ">
+				<div class="row ml-2">
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-chalkboard"></i> 공지사항
+					</h3>
+				</div>
 				<div class="blog__details__form pt-0 d-flex justify-content-end m-2">
 					<div class="row">
 						<form onsubmit="return false">
 							<div class="row mr-2">
-								<input v-model="inputTitle" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck=false>
+								<input v-model="inputTitle" v-on:click="cursorSearch" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck=false>
 								<a v-on:click="titleSearch" class="btn btn-outline-secondary" style="height: 35px;"> <i class="icon_search"></i></a>
 							</div>
 						</form>
@@ -67,7 +72,6 @@
 				<thead class="table-secondary">
 					<th class="text-center">번호</th>
 					<th class="text-center">제목</th>
-					<th class="text-center">작성자</th>
 					<th class="text-center">작성일</th>
 					<th class="text-center">조회수</th>
 					<th class="text-center">첨부파일</th>
@@ -79,7 +83,6 @@
 						<td v-on:click="titleDetail(board.bno)">
 							<div class="name">{{board.ttl}}</div>
 						</td>
-						<td ></td>
 						<td>{{board.wrDate}}</td>
 						<td class="text-center">{{board.hits}}</td>
 						<td class="text-center">
@@ -96,7 +99,7 @@
 			<a href="#" v-if="pageNum+1 < pages" v-on:click="pageMove(-2)" ><i class="fa fa-angle-double-right"></i></a>
 		</div>
 		<div class="d-flex justify-content-center mt-3">
-			<button type="submit" class="site-btn" onclick="history.go(-1);">뒤로가기</button>
+			<a class="site-btn" href="/home">뒤로가기</a>
 		</div>
 	</section>
 
@@ -125,6 +128,10 @@
                 //ex> 오름차순,내림차순
             },
             methods: {
+            	cursorSearch(){
+            		console.log($(event.target));
+            		$(event.target).select();
+            	},
                 titleSearch() {
                    this.page(this.originBoards.filter(obj => obj.ttl.indexOf(this.inputTitle)!== -1));
                 },
