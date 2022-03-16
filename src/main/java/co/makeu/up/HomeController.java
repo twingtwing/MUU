@@ -3,6 +3,8 @@ package co.makeu.up;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -65,7 +67,7 @@ public class HomeController {
 	//관리자 메인 끝
 	
 	@GetMapping("/customLogin")
-	public String customLoginForm(String error, String logout, Model model) {
+	public String customLoginForm(String error, String logout, Model model, HttpServletRequest request) {
 		if(error!=null) {
 			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
 		}

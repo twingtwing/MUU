@@ -266,7 +266,7 @@ table {
 		
 		
 		const telreg = /^010\d{8}$/;
-		const birthreg = /\d{4}$/;
+		const birthreg = /^\d{4}$/;
 		$('#tel').keyup(()=>{
 			if($('#tel').val()){
 				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
