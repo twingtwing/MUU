@@ -27,19 +27,14 @@ public class WishListController {
 	WishListServiceImpl wishListDao;
 
 	@GetMapping("/user/userWishList")
-	public String wishListSearch(Model model, Principal pri, WishlistVO vo,
-			@RequestParam("lec") int lec) {
-		
-		vo.setPage(0);
+
+	public String wishListSearch(Model model, Principal pri, WishlistVO vo, @RequestParam("lec") int lec) {
+	
 		vo.setId(pri.getName());
-		int listCnt = wishListDao.WishListCnt();
-		System.out.println(listCnt + " 있냐?");
-		PaginationFive pagination = new PaginationFive(listCnt,1);
 		List<WishlistVO> wlist = wishListDao.WishListSearch(vo);
 		model.addAttribute("ltno", vo.getLtNo());
-		model.addAttribute("pagination",pagination);
 		model.addAttribute("wishlists", wlist);
-		//수정
+
 		boolean flag = false;
 		for (WishlistVO w : wlist) {
 			if(w.getLtNo() == lec) {
@@ -47,14 +42,12 @@ public class WishListController {
 			}
 		}
 		if(lec != 0 && !flag) {
-			System.out.println(lec);
-			System.out.println(flag);
 			WishlistVO wvo = new WishlistVO();
 			wvo.setLtNo(lec);
 			wvo.setId(pri.getName());
 			wishListDao.heartInsert(wvo);
 		}
-		//수정
+
 		return "main/user/userWi";
 	}
 	
