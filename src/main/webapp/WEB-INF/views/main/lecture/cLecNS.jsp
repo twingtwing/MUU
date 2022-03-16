@@ -83,6 +83,7 @@
                     <div class="breadcrumb__links">
                         <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                        <span>${lecinfo.ttl }</span>
                     </div>
                 </div>
             </div>

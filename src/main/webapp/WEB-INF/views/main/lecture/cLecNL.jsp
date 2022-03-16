@@ -59,6 +59,7 @@
                   <div class="breadcrumb__links">
                       <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                       <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                      <span>${lecinfo.ttl }</span>
                   </div>
               </div>
           </div>
@@ -178,20 +179,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${nlists }" var="list" varStatus="status">
-                  <tr onclick="noticeSelect(${list.ntNo}, ${list.noticeNo })">
-                    <td>${list.ntNo }</td>
-                    <td>${list.ttl }</td>
-                    <td>${list.wrDate }</td>
-                    <c:if test="${list.fileNo != 0}">
-                    <td><i class="fa fa-download mx-1"></i></td>
-					</c:if>
-					<c:if test="${list.fileNo == 0}">
-                    <td></td>
-					</c:if>
-                    <td>${list.hits }</td>
-                  </tr>
-                 </c:forEach>
+                <c:if test="${nlists == '[]' }">
+                	<tr>
+                		<td colspan="5">등록된 공지사항이 없습니다</td>
+                	</tr>
+                </c:if>
+                <c:if test="${nlists != '[]' }">
+	                <c:forEach items="${nlists }" var="list" varStatus="status">
+	                  <tr onclick="noticeSelect(${list.ntNo}, ${list.noticeNo })">
+	                    <td>${list.ntNo }</td>
+	                    <td>${list.ttl }</td>
+	                    <td>${list.wrDate }</td>
+	                    <c:if test="${list.fileNo != 0}">
+	                    <td><i class="fa fa-download mx-1"></i></td>
+						</c:if>
+						<c:if test="${list.fileNo == 0}">
+	                    <td></td>
+						</c:if>
+	                    <td>${list.hits }</td>
+	                  </tr>
+	                 </c:forEach>
+	             </c:if>
                 </tbody>
               </table>
           </div>
@@ -370,11 +378,12 @@ $(function(){
   //검색 조회시 검색란 선입력
   $(function(){
 	  $('#toc option:selected').removeAttr('selected');
-	  if(${inputTtl != ''}){
+	  console.log('${inputTtl}');
+	  if('${inputTtl}' != ''){
 		  $($('#toc option[value="제목"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputTtl}');
 	  } 
-	  if(${inputContent != ''}){
+	  if('${inputContent}' != ''){
 		  $($('#toc option[value="내용"]')).attr('selected', 'selected');
 		  $('#tocval').val('${inputContent}');
 	  }

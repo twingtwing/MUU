@@ -49,6 +49,7 @@
                 <div class="breadcrumb__links">
                     <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                     <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+                    <span>${lecinfo.ttl }</span>
                 </div>
             </div>
         </div>
@@ -140,7 +141,12 @@
                 <hr class="font-weight-bold">
                 
                 <div class="row mt-4 col-12 justify-content-center">
+                <c:if test="${rvlist == '[]' }">
+                  	<h5 class="font-weight-bold">수강 리뷰</h5>
+                  </c:if>
+                <c:if test="${rvlist != '[]' }">
                   <h5 class="font-weight-bold">수강 리뷰( <span class="fas fa-star"></span><span id="avgStar"> </span> / 5 )</h5>
+                </c:if>
                 </div>
                 
                 <div class="row col-12 justify-content-end mt-3 mb-1 pr-4">
@@ -156,63 +162,68 @@
 
                 <div class="row col-12 justify-content-center">
                   <!--  card 사실 유저페이지랑 거의 똑같음 -->
-                  <c:forEach items="${rvlist}" var="list" varStatus="status">
-	                  <div class="col-6 mt-3 rvcard">
-	                    <div data-no="${list.rvNo}" class="bg-light border rounded d-flex flex-column align-items-center p-3 mx-3 mb-3 rv">
-	                      <div class="d-flex justify-content-between w-100 mb-2 px-1">
-	                        <span>
-	                          <span>${list.writer }</span>
-	                          <c:if test="${list.star==1 }">
-	                          <span class="fas fa-star"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          </c:if>
-	                          <c:if test="${list.star==2 }">
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          </c:if>
-	                          <c:if test="${list.star==3 }">
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          </c:if>
-	                          <c:if test="${list.star==4 }">
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fa fa-star-o"></span>
-	                          </c:if>
-	                          <c:if test="${list.star==5 }">
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          <span class="fas fa-star"></span>
-	                          </c:if>
-	                        </span>
-	                        <span>
-	                          <span>${list.wrDate }</span>
-	                          <i class="fa fa-ban report text-danger ml-2" aria-hidden="true"
-	                          data-toggle="modal" data-target="#revReport"
-	                          data-reporter='${list.writer }' data-ltno='${list.ltNo}'
-	                          data-content='${list.content }' data-num='${list.rvNo }' title="클릭 시 신고창"></i>
-	                        </span>
-	                        <input type="hidden" id="avgStarinput" value="${list.avgStar }">
-	                      </div>
-	                      <div class="bg-white h-25 w-100 h-100 rounded p-2" id="rvcontent">
-	                        ${list.content }
-	                      </div>
-	                    </div>
-	                  </div>
-                  </c:forEach>
+                  <c:if test="${rvlist == '[]' }">
+                  	<span class="mt-3">등록된 리뷰가 없습니다</span>
+                  </c:if>
+                  <c:if test="${rvlist != '[]' }">
+	                  <c:forEach items="${rvlist}" var="list" varStatus="status">
+		                  <div class="col-6 mt-3 rvcard">
+		                    <div data-no="${list.rvNo}" class="bg-light border rounded d-flex flex-column align-items-center p-3 mx-3 mb-3 rv">
+		                      <div class="d-flex justify-content-between w-100 mb-2 px-1">
+		                        <span>
+		                          <span>${list.writer }</span>
+		                          <c:if test="${list.star==1 }">
+		                          <span class="fas fa-star"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          </c:if>
+		                          <c:if test="${list.star==2 }">
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          </c:if>
+		                          <c:if test="${list.star==3 }">
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          </c:if>
+		                          <c:if test="${list.star==4 }">
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fa fa-star-o"></span>
+		                          </c:if>
+		                          <c:if test="${list.star==5 }">
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          <span class="fas fa-star"></span>
+		                          </c:if>
+		                        </span>
+		                        <span>
+		                          <span>${list.wrDate }</span>
+		                          <i class="fa fa-ban report text-danger ml-2" aria-hidden="true"
+		                          data-toggle="modal" data-target="#revReport"
+		                          data-reporter='${list.writer }' data-ltno='${list.ltNo}'
+		                          data-content='${list.content }' data-num='${list.rvNo }' title="클릭 시 신고창"></i>
+		                        </span>
+		                        <input type="hidden" id="avgStarinput" value="${list.avgStar }">
+		                      </div>
+		                      <div class="bg-white h-25 w-100 h-100 rounded p-2" id="rvcontent">
+		                        ${list.content }
+		                      </div>
+		                    </div>
+		                  </div>
+	                  </c:forEach>
+	              </c:if>
                   </div>
                 </div>
         </div>
