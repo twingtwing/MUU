@@ -266,7 +266,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -276,7 +276,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -332,7 +332,7 @@
 			                                                    <div class="card-body" style="height: 18vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -342,7 +342,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5"></textarea>
+			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>

@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group mt-3">
-                                    <textarea class="form-control"   rows="25" id="cont" name="cont">${board.content}</textarea>
+                                    <textarea class="form-control" spellcheck="false"  rows="25" id="cont" name="cont">${board.content}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
