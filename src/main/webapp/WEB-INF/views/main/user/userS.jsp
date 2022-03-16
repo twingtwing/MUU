@@ -167,12 +167,6 @@ td, th {
 													<td>${user.id}</td>
 												</tr>
 												<tr>
-													<th>SNS 연동</th>
-													<td><img src="/resources/img/kakao.svg" alt="">
-														<img src="/resources/img/naver.png" alt=""> <img
-														src="/resources/img/google.png" alt=""></td>
-												</tr>
-												<tr>
 													<th>내 권한/등급</th>
 													<td style="cursor: pointer;" id="getGrade"><c:if
 															test="${user.authCode eq 'A02'}">
@@ -191,8 +185,8 @@ td, th {
 												적립금은 구매 후 7일 뒤, 혹은 구매 확정 시 적립됩니다.</span>
 										</div>
 									</div>
-									<div class="d-flex justify-content-center border info w-75 py-4">
-										<table>
+									<div class="d-flex justify-content-center border info w-75 p-4">
+										<table class="w-75">
 											<tr>
 												<th>이름</th>
 												<td>${user.name }</td>

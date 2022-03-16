@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -166,8 +165,10 @@
                                     </div>
                                   </div>
                                   <div class="col-lg-2 align-self-end">
+                                  <c:if test="${del.shipStCode ne 'D05' }">
                                     <button type="button" class="site-btn mb-2 confirmBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }" >구매확정</button>
                                     <button type="button" class="site-btn refundBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }">반송신청</button>
+                                  </c:if>
                                   </div>
                                 </div>
                               </div>
@@ -250,7 +251,7 @@
                           </c:forEach>   
                         </tbody>
                       </table>
-               <c:if test="${fn:length(review) > 6}">              
+               <c:if test="${payCnt  > 6}">              
                   <div class="more text-center">더보기</div>            
                </c:if>
                   </div>
@@ -286,13 +287,10 @@
     });
 
     // 더보기
-    $('.more').click(()=>{
+    $('.more').click((e)=>{
     	let cards = document.querySelectorAll('.hided');
     	for(let i=0; i<6; i++){
-    		if(cards[i]){
-    		cards[i].classList.remove('hided');    			
-    		}
-    		console.log(cards[i])
+	    	cards.length == 0 ? e.currentTarget.remove() : cards[i].classList.remove('hided')
     	}
     })
     
@@ -313,7 +311,7 @@
 		    	node.remove();    		
 	    	} else if(data.shipStCode==='D05'){
 	    		$(node).addClass('bg-warning');
-	    		$(node).text('반송 신청됨')
+	    		$(node).text('반송 신청됨');
 	    	}
     	})
     }
@@ -329,6 +327,9 @@
     	let data = {tlsnNo : num, shipStCode : 'D05'};
     	let node = e.currentTarget.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling;
     	shipStateUpdate(data,'반송 신청이 접수되었습니다.', node);
+    	e.currentTarget.previousElementSibling.remove();
+    	e.currentTarget.remove();
+    	
     })
     
     

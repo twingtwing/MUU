@@ -36,16 +36,6 @@
 						<div class="card-body mx-4 my-2"
 							style="height: 30vh; width: 25vh;">
 							<div class="mb-3 mt-3 row d-flex justify-content-center align-items-center">
-								<h4 class="font-weight-bold mt-5">아이디 찾기</h4>
-								<button class="site-btn email my-5">이메일<br>본인인증</button>
-							</div>
-							
-						</div>
-					</div>
-					<div class="card mr-5 rounded pb-5">
-						<div class="card-body mx-4 my-2"
-							style="height: 30vh; width: 25vh;">
-							<div class="mb-3 mt-3 row d-flex justify-content-center align-items-center">
 								<h4 class="font-weight-bold mt-5">비밀번호 찾기</h4>
 								<button class="site-btn email my-5">이메일<br>본인인증</button>
 							</div>

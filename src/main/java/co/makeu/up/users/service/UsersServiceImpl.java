@@ -67,4 +67,9 @@ public class UsersServiceImpl implements UsersMapper {
 	public String userPwChck(String id) {
 		return map.userPwChck(id);
 	}
+
+	@Override
+	public int userPointAdd(UsersVO vo) {
+		return map.userPointAdd(vo);
+	}
 }

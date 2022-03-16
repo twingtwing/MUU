@@ -229,11 +229,6 @@
                                         </tr>
                                     </thead>
                                     <tbody class="userListBoard">
-                                    	<c:if test="${empty users }">
-                                        <tr>
-                                        <td colspan="7">
-                                        검색 결과가 없습니다.</td></tr>
-                                        </c:if>
                                         <c:forEach items="${users}" var="user">
 	                                        <tr id="ho">
 	                                            <td>${user.id }</td>
@@ -260,6 +255,11 @@
 	                                        </tr>
                                         </c:forEach>
                                     </tbody>
+                                    <c:if test="${empty users }">
+                                        <tr>
+                                        <td colspan="7">
+                                        검색 결과가 없습니다.</td></tr>
+                                    </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
