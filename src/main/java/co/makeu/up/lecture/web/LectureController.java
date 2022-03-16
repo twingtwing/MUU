@@ -354,13 +354,13 @@ public class LectureController {
 				String oriFileName = filelist.get(i).getOriginalFilename();
 				String safeFile = saveDir + "/" + UUID.randomUUID().toString() + oriFileName;
 				if(i == 0) {
-					vo.setPht1(safeFile);
+					vo.setPht1("/upload/" + safeFile.substring(saveDir.length()));
 				} else if(i == 1) {
-					vo.setPht2(safeFile);
+					vo.setPht2("/upload/" + safeFile.substring(saveDir.length()));
 				} else if(i == 2) {
-					vo.setPht3(safeFile);
+					vo.setPht3("/upload/" + safeFile.substring(saveDir.length()));
 				} else if(i == 3) {
-	                vo.setThumb(safeFile);
+	                vo.setThumb("/upload/" + safeFile.substring(saveDir.length()));
 	            }
 	
 				try {

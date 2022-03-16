@@ -9,7 +9,7 @@
 	</bean>
 
 	<bean class="java.lang.String" id="saveDir">
-		<constructor-arg value="/home/ubuntu/apache-tomcat-9.0.59/webapps/upload"/>
+		<constructor-arg value="/home/ubuntu/apache-tomcat-9.0.59/webapps/upload/"/>
 	</bean>
 	
 </beans>
