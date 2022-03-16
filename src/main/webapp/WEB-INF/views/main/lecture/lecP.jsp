@@ -393,7 +393,7 @@
             		$('#frm #addr').val(addr);
             		$('#frm #detaAddr').val(detaAddr);
             		$('#frm #usePoint').val(this.payPoint);
-            		$('#frm #pay').val(this.prcSum);
+            		$('#frm #pay').val(this.prcSum.replaceAll(',',''));
             		if(this.lectureDetail.kitName != null){
             			$('#frm #shipStCode').val('D01');
             		}
