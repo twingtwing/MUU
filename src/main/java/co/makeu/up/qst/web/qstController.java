@@ -69,7 +69,6 @@ public class qstController {
 	public String adQstMail(QstVO vo) {
 		String fromEamil = "muuproject.up@gmail.com";
 		String toEamil = vo.getEmail();
-
 		String subject = "[MakeUUp] 작성하신 문의글 '"+vo.getTtl()+"'에 대한 답변입니다.";
 		String content = vo.getaContent();
 		

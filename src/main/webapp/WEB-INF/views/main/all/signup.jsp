@@ -119,7 +119,7 @@ table {
 								</tr>
 								<tr>
 									<td class="pilsu"><input class="border px-10 py-2"
-										spellcheck="false" type="text" placeholder="출생년도 ..."
+										spellcheck="false" type="text" placeholder="출생년도"
 										name="birthDate" id="birthDate" required> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td class="pilsu"><select

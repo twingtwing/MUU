@@ -206,6 +206,11 @@
                                         </tr>
                                     </c:forEach>
                                     </tbody>
+                                    <c:if test="${empty qstList }">
+                                    	<tr>
+                                    		<td colspan="5">결과가 없습니다.</td>
+                                    	</tr>
+                                    </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">

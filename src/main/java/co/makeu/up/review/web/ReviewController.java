@@ -76,6 +76,7 @@ public class ReviewController {
 		avg = Math.round(avg/list.size());
 		model.addAttribute("starAvg",avg);
 		model.addAttribute("reviews",list);
+		model.addAttribute("length",list.size());
 		model.addAttribute("ltNo",vo.getLtNo());
 		return "main/user/userLR";
 	}

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <!DOCTYPE html>
 <html>
@@ -242,7 +241,7 @@
                 </c:choose>
                 </c:if>
                </c:forEach> 
-               <c:if test="${fn:length(review) > 6}">
+               <c:if test="${length > 6}">
                 <div class="text-secondary small" style="cursor:pointer;" id="more">더보기</div>              
                </c:if>
               </div>  
@@ -384,8 +383,20 @@
     // 리뷰작성 ajax
     $('#modalY').click((e)=>{
       if(num===0){
+    	  window.alert('별점을 매겨주세요.')
     	  return;
       }
+      // 길이제한
+      let length = $('.wrbox').val()?.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+  	  if(length>=200){
+  		window.alert('200자 이내로 작성해주세요.');
+  		return;
+  	  }
+  	  if(!$('.wrbox').val()){
+  		  window.alert('내용을 입력해주세요.');
+  		  return;
+  	  }
+      
       if($('#modalY').text()==='작성'){
 	      $.ajax({
 	    	  url : '/user/userLRWrite',

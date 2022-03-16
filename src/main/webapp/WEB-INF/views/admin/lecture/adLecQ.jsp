@@ -210,7 +210,7 @@
                                         </ul>
                                     </div>
                                     <div class="position-absolute" style="left: 1px;">
-                                        <button class="btn btn-light">목록가기</button>
+                                        <button class="btn btn-light" onclick="location.href='/admin/adLecL'">목록가기</button>
                                     </div>
                                 </div>
                             </div>

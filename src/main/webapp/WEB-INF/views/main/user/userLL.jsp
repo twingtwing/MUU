@@ -175,7 +175,7 @@
                           <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
                               <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo})">
-                              <h5 class="px-3 m-0 font-weight-bold font-weight-bold" onclick="selectLecture(${sugang.ltNo})">${sugang.ttl}</h5>
+                              <h5 class="px-3 m-0 font-weight-bold" onclick="selectLecture(${sugang.ltNo})" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugang.ttl}</h5>
                               <div class="small text-secondary text-right m-0">진도율 ( ${sugang.progPct}% )</div>
                               <div class="bg-secondary w-100 small position-relative">　
                                 <div class="bg-danger position-absolute text-secondary pl-1" style="top:0px; width:${sugang.progPct}%">.</div>
@@ -194,7 +194,7 @@
  							<c:forEach items="${sugangList}" var="innersugang" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
 		                         <div class="thumbnail col-lg-4">
 		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.ltNo})"/>
-		                          <h5 class="px-3 font-weight-bold" onclick="selectLecture(${innersugang.ltNo})">${innersugang.ttl}</h5>
+		                          <h5 class="px-3  m-0 font-weight-bold" onclick="selectLecture(${innersugang.ltNo})" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugang.ttl}</h5>
 		                          <div class="small text-secondary text-right m-0">진도율 ( ${innersugang.progPct}% )</div>
 		                          <div class="bg-secondary text-secondary w-100 small position-relative">.
 		                           <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${innersugang.progPct}%">　</div>
@@ -240,7 +240,7 @@
                           <c:forEach items="${sugangEndList}" var="sugangend" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
                               <img src="${sugangend.thumb }" alt="">
-                              <h5 class="px-3 font-weight-bold font-weight-bold">${sugangend.ttl}</h5>
+                              <h5 class="px-3 font-weight-bold font-weight-bold"style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugangend.ttl}</h5>
                             </div>
                           </c:forEach>
                           </div> <!-- thumbnails first list end -->
@@ -255,7 +255,7 @@
  							<c:forEach items="${sugangEndList}" var="innersugangend" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
 		                         <div class="thumbnail col-lg-4">
 		                          <img src="${innersugangend.thumb}" alt="">
-		                          <h5 class="px-3 font-weight-bold">${innersugangend.ttl}</h5>
+		                          <h5 class="px-3 font-weight-bold"style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugangend.ttl}</h5>
 		                          </div>
 	 						</c:forEach>
 		                   </div>

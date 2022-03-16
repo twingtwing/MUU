@@ -100,7 +100,7 @@ const telReg = /^010\d{8}$/;
 	if($('#creIntro').val() && $('#tel').val() && $('#pw1').val() && $('#pw2').val() && telReg.test($('#tel').val())&& $('#pw1').val()===$('#pw2').val()){
 		$('#alert').text('')
 	}
-	let length = $('#myquestion').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+	let length = $('#creIntro').val().replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
 	if(length>=500){
 		window.alert('500자 이내로 작성해주세요.');
 		return;

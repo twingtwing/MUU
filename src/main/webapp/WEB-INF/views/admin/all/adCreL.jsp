@@ -222,11 +222,6 @@
                                     </thead>
                                         <!--크리에이터 정보 가져오기-->
                                         <tbody class="creatorListBoard">
-                                        <c:if test="${empty creators }">
-                                        <tr>
-                                        <td colspan="7">
-                                        검색 결과가 없습니다.</td></tr>
-                                        </c:if>
                                         <c:forEach items="${creators }" var="c">
                                         <tr>
                                             <td>${c.id }</td>
@@ -253,6 +248,11 @@
                                         </tr>
                                         </c:forEach>
                                         </tbody>
+                                         <c:if test="${empty creators }">
+                                        <tr>
+                                        <td colspan="7">
+                                        검색 결과가 없습니다.</td></tr>
+                                        </c:if>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">

@@ -16,6 +16,7 @@ public interface UsersMapper {
 	int userPointUpdate(UsersVO vo);
 	int userToCreator(UsersVO vo);
 	String userPwChck(String id);
+	int userPointAdd(UsersVO vo);
 	
 	// admin
 	List<UsersVO> usersList(UsersVO vo);

@@ -126,7 +126,7 @@
                                                                 <label for="exampleFormControlTextarea1">답변작성</label>
                                                                 
                                                                 <c:if test="${empty qst.aContent }">
-                                                                <textarea class="form-control" rows="10" id="answer"></textarea>
+                                                                <textarea class="form-control" rows="10" id="answer" spellcheck="false"></textarea>
                                                                 </c:if>
                                                                 <c:if test="${not empty qst.aContent }">
                                                                 <div>${qst.aContent }</div>
@@ -143,9 +143,11 @@
                                                                 onclick="history.go(-1);">뒤로가기</button>
                                                         </div>
                                                         <!-- 답변완료 시에 안보임 -->
+                                                        <c:if test="${empty qst.aContent }">
                                                         <div class="mr-4">
                                                             <button type="button" class="btn btn-secondary complete" >답변완료</button>
                                                         </div>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,17 +163,36 @@
 <input type="hidden" name="qstNo" value="${qst.qstNo }">
 <input type="hidden" name="email" value="${qst.email }">
 <input type="hidden" name="aContent">  
+<input type="hidden" name="ttl" value="${qst.ttl }">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">          
 </form>
 <script type="text/javascript">
 $('.complete').click(()=>{
 	if(!$('#answer').val()){
+		window.alert('답변을 작성해주세요.')
 		return;
 	}
+	// 길이제한
+    let length = $('#answer').val()?.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
+	if(length>=4000){
+		window.alert('4000자 이내로 작성해주세요.');
+		return;
+	}
+	
 	$('#frm>input[name=aContent]').val($('#answer').val());
+	lineMaker();
 	window.alert('답변이 완료되었습니다. 시간이 다소 걸릴 수 있습니다...');
 	$('#frm').submit();
 })
+
+// br태그삽입
+const lineMaker = ()=>{
+   let answer = $('#frm>input[name=aContent]').val();
+   answer = answer.replace(/\r\n/ig,'<br>');
+   answer = answer.replace(/\\n/ig,'<br>');
+   answer = answer.replace(/\n/ig,'<br>');
+   $('#frm>input[name=aContent]').val(answer);
+}
 </script>
 </body>
 </html>

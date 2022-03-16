@@ -331,10 +331,10 @@
                                         	<td>${l.ltStCode }</td>
                                         </tr>
                                         </c:forEach>
-                                       <c:if test="${empty lectures[0].ltNo }">
+                                        </tbody>
+                                       <c:if test="${empty lectures }">
                                        <tr><td colspan="9">결과가 없습니다.</td></tr>
                                        </c:if>
-                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="row d-flex justify-content-center position-relative">
@@ -447,6 +447,7 @@ $('#resetAll').click(()=>{
 		$('#searchForm').submit();
 	})
 
+	// 선택
 	$('.lectureList').click((e)=>{
 		let ltno = e.target.parentElement.dataset.ltno;
 		location.href='/admin/adLecI?ltNo='+ltno;
