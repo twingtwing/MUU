@@ -77,7 +77,10 @@
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
-				<tr v-for="(board,index) in boards[pageNum]">
+					<tr v-if="boards[pageNum] == []">
+						<td colspan="5">공지사항이 없습니다.</td>
+					</tr>
+					<tr v-if="boards[pageNum] != []" v-for="(board,index) in boards[pageNum]">
 						<td scope="row" class="text-center">{{board.bno}}</td>
 						<!-- 나중에 페이지네이션 들어가면 index 못쓸거임 아마 방법 생각하삼 -->
 						<td v-on:click="titleDetail(board.bno)">
@@ -129,7 +132,6 @@
             },
             methods: {
             	cursorSearch(){
-            		console.log($(event.target));
             		$(event.target).select();
             	},
                 titleSearch() {
@@ -150,10 +152,8 @@
 							this.boards[count] = [];
 						}
 					}
-                	console.log(this.boards);
                 },
                 pageMove(num){
-                	
                 	if(num == -1){
                 		this.pageNum --;
                 	}else if(num == -2){
@@ -161,7 +161,6 @@
                 	}else{
                 		this.pageNum = num;
                 	}
-                	console.log(this.pageNum);
                 }
             },
             beforeCreate: function () {
