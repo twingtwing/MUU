@@ -78,7 +78,7 @@
                                 <div class="row form-group">
                                     <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
-                                            ${report.content }
+                                            ${report.recontent }
                                         </div>
                                          <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
@@ -134,7 +134,7 @@
                                 <div class="row form-group">
                                     <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
-                                            ${report.recontent }
+                                            ${report.content }
                                         </div>
                                         <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
