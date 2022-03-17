@@ -391,10 +391,10 @@ select {
                         </div>
                         
                         <!-- 수업 드래그 앤 드롭  -->
-                        <div id="plzInsert">
+                        <div id="plzInsert" style="min-height:120px;">
                             수업을 추가해주세요(OT영상은 필수입니다.)
                         </div>
-                        <div class="" id="itemBoxWrap">
+                        <div class="" id="itemBoxWrap" style="min-height:250px;">
                         </div>
                     </div>
                     
@@ -548,9 +548,6 @@ select {
 		$('#thPhtUp').attr('style', 'display:none');
 	})
 	
-	
-	
-	
     //카테고리
     const Tcategory = {
 		//'전체(상위 카테고리)' : ['없음'],
@@ -563,6 +560,7 @@ select {
         '자기계발': [{'부동산':'LC42'},{'주식':'LC43'},{'면접/자소서':'LC44'},{'SNS/블로그':'LC45'},{'기타':'LC46'}]
         
       }
+	
 	$('#ctgr').change(()=>{
 		$('#downctgr>option').remove();
 			let upper = $('#ctgr option:selected').text();
@@ -806,12 +804,6 @@ select {
     	} else if (/\D/.test(this.value)) {
 			this.value = this.value.replace(/\D/g, '');
 			alert('숫자만 입력가능합니다.');
-		} else if (this.value < 1000) {
-			this.value = 1000;
-			alert('1000원 미만으로 등록할 수 없습니다');
-		} else if (this.value > 50000) {
-			this.value = 50000;
-			alert('50000만원을 초과할 수 없습니다');
 		}
 	});
     
@@ -830,14 +822,6 @@ select {
 		if (/\D/.test(this.value)) {
 			this.value = this.value.replace(/\D/g, '');
 			alert('1000 ~ 300000 사이 값만 입력가능합니다.');
-		}
-		if (this.value < 1000) {
-			this.value = 1000;
-			alert('1000원 미만으로 등록할 수 없습니다');
-		}
-		if (this.value > 300000) {
-			this.value = 300000;
-			alert('300000만원을 초과할 수 없습니다');
 		}
 	});
 	
@@ -1006,6 +990,29 @@ select {
 				return false;
 			}
 		}
+		//4페이지 금액 체크
+		if($('#kitname').val() != ''){
+			if($('#kitprc').val() < 1000){
+				$(this).val(1000);
+				alert('키트금액은 1000원 미만으로 등록할 수 없습니다');
+				return false;
+			} else if($('#kitprc').val() > 50000){
+				$(this).val(50000);
+				alert('키트금액은 50000원 초과하여 등록할 수 없습니다');
+				return false;
+			}
+		}
+		
+		if($('#prc').val() < 1000){
+			$(this).val(1000);
+			alert('수강료는 1000원 미만으로 등록할 수 없습니다');
+			return false;
+		} else if($('#prc').val() > 300000){
+			$(this).val(300000);
+			alert('수강료는 300000원 초과하여 등록할 수 없습니다');
+			return false;
+		}
+		
         
         $.ajax({
             url : "/creator/lectureResister",

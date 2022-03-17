@@ -34,6 +34,12 @@
     a{
     	cursor:pointer;
     }
+    select {
+	    height: 37px;
+		background-color: aliceblue;
+		border : 1px solid darkgrey;
+    
+    }
   </style>
 </head>
 <body>
@@ -161,7 +167,7 @@
                               <option value="내용">내용</option>
                           </select>
                       </div>
-                      <input class="border mb-0 ml-1" id="tocval" style="height: 37px; width: 170px" type="text"
+                      <input class="border mb-0 ml-1 mr-1" id="tocval" style="height: 37px; width: 170px" type="text"
                           placeholder="검색..." spellcheck=false onfocus="this.select()" onkeypress="if(event.keyCode==13){tocSearch();}">
                       <a class="btn btn-outline-secondary search-a" onclick="tocSearch()"><i class="icon_search"></i></a>
 

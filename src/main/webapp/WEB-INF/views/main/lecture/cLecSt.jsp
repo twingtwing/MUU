@@ -173,7 +173,7 @@
   
             <div class="row col-12 justify-content-end mt-3 mb-1">
               <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색..." title="수강생 이름 입력">
-              <button type="button" class="border px-4 mr-4" id="stBtn" onclick="stSearch()">검색</button>
+              <button type="button" class="border px-4 mr-2" id="stBtn" onclick="stSearch()">검색</button>
                 <select id="shipcode" class="border px-4" onchange="stSearch()">
                   <option value="" selected>전체</option>
                   <option value="D01">배송 예정</option>
@@ -223,7 +223,7 @@
 		                    <c:if test="${list.shipStCode == 'D01' }">
 			                      <button class="border p-2 updateShip">배송 예정</button>
 			                      <div class="shipbox justify-content-center position-absolute">
-			                        <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
+			                        <input type="text" id="inputshipNum" class="border" maxlength="15" placeholder="운송장번호 입력">
 			                        <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
 			                        <button class="border compl cancel">취소</button>
 			                      </div>
@@ -237,7 +237,7 @@
 		                     <c:if test="${list.shipStCode == 'D05' }">
 		                   		 <button class="border p-2 updateShip">반송</button>
 		                         <div class="shipbox justify-content-center position-absolute">
-			                         <input type="text" id="inputshipNum" class="border" placeholder="운송장번호 입력">
+			                         <input type="text" id="inputshipNum" class="border" maxlength="15" placeholder="운송장번호 입력">
 			                         <button class="border compl" onclick="goDelivery(${list.tlsnNo })">완료</button>
 			                         <button class="border comple" onclick="rejectDelivery(${list.tlsnNo })">반송거부</button>
 			                         <button class="border compl cancel">취소</button>

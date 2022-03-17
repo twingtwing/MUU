@@ -110,9 +110,21 @@
                     <div class="row py-3">
                         <div class="col-lg-12">
                             <h5 class="ml-1 mb-3 font-weight-bold">
-                                <i class="fa fa-hand-rock-o text-danger" aria-hidden="true"></i>
-                                종료된 강의(<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 종료됨</span>)
+                                <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+                                종료된 강의
+                                <c:if test="${listCnt != null}">
+                                (<span><i class="fa fa-check" aria-hidden="true"></i>${listCnt }개 종료됨</span>)
+                                </c:if>
+                                <c:if test="${listCnt == null}">
+                                (<span><i class="fa fa-check" aria-hidden="true"></i>0개 종료됨</span>)
+                                </c:if>
                             </h5>
+                            <c:if test="${cllists == '[]'}">
+                            <div class="mt-5 mb-5">
+                            	<h3><i class="fa fa-search" aria-hidden="true"></i>종료된 강의가 없습니다</h3>
+                            </div>
+                            </c:if>
+                            <c:if test="${cllists != '[]'}">
                             <!-- 강의 하나-->
                             <c:forEach items="${cllists}" var="list" varStatus="status" begin="0" end="2">
                             <div class="card ml-1 mt-2 mb-3">
@@ -140,7 +152,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }만원</td>
+                                                        <td style="width:100px">${list.prc }원</td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>
@@ -193,7 +205,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }만원</td>
+                                                        <td style="width:100px">${list.prc }원</td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>
@@ -215,6 +227,7 @@
                                     접기
                                 </button>
                             </div>
+                            </c:if>
                             
                         </div>
                     </div>

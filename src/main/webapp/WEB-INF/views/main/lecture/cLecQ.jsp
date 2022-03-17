@@ -7,36 +7,35 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
-        #cctgy>li {
-            cursor: pointer;
-
-        }
-
-        .list-link {
-            color: black;
-        }
-
-        .list-link.active {
-            font-weight: bold;
-            color: #e53637;
-
-        }
-
-        form .nice-select{
-            height: 38px;
-        }
-        a {
-        	cursor : pointer;
-        }
-        table {
-        	table-layout : fixed;
-        }
-        td {
-        	text-overflow:ellipsis; 
-        	overflow:hidden; 
-        	white-space:nowrap;
-        } 
+     #cctgy>li {
+         cursor: pointer;
+     }
+     .list-link {
+         color: black;
+     }
+     .list-link.active {
+         font-weight: bold;
+         color: #e53637;
+     }
+     form .nice-select{
+         height: 38px;
+     }
+     a {
+     	cursor : pointer;
+     }
+     table {
+     	table-layout : fixed;
+     }
+     td {
+     	text-overflow:ellipsis; 
+     	overflow:hidden; 
+     	white-space:nowrap;
+     } 
+     select {
+     	height: 37px;
+		background-color: aliceblue;
+		border : 1px solid darkgrey;
+     }
        
     </style>
 </head>
@@ -276,7 +275,7 @@
                             <div class="align-self-start" style="transform: rotate(180deg);">
                                 <i class="arrow_back" style="font-size: 70px;"></i>
                             </div>
-                            <textarea name="aw" id="qnAnswer" cols="30" rows="4"></textarea> 
+                            <textarea name="aw" id="qnAnswer" cols="30" rows="4" maxlength="4000" spellcheck="false"></textarea> 
                             <button type="button" id="updateBtn" class="btn btn-outline-dark" onclick="aUpdate()">저장</button>
                         </div>
                     </div>

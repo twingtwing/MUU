@@ -104,8 +104,8 @@
                                     <ul class="list-group list-group-flush ml-3">
                                         <li class="list-group-item font-weight-bold">이름 : ${name }</li>
                                         <li class="list-group-item font-weight-bold">
-                                            자기 소개 칸 : ${creIntro }
-                                        </li> 
+                                            소개 : ${creIntro }
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="row justify-content-center">
@@ -118,22 +118,22 @@
             </div>
         </div>
     </section>
-    <script>
-	    //mouseover 이벤트 : 사이드바 css변경
-	    $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
-	        $(this).css('background-color','#e53637');
-	        $(this).find('.list-link').css('color','#ffffff');
-	    })
-	
-	    //mouseover 이벤트 : 사이드바 css변경
-	    $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
-	        $(this).css('background-color','#ffffff');
-	        $(this).find('.list-link').css('color','#000000');
-	        $(this).find('.list-link.active').css('color','#e53637');
-	    })
-	    
-	
-	</script>
+<script>
+ //mouseover 이벤트 : 사이드바 css변경
+ $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+     $(this).css('background-color','#e53637');
+     $(this).find('.list-link').css('color','#ffffff');
+ })
+
+ //mouseover 이벤트 : 사이드바 css변경
+ $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+     $(this).css('background-color','#ffffff');
+     $(this).find('.list-link').css('color','#000000');
+     $(this).find('.list-link.active').css('color','#e53637');
+ })
+ 
+
+</script>
 	
 </body>
 

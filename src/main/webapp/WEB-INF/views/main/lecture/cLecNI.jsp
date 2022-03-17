@@ -183,11 +183,11 @@
                                     <h5><strong>제목 : </strong></h5>
                                 </div>
                                 <div class="col-11 px-0">
-                                    <input class="w-100" type="text" name="" id="ttl" spellcheck="false">
+                                    <input class="w-100" type="text" maxlength="200" id="ttl" spellcheck="false">
                                 </div>
                             </div>
                             <div class="row col-12 my-3" style="height: 45vh;">
-                                <textarea id="content" cols="130" rows="10" spellcheck="false"></textarea>
+                                <textarea id="content" cols="130" rows="10" maxlength="3500" spellcheck="false"></textarea>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
                                 <div class="d-flex align-items-center">
