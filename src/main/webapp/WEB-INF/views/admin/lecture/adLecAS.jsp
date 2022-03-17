@@ -114,7 +114,7 @@ td, th {
 											${les.ttl }</a></td>
 									</tr>
 									<tr>
-										<td class="p-0">
+									 	<td class="p-0">
 											<div class="collapse" id="collapseExample${les.lsnNo }">
 												<div class="card card-body d-flex-justify-content-center">
 													<video controls width="250">

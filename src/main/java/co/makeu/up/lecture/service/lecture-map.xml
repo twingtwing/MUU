@@ -98,7 +98,7 @@
 	
 	<update id="lectureReportCheck" parameterType="co.makeu.up.lecture.service.LectureVO">
 		UPDATE LECTURE 
-		SET LT_ST_CODE = 'L02'
+		SET LT_ST_CODE = 'L06'
 		WHERE LT_NO = #{ltNo} 
 	</update>
 	<update id="lectureReInsert" parameterType="co.makeu.up.lecture.service.LectureVO">

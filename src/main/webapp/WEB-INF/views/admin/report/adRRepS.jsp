@@ -78,11 +78,14 @@
                                 <div class="row form-group">
                                     <div class="card w-100">
                                         <div class="card-body" style="height: 25vh;">
-                                            ${report.recontent }
+                                             <c:if test="${not empty report.recontent }">${report.recontent }</c:if>
+	                                                <c:if test="${empty report.recontent }"> <b class="text-danger">삭제됨</b> </c:if>
+                                          
                                         </div>
                                          <div class="card-footer row justify-content-end" style="background-color: white;">
 	                                         <div>
-	                                            별점 ${report.star }
+	                                            <c:if test="${report.star eq 0 }"> </c:if>
+	                                              <c:if test="${report.star ne 0 }"> ${report.star }</c:if>  
 	                                         </div>
                                         </div>
                                     </div>

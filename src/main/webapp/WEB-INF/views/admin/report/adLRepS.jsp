@@ -84,8 +84,8 @@
 		                                    <div class="card-body  row justify-content-end">
 		                                    
 		                                    <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
-                                                          <source src="lesson.lsnFile" type="video/mp4">
-                                           </video>
+                                                          <source ${report.lsnfile} type="video/mp4">
+                                           
 		                                    </div>
 		                                    
 		                                    

@@ -180,7 +180,9 @@
                                                 </th>
                                                 <th data-col="recontent">
                                                 	신고당한 리뷰
-                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'recontent' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true"></i>	
+                                                	<i class="fa fa-caret-down <c:if test="${search.orderColumn eq 'recontent' and search.orderBy eq 'asc'}">fa-rotate-180</c:if> " aria-hidden="true">
+                                                		
+                                                	</i>	
                                                 </th>
                                                 <th data-col="rp_date" style="width: 10%;">
                                                 	신고날짜
@@ -193,6 +195,9 @@
                                             </tr>
                                         </thead>
                                         <tbody id="mo"  onmouseover = "setCursor(this,'pointer')">
+                                        
+                                        
+                                        
                                         <c:if test="${empty list }">
                                         	<tr >
                                         		<td class="font-weight-bold py-4" colspan="8">데이터가 없습니다.</td>
@@ -216,7 +221,11 @@
 	                                                <td>${list.creid }</td>
 	                                                <td>${list.ttl }</td>
 	                                                <td>${list.reporter }</td>
-	                                                <td>${list.recontent }</td>
+	                                                <td>
+	                                                <c:if test="${not empty list.recontent }">${list.recontent }</c:if>
+	                                                <c:if test="${empty list.recontent }"><b class="text-danger">삭제됨</b></c:if>
+	                                                </td>
+	                                                
 	                                                <td>${list.rpdate }</td>
 	                                                <td>
 		                                                <c:if test = "${list.rpStCode eq 'RPS01' }">
