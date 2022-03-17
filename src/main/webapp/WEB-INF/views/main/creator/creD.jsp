@@ -105,7 +105,8 @@
                                 <div class="col-lg-6 pr-5">
                                     <div class="row d-flex justify-content-end">
                                         <div>
-                                            <img :src="creDetail.pht" class="rounded-circle" style="width: 150px;height: 150px;">
+                                            <img v-if="creDetail.pht != null" :src="creDetail.pht" class="rounded-circle" style="width: 150px;height: 150px;">
+                                            <img v-if="creDetail.pht == null" class="rounded-circle" src="/resources/img/profile.png" style="width: 75px; height: 75px">
                                             <div class="row mt-2 d-flex justify-content-center">
                                                 <h6 class="text-muted">{{creDetail.name}} ({{creDetail.creId}})</h6>
                                             </div>

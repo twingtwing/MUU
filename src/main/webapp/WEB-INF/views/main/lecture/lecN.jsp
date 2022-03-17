@@ -107,7 +107,8 @@
                                             </div>
                                             <div class="row d-flex justify-content-between mb-4">
                                                 <div class="row ml-2">
-                                                    <img class="rounded-circle" :src="lecDetails.pht" alt="크리에이터이미지" style="width: 75px; height: 75px">
+                                                    <img v-if="lecDetails.pht != null" class="rounded-circle" :src="lecDetails.pht" alt="크리에이터이미지" style="width: 75px; height: 75px">
+                                                    <img v-if="lecDetails.pht == null" class="rounded-circle" src="/resources/img/profile.png" style="width: 75px; height: 75px">
                                                     <div class="d-flex align-items-center ml-3">
                                                         <h5 class="mb-0">{{lecDetails.name}}</h5>
                                                     </div>
