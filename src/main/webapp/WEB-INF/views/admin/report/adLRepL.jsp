@@ -177,6 +177,13 @@ background-color:#f5f5f5;
                                             </tr>
                                         </thead>
                                     <tbody id="mo" onmouseover = "setCursor(this,'pointer')">
+                                    	 <c:if test="${empty list }">
+                                        	<tr>
+                                        		<td colspan="8" class="py-6 font-weight-bold">검색 결과 데이터가 없습니다.</td>
+                                        	</tr>
+                                        	</c:if>
+                                    
+                                    
                                    		<c:forEach items = "${list }" var = "list">
                                         <tr id="mod" onclick="location.href='/admin/adLRepS?rpNo=${list.rpNo }'">
                                             <td>${list.rpNo }</td>
