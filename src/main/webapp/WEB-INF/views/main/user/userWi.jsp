@@ -45,7 +45,7 @@ i.fa-heart-o {
 
 <body>
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="img/normal-breadcrumb.jpg">
+		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">

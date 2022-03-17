@@ -113,8 +113,8 @@
                         <div class="col-lg-12 d-flex justify-content-between mx-2">
                           <h5 class="font-weight-bold mb-2 text-dark"><i class="fa fa-truck text-danger"></i> 배송현황</h5>
                           <div class="align-items-bottom">
-                            <p class="mb-0 text-danger mr-3" style="font-size: 10px;">*배송과 관련된 문제는 사이트에서 책임지지 않습니다.</p>
-                            <p class="mb-0 text-danger mr-3" style="font-size: 10px;">*구매 확정 시 적립금이 지급되며, 환불이나 교환은 일체 불가능합니다.</p>
+                            <p class="mb-0 text-danger mr-3 font-weight-bold" style="font-size: 12px;">*배송과 관련된 문제는 사이트에서 책임지지 않습니다.</p>
+                            <p class="mb-0 text-danger mr-3 font-weight-bold" style="font-size: 12px;">*구매 확정 시 적립금이 지급되며, 환불이나 교환은 일체 불가능합니다.</p>
 
                           </div>
                         </div>
@@ -156,7 +156,7 @@
                                       rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
                                       ${del.shipStName }
                                       </div>
-                                      <p class="mb-0 ml-3">운송장번호 : ${del.shipNum }</p>
+                                      <p class="mb-0 ml-3 font-weight-bold">운송장번호 : ${del.shipNum }</p>
                                     </div>
                                   </div>
                                   
@@ -341,10 +341,18 @@
     		data : {regDateSearch : $('#date1').val(), expDateSearch : $('#date2').val()},
     	})
     	.done((r)=>{
-    		removeAll();
-    		r.forEach((v)=>{
-	    		$('.myPayList').append(makeRow(v));    			
-    		})
+	    	removeAll();
+    		if(r.length!=0){    			
+	    		r.forEach((v)=>{
+		    		$('.myPayList').append(makeRow(v));    			
+	    		})
+    		} else {
+    			$('.myPayList').append(
+    					$('<tr>').append(
+    							$('<td>').attr('colspan',6).text('결과가 없습니다.').addClass('text-center p-3')
+    					)
+    			)    		
+    		}
     	})
     })
     
@@ -365,7 +373,7 @@
     				.addClass('p-0 text-center align-middle'),
     		$('<td>').text(list.ttl).addClass('text-center align-middle'),
     		$('<td>').text(list.pay).append($('<br>'),
-    				$('<span>').text(ktPrc)).addClass('text-center align-middle'),
+    				$('<span>').text(ktPrc).addClass('small')).addClass('text-center align-middle'),
     		$('<td>').text(dateformat(list.regDate)).addClass('text-center align-middle'),
     		$('<td>').text(dateformat(list.expDate)).addClass('text-center align-middle'),
     		$('<td>').text(list.rfStCode).addClass('text-center align-middle')

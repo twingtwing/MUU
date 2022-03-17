@@ -20,13 +20,13 @@
 </head>
 <body>
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="resources/img/hero/hero-1.jpg">
+		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
-						<h2>공지사항</h2>
-						<p>공지사항입니다</p>
+						<h2>고객센터</h2>
+						<p>공지사항</p>
 					</div>
 				</div>
 			</div>

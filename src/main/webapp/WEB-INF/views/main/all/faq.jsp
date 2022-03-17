@@ -28,7 +28,7 @@
 
 <body>
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="resources/img/hero/hero-1.jpg">
+		data-setbg="resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">

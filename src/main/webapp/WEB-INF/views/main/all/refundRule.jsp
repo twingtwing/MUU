@@ -9,13 +9,13 @@
 <body>
 	<!-- 배너 시작-->
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="resources/img/hero/hero-1.jpg">
+		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
-						<h2>환불규정</h2>
-						<p>환불규정 상세설명</p>
+						<h2>고객센터</h2>
+						<p>환불규정</p>
 					</div>
 				</div>
 			</div>

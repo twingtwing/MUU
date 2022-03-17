@@ -251,7 +251,7 @@ table {
 		})
 		
 		$('#pw, #pw2').keyup((e) => {
-			const pwreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+			const pwreg = /^(?=.*[A-Za-z$`~!@$!%*#^?&\\(\\)\-_=+])(?=.*\d)[A-Za-z\d$`~!@$!%*#^?&\\(\\)\-_=+]{8,20}$/;
 			if(!pwreg.test($('#pw').val())){
 				$('.pwAlert').text('비밀번호 양식을 지켜주시기 바랍니다.')
 			}				
@@ -294,6 +294,18 @@ table {
 				return;
 			} else {
 				$('#alert').text('');
+			}
+			if($('#sample4_postcode').val() && !$('#sample4_detailAddress').val()){
+				$('#alert').text('상세주소를 작성해주세요.');
+				return;
+			} else {
+				$('#alert').text('');	
+			}
+			if($('#tel').val() && !telreg.test($('#tel').val())){
+				 $('#alert').text('전화번호 양식이 바르지 않습니다.')
+				 return;
+			} else {				
+				 $('#alert').text('')
 			}
 			if(chkState && !$('#alert').text() && pwState){
 				$('#id').val($('#id').val() + $('.emailAddr option:selected').val());

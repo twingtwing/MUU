@@ -217,7 +217,7 @@ td, th {
 									<div class="d-flex justify-content-center mx-5 mb-5 mt-4">
 										<button class="border px-4 py-2 rounded"
 											onclick="location.href='/user/userUpdate'">회원정보수정</button>
-										<button class="border rounded px-4 -y-2" onclick="location.href='/user/userPwForm'">비밀번호 변경</button>
+										<button class="border rounded px-4 -y-2" id="changePw">비밀번호 변경</button>
 										<button class="px-4 py-2 bg-danger rounded" id="out" style="color:white;border:none;">탈퇴</button>
 									</div>
 								</div>
@@ -337,7 +337,9 @@ td, th {
 			</div>
 		</div>
 	</div>
-
+<form action="/user/userPwForm" method="post" id="pwForm">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+</form>
 	<script>
         $('#getGrade').mouseover((e)=>{
             $('.UserGradeInfo').addClass('show');
@@ -412,7 +414,12 @@ td, th {
             $('#logout').submit();
         })
         
-       
+       	// 비밀번호 변경 페이지로 이동
+       $('#changePw').click(()=>{
+    	   $('#pwForm').submit()
+       })
+        
+        
         
         // change profile image
       $('#file').change((e)=>{

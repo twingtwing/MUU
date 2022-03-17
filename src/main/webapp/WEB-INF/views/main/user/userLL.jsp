@@ -172,6 +172,9 @@
                       <!-- active start -->
                         <div class="carousel-item active">
                           <div class="d-flex w-100 col-lg-12">
+                          <c:if test="${empty sugangList }">
+                          	<div class="my-5 text-center w-100">수강 중인 강의가 없습니다.</div>
+                          </c:if>
                           <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
                               <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo})">
@@ -232,11 +235,14 @@
 
                   <!-- 수강 만료 강의-->
                   <div class="row col-lg-12 m-0">
-                    <div class="my-3 mb-5 classlist endclass carousel slide w-100" id="slide2" data-ride="carousel">
+                    <div class="my-3 classlist endclass carousel slide w-100" id="slide2" data-ride="carousel">
                       <div class="carousel-inner">
                       <!--  active start -->
                         <div class="carousel-item active">
-                          <div class="d-flex w-100 col-lg-12">           
+                          <div class="d-flex w-100 col-lg-12">    
+                          <c:if test="${empty sugangEndList }">
+                          	<div class="my-5 text-center w-100">만료된 강의가 없습니다.</div>
+                          </c:if>       
                           <c:forEach items="${sugangEndList}" var="sugangend" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
                               <img src="${sugangend.thumb }" alt="">
