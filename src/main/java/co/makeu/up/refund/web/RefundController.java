@@ -41,11 +41,12 @@ public class RefundController {
 		vo.setPage(0);
 		vo.setCre_id(pri.getName());
 		List<RefundVO> rlist = refundDao.RefundList(vo);
-		int listCnt = rlist.get(0).getCount();
-		System.out.println(listCnt + "작동했나?");
-		Pagination pagination = new Pagination(listCnt,1);
-		model.addAttribute("ltno", vo.getLtNo());
-		model.addAttribute("pagination",pagination);
+		if(rlist.isEmpty()!= true) {
+			System.out.println("콘솔확인용 if구문 되나?");
+			int listCnt = rlist.get(0).getCount();
+			Pagination pagination = new Pagination(listCnt,1);
+			model.addAttribute("pagination",pagination);
+		}
 		model.addAttribute("refundlists", rlist);
 		return "main/creator/creR";
 	}

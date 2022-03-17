@@ -35,6 +35,12 @@ td, th {
 .modal {
 	margin-top: 10rem;
 }
+#ok {
+    cursor: pointer;
+}
+#reject {
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -69,7 +75,7 @@ td, th {
 					<div class="card-body">
 						<!-- 여기서부터 작성 -->
 						<div class="row">
-							<a href="javscript:history.back()"
+							<a href="/admin/adLecAL"
 								class="mb-3 border p-2 text-secondary">뒤로가기</a>
 							<table class="table table-bordered mb-5">
 								<tr style="background-color: #eeeeee;">
@@ -117,7 +123,7 @@ td, th {
 										<td class="p-0">
 											<div class="collapse" id="collapseExample${les.lsnNo }">
 												<div class="card card-body d-flex-justify-content-center">
-													<video controls width="250">
+													<video controls height="240">
 														<source src="${les.lsnFile }" type="video/webm">
 													</video>
 												</div>
@@ -204,7 +210,6 @@ td, th {
     		$('.show').attr('class','collapse');
     	}
     })
-}
 </script>
 </body>
 </html>
