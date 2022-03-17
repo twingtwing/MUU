@@ -104,15 +104,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[0]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -128,15 +128,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[1]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -151,15 +151,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[2]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -175,15 +175,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[3]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -199,15 +199,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[4]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -223,15 +223,15 @@
 									<div class="card border-0" v-for="(faq,index) in faqMore[5]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.{{faq.qcontent}}</button>
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">A{{index+1}}.{{faq.acontent}}</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="text-danger" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -275,16 +275,16 @@
 								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
 									<div class="card-header text-secondary bg-light" id="headingOne">
 										<h2 class="mb-0">
-											<button class="btn btn-link btn-block text-left text-secondary"
+											<button class="btn btn-link btn-block d-flex text-left text-secondary"
 												type="button" data-toggle="collapse"
 												:data-target="'#collapse_search_'+faq.fno"
 												aria-expanded="false"
-												:aria-controls="'collapse_search_'+faq.fno">카테고리/{{faq.ctgrName}} Q.{{faq.qcontent}}</button>
+												:aria-controls="'collapse_search_'+faq.fno">Q. [ {{faq.ctgrName}} ] <p v-html="faq.qcontent"></p></button>
 										</h2>
 									</div>
 									<div :id="'collapse_search_'+faq.fno" class="collapse"
 										aria-labelledby="headingOne" data-parent="#accordionExample">
-										<div class="card-body">A .{{faq.acontent}}</div>
+										<div class="card-body d-flex">A .<p v-html="faq.acontent"></p></div>
 									</div>
 								</div>
 								<div v-if="searchFaq != null"
@@ -336,8 +336,11 @@
       	          }
       	      })
       	      .done(res =>{
+      	    	  for(var faq of res){
+      	    		faq.qcontent = this.brChg(faq.qcontent);
+                    faq.acontent = this.brChg(faq.acontent);
+      	    	  }
       	    	  if(res !==null){
-      	    		console.log("나오기는 하냐?")
       	    		this.searchFaqMore = [];
       	    		this.searchFaq = [];
       	    		  if(res.length < 6){
@@ -345,19 +348,14 @@
       	    			  if(this.searchFaqMore[0] == null){
       	    				let test = ['검색없음']
       	    				this.searchFaqMore = test
-      	    				console.log(this.searchFaqMore);
       	    			  }
-      	    			  console.log('test1')
       	    		  }else{
       	    			  for(var j = 0; j < 5; j++){
-      	    				 console.log('test2')
       	    				this.searchFaqMore.push(res[j]);
       	    			  }
       	    			  this.searchFaq = res.splice(5);
-      	    			 console.log('test3')
       	    		  }
       	    	  }else{
-      	    		 console.log('test4')
       	    		  this.searchFaqMore = '없음';
       	    	  }
              })
@@ -367,14 +365,20 @@
             	this.faqs[num].splice(0,1);
             },
             searchMore() {
-            	console.log(this.searchFaq.length )
             	if(this.searchFaq.length > 5){
             		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq.splice(0,5));
             	}else{
             		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq);
             		this.searchFaq = null;
             	}
-            }
+            },
+            brChg(val){
+        		let resultVal = val;
+        		resultVal = resultVal.replace(/\r\n/ig,'<br>');
+        		resultVal = resultVal.replace(/\\n/ig,'<br>');
+        		resultVal = resultVal.replace(/\n/ig,'<br>');
+        		return resultVal;
+        	}
          },
          beforeCreate: function () {
             $.ajax({
@@ -393,6 +397,8 @@
                   for (var faq of result) {
                      faq.target = 'collapse_' + Math.trunc((Math.random() * 1000));
                      faq.target2 = '#' + faq.target;
+                     faq.qcontent = this.brChg(faq.qcontent);
+                     faq.acontent = this.brChg(faq.acontent);
                      for (var i = 1; i <= 6; i++) {
 						 if(faq.ctgr.indexOf(i) !== -1){
 							this.faqs[i-1].push(faq);
