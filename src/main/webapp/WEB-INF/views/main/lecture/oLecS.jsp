@@ -209,7 +209,7 @@
                                         </tr>
                                         <tr>
                                             <th>강의가격</th>
-                                            <td>${olists.prc }만원</td>
+                                            <td>${olists.prc }원</td>
                                             <th>키트가격</th>
                                             <td>${olists.kitPrc }원</td>
                                         </tr>
@@ -241,7 +241,7 @@
                             <h5 class="font-weight-bold">키트 상세 정보</h5>
                         </div>
                         <div class="row col-12 align-items-end">
-                            <div class="col-10">
+                            <div class="row col-12">
                                 <div class="row">
                                 	<c:if test="${olists.kitName != null }">
                                     <h6 class="font-weight-bold">${olists.kitName }</h6>
@@ -258,10 +258,10 @@
                                 </div>
                                 </c:if>
                             </div>
-                            <div class="col-2">
+                            <div class="row col-12 justify-content-end mt-3">
                                 <div class="row align-self-end">
                                 	<c:if test="${olists.kitPrc != null }">
-                                    <p class="mb-0">키트 가격 : ${olists.kitPrc }원</p>
+                                    <p class="font-weight-bold mb-0">키트 가격 : ${olists.kitPrc }원</p>
                                     </c:if>
                                 </div>
                             </div>

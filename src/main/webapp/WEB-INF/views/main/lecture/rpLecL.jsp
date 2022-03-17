@@ -118,6 +118,12 @@
                                 (<span><i class="fa fa-check" aria-hidden="true"></i>0개 신고됨</span>)
                                 </c:if>
                             </h5>
+                            <c:if test="${rplists == '[]'}">
+                            <div class="mt-5 mb-5">
+                            	<h3><i class="fa fa-search" aria-hidden="true"></i>신고된 강의가 없습니다</h3>
+                            </div>
+                            </c:if>
+                            <c:if test="${rplists != '[]'}">
                             <!-- 강의 하나-->
                             <c:forEach items="${rplists}" var="list" varStatus="status" begin="0" end="2">
                             <div class="card ml-1 mt-2 mb-3">
@@ -145,7 +151,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }만원</td>
+                                                        <td style="width:100px">${list.prc }원</td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>
@@ -173,6 +179,7 @@
                                 </div>
                             </div>
                             </c:forEach>
+                            
                             
 
                             <!-- 더보기 누르면 나중에 버튼 숨기거나 접기버튼으로 전환하기-->
@@ -210,7 +217,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }만원</td>
+                                                        <td style="width:100px">${list.prc }원</td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>
@@ -245,6 +252,7 @@
                                     접기
                                 </button>
                             </div>
+                            </c:if>
                             
                         </div>
                     </div>

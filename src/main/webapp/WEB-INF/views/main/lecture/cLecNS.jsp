@@ -193,7 +193,7 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <div class="row col-12 my-3" style="height: 45vh;">
+                            <div class="row col-12 my-3" style="min-height: 350px;">
                                 <p id="inputcontent">${noinfo.content}</p>
                             </div>
                             <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">

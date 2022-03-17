@@ -24,6 +24,12 @@
     a {
       color: var(--secondary);
     }
+    select {
+    	height: 37px;
+		background-color: aliceblue;
+		border : 1px solid darkgrey;
+    	
+    }
   </style>
 </head>
 <body>
