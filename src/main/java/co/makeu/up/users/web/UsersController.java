@@ -122,7 +122,7 @@ public class UsersController {
 		model.addAttribute("id",email);
 		return "main/all/changePwForm";
 	}
-	@GetMapping("/user/userPwForm")
+	@PostMapping("/user/userPwForm")
 	public String userPwForm(Principal pri) {
 		return "main/user/userPwForm";
 	}

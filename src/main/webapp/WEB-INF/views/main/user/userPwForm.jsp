@@ -47,7 +47,7 @@ const passwordChk = (pw)=>{
 }
 
 $('#btn').click(()=>{
-	const pwreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+	const pwreg = /^(?=.*[A-Za-z$`~!@$!%*#^?&\\(\\)\-_=+])(?=.*\d)[A-Za-z\d$`~!@$!%*#^?&\\(\\)\-_=+]{8,20}$/;
 	passwordChk($('#currPw').val());
 	console.log(state)
 	if(!state){
@@ -62,6 +62,7 @@ $('#btn').click(()=>{
 		window.alert('비밀번호 양식에 맞지 않습니다.');
 		return;
 	}
+	window.alert('비밀번호 변경이 완료되었습니다.')
 	$('#frm').submit();
 })
 

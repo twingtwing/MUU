@@ -10,13 +10,13 @@
 </head>
 <body>
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="/resources/img/hero/hero-1.jpg">
+		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
-						<h2>문의글</h2>
-						<p>상세한 문의를 원하시면 여기서 하시면 됩니다.</p>
+						<h2>고객센터</h2>
+						<p>문의글</p>
 					</div>
 				</div>
 			</div>

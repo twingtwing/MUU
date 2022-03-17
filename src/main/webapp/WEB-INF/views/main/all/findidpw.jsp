@@ -81,6 +81,7 @@
 		</div>
 	</div>
 <form action="/changePwForm" id="findForm">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 <input type="hidden" name="email">
 </form>
 	<script type="text/javascript">
