@@ -77,10 +77,10 @@
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
-					<tr v-if="boards[pageNum] == []">
-						<td colspan="5">공지사항이 없습니다.</td>
+					<tr v-if="boards[0] == ''">
+						<td class="text-center font-weight-bold py-5" colspan="5">검색 결과가 없습니다.</td>
 					</tr>
-					<tr v-if="boards[pageNum] != []" v-for="(board,index) in boards[pageNum]">
+					<tr v-if="boards[0] != ''" v-for="(board,index) in boards[pageNum]">
 						<td scope="row" class="text-center">{{board.bno}}</td>
 						<!-- 나중에 페이지네이션 들어가면 index 못쓸거임 아마 방법 생각하삼 -->
 						<td v-on:click="titleDetail(board.bno)">
