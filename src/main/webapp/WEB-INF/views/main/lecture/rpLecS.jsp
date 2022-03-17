@@ -195,10 +195,8 @@
                             <div class="col-12 text-right align-items-right">
                                 <button class="btn btn-outline-secondary" type="button" onclick="lectureInfo(${rplists.ltNo })">강의정보수정</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <!-- 
                                 <button class="btn btn-outline-info"  type="button" onclick="lessonInfo(${rplists.ltNo })">영상 관리</button>
                                 &nbsp;&nbsp;&nbsp;
-                                 -->
                                 <button class="btn btn-outline-success" type="button" onclick="lecCheck(${rplists.ltNo})">재검토</button>
                             </div>
                         </div>
@@ -227,11 +225,11 @@
                         <div class="row col-12 justify-content-center border">
                             <div class="row mr-0 my-4">
                                 <div class="col-lg-8 pr-2">
-                                    <img src="${rplist.pht1 }" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
+                                    <img src="${rplists.pht1 }" style="object-fit: cover; width: 100%; height: 500px;" alt="강의 이미지 1">
                                 </div>
                                 <div class="col-lg-4 p-0">
-                                    <img src="${rplist.pht2 }" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2">
-                                    <img src="${rplist.pht3 }" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
+                                    <img src="${rplists.pht2 }" class="pb-2" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 2">
+                                    <img src="${rplists.pht3 }" style="object-fit: cover; width: 100%; height: 250px;" alt="강의 이미지 3">
                                 </div>
                             </div>
                         </div>

@@ -385,10 +385,10 @@
                         </div>
                         
                         <!-- 수업 드래그 앤 드롭  -->
-                        <div id="plzInsert">
+                        <div id="plzInsert" style="min-height:120px;">
                             수업을 추가해주세요(OT영상은 필수입니다.)
                         </div>
-                        <div class="" id="itemBoxWrap">
+                        <div class="" id="itemBoxWrap" style="min-height:250px;">
                         </div>
                     </div>
                     
@@ -474,13 +474,18 @@
     
                         <!--수업키트 금액 및 강의금액 입력란 / input type을 바꾸거나 백단에서 제한 둘 것-->
                         <div class="col-5 ml-3 mt-5 mb-5 align-self-center periodselect">
-                            <div class="mb-5">
-                                <input type="text" id="kitprc" style="width:-webkit-fill-available" value="${tempinfo.kitPrc }" placeholder="수업 키트 금액을 입력해주세요">
-                            </div>
                             <div class="mb-2">
-                                <input type="text" id="prc" style="width:-webkit-fill-available" value="10" value="${tempinfo.prc }" placeholder="강의 금액을 입력해주세요">
+                                <input type="text" id="kitprc" style="width:-webkit-fill-available" placeholder="수업 키트 금액을 입력해주세요" title="키트금액란">
                             </div>
-                            <h6 class="periodsub">*만원단위이며 10~500만원 사이 금액만 등록 가능합니다.</h6>
+                            <div style="text-align:right;">
+                            	<h6 class="periodsub">*단위는 원</h6>
+                            </div>
+                            <div class="mt-5 mb-2">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" value="1000" placeholder="강의 금액을 입력해주세요" title="강의금액란">
+                            </div>
+                            <div style="text-align:right;">
+                            	<h6 class="periodsub">*단위는 원</h6>
+                            </div>
                         </div>
                     </div>
 
@@ -772,25 +777,8 @@
         .append("<div class='deleteBox'>[삭제]</div>")
 
         .find(".deleteBox").click(function() {
-            // var valueCheck = false;
-            
-            // $(this).parent().find('span').each(function() {
-            //     console.log(this);
-            //     console.log($(this).find('.itemClassName').innerText());
-            //     if($('.itemClassName').text() != '' && null) {
-            //         console.log(this);
-            //         valueCheck = true;
-            //         console.log(valueCheck);
-            //     }
-            // });
-
-            // if(valueCheck) {
-            //     var delCheck = confirm('입력하신 내용이 있습니다.\n삭제하시겠습니까?');
-            // }
-            // if(!valueCheck || delCheck == true) {
                 $(this).parent().remove();
                 reorder();
-            // }
         });
         // 번호 재정렬
         reorder();
@@ -903,14 +891,6 @@
 			this.value = this.value.replace(/\D/g, '');
 			alert('10~500만 입력가능합니다.');
 		}
-		if (this.value < 10) {
-			this.value = 10;
-			alert('10만원 미만으로 등록할 수 없습니다');
-		}
-		if (this.value > 500) {
-			this.value = 500;
-			alert('500만원을 초과할 수 없습니다');
-		}
 	}); 
     
      //태그 체크
@@ -923,6 +903,28 @@
 	     	}
 	     })
      })
+  	 //강의제목 200바이트 제한
+     function fn_checkByte(obj){
+   	    const maxByte = 200; 
+   	    const text_val = obj.value;
+   	    const text_len = text_val.length;
+   	    
+   	    let totalByte=0;
+   	    for(let i=0; i<text_len; i++){
+   	    	const each_char = text_val.charAt(i);
+   	        const uni_char = escape(each_char) //유니코드 형식으로 변환
+   	        if(uni_char.length>4){
+   	            totalByte += 2;
+   	        }else{
+   	            totalByte += 1;
+   	        }
+   	    }
+   	    
+   	    if(totalByte>maxByte){
+   	    	alert('강의 제목이 너무 깁니다!');
+   	    	this.value 
+   	    }
+   	  }
     
 	//시큐리티 토큰
 	let header = "${_csrf.headerName}";
@@ -1030,6 +1032,18 @@
 		for(var i = 0; i < $('.classUp').length; i++){
 			if($('.classUp')[i].files[0] == null){
 				alert('영상이 없는 수업이 있습니다');
+				return false;
+			}
+		}
+		//4페이지 금액 체크
+		if($('#kitname').val() != ''){
+			if($('#kitprc').val() < 1000){
+				$(this).val(1000);
+				alert('키트금액은 1000원 미만으로 등록할 수 없습니다');
+				return false;
+			} else if($('#kitprc').val() > 50000){
+				$(this).val(50000);
+				alert('키트금액은 50000원 초과하여 등록할 수 없습니다');
 				return false;
 			}
 		}

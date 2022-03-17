@@ -93,7 +93,7 @@
 	<update id="lectureReResister" parameterType="co.makeu.up.lecture.service.LectureVO">
 		UPDATE LECTURE 
 		SET LT_ST_CODE = 'L02'
-		WHERE LT_NO = #{ltNo} 
+		WHERE LT_NO = #{ltNo}
 	</update>
 	
 	<update id="lectureReportCheck" parameterType="co.makeu.up.lecture.service.LectureVO">
