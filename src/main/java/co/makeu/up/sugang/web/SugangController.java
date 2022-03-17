@@ -138,20 +138,22 @@ public class SugangController {
 	@ResponseBody
 	@PostMapping("/user/userSugangConfirm")
 	public void userSugangConfirm(SugangVO vo, Principal pri) {
-		vo = sugangDao.selectSugang(vo.getTlsnNo());
-		UsersVO uservo = new UsersVO();
-		uservo.setId(pri.getName());
-		String grd = userDao.selectUsers(uservo).getuGrdCode();
-		if(grd.equals("일반")) {
-			uservo.setPoint((int) (vo.getPay()*0.01));
-		} else if (grd.equals("새싹")) {
-			uservo.setPoint((int) (vo.getPay()*0.03));
-		} else if (grd.equals("꽃")) {
-			uservo.setPoint((int) (vo.getPay()*0.05));
-		} else if (grd.equals("나무")) {
-			uservo.setPoint((int) (vo.getPay()*0.1));
+		if(vo.getShipStCode().equals("D03")) {
+			vo = sugangDao.selectSugang(vo.getTlsnNo());
+			UsersVO uservo = new UsersVO();
+			uservo.setId(pri.getName());
+			String grd = userDao.selectUsers(uservo).getuGrdCode();
+			if(grd.equals("일반")) {
+				uservo.setPoint((int) (vo.getPay()*0.01));
+			} else if (grd.equals("새싹")) {
+				uservo.setPoint((int) (vo.getPay()*0.03));
+			} else if (grd.equals("꽃")) {
+				uservo.setPoint((int) (vo.getPay()*0.05));
+			} else if (grd.equals("나무")) {
+				uservo.setPoint((int) (vo.getPay()*0.1));
+			}
+			userDao.userPointAdd(uservo);
 		}
-		userDao.userPointAdd(uservo);
 		sugangDao.updateSugangConfirm(vo);
 	}
 	

@@ -25,7 +25,7 @@ public class SugangVO {
 	private String detaAddr;
 	private String tel;
 	private Date expDate;
-	
+	private String shipStName;
 	
 	//for extended
 	private int num;

@@ -422,16 +422,7 @@
     	  	.done(()=>{
 	    	  		window.alert('수정이 완료되었습니다.');
 	    	  		$('#wrmodal').modal('hide');
-	    	  		$('.myrvContent').text($('.wrbox').val());
-	    	  		$('.wrbox').val('');
-	    	  		getgray();
-	    	  		//별수정
-	    	  		$('.mystars').children().remove();
-	    	  		for(let i=0; i<num;i++){
-	    	  			$('.mystars').append(
-	    	  				$('<span>').addClass('fas fa-star')		
-	    	  			)
-	    	  		}
+	    	  		location.reload()
     	  		})
     	  	
       }

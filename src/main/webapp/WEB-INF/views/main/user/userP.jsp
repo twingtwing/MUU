@@ -33,6 +33,11 @@
     .more {
     	cursor: pointer;
     }
+    .kitIntro,.payttl{
+     white-space: nowrap;
+     overflow:hidden;
+     text-overflow:ellipsis;
+    }
   </style>
 
 </head>
@@ -132,60 +137,35 @@
 						</c:if>
                         <c:forEach items="${delInfo }" var="del">
                         <div class="card" style="border-radius: 10px;">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="row">
+                          <div class="card-body d-flex">
                                   <div class="col-lg-10">
-                                    <div class="row mx-1">
-                                      <h5 class="font-weight-bold mb-3 mt-1">${del.ttl }</h5>
-                                    </div>
+	                                  <div class="d-flex">
+        	                              <h5 class="mb-3 mt-1 mr-3">${del.ttl }<span class="mb-0 font-weight-bold mx-3">${del.kitName} ( <fmt:formatNumber> ${del.kitPrc } </fmt:formatNumber>원 )</span></h5>
+    	                              </div>
                                     <div class="row mx-1 justify-content-between mb-2">
-                                        <p class="mb-0">${del.kitName} ( <fmt:formatNumber> ${del.kitPrc } </fmt:formatNumber>원 )</p>
-                                        <p class="mb-0">${del.kitIntro }</p> 
-                                        <p class="mb-0">운송장번호 : ${del.shipNum }</p>
+                                        <p class="mb-0 kitIntro small" style="height:80px;">${del.kitIntro }</p> 
                                     </div>
-                                    <div class="row mx-1">
+                                    <div class="row mx-1 d-flex">
                                       <p class="mb-0 font-weight-bold">진행상황</p>
-                                      
-                                      <c:if test="${del.shipStCode eq 'D01' }">
-                                      <div class="progress-bar ml-5 bg-secondary rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
-                                      배송 시작
+                                      <div class="progress-bar ml-5 
+                                      <c:if test="${del.shipStCode eq 'D01' }">bg-secondary</c:if>
+                                      <c:if test="${del.shipStCode eq 'D02' }">bg-success</c:if>                                      
+                                      <c:if test="${del.shipStCode eq 'D04' }">bg-danger</c:if>
+                                      <c:if test="${del.shipStCode eq 'D05' }">bg-warning</c:if>
+                                      <c:if test="${del.shipStCode eq 'D06' }">progress-bar</c:if>
+                                      rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
+                                      ${del.shipStName }
                                       </div>
-                                      </c:if>
-                                      
-                                      <c:if test="${del.shipStCode eq 'D02' }">
-                                      <div class="progress-bar ml-5 bg-success rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
-                                      배송 중
-                                      </div>
-                                      </c:if>
-                                      
-                                      <c:if test="${del.shipStCode eq 'D04' }">
-                                      <div class="progress-bar ml-5 bg-danger rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
-                                      배송 실패
-                                      </div>
-                                      </c:if>
-                                      
-                                      <c:if test="${del.shipStCode eq 'D05' }">
-                                      <div class="progress-bar ml-5 bg-warning rounded" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
-                                      반송 신청됨</div>
-                                      </c:if>
-                                      <c:if test="${del.shipStCode eq 'D06' }">
-                                      <div class="progress-bar ml-5 bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
-                                      반송 거부됨</div>
-                                      </c:if>
-                                      
+                                      <p class="mb-0 ml-3">운송장번호 : ${del.shipNum }</p>
                                     </div>
                                   </div>
+                                  
                                   <div class="col-lg-2 align-self-end">
                                   <c:if test="${del.shipStCode ne 'D05' }">
                                     <button type="button" class="site-btn mb-2 confirmBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }" >구매확정</button>
                                     <button type="button" class="site-btn refundBtn" style="padding: 10px 20px;"data-tlsnno="${del.tlsnNo }">반송신청</button>
                                   </c:if>
-                                  </div>
                                 </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         </c:forEach>
@@ -223,10 +203,10 @@
                         <thead class="text-center">
                         <tr>
                           <th class="text-center align-middle" style="width:200px">강의사진</th>
-                          <th class="text-center align-middle">강의제목</th>
+                          <th class="text-center align-middle" style="width:200px">강의제목</th>
                           <th class="text-center align-middle">수강료<br><span class="small">(키트 가격은 지불액에 포함됨)</span></th>
-                          <th class="text-center align-middle">구매날짜</th>
-                          <th class="text-center align-middle">만료날짜</th>
+                          <th class="text-center align-middle" style="width:120px">구매날짜</th>
+                          <th class="text-center align-middle" style="width:120px">만료날짜</th>
                           <th class="text-center align-middle">상태</th>
                         </tr>
                         </thead>
@@ -243,7 +223,7 @@
                                   <img src="${pay.thumb }" alt="" class="rounded" style="height: 150px; width: 200px;">
                               </div>
                             </td>
-                            <td class="text-center align-middle">
+                            <td class="text-center align-middle payttl">
                                 ${pay.ttl }
                             </td>
                             <td class="text-center align-middle">
@@ -255,15 +235,14 @@
                             <td class="text-center align-middle">${pay.regDate }</td>
                             <td class="text-center align-middle">${pay.expDate }</td>
                             <td class="text-center align-middle">
-                            <c:if test="${pay.rfStCode eq 'RF01'}">
-                                <span class="text-danger">환불 신청 대기</span>
-                            </c:if>
-                            <c:if test="${pay.rfStCode eq 'RF02'}">
-                                <span class="text-success">환불 완료</span>
-                            </c:if>
-                            <c:if test="${pay.rfStCode eq 'RF03'}">
-                                <span class="text-danger">환불 거부됨</span>
-                            </c:if>
+                           		<c:choose>
+		                            <c:when test="${not empty pay.rfStCode }">
+			                            <span class="text-danger">${pay.rfStCode }</span>
+		                            </c:when>
+		                            <c:otherwise>
+		                            	${pay.shipStName }
+		                            </c:otherwise>
+	                            </c:choose>
                             </td>
                           </tr>
                           </c:forEach>   
@@ -376,13 +355,9 @@
     const makeRow = (list)=>{
     	let ktPrc = '( 키트 가격 : '+list.kitPrc+'원 )';
     	let tr = $('<tr>');
-    	if(list.rfStCode==='RF01'){
-    		list.rfStCode='환불 신청 대기'
-    	} else if(list.rfStCode==='RF02') {
-    		list.rfStCode='환불 완료'
-    	} else if(list.rfStCode==='RF03'){
-    		list.rfStCode='환불 거부됨'
-    	}   	
+    	if(!list.rfStCode) {
+    		list.rfStCode = list.shipStName;
+    	} 	
     	tr.addClass('align-middle');
     	tr.append(
     		$('<td>').append(
@@ -393,7 +368,7 @@
     				$('<span>').text(ktPrc)).addClass('text-center align-middle'),
     		$('<td>').text(dateformat(list.regDate)).addClass('text-center align-middle'),
     		$('<td>').text(dateformat(list.expDate)).addClass('text-center align-middle'),
-    		$('<td>').text(list.rfStCode).addClass('text-danger').addClass('text-center align-middle')
+    		$('<td>').text(list.rfStCode).addClass('text-center align-middle')
     	)
     	return tr;
     }
