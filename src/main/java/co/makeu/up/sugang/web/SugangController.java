@@ -165,7 +165,7 @@ public class SugangController {
 			user.setPoint(vo.getUsePoint());
 			userDao.userPointUpdate(user);
 		}
-		return "main/all/home";
+		return "redirect:/home";
   }
   
 	//강의 수강생 리스트 페이지 이동

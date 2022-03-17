@@ -122,7 +122,8 @@
                                             </div>
                                             <div class="row d-flex justify-content-between mb-4">
                                                 <div class="row ml-2">
-                                                    <img class="rounded-circle" :src="lecDetails.pht" alt="크리에이터이미지" style="width: 75px; height: 75px">
+                                                    <img v-if="lecDetails.pht != null" class="rounded-circle" :src="lecDetails.pht" style="width: 75px; height: 75px">
+                                                    <img v-if="lecDetails.pht == null" class="rounded-circle" src="/resources/img/profile.png" style="width: 75px; height: 75px">
                                                     <div class="d-flex align-items-center ml-3">
                                                         <h5 class="mb-0">{{lecDetails.name}}</h5>
                                                     </div>
@@ -225,7 +226,8 @@
                                                                     <div id="myStar">
                                                                         <div class="row mx-0">
                                                                             <div class="col-lg-1 px-0">
-                                                                                <img class="rounded-circle" :src="myReview.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
+                                                                                <img v-if="myReview.pht != null" class="rounded-circle" :src="myReview.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
+                                                                                <img v-if="myReview.pht == null" class="rounded-circle" src="/resources/img/profile.png" style="width: 75px; height: 75px">
                                                                             </div>
                                                                             <div class="col-lg-9">
                                                                                 <p class="mb-0 font-weight-bold">나</p>
@@ -264,7 +266,8 @@
                                                                     <div class="revCopy">
                                                                         <div class="row mx-0">
                                                                             <div class="col-lg-2 px-0 d-flex justify-content-center">
-                                                                                <img class="rounded-circle" :src="review.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
+                                                                                <img v-if="review.pht != null" class="rounded-circle" :src="review.pht" alt="프로필 사진" style="width: 50px; height: 50px;">
+																				<img v-if="review.pht == null" class="rounded-circle" src="/resources/img/profile.png" style="width: 75px; height: 75px">                                                                                
                                                                             </div>
                                                                             <div class="col-lg-9 pl-0">
                                                                                 <p class="mb-0">{{review.name}}</p>
@@ -298,7 +301,7 @@
                                                     <h5 class="font-weight-bold my-2">키트 소개</h5>
                                                     <p class="font-weight-bold mx-2">[ {{lecDetails.kitName}} ]</p>
                                                     <div class="mx-4 pl-2" style="border-left: 5px solid #070720;">
-                                                        <p>{{lecDetails.kitIntro}}</p>
+                                                        <p v-html="lecDetails.kitIntro"></p>
                                                     </div>
                                                 </div>
                                             </div>
