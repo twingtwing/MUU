@@ -117,7 +117,7 @@ public class SugangController {
 		List<SugangVO> listAll = sugangDao.sugangPay(vo);
 		if(listAll.size()!=0) {			
 		for(SugangVO list : listAll) {
-			if(list.getShipStCode()!=null && list.getShipNum()!=null && !list.getShipStCode().equals("D03")) {
+			if(list.getShipStCode()!=null && list.getShipNum()!=null && !list.getShipStCode().equals("D03") & !list.getTlsnStCode().equals("SU03")) {
 				listDelivery.add(list);
 			}
 		}

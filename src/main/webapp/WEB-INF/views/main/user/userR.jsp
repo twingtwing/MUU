@@ -137,9 +137,10 @@
                   <div class="card-body d-flex align-items-center justify-content-center">
                     <div class="d-flex flex-column align-items-center">
                       <h4>환불 규정</h4>
-                      <div class="card bg-light m-3 my-5 p-3 text-center w-75"><b>강의 기간 시작일로부터 7일 이내, 3개 이하 수업 영상(OT 영상 제외)을
-                          시청한 경우</b>결제대금 전액 환불 가능합니다.
-                        강의 기간 시작일은 결제일부터입니다.
+                      <div class="card bg-light m-3 my-5 p-5 text-center w-100"><b>강의 기간 시작일로부터 7일 이내,<br> 3개 이하 수업 영상(OT 영상 제외)을
+                          시청한 경우</b>결제대금 전액 환불 가능합니다.<br>
+                        강의 기간 시작일은 결제일부터입니다.<br>
+                        <a href="/refundRule" target="_blank">자세한 환불 규정은 여기를 참고하십시오.</a>
                       </div>
                       <div>
                         <!--기간이 지난 경우 표시

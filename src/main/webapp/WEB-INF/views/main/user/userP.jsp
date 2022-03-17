@@ -237,7 +237,7 @@
                             <td class="text-center align-middle">
                            		<c:choose>
 		                            <c:when test="${not empty pay.rfStCode }">
-			                            <span class="text-danger">${pay.rfStCode }</span>
+			                            <span>${pay.rfStCode }</span>
 		                            </c:when>
 		                            <c:otherwise>
 		                            	${pay.shipStName }
@@ -341,6 +341,7 @@
     		data : {regDateSearch : $('#date1').val(), expDateSearch : $('#date2').val()},
     	})
     	.done((r)=>{
+    		console.log(r)
 	    	removeAll();
     		if(r.length!=0){    			
 	    		r.forEach((v)=>{
@@ -383,7 +384,8 @@
     
     // change to dateformat
     const dateformat = (num)=>{
-    	return new Date(num).toISOString().slice(0,10);
+    	let date = new Date(num);
+    	return new Date(num - date.getTimezoneOffset()*60000).toISOString().slice(0,10);
     }
     //mouseover 이벤트 : 사이드바 css변경
     $('.list-group .list-group-item:not(.mylist)').on('mouseover',function(){

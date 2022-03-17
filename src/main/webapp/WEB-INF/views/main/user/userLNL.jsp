@@ -272,11 +272,16 @@
 					$('<td>').text(val.ntNo),
 					$('<td>').text(val.ttl),
 					$('<td>').html(fileicon),
-					$('<td>').text(new Date(val.wrDate).toISOString().slice(0,10)),
+					$('<td>').text(dateformat(val.wrDate)),
 					$('<td>').text(val.hits));
 			$('#noticeList').append(tr);
 		})
 	}
+	const dateformat = (num)=>{
+    	let date = new Date(num);
+    	return new Date(num - date.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    }
+	
 	
   // 클릭시 공지사항 내용으로
     $('#noticeList').click((e)=>{
@@ -294,7 +299,7 @@
 	   } else {
 	   		cont = $('#noticeSearchKey').val();
 	   }
-	   const searchData = { ttlSearchKey : ttl , contentSearchKey : cont, ltNo : ${ltno}, page : 0}
+	   const searchData = { ttlSearchKey : ttl , contentSearchKey : cont, ltNo : ${ltno}, page : 1}
 	   return searchData
    }
    

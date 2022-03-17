@@ -124,10 +124,12 @@
                                         <tr height="38">
                                             <th>수강생 아이디</th>
                                             <td>
+                                            	<input hidden="hidden">
                                                 <input class="w-100" type="text" id="incheck" spellcheck="false" name="writer" value="${search.writer }">
                                             </td>                       
                                             <th>내용</th>
                                             <td>
+                                            	<input hidden="hidden">
                                                 <input class="w-100" type="text" id="incheck" spellcheck="false" name="content" value="${search.content }">
                                             </td>                       
                                         </tr>
@@ -265,6 +267,12 @@ const searchSetting = ()=>{
 		$('#lastJdate').val(new Date(today).toISOString().slice(0,10));
 	}
 }
+//자동검색 막음
+$('input[type="text"]').keydown((e)=>{
+    if(e.key==='Enter') {
+        e.preventDefault()
+    }
+})
 
 //페이지네이션
 $('.page-item').click((e)=>{

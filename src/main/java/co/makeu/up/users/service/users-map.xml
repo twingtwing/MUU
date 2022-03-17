@@ -32,7 +32,7 @@
 	<update id="deleteUsers" parameterType="String">
 		UPDATE USERS 
 		SET PW = NULL,
-		NAME = NULL,
+		NAME = ' ',
 		BIRTH_DATE = NULL,
 		TEL = NULL,
 		GENDER =NULL,
@@ -87,7 +87,7 @@
 			    	ORDER BY ${orderColumn} ${orderBy}
 			    </if>
 			    <if test="orderColumn == null or orderColumn.equals('')">
-			    	ORDER BY JOIN_DATE desc
+			    	ORDER BY JOIN_DATE DESC
 			    </if>
 			) W )
 		<if test="page > 0">

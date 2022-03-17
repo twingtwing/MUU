@@ -149,7 +149,7 @@
                                 <hr class="font-weight-bold">
 
                                 <!--검색페이지-->
-                                	<form action="/admin/adLecK" id="searchForm">
+                                <form action="/admin/adLecK" id="searchForm">
                                 <div class="row position-relative mt-3">
                                     <div class="tableTitle">
                                         <i class="fa fa-hashtag" aria-hidden="true"></i>배송정보
@@ -196,8 +196,8 @@
                                 <div class="row">
                                     <table class="table table-bordered">                                        
                                         <tr style="background-color: #eeeeee;">
-                                            <th style="width:90px;">번호</th>
-                                            <th style="width:120px;">유저아이디</th>
+                                            <th style="width:90px;">수강번호</th>
+                                            <th style="width:120px;">수강생아이디</th>
                                             <th>결제일</th>
                                             <th>결제금액</th>
                                             <th>운송장번호</th>
@@ -266,7 +266,12 @@ const searchSetting = ()=>{
 		$('#lastJdate').val(new Date(today).toISOString().slice(0,10));
 	}
 }
-
+//자동검색 막음
+$('input[type="text"]').keydown((e)=>{
+    if(e.key==='Enter') {
+        e.preventDefault()
+    }
+})
 //페이지네이션
 $('.page-item').click((e)=>{
 	let pageNum = +e.currentTarget.dataset.num;

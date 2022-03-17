@@ -241,13 +241,21 @@
 	                                            		비활성
 	                                            	</c:if>
 	                                            </td>
-	                                            <td>${user.name }</td>
+	                                            <td>
+	                                            <c:if test="${user.name eq ' ' }">
+		                                            정보 없음
+	                                            </c:if>
+	                                            
+	                                            </td>
 	                                            <td>
 	                                            	<c:if test="${user.gender eq 'M' }">
 	                                            		남성
 	                                            	</c:if>
 	                                            	<c:if test="${user.gender eq 'W' }">
 	                                            		여성
+	                                            	</c:if>
+	                                            	<c:if test="${empty user.gender }">
+														정보 없음
 	                                            	</c:if>
 	                                            </td>
 	                                            <td>

@@ -247,6 +247,13 @@ const searchSetting = ()=>{
 	}
 }
 
+// 자동검색 막음
+$('input[type="text"]').keydown((e)=>{
+    if(e.key==='Enter') {
+        e.preventDefault()
+    }
+})
+
 //페이지네이션
 $('.page-item').click((e)=>{
 	let pageNum = +e.currentTarget.dataset.num;
