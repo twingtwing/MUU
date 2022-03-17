@@ -133,6 +133,11 @@ th, td {
 									</thead>
 									<tbody id="refundList">
 										<!-- for문 돌리기 -->
+										<c:if test="${empty refundlists }">
+											<tr>
+												<td colspan="8">환불 내역이 없습니다.</td>
+											</tr>
+										</c:if>
 										<c:forEach items="${refundlists }" var="refundlist">
 											<tr>
 												<td>${refundlist.tlsnNo }</td>

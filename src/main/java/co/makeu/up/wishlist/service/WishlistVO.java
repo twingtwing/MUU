@@ -13,6 +13,7 @@ public class WishlistVO {
 	private int prc;
 	private String ltStCode;
 	private String thumb;
+	private String tlsnStCode;
 	
 	// 페이지네이션을 위한 vo객체
 	private int page;

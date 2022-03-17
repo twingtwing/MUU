@@ -149,7 +149,18 @@ i.fa-heart-o {
 																<div style="display: inline-block; width: 250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${wishlist.ttl }</div>
 															</td>
 															<td class="text-right align-middle"><fmt:formatNumber>${wishlist.prc}</fmt:formatNumber>원</td>
-															<td class="text-center align-middle">${wishlist.ltStCode}</td>
+															<c:if test="${wishlist.tlsnStCode eq 'SU01' && wishlist.ltStCode eq '가능'}">
+																<td class="text-center align-middle">결제
+															</c:if>
+															<c:if test="${wishlist.tlsnStCode eq 'SU01' && wishlist.ltStCode eq '불가'}">
+																<td class="text-center align-middle">결제
+															</c:if>
+															<c:if test="${empty wishlist.tlsnStCode && wishlist.ltStCode eq '가능'}">
+																<td class="text-center align-middle">가능
+															</c:if>
+															<c:if test="${empty wishlist.tlsnStCode && wishlist.ltStCode eq '불가'}">
+																<td class="text-center align-middle">불가
+															</c:if>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -160,8 +171,7 @@ i.fa-heart-o {
 							</div>
 								<div class="row position-absolute" style="right: 40px; bottom: -1px">
 									<!-- onclick="location.href='./결제창.html'" -->
-									<button type="button" onclick="paymentCheck()" class="site-btn"
-										style="padding: 8px 20px;">결제</button>
+									<button type="button" onclick="paymentCheck()" class="site-btn" style="padding: 8px 20px;">결제</button>
 									<button type="button" onclick="deleteCheck()" class="site-btn ml-2" style="padding: 8px 20px;">삭제</button>
 								</div>
 							<!-- 본편 끝-->
@@ -184,8 +194,8 @@ i.fa-heart-o {
 		//check click 이벤트
 		function FalseCheck(event){
 		$(event).closest('tr').children().last()
-		console.log($(event).closest('tr').children().last().text())
-		if($(event).closest('tr').children().last().text() != "가능"){
+		console.log($(event).closest('tr').children().last().text().trim())
+		if($(event).closest('tr').children().last().text().trim() != "가능"){
 				
 			}
 		};
@@ -228,29 +238,37 @@ i.fa-heart-o {
 			let token = "${_csrf.token}";
 			let checkboxArr=[];
 			
-			const ary = $("input[name=checkbox]:checked");
 			
 			//each/for 구문 돌려서 for var i of ary $(i).closest('tr').children().last().text() == '불가';
-			console.log(ary);
-			if(ary.length == 0){
-				alert("위시리스트에서 하나라도 체크해야 합니다.")
-				return;
-			}
-			
-			if(ary.length > 1){
-				alert("워시리스트에서 결제는 1개씨만 가능합니다.");
-				ary[0].checked=false;
-				return;
-			}
-			
-			if($(ary[0]).closest('tr').children().last().text() == "불가"){
-				alert($(obj).closest('tr').children().eq(2).text() + " 는 결제 불가능한 강의입니다.");
-				obj.checked=false;
-				return ;
-			}
-			
-			//잘 도착하는지 테스트
-			location.href="/user/lecP?ltNo="+$(ary[0]).val();
+			const ary = $("input[name=checkbox]:checked");
+			for(var i of ary){
+				console.log($(ary[0]).closest('tr').children().eq(2).text().trim());
+				if(ary.length == 0){
+					alert("위시리스트에서 하나라도 체크해야 합니다.")
+					return;
+				}
+				
+				if(ary.length > 1){
+					alert("워시리스트에서 결제는 1개씩만 가능합니다.");
+					ary[0].checked=false;
+					return;
+				}
+				
+				if($(ary[0]).closest('tr').children().last().text().trim() == "불가"){
+					alert($(ary[0]).closest('tr').children().eq(2).text().trim() + "는 결제 불가능한 강의입니다.");
+					ary[0].checked=false;
+					return ;
+				}
+				
+				if($(ary[0]).closest('tr').children().last().text().trim() == "결제"){
+					alert($(ary[0]).closest('tr').children().eq(2).text().trim() + "는 이미 결제한 강의입니다.");
+					ary[0].checked=false;
+					return ;
+				}
+				
+				//잘 도착하는지 테스트
+				location.href="/user/lecP?ltNo="+$(ary[0]).val();
+				}
 		}
 
 		//mouseover 이벤트 : 사이드바 css변경

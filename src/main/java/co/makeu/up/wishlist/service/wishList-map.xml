@@ -4,13 +4,17 @@
 	<select id="WishListSearch"
 		resultType="co.makeu.up.wishlist.service.WishlistVO">
 		SELECT * FROM(
-		SELECT ROWNUM RN,l.LT_NO,l.THUMB,l.TTL,l.PRC,
-		CASE l.LT_ST_CODE WHEN 'L01' THEN '가능'
-		ELSE '불가' END LT_ST_CODE
-		FROM LECTURE l JOIN WISHLIST w
-		ON l.lt_no = w.lt_no
-		where id=#{id})
-		order by lt_no DESC
+          SELECT l.LT_NO,l.THUMB,l.TTL,l.PRC,s.TLSN_ST_CODE,
+          CASE l.LT_ST_CODE WHEN 'L01' THEN '가능'
+          ELSE '불가' END LT_ST_CODE
+          FROM WISHLIST w 
+          LEFT JOIN (SELECT tlsn_st_code,lt_no FROM SUGANG 
+                     WHERE ID = #{id} AND TLSN_ST_CODE = 'SU01') s
+          ON w.lt_no = s.lt_no  
+          LEFT JOIN LECTURE l
+          ON l.lt_no = w.lt_no
+          where w.id=#{id})
+      	order by lt_no DESC
 	</select>
 
 	<select id="WishListCnt" parameterType="Integer" resultType="Integer">
