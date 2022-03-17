@@ -77,6 +77,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-9">
+                                                    	<input hidden="hidden">
                                                         <input class="w-100 border py-1 selectBox" type="text" spellcheck="false"
                                                         <c:if test="${not empty search.id }">value="${search.id }"</c:if>
                                                         <c:if test="${not empty search.name }">value="${search.name }"</c:if>

@@ -74,6 +74,7 @@ public class SugangController {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			lessonvo.setId(vo.getId());
 			lessonvo.setLtNo(vo.getLtNo());
+			
 			model.addAttribute("progress",lessonDao.lessonWithProgress(lessonvo));
 			model.addAttribute("sugang",checkvo);
 			model.addAttribute("lessonList",lessonDao.lessonList(vo.getLtNo()));
@@ -167,6 +168,14 @@ public class SugangController {
 			user.setId(pri.getName());
 			user.setPoint(vo.getUsePoint());
 			userDao.userPointUpdate(user);
+		}
+		List<LessonVO> list = lessonDao.lessonList(vo.getLtNo());
+		for(LessonVO l : list) {
+			ProgressVO progressvo = new ProgressVO();
+			progressvo.setProgPct(0);
+			progressvo.setId(pri.getName());
+			progressvo.setSerialNo(l.getSerialNo());
+			progressDao.insertProgress(progressvo);
 		}
 		return "redirect:/home";
   }

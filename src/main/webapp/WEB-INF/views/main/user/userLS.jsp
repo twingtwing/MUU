@@ -173,7 +173,7 @@
                   <c:forEach items="${progress}" var="p">
 	                 <li class="position-relative h-100" style="background-color: lightgray;">&nbsp;　
 	                 <c:if test="${p.progPct ne 0}">
-		                 <div class="bg-success h-100 position-absolute" style="top:0; left:0; width:${p.progPct}%"></div>
+		                 <div class="bg-success h-100 position-absolute" style="top:0; left:0; width:${p.progPct}%">&nbsp;　</div>
 	                 </c:if>
 	               </li>                  
                   </c:forEach>

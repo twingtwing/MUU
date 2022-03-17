@@ -11,7 +11,7 @@
 	<insert id="reviewInsert" parameterType="co.makeu.up.review.service.ReviewVO">
 		INSERT INTO REVIEW
 		VALUES(
-		(SELECT NVL(MAX(RV_NO),1) FROM REVIEW)+1,TRUNC(SYSDATE),'RE01',#{content},#{star},#{ltNo},#{writer})
+		REVIEWSQ.NEXTVAL,TRUNC(SYSDATE),'RE01',#{content},#{star},#{ltNo},#{writer})
 	</insert>
 	<select id="selectMyReview" parameterType="co.makeu.up.review.service.ReviewVO" resultType="co.makeu.up.review.service.ReviewVO">
 		SELECT * FROM REVIEW

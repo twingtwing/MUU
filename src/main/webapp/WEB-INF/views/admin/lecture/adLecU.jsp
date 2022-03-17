@@ -147,7 +147,7 @@
                                 <hr class="font-weight-bold">
                                 
                                 <!--검색페이지-->
-                                    <form action="/admin/adLecU" id="searchForm">
+                                <form action="/admin/adLecU" id="searchForm">
                                 <div class="row position-relative mt-4 mb-3">
                                     <div class="tableTitle">
                                         <i class="fa fa-hashtag" aria-hidden="true"></i> 개별 수강인원 상황
@@ -168,6 +168,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-9">
+                                                    	<input hidden="hidden">
                                                         <input class="w-100 searchKey" type="text" id="incheck" spellcheck="false" value="${search.name }${search.id}">
                                                     </div>
                                                 </div>    

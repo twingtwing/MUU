@@ -74,6 +74,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-9">
+                                                    	<input hidden="hidden">
                                                         <input class="w-100 border py-1 selectBox" type="text" spellcheck="false"
                                                         <c:if test="${not empty search.id }">value="${search.id }"</c:if>
                                                         <c:if test="${not empty search.name }">value="${search.name }"</c:if>
@@ -249,7 +250,12 @@
 	                                            		여성
 	                                            	</c:if>
 	                                            </td>
-	                                            <td>${user.tel }</td>
+	                                            <td>
+	                                            <c:if test="${empty user.tel }">
+													정보 없음
+	                                            </c:if>
+		                                            ${user.tel }
+	                                            </td>
 	                                            <td>${user.uGrdCode }</td>
 	                                            <td>${user.joinDate }</td>
 	                                        </tr>
