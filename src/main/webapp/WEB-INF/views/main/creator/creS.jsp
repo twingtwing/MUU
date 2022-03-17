@@ -104,7 +104,7 @@
                                     <ul class="list-group list-group-flush ml-3">
                                         <li class="list-group-item font-weight-bold">이름 : ${name }</li>
                                         <li class="list-group-item font-weight-bold">
-                                            소개 : ${creIntro }
+                                            ${creIntro }
                                         </li>
                                     </ul>
                                 </div>

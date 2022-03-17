@@ -377,6 +377,7 @@ $('#reportBtn').on('click',function(){
 	let reporter = $('#inreporter').val();
 	let ltNo = $('#inltno').val();
 	let content = $('#incontent').val();
+	content = lineMaker(content);
 	let num = $('#innum').val();
 	let type = $('#rptype option:selected').val();
 	
@@ -445,10 +446,25 @@ $(function(){
 		$('#rvsearch option[value="내용"]').attr('selected','selected');
 		$('#rvinput').val('${inputContent}');
 	}
-	
-	
-	
 })
+
+//줄바꿈
+const lineMaker = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/\r\n/ig,'<br>');
+	inputVal = inputVal.replace(/\\n/ig,'<br>');
+	inputVal = inputVal.replace(/\n/ig,'<br>');
+	return inputVal;
+}
+
+//br없애기
+const brDel = (e)=>{
+	let inputVal = e;
+	inputVal = inputVal.replace(/<br>/ig,'\n');
+	inputVal = inputVal.replace(/<\/br>/ig,'\n');
+	inputVal = inputVal.replace(/<br\/>/ig,'\n');
+	return inputVal
+}
 
 </script>
 
