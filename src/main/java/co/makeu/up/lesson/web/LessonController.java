@@ -37,39 +37,14 @@ public class LessonController {
 		vo.setId(pri.getName());
 		model.addAttribute("firstLesson",lessonDao.ajaxLessonSelect(vo.getSerialNo()));
 		model.addAttribute("lessons",lessonDao.lessonList(vo.getLtNo()));
-		ProgressVO progressvo = new ProgressVO();
-		progressvo.setId(pri.getName());
-		progressvo.setSerialNo(vo.getSerialNo());
-		progressvo = progressDao.selectProgress(progressvo);
-		if(progressvo==null) {
-			logger.info("null값입니다! ");
-			ProgressVO pgrvo = new ProgressVO();
-			pgrvo.setId(pri.getName());
-			pgrvo.setSerialNo(vo.getSerialNo());
-			pgrvo.setProgPct(0);
-			progressDao.insertProgress(pgrvo);
-		}
 		return "main/user/userLW";
 	}
 	
 	// 수업 누르면 영상바뀌게
 	@ResponseBody
 	@GetMapping("/user/userLWselect")
-	public LessonVO userLWselect(int serialNo, LessonVO vo, Principal pri) {
-		ProgressVO progressvo = new ProgressVO();
-		progressvo.setId(pri.getName());
-		progressvo.setSerialNo(serialNo);
-		progressvo = progressDao.selectProgress(progressvo);
-		System.out.println(progressvo);
-		if(progressvo==null) {
-			ProgressVO pgrvo = new ProgressVO();
-			pgrvo.setId(pri.getName());
-			pgrvo.setSerialNo(vo.getSerialNo());
-			pgrvo.setProgPct(0);
-			progressDao.insertProgress(pgrvo);
-		}	
-		vo = lessonDao.ajaxLessonSelect(serialNo);
-		return vo;
+	public LessonVO userLWselect(int serialNo) {	
+		return lessonDao.ajaxLessonSelect(serialNo);
 	}
 	
 	//수업 영상 관리 페이지

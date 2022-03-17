@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+0<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -128,14 +128,12 @@
                                     </div>
                                     <table class="table table-bordered">                                        
                                         <tr style="background-color: #eeeeee;">
-                                            <th style="width:90px;">번호</th>
-                                            <th>키트명</th>
+                                            <th style="width:150px;">키트명</th>
                                             <th>키트설명</th>
                                             <th style="width:120px;">키트가격</th>
                                         </tr>
                                         
                                         <tr>
-                                            <td>${lecInfo.ltNo}</td>
                                             <td>${lecInfo.kitName}</td>
                                             <td>
                                             <c:if test="${empty lecInfo.kitIntro }">없음</c:if>
@@ -177,7 +175,7 @@
                                             </td>
                                         </tr>
                                         <tr height="38">
-                                            <th>송장번호</th>
+                                            <th>운송장번호</th>
                                             <td>
                                                 <input class="w-100" type="text" id="incheck" spellcheck="false" name="shipNum" value="${search.shipNum }">
                                             </td>
@@ -215,7 +213,7 @@
                                            <td>${d.tlsnNo }</td>
                                            <td>${d.id }</td>
                                            <td>${d.regDate }</td>
-                                           <td>${d.pay }</td>
+                                           <td><fmt:formatNumber>${d.pay }</fmt:formatNumber>원</td>
                                            <td>${d.shipNum }</td>
                                            <td>${d.shipStCode }</td>
                                         </tr>

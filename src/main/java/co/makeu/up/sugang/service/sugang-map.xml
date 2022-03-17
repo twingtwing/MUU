@@ -65,9 +65,11 @@
 	</select>
 	<select id="adminSugangCount" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
 		SELECT * FROM (SELECT COUNT(*) OK FROM SUGANG
-						WHERE EXP_DATE <![CDATA[>=]]> SYSDATE) 
+						WHERE EXP_DATE <![CDATA[>=]]> SYSDATE
+						AND LT_NO = #{ltNo}) 
 		CROSS JOIN (SELECT COUNT(*) END FROM SUGANG
-		WHERE EXP_DATE <![CDATA[<]]> SYSDATE)
+		WHERE EXP_DATE <![CDATA[<]]> SYSDATE
+		AND LT_NO = #{ltNo})
 	</select>
 	<select id="adminLecUserList" parameterType="Integer" resultType="co.makeu.up.sugang.service.SugangVO">
 		SELECT W.* FROM (SELECT ROWNUM RN, U.NAME ,S.ID,S.REG_DATE,S.EXP_DATE, FINDLTCODE(S.TLSN_ST_CODE) TLSN_ST_CODE,COUNT(*) OVER() CNT

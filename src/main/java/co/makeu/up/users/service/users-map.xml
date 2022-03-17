@@ -39,11 +39,10 @@
 		ZIP = NULL,
 		ADDR=NULL,
 		DETA_ADDR=NULL,
-		SOCIAL_TOKEN=NULL,
 		PHT=NULL,
 		POINT=NULL,
 		CRE_INTRO=NULL,
-		SOCIAL_CODE=NULL
+		U_ST_CODE = 0
 		WHERE ID = #{id}
 	</update>
 	<select id="usersList" resultType="co.makeu.up.users.service.UsersVO" parameterType="co.makeu.up.users.service.UsersVO">
@@ -88,7 +87,7 @@
 			    	ORDER BY ${orderColumn} ${orderBy}
 			    </if>
 			    <if test="orderColumn == null or orderColumn.equals('')">
-			    	ORDER BY JOIN_DATE ${orderBy}
+			    	ORDER BY JOIN_DATE desc
 			    </if>
 			) W )
 		<if test="page > 0">
