@@ -67,18 +67,21 @@
 		TTL = #{ttl}, INTRO = #{intro}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}
 		WHERE LT_NO = #{ltNo}
 	</update>
+	<select id="lectureTempSelect" parameterType="co.makeu.up.lecture.service.LectureVO" resultType ="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L05'
+	</select>
 	<select id="lectureInsertTemp" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
 		SELECT * FROM CNAMELECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L05'
 	</select>
 	<update id="lectureUpdateTemp" parameterType="co.makeu.up.lecture.service.LectureVO">
-		UPDATE LECTURE(LT_NO, CRE_ID, TTL, INTRO, UP_CTGR, DOWN_CTGR, THUMB, PHT_1, PHT_2, PHT_3,
-					   OPEN_TERM, TLSN_TERM, PRC, KIT_NAME, KIT_INTRO, KIT_PRC, TAG_1, TAG_2, TAG_3,
-					   REQ_DATE, LT_ST_CODE, EXP_DATE, START_DATE)
-		SET((SELECT NVL(MAX(LT_NO), 0)+1 FROM LECTURE), #{creId}, #{ttl}, #{intro}, 
-			   #{upCtgr}, #{downCtgr}, #{thumb}, #{pht1}, #{pht2}, #{pht3}, 
-			   #{openTerm}, #{tlsnTerm}, #{prc},
-			   #{kitName}, #{kitIntro}, #{kitPrc}, #{tag1}, #{tag2}, #{tag3}, 
-			   SYSDATE, #{ltStCode}, (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), SYSDATE)
+		UPDATE LECTURE
+		SET
+			CRE_ID = #{creId}, TTL = #{ttl}, INTRO = #{intro}, 
+		    UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr}, THUMB = #{thumb}, PHT_1 = #{pht1}, PHT_2 = #{pht2}, PHT_3 = #{pht3}, 
+		    OPEN_TERM = #{openTerm}, TLSN_TERM = #{tlsnTerm}, PRC = #{prc},
+		    KIT_NAME = #{kitName}, KIT_INTRO = #{kitIntro}, KIT_PRC = #{kitPrc}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}, 
+		    REQ_DATE = SYSDATE, LT_ST_CODE = #{ltStCode}, EXP_DATE = (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), START_DATE = SYSDATE
+	    WHERE LT_NO = #{ltNo}
 	</update>
 
 	<select id="creLectureList" parameterType="String" resultType="co.makeu.up.lecture.service.LectureVO">

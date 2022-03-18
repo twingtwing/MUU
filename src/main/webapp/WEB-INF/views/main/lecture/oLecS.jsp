@@ -209,9 +209,14 @@
                                         </tr>
                                         <tr>
                                             <th>강의가격</th>
-                                            <td>${olists.prc }원</td>
+                                            <td class="prccomma">${olists.prc }</td>
                                             <th>키트가격</th>
-                                            <td>${olists.kitPrc }원</td>
+                                            <c:if test="${olists.kitPrc == null}">
+                                            <td> - </td>
+                                            </c:if>
+                                            <c:if test="${olists.kitPrc != null}">
+                                            <td class="prccomma">${olists.kitPrc }</td>
+                                            </c:if>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -260,8 +265,8 @@
                             </div>
                             <div class="row col-12 justify-content-end mt-3">
                                 <div class="row align-self-end">
-                                	<c:if test="${olists.kitPrc != null }">
-                                    <p class="font-weight-bold mb-0">키트 가격 : ${olists.kitPrc }원</p>
+                                	<c:if test="${olists.kitPrc != nell }">
+                                    <p class="font-weight-bold mb-0 kitprccomma">${olists.kitPrc }</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -326,6 +331,22 @@
     	$('#frm').attr("action", "/creator/cLecSt");
     	$('#frm').submit();
     }
+    
+    //천단위 콤마
+    function addComma(value){
+         value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+         return value; 
+    }
+    
+    $(function(){
+    	let prccomma = $('.prccomma').text();
+    	prccomma = addComma(prccomma);
+    	$('.prccomma').text(prccomma+"원");
+    	
+    	let kitprccomma = $('.kitprccomma').text();
+    	kitprccomma = addComma(kitprccomma);
+    	$('.kitprccomma').text("키트 가격 : "+kitprccomma+"원");
+    })
 
 </script>
 </html>

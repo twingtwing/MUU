@@ -257,6 +257,7 @@
   
             <div class="row col-12 justify-content-center mt-3">
               <div class="product__pagination">
+              <c:if test="${pagination.currRange ne null}">
                 <c:if test="${pagination.currRange ne 1}">
 					<a><i class="fa fa-angle-double-left"></i></a>
 				</c:if>
@@ -273,6 +274,7 @@
 				<c:if test="${pagination.currRange ne pagination.pageCnt && pagination.pageCnt > 0}">
 					<a><i class="fa fa-angle-double-right"></i></a>
 				</c:if>
+			  </c:if>
               </div>
             </div>
   

@@ -123,4 +123,9 @@ public class LectureServiceImpl implements LectureMapper {
 		return map.lectureDelete(vo);
 	}
 
+	@Override
+	public LectureVO lectureTempSelect(LectureVO vo) {
+		return map.lectureTempSelect(vo);
+	}
+
 }

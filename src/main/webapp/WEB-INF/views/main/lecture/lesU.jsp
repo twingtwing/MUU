@@ -83,7 +83,6 @@
 </head>
 <body>
 <!-- 배너 시작-->
-!!!이거 복붙 해온거라 충돌나면 제거 지우면 됩니다 !!!
     <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
