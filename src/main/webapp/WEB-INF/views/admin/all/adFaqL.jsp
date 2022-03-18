@@ -215,7 +215,7 @@
                                             </div>
                                         	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
                                                 <div class="card">
-                                                    <div class="card-body" style="height: 18vh;">
+                                                    <div class="card-body">
                                                     	<h6 class="font-weight-bold mb-0">질문</h6>
                                                     	<p class="qcontent mb-0 mt-1"></p>
                                                     </div>
@@ -262,11 +262,11 @@
 															</div>
 														</div>
 			                                        	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
-			                                                <div class="card">
-			                                                    <div class="card-body" style="height: 18vh;">
+			                                                <div class="card w-100">
+			                                                    <div class="card-body">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control qcontent" id="qe1" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
+			                                                    		<input class="form-control qcontent" id="qe1" name="qcontent" maxlength="100" spellcheck="false">
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -276,7 +276,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
+			                                                        	<textarea  class="form-control acontent" id="con1" name="acontent" cols="80" rows="5" maxlength="200" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -313,8 +313,7 @@
 																</select>
 															</div>
 														</div>
-	                                                    <div class="row justify-content-between p-2"
-	                                                        style="background-color: #eeeeee; border-top: 1px solid black; border-bottom: 2px solid black;">
+	                                                    <div class="row justify-content-between p-2" style="background-color: #eeeeee; border-top: 1px solid black; border-bottom: 2px solid black;">
 	                                                        <div class="row">
 	                                                            <p class="mb-0 ml-2 pl-1">번호</p>
 	                                                            <p class="mb-0 ml-2 fno" style="font-weight: 500;"></p>
@@ -328,11 +327,11 @@
 	                                                        </div>
 	                                                    </div>
 			                                        	<div class="row form-group mb-0" style="border-bottom: 2px solid #eeeeee;">
-			                                                <div class="card">
-			                                                    <div class="card-body" style="height: 18vh;">
+			                                                <div class="card w-100">
+			                                                    <div class="card-body">
 			                                                    	<h6 class="font-weight-bold mb-0">질문</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control qcontent" id="qe" name="qcontent" cols="80" rows="5" spellcheck="false"></textarea>
+			                                                    		<input class="form-control qcontent" id="qe" name="qcontent" maxlength="100" spellcheck="false">
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>
@@ -342,7 +341,7 @@
 			                                                    <div class="card-body" style="height: 16vh;">
 			                                                    	<h6 class="font-weight-bold mb-0">답변</h6>
 			                                                    	<div class="row form-group pt-3 px-2">
-			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5" spellcheck="false"></textarea>
+			                                                        	<textarea class="form-control acontent" id="con" name="acontent" cols="80" rows="5" maxlength="200" spellcheck="false"></textarea>
 			                                                    	</div>
 			                                                    </div>
 			                                                </div>

@@ -144,14 +144,14 @@
                                         <div class="card-body" style="height: 25vh;">
                                         ${report.content }
                                         </div>
-                                        <div class="card-footer row justify-content-end" style="background-color: white;">
+                                        <div class="card-footer row" style="background-color: white;">
 	                                         <div>
 	                                            신고 상태 : <span class="text-danger font-weight-bold"> 
 	                                            <c:if test = "${report.rpStCode eq 'RPS01' }">
 	                                            	미처리
 	                                            </c:if>
 	                                            <c:if test="${report.rpStCode eq 'RPS02' }">
-	                                            	 완료
+	                                            	 처리
 	                                            </c:if>
 	                                          
 	                                             <c:if test="${report.rpStCode eq 'RPS03' }">
@@ -160,18 +160,15 @@
 	                                            </span>
 	                                         </div>
 	                                         <div class="row mx-2">
-	                                         강의상태:<span class="text-danger font-weight-bold"> 
-	                                         <c:if test = "${report.ltStCode eq 'L01' }">
-	                                         정상강의
-	                                         </c:if>
-	                                         <c:if test = "${report.ltStCode eq 'L04' }">
-	                                         수정 전
-	                                         </c:if>
-	                                         <c:if test = "${report.ltStCode eq 'L06' }">
-	                                         수정완료
-	                                         </c:if>
-	                                         </span>
-	                                         
+		                                         <c:if test = "${report.ltStCode ne 'L04' and report.ltStCode ne 'L06'}">
+		                                         강의상태:<span class="text-danger font-weight-bold">&nbsp; 정상강의</span>
+		                                         </c:if>
+		                                         <c:if test = "${report.ltStCode eq 'L04' }">
+		                                         강의상태:<span class="text-danger font-weight-bold">&nbsp; 수정 전</span>
+		                                         </c:if>
+		                                         <c:if test = "${report.ltStCode eq 'L06' }">
+		                                         강의상태:<span class="text-danger font-weight-bold">&nbsp; 수정완료</span>
+		                                         </c:if>
 	                                         </div>
                                         </div>
                                     </div>
