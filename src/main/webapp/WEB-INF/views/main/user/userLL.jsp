@@ -196,8 +196,8 @@
 		                    <div class="d-flex w-100 col-lg-12">
  							<c:forEach items="${sugangList}" var="innersugang" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
 		                         <div class="thumbnail col-lg-4">
-		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.ltNo})"/>
-		                          <h5 class="px-3  m-0 font-weight-bold" onclick="selectLecture(${innersugang.ltNo})" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugang.ttl}</h5>
+		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.ltNo}, ${innersugang.tlsnNo })"/>
+		                          <h5 class="px-3  m-0 font-weight-bold" onclick="selectLecture(${innersugang.ltNo}, ${innersugang.tlsnNo })" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugang.ttl}</h5>
 		                          <div class="small text-secondary text-right m-0">진도율 ( ${innersugang.progPct}% )</div>
 		                          <div class="bg-secondary text-secondary w-100 small position-relative">.
 		                           <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${innersugang.progPct}%">　</div>

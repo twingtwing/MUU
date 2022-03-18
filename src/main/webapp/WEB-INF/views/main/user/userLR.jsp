@@ -198,7 +198,9 @@
 		                  </div>
 	                </div>
                 </c:if>
-                
+                <c:if test="${empty reviews }">
+                    <div class="m-5">리뷰가 없습니다.</div>
+                </c:if>
                 <c:forEach items="${reviews}" var="review" varStatus="st">
                 <!--  card 사실 유저페이지랑 거의 똑같음 -->
                 <c:if test="${review.writer ne myReview.writer }">

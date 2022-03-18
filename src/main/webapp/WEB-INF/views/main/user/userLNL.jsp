@@ -147,7 +147,7 @@
                 </div>
 
                 <div class="col-12 row mb-3">
-                  <table class="w-100 list text-center">
+                  <table class="w-100 list text-center border">
                     <thead class="bg-light">
                       <tr>
                         <th>글번호</th>
@@ -158,6 +158,9 @@
                       </tr>
                     </thead>
                     <tbody id="noticeList">
+                    <c:if test="${empty notices }">
+                    <tr><td colspan="5">공지사항이 없습니다.</td></tr>
+                    </c:if>
                       <c:forEach items="${notices}" var="notice">
                       <tr>
                         <td>${notice.ntNo}</td>
