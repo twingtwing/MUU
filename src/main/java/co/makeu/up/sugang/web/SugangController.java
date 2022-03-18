@@ -69,6 +69,7 @@ public class SugangController {
 		if(Objects.isNull(checkvo)) {
 			logger.info("사용자의 잘못된 접근");
 			model.addAttribute("accessBan","잘못된 접근입니다.");
+			// 여기서 SU02로 업데이트
 			return "redirect:/accessError";
 		} else {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));

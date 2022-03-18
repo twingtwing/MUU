@@ -38,6 +38,12 @@
         label{
             margin-bottom:0px;
         }
+        .questions:hover{
+        	background-color: var(--light);
+        }
+        .answers{
+        	font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -154,6 +160,7 @@
                                 <input type="hidden" name="ltNo" value="${lecInfo.ltNo }">
 							</form>
                                 <!--검색결과-->
+                                <div class="text-danger">※ 클릭 시 답변을 확인할 수 있습니다.</div>
                                 <div class="row">
                                     <table class="table table-bordered">
                                         <tr style="background-color: #eeeeee;">
@@ -168,14 +175,14 @@
                                         </tr>
                                         </c:if>
                                         <c:forEach items="${qna }" var="q">
-                                        <tr>                                        
+                                        <tr class="questions">                                        
                                             <td>${q.qnaNo}</td> 
                                             <td>${q.writer}</td>
                                             <td class="question"><a onclick="openAnswer(${q.qnaNo})">${q.qContent}</a></td>
                                             <td>${q.qnaStCode}</td>
                                         </tr>
                                         <tr class="answer ans${q.qnaNo }">
-                                            <td colspan="4" id="" class="">
+                                            <td colspan="4" class="answers">
                                             <c:if test="${empty q.aContent }">
                                             답변이 없습니다.
                                             </c:if>
