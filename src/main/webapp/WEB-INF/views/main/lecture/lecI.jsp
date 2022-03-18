@@ -315,10 +315,10 @@ select {
                         <!--강의제목, 소개글 등록란-->
                         <div class="col-6 ml-3 align-self-center" style="border-right:1px solid rgb(218, 218, 218)">
                             <div class="mb-3">
-                                <input type="text" id="lecTitle" maxlength="200" onkeyup="fn_checkByte(this)" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" title="강의제목란">
+                                <input type="text" id="lecTitle" maxlength="200" onkeyup="fn_checkByte(this)" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" title="강의제목란" spellcheck="false">
                             </div>
                             <div class="">
-                                <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의소개란"></textarea>
+                                <textarea rows="7" id="lecIntro" maxlength="4000" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의소개란" spellcheck="false"></textarea>
                             </div>
                         </div>
     
@@ -470,10 +470,10 @@ select {
                             <form>
                                 <div class="row mb-3">
                                 	<input hidden="hidden">
-                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요" title="키트이름란">
+                                    <input type="text" id="kitname" size="35" maxlength="200" style="width:-webkit-fill-available" placeholder="수업 키트명을 입력해주세요" title="키트이름란" spellcheck="false">
                                 </div>
                                 <div class="row">
-                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요" title="키트설명란"></textarea>
+                                    <textarea rows="10" id="kitintro" maxlength="4000" style="width:-webkit-fill-available" placeholder="키트에 대한 설명을 간단히 입력해주세요" title="키트설명란" spellcheck="false"></textarea>
                                 </div>
                             </form>
                         </div>

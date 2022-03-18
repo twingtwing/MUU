@@ -144,7 +144,7 @@
                                                 <input type="date" class="border py-1 pastDate" value="${search.pastDate }" name="pastDate">
                                                 <i class="fas fa-minus mx-2"></i>
                                                 <input type="date" class="border py-1 recentDate" value="${search.recentDate }" name="recentDate">
-			                                    <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 19px;" id="resetAll">초기화</button>
+			                                    <button type="button" class="btn bg-white border position-absolute" style="width: 75px; height: 33px; right: 85px; bottom: 22px;" id="resetAll">초기화</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -245,7 +245,7 @@
 	                                            <c:if test="${user.name eq ' ' }">
 		                                            정보 없음
 	                                            </c:if>
-	                                            
+	                                            ${user.name }
 	                                            </td>
 	                                            <td>
 	                                            	<c:if test="${user.gender eq 'M' }">

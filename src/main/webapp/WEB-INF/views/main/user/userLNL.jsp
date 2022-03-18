@@ -142,7 +142,7 @@
                     <option value="ttlSearchKey">제목</option>
                     <option value="contentSearchKey">내용</option>
                   </select>
-                  <input type="text" class="border" id="noticeSearchKey">
+                  <input type="text" class="border" id="noticeSearchKey" spellcheck="false">
                   <button type="button" class="border px-4" id="noticeSearch">검색</button>
                 </div>
 
@@ -236,9 +236,16 @@
   		contentType : 'application/json;charset=utf-8',
   	})
   	.done((res)=>{
-  		$(document.querySelectorAll('.product__pagination>a')).removeClass('current-page');
   		removeAll();
-  		changePage(res);
+  		if(res.length!=0){
+	  		changePage(res);  			
+  		} else {
+  			$('#noticeList').append(
+  				$('<tr>').append(
+  					$('<td>').attr('colspan',5).text('검색 결과가 없습니다.')		
+  				)
+  			);
+  		}
   	})
   }
   
@@ -267,7 +274,6 @@
 			if(val.fileNo!=0){
 				fileicon = '<i class="fa fa-file" aria-hidden="true"></i>';
 			}
-			console.log(fileicon)
 			let tr = $('<tr>').append(
 					$('<td>').text(val.ntNo),
 					$('<td>').text(val.ttl),
