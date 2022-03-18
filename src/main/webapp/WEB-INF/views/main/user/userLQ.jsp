@@ -288,6 +288,7 @@
           qContent: $('#myquestion').val(),
           ltNo: ${ltNo}
         }
+        $('#myquestion').val('')
         $.ajax({
             url: '/user/userInsertLQ',
             data: data,
@@ -298,10 +299,8 @@
           })
           .done((r) => {
         	$('#qst').text('질문하기');
-        	$('#myquestion').val('')
         	$('.delete').attr('disabled',false);
       		$('.modify').attr('disabled',false);
-      		console.log(r)
             let today = new Date().toISOString().slice(0, 10)
             $('#qstbox').toggleClass('d-none');
             $('#qstbox').toggleClass('d-flex');
@@ -313,7 +312,6 @@
       		window.alert('1000자 내외로 작성해주세요.');
       		return;
       	  }
-      	  $('')
       	  lineMaker($('#myquestion'));
     	  let data = {qnaNo : qnanoForMod, qContent : $('#myquestion').val()}
     	  $('#myquestion').val('')
@@ -439,14 +437,17 @@
         let tr = $('<tr>').append(
           $('<td>').html(val.qContent),
           $('<td>').text(val.writer),
-          $('<td>').text(new Date(val.qRegDate).toISOString().slice(0, 10)),
+          $('<td>').text(dateformat(val.qRegDate)),
           $('<th>').text(val.qnaStCode).addClass(val.color),
         );
         tr.data('qnano', +val.qnaNo)
         $('#qstList').append(tr)
       }
     }
-
+    const dateformat = (num)=>{
+    	let date = new Date(num);
+    	return new Date(num - date.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    }
 
     // 수정버튼 클릭시
     $('.myQstBoard').click((e) => {

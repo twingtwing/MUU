@@ -304,8 +304,13 @@ $('#resetAll').click(()=>{
 	$('input[name=creGrdCodeList]').prop('checked',null);
 	$('#searchState').val(false);
 })
-
-
+// 자동검색 막음
+$('input[type="text"]').keydown((e)=>{
+    if(e.key==='Enter') {
+        e.preventDefault()
+    }
+})
+//엑셀다운
 $('#excel').click(()=>{
 	makeSearchData(0);
 	$('#searchForm').attr('action','/admin/creatorExcel');
