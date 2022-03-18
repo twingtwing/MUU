@@ -101,9 +101,7 @@
 			<a href="#" v-for="page in pages" v-on:click="pageMove(page-1)" v-bind:class="{'current-page':pageNum+1 == page}"/>{{page}}</a> 
 			<a href="#" v-if="pageNum+1 < pages" v-on:click="pageMove(-2)" ><i class="fa fa-angle-double-right"></i></a>
 		</div>
-		<div class="d-flex justify-content-center mt-3">
-			<a class="site-btn" href="/home">뒤로가기</a>
-		</div>
+		
 	</section>
 
 	<script>
