@@ -107,6 +107,7 @@ td, th {
 							role="button" aria-expanded="false" aria-controls="collapseExample">전부 보기
 							</a>
 							</div>
+							<div class="d-flex ml-5">※ 클릭 시 자주묻는질문의 내용을 확인할 수 있습니다.</div>
 							<!-- <div class="text-center mb-2">
 								<button class="btn btn-secondary" id="onlyone">하나씩 보기</button>
 							</div> -->

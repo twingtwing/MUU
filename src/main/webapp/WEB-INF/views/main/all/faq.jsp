@@ -68,6 +68,7 @@
 				</div>
 				<div class="row py-5">
 					<div class="col-lg-12">
+					<div>※ 클릭 시 자주묻는질문의 내용을 확인할 수 있습니다.</div>
 						<!-- Nav tabs 머리시작-->
 						<ul class="nav nav-tabs nav-fill" role="tablist">
 							<li class="nav-item" role="presentation" id="head"><a
@@ -103,7 +104,7 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[0]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
@@ -112,7 +113,7 @@
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -127,7 +128,7 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[1]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
@@ -136,7 +137,7 @@
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -150,16 +151,16 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[2]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
-													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
+													:aria-controls="faq.target"></>Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -174,7 +175,7 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[3]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
@@ -183,7 +184,7 @@
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -198,7 +199,7 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[4]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
@@ -207,7 +208,7 @@
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -222,7 +223,7 @@
 								<div class="accordion" id="accordionExample">
 									<div class="card border-0" v-for="(faq,index) in faqMore[5]">
 										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
+											<h2 class="mb-0 d-flex">
 												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
 													:data-target="faq.target2" aria-expanded="false"
@@ -231,7 +232,7 @@
 										</div>
 										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body d-flex">A{{index+1}}.<p class="text-danger" v-html="faq.acontent"></p></div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
 								</div>
@@ -258,13 +259,16 @@
 								<div class="row">
 								<form onsubmit="return false">
 									<div class="row mr-2">
-										<input id="acontentSearch" v-on:click="cursorSearch" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
+										<input id="acontentSearch" v-on:click="cursorSearch" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this)" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
 											<a id="searchTest" v-on:click="search()" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="height: 50px; width:70px;">
 												<p class="mb-0">검색</p>
 											</a>
 										</div>
 								</form>
 								</div>
+							</div>
+							<div id="nosearch" class="d-none">
+								<p class="mb-0 text-danger text-right">검색어를 입력해주세요.</p>
 							</div>
 						</div>
 						<div v-if="searchFaqMore[0] == '검색없음'">
@@ -274,7 +278,7 @@
 							<div class="accordion" id="accordionExampl">
 								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
 									<div class="card-header text-secondary bg-light" id="headingOne">
-										<h2 class="mb-0">
+										<h2 class="mb-0 d-flex">
 											<button class="btn btn-link btn-block d-flex text-left text-secondary"
 												type="button" data-toggle="collapse"
 												:data-target="'#collapse_search_'+faq.fno"
@@ -297,9 +301,6 @@
 					</div>
 				</div>
 				<!-- Example split danger button -->
-				<div class="d-flex justify-content-center">
-					<button type="submit" class="site-btn" onclick="history.go(-1);">뒤로가기</button>
-				</div>
 			</div>
 		</div>
 	</section>
@@ -326,6 +327,16 @@
         	search(){
         	  let search = $('#acontentSearch').val()
           	  console.log(search);
+        	  
+        	  var text = $("#acontentSearch").val();
+              // 미입력 또는 공백 입력 방지
+              if (text.replace(/\s|　/gi, "").length == 0) {
+				$('#nosearch').removeClass('d-none');
+                $("#acontentSearch").focus();
+                return;
+              }else{
+            	  $('#nosearch').addClass('d-none');
+              }
       	      $.ajax({
       	          url: 'faqSelectListSearch',
       	          type: 'post',
@@ -426,9 +437,7 @@
       })
       //mount vue
       const mountedFaq = faq.mount('#faqSelectList');
-   </script>
-
-	<script type="text/javascript">
+      
       $(document).click(function (e) {
          if (!$(e.target).is('.card-body')) {
             $('.collapse').collapse('hide');
