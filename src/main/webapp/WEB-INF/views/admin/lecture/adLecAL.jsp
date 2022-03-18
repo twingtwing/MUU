@@ -200,7 +200,7 @@
 										</td>
 										<td>${llist.creId }</td>
 										<td>${llist.name }</td>
-										<td class="clickstyle" onclick="location.href='/admin/adLecAS?ltNo=${llist.ltNo }'">${llist.ttl }</td>
+											<td class="clickstyle" onclick="location.href='/admin/adLecAS?ltNo=${llist.ltNo }'">${llist.ttl }</td>
 										<td>${llist.reqDate }</td>
 										<c:if test="${llist.ltStCode eq 'L02'}">
 											<td>강의등록대기</td>
