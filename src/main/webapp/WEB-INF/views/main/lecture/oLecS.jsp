@@ -209,13 +209,13 @@
                                         </tr>
                                         <tr>
                                             <th>강의가격</th>
-                                            <td class="prccomma">${olists.prc }</td>
+                                            <td class="prccomma1">${olists.prc }</td>
                                             <th>키트가격</th>
                                             <c:if test="${olists.kitPrc == null}">
                                             <td> - </td>
                                             </c:if>
                                             <c:if test="${olists.kitPrc != null}">
-                                            <td class="prccomma">${olists.kitPrc }</td>
+                                            <td class="prccomma2">${olists.kitPrc }</td>
                                             </c:if>
                                         </tr>
                                     </tbody>
@@ -339,9 +339,13 @@
     }
     
     $(function(){
-    	let prccomma = $('.prccomma').text();
-    	prccomma = addComma(prccomma);
-    	$('.prccomma').text(prccomma+"원");
+    	let prccomma1 = $('.prccomma1').text();
+    	prccomma1 = addComma(prccomma1);
+    	$('.prccomma1').text(prccomma1+"원");
+    	
+    	let prccomma2 = $('.prccomma2').text();
+    	prccomma2 = addComma(prccomma2);
+    	$('.prccomma2').text(prccomma2+"원");
     	
     	let kitprccomma = $('.kitprccomma').text();
     	kitprccomma = addComma(kitprccomma);
