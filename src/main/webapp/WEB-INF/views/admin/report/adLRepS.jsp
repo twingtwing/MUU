@@ -83,12 +83,10 @@
 	                                    <div class="card d-felx justify-content-center">
 		                                    <div class="card-body  row justify-content-end">
 		                                    
-		                                    <video controls controlsList="nodownload" style="display:block; width:100%; height: 100%">
-                                                          <source ${report.lsnfile} type="video/mp4">
-                                           
+			                                  <video controls controlsList="nodownload" style="display:block; width:80%; height: 80%">
+	                                                <source src="${report.lsnfile}" type="video/mp4">
+	                                           </video>
 		                                    </div>
-		                                    
-		                                    
 		                                    <div class="card-footer row justify-content-end" style="background-color: white;">
 			                                	
 		                                	</div>
