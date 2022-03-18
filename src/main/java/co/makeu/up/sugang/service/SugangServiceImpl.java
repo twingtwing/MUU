@@ -84,4 +84,9 @@ public class SugangServiceImpl implements SugangMapper {
 		return map.selectSugang(tlsnNo);
 	}
 
+	@Override
+	public int updateSugangEnd(int tlsnNo) {
+		return map.updateSugangEnd(tlsnNo);
+	}
+
 }

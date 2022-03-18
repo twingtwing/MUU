@@ -17,7 +17,7 @@
 	</insert>
 
 	<select id="lessonWithProgress" parameterType="co.makeu.up.lesson.service.LessonVO" resultType="co.makeu.up.lesson.service.LessonVO">
-		SELECT L.SERIAL_NO,L.LSN_NO,L.TTL, P.PROG_PCT,P.ID FROM LESSON L LEFT OUTER JOIN PROGRESS P
+		SELECT L.SERIAL_NO,L.LSN_NO,L.TTL, P.PROG_PCT,P.ID FROM LESSON L JOIN PROGRESS P
 		ON L.SERIAL_NO = P.SERIAL_NO
 		WHERE LT_NO = #{ltNo}
 		AND P.ID = #{id}
