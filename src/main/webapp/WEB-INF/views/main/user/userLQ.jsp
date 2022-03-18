@@ -212,9 +212,12 @@
                   </tr>
                 </thead>
 
+                <c:if test="${empty qnaList }">
+                <tr><td colspan="4">질문 내역이 없습니다.</td></tr>
+                </c:if>
                 <tbody class="qstboard" id="qstList">
                   <c:forEach items="${qnaList}" var="list">
-                    <tr data-qnano=${list.qnaNo}>
+                    <tr data-qnano="${list.qnaNo}">
                       <td>${list.qContent }</td>
                       <td >${list.writer }</td>
                       <td>${list.qRegDate }</td>

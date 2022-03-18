@@ -368,6 +368,7 @@
             		val = Number(val);
             		return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             	},
+            	
             	payAjax(){
             		let tag =  $('.tab-pane.fade.active.show')
             		let tel, zip, addr, detaAddr;
@@ -398,7 +399,9 @@
             			$('#frm #shipStCode').val('D01');
             		}
             		$('#frm #num').val(this.lectureDetail.tlsnTerm);
-            		
+            		//나중에 삭제
+            		$('#frm').submit();
+            		/*
             		var IMP = window.IMP;
         			IMP.init('imp47910912');
         			 IMP.request_pay({
@@ -424,7 +427,7 @@
         						console.log('결제가 성공적으로 마무리되었습니다.');
         						window.alert(msg);
         						$('#frm').submit();
-        					} else { // 실패시
+        				 } else { // 실패시
         						var msg = '결제에 실패하였습니다.';
         						msg += '에러내용 : ' + rsp.error_msg;
         						console.log('실패');
@@ -432,7 +435,7 @@
         					}
         			 
         			 });
-            		
+            		*/
             	},
             	valForm(){
             		const ary = $('#another input');

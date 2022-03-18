@@ -177,8 +177,8 @@
                           </c:if>
                           <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
                             <div class="thumbnail col-lg-4">
-                              <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo})">
-                              <h5 class="px-3 m-0 font-weight-bold" onclick="selectLecture(${sugang.ltNo})" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugang.ttl}</h5>
+                              <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo}, ${sugang.tlsnNo })">
+                              <h5 class="px-3 m-0 font-weight-bold" onclick="selectLecture(${sugang.ltNo} , ${sugang.tlsnNo })" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugang.ttl}</h5>
                               <div class="small text-secondary text-right m-0">진도율 ( ${sugang.progPct}% )</div>
                               <div class="bg-secondary w-100 small position-relative">　
                                 <div class="bg-danger position-absolute text-secondary pl-1" style="top:0px; width:${sugang.progPct}%">.</div>
@@ -298,12 +298,14 @@
   <form action="/user/userLectureSelect" id="lectureSelectForm">
   	<input type="hidden" name="id" value="${username}">
   	<input type="hidden" id="lectureNo" name="ltNo">
+  	<input type="hidden" id="tlsnNo" name="tlsnNo">
   </form>
   
   <script>
-    const selectLecture = (number) => {
+    const selectLecture = (number, tlsnNo) => {
       console.log(number);
       $('#lectureNo').val(number);
+      $('#tlsnNo').val(tlsnNo);
       $('#lectureSelectForm').submit();
     }
 

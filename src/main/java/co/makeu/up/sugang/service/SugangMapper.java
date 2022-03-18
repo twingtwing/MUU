@@ -13,6 +13,7 @@ public interface SugangMapper {
 	int shipUpdate(SugangVO vo);
 	SugangVO selectSugang(int tlsnNo);
 	int sugangInsert(SugangVO vo);
+	int updateSugangEnd(int tlsnNo);
 	
 	// admin
 	List<SugangVO> userRefundList(String id);

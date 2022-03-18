@@ -156,4 +156,7 @@
 		SELECT * FROM SUGANG
 		WHERE TLSN_NO = #{tlsnNo}
 	</select>
+	<update id="updateSugangEnd" parameterType="Integer">
+		UPDATE SUGANG SET TLSN_ST_CODE = 'SU02' WHERE TLSN_NO = #{tlsnNo}
+	</update>
 </mapper>

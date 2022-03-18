@@ -69,13 +69,14 @@ public class SugangController {
 		if(Objects.isNull(checkvo)) {
 			logger.info("사용자의 잘못된 접근");
 			model.addAttribute("accessBan","잘못된 접근입니다.");
-			// 여기서 SU02로 업데이트
+			if(vo.getTlsnNo()!=0) {
+				sugangDao.updateSugangEnd(vo.getTlsnNo()); // SU02로 업데이트				
+			}
 			return "redirect:/accessError";
 		} else {
 			checkvo.setProgPct(progressDao.wholeProgress(prvo));
 			lessonvo.setId(vo.getId());
 			lessonvo.setLtNo(vo.getLtNo());
-			
 			model.addAttribute("progress",lessonDao.lessonWithProgress(lessonvo));
 			model.addAttribute("sugang",checkvo);
 			model.addAttribute("lessonList",lessonDao.lessonList(vo.getLtNo()));
