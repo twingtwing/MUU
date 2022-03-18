@@ -16,6 +16,14 @@ th, td {
 	padding: 0.5rem;
 	text-align: center;
 }
+.test{
+	display: inline-block; 
+	width: 160px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center
+}
 </style>
 </head>
 <body>
@@ -127,7 +135,7 @@ th, td {
 											<th style="width: 107px">결제일</th>
 											<th style="width: 107px">환불 요청일</th>
 											<th>환불사유</th>
-											<th style="width: 90px">결제금액</th>
+											<th>결제금액</th>
 											<th style="width: 80px">처리상태</th>
 										</tr>
 									</thead>
@@ -142,10 +150,10 @@ th, td {
 											<tr>
 												<td>${refundlist.tlsnNo }</td>
 												<td>${refundlist.id }</td>
-												<td>${refundlist.ttl }</td>
+												<td class="test" title="${refundlist.ttl }">${refundlist.ttl }</td>
 												<td>${refundlist.regDate }</td>
 												<td>${refundlist.reqDate }</td>
-												<td>${refundlist.content }</td>
+												<td class="test" title="${refundlist.content }">${refundlist.content }</td>
 												<td><fmt:formatNumber>${refundlist.pay }</fmt:formatNumber>원</td>
 												<c:if test="${refundlist.rfStCode eq 'RF01'}">
 													<td class="font-weight-bold">환불신청대기</td>
@@ -348,10 +356,10 @@ th, td {
 			console.log(val)
 				$('#sampleTr #num_sam').text(val.tlsnNo);
 				$('#sampleTr #id_sam').text(val.id);
-				$('#sampleTr #ttl_sam').text(val.ttl);
+				$('#sampleTr #ttl_sam').attr('class','test').attr('title',val.ttl).text(val.ttl);
 				$('#sampleTr #regDate_sam').text(new Date(val.regDate).toISOString().slice(0,10));
 				$('#sampleTr #reqDate_sam').text(new Date(val.reqDate).toISOString().slice(0,10));
-				$('#sampleTr #content_sam').text(val.content);
+				$('#sampleTr #content_sam').attr('class','test').attr('title',val.content).text(val.content);
 				$('#sampleTr #pay_sam').text(val.pay + "원");
 				if(val.rfStCode == 'RF01'){
 					$('#sampleTr #rfStCode_sam').text("환불신청대기");
