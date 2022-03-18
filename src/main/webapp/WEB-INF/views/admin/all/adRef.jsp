@@ -20,7 +20,7 @@ table tr, table td {
 	text-align: center;
 }
 
-.admin_search th {
+.admin_search th,.modal_table th {
 	background-color: #eeeeee;
 }
 
@@ -313,7 +313,7 @@ table tr, table td {
 					</button>
 				</div>
 				<div class="modal-body">
-					<table class="table">
+					<table class="table modal_table">
 						<tr>
 							<th>번호</th>
 							<th>아이디</th>
@@ -353,8 +353,6 @@ table tr, table td {
 					<div class="modal-footer">
 						<button id="agree" type="button" class="btn btn-primary">승인</button>
 						<button id="disagree" type="button" class="btn btn-secondary">거부</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">뒤로가기</button>
 					</div>
 				</div>
 			</div>
