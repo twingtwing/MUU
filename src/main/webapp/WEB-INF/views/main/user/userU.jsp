@@ -130,7 +130,10 @@ td, th {
 								<div class="card-body d-flex flex-column align-items-center">
 									<div
 										class="d-flex justify-content-center align-items-center justify-content-around my-5 position-relative">
-										<img src="${user.pht}" alt="유저의 프로필 사진입니다."
+										<img src="
+										<c:if test="${empty user.pht }">/resources/img/profile.png</c:if>
+										${user.pht}
+										" alt="유저의 프로필 사진입니다."
 											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid;"
 											class="mr-4">
 										<div>
@@ -138,12 +141,6 @@ td, th {
 												<tr>
 													<th>아이디</th>
 													<td>${user.id}</td>
-												</tr>
-												<tr>
-													<th>SNS 연동</th>
-													<td><img src="/resources/img/kakao.svg" alt="">
-														<img src="/resources/img/naver.png" alt=""> <img
-														src="/resources/img/google.png" alt=""></td>
 												</tr>
 												<tr>
 													<th>내 권한/등급</th>

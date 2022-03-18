@@ -144,7 +144,7 @@
                       </c:if>
                   </div>
               </div>
-              <div class="col-12 my-3" style="height: 45vh;">
+              <div class="col-12 my-3">
                   <p class="px-2">${notice.content}</p>
               </div>
               <!-- 다중파일 -->

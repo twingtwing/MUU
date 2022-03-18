@@ -35,7 +35,13 @@
             vertical-align: middle;
         }
         .openClass, .hideClass{
-        cursor: pointer;
+        	cursor: pointer;
+        }
+        .openClass:hover{
+        	background-color: var(--light);
+        }
+        .hideClass:hover{
+        	background-color: var(--light);
         }
     </style>
 </head>
@@ -127,7 +133,7 @@
                                             <td class="pl-3 text-left" >총 ${cnt}개</td>
                                         </tr>
                                     </table>
-
+									<div class="text-danger">※ 클릭 시 강의 영상을 확인할 수 있습니다.</div>
                                     <table class="table table-bordered">
                                         <tr style="background-color: #eeeeee;">
                                             <th style="width:100px;">수업순번</th>

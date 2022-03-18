@@ -38,6 +38,12 @@
     .qstboard, .qstboard button, .qstboard td{
    	font-size: 0.9rem;
    }
+   #qstList tr:hover{
+   	background-color: lightgray;
+   }
+   tr{
+   	border-bottom: solid 1px lightgray;
+   }
   </style>
 </head>
 
@@ -139,6 +145,7 @@
           </div>
           <div class="card" style="height: auto; position: relative;">
             <div class="card-body">
+             <div class="text-danger">※ <span class="text-success font-weight-bold">답변 완료</span> 표시가 있는 질문을 클릭하면 답변을 확인할 수 있습니다.</div>
               <div class="d-flex justify-content-between align-items-center m-3">
                 <div class="d-flex align-self-end">
                   <div class="row">
@@ -332,7 +339,7 @@
     // 답변 조회
     const makeRow = (content) => {
       let row = $('<tr>').append(
-        $('<td>').attr('colspan', 4).html(content).addClass('clicked'));
+        $('<td>').attr('colspan', 4).html(content).addClass('clicked')).addClass('font-weight-bold');
       return row;
     }
     $('.qstboard').click((e) => {
