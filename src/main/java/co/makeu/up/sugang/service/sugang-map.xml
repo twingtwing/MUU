@@ -128,23 +128,32 @@
 		]]>
 	</select>
 	<select id="sugangList" parameterType="co.makeu.up.sugang.service.SugangVO" resultType="co.makeu.up.sugang.service.SugangVO">
-		select * from
-			(select rownum rn, e.* from
-				(select s.*, c.name, c.prog, COUNT(*) OVER() AS COUNT
-				    from (select a.name, b.*
-					        from(
-					            select p.id, round(avg(p.prog_pct), 1) prog
-					            from lesson l left outer join progress p
-					            on l.lsn_no = p.serial_no
-					            where lt_no = #{ltNo}
-					            group by p.id) b join users a
-					       on a.id = b.id) c right outer join sugang s
-				  on c.id = s.id
-				  where lt_no = #{ltNo}
-				  and name LIKE '%'||#{nameSearchKey}||'%'
-				  AND ship_st_code LIKE '%'||#{shipStCodeSearchKey}||'%'
-				  and tlsn_st_code in ('SU01', 'SU03')
-				  order by tlsn_no desc) e)
+		with avgprog as(
+		select l.serial_no, l.ttl, l.lt_no, l.reg_date, l.mod_date, l.lsn_no, p.prog_pct, p.id
+		from lesson l join progress p
+		on l.serial_no = p.serial_no
+		where lt_no = #{ltNo})
+		select *
+		from
+		    (select rownum rn, e.* 
+		    from
+		        (select s.*, d.name, d.prog, COUNT(*) OVER() AS COUNT
+		        from
+		            (select distinct u.name, c.id, c.prog
+		            from
+		                (select a.*, b.prog
+		                from
+		                    (select id, avg(prog_pct) prog
+		                    from avgprog
+		                    group by id) b right outer join avgprog a
+		                on a.id = b.id) c left outer join users u
+		            on c.id = u.id) d join sugang s
+		        on d.id = s.id
+		        where lt_no = #{ltNo}
+		        and name LIKE '%'||#{nameSearchKey}||'%'
+		        AND ship_st_code LIKE '%'||#{shipStCodeSearchKey}||'%'
+		        and tlsn_st_code in ('SU01', 'SU03')
+		        order by reg_date desc) e)
 		where rn between (#{page}-1)*10 and 10*(#{page})
 	</select>
 	<update id="shipUpdate" parameterType="co.makeu.up.sugang.service.SugangVO">

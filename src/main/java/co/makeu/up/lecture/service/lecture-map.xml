@@ -71,9 +71,9 @@
 		SELECT * FROM CNAMELECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L05'
 	</select>
 	<update id="lectureUpdateTemp" parameterType="co.makeu.up.lecture.service.LectureVO">
-		UPDATE LECTURE LECTURE(LT_NO, CRE_ID, TTL, INTRO, UP_CTGR, DOWN_CTGR, THUMB, PHT_1, PHT_2, PHT_3,
-							OPEN_TERM, TLSN_TERM, PRC, KIT_NAME, KIT_INTRO, KIT_PRC, TAG_1, TAG_2, TAG_3,
-							REQ_DATE, LT_ST_CODE, EXP_DATE, START_DATE)
+		UPDATE LECTURE(LT_NO, CRE_ID, TTL, INTRO, UP_CTGR, DOWN_CTGR, THUMB, PHT_1, PHT_2, PHT_3,
+					   OPEN_TERM, TLSN_TERM, PRC, KIT_NAME, KIT_INTRO, KIT_PRC, TAG_1, TAG_2, TAG_3,
+					   REQ_DATE, LT_ST_CODE, EXP_DATE, START_DATE)
 		SET((SELECT NVL(MAX(LT_NO), 0)+1 FROM LECTURE), #{creId}, #{ttl}, #{intro}, 
 			   #{upCtgr}, #{downCtgr}, #{thumb}, #{pht1}, #{pht2}, #{pht3}, 
 			   #{openTerm}, #{tlsnTerm}, #{prc},

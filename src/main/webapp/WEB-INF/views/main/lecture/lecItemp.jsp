@@ -591,7 +591,7 @@
                        { tagId : 'LT19', tagName :'인생샷'},
                        { tagId : 'LT20', tagName :'여행'}
                     ]
-   $(function(){
+  /*  $(function(){
 	   		$.each(taglist, function(a,b){
 	   			let taglabel = $('<label>').addClass('mr-2').text(b.tagName).attr('for', a);
 	   			let taginput = $('<input>').attr('type','checkbox').attr('id',a).val(b.tagId);
@@ -599,7 +599,7 @@
 			    taginput.appendTo($('#tagdiv'));
 			    taglabel.appendTo($('#tagdiv'));
 	   		});
-   });
+   }); */
 	
 	
 	
