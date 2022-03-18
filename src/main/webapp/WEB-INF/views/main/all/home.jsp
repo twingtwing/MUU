@@ -11,6 +11,10 @@
             color: black;
         }
         
+        .hero__slider .hero__items h2{
+        	color : white;
+        }
+        
         .product__item__text ul li,.product__sidebar__comment__item__text ul li{
             background-color: rgb(201 175 175) ;
         }
@@ -46,7 +50,7 @@
 							<div class="col-lg-6">
 								<div class="hero__text">
 									<div class="label font-weight-bold py-2">${lec.upCtgr} · ${lec.downCtgr}</div>
-									<h2 class="text-dark">${lec.ttl}</h2>
+									<h2>${lec.ttl}</h2>
 									<p></p>
 									<a href="/lecD?ltNo=${lec.ltNo}">
 										<span>Go Now</span> 

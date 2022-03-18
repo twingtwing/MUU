@@ -86,7 +86,7 @@
 							<p class="download_link mb-0" v-for="(file,index) in board.detaFileList" v-on:click="downloadDetail(index)" class="text-muted ml-2">{{file.filePath}}</p>
 						</div>
 					</div>
-					<div id="cont" class="d-flex justify-content-start mt-1 alert" role="alert" style="height:40vh" name=linemak>
+					<div id="cont" class="d-flex justify-content-start mt-1 alert" role="alert" style="height:70vh" name=linemak>
 						<p class="mb-3" v-html="board.content"></p>
 					</div>
 					<div class="border-top"></div>
