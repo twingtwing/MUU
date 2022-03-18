@@ -174,6 +174,13 @@
                   <c:if test="${rvlist != '[]' }">
 	                  <c:forEach items="${rvlist}" var="list" varStatus="status">
 		                  <div class="col-6 mt-3 rvcard">
+		                    <c:choose>
+		                    	<c:when test="${list.rvCode eq 'RE02' }">
+		                    	<div class="bg-light border text-center rounded d-flex flex-column align-items-center p-3 mx-3 mb-3 rv">
+		                    		<div class="h-25 w-100 h-100 rounded p-2"><span>${list.wrDate }</span><br><br>신고 처리된 리뷰입니다.</div>
+		                     	</div>
+		                    	</c:when>
+		                    	<c:otherwise>
 		                    <div data-no="${list.rvNo}" class="bg-light border rounded d-flex flex-column align-items-center p-3 mx-3 mb-3 rv">
 		                      <div class="d-flex justify-content-between w-100 mb-2 px-1">
 		                        <span>
@@ -226,7 +233,9 @@
 		                      <div class="bg-white h-25 w-100 h-100 rounded p-2" id="rvcontent">
 		                        ${list.content }
 		                      </div>
-		                    </div>
+		                    </div>               	
+		                    </c:otherwise>
+		                    </c:choose>
 		                  </div>
 	                  </c:forEach>
 	              </c:if>

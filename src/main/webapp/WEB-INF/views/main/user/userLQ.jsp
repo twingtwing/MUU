@@ -158,6 +158,9 @@
                   </tr>
                 </thead>
                 <tbody class="qstboard myQstBoard">
+                <c:if test="${empty myList }">
+                <tr><td colspan="4">질문 내역이 없습니다.</td></tr>
+                </c:if>
                   <c:forEach items="${myList}" var="list">
                     <tr data-qnano="${list.qnaNo}">
                       <td>${list.qContent }</td>
@@ -419,7 +422,13 @@
 		})
 		.done((res)=>{
 			removeAll();
-			makeRowPage(res);
+			if(res.length===0){
+				$('#qstList').append(
+					$('<tr>').append($('<td>').attr('colspan',4).text('검색 결과가 없습니다.'))
+				)
+			} else {
+				makeRowPage(res);				
+			}
 		})
 	}
     const removeAll = () => {

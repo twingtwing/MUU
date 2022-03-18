@@ -28,13 +28,13 @@
 </head>
 <body>
 <!-- 배너 시작-->
-    <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="normal__breadcrumb__text">
                         <h2>내 강의 목록</h2>
-                        <p></p>
+                        <p>신고된 강의</p>
                     </div>
                 </div>
             </div>

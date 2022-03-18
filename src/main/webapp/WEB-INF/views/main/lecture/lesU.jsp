@@ -174,7 +174,7 @@
 	                        <c:forEach items="${lesinfo }" var="list" varStatus="status">
 								<div class="itemBox" data-no="${list.ltNo }">
 						            <span class="itemNum">${list.lsnNo }</span>&nbsp&nbsp&nbsp
-						            <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }"></span>&nbsp&nbsp&nbsp
+						            <span class="itemClassName"><input type="text" class="classTtl" maxlength="100" style="width:300px;" value="${list.ttl }" spellcheck="false"></span>&nbsp&nbsp&nbsp
 						            <span id="inputVideo"></span>
 						            <input class="itemlsnFile" type="hidden" value="${list.lsnFile }">
 						            <span class='deleteBoxa' style="display:none;">[삭제]</span>

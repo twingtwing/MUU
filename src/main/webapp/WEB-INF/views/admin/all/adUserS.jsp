@@ -73,9 +73,26 @@
                                         	</c:if>
                                         	</td>
                                             <td>${userInfo.id }</td>
-                                            <td>${userInfo.name }</td>
-                                            <td>${userInfo.age }세</td>
-                                            <td>${userInfo.tel }</td>
+                                            <td>
+                                            <c:if test="${userInfo.name eq ' ' }">
+                                            	정보 없음
+                                            </c:if>
+                                            ${userInfo.name }
+                                            </td>
+                                            <td>
+                                            <c:if test="${userInfo.age eq 0 }">
+                                            	정보 없음
+                                            </c:if>
+                                            <c:if test="${userInfo.age ne 0}">
+	                                            ${userInfo.age }세
+                                            </c:if>
+                                            </td>
+                                            <td>
+                                            <c:if test="${empty userInfo.tel }">
+                                            	정보 없음
+                                            </c:if>
+                                            ${userInfo.tel }
+                                            </td>
                                             <td>
                                             <c:if test="${userInfo.gender eq 'W'}">
                                         		여성
@@ -83,6 +100,9 @@
                                         	<c:if test="${userInfo.gender eq 'M'}">
                                         		남성
                                         	</c:if>
+                                        	<c:if test="${empty userInfo.gender }">
+                                            	정보 없음
+                                            </c:if>
                                             </td>
                                             <td>${userInfo.joinDate}</td>
                                         </tr>
@@ -94,8 +114,14 @@
                                             <th>적립금</th>
                                         </tr>
                                         <tr>
-                                        	<td><c:if test="${userInfo.zip ne 0}">${userInfo.zip }</c:if></td>
-                                            <td colspan="3">${userInfo.addr } ${userInfo.detaAddr }</td>
+                                        	<td>
+                                        	<c:if test="${userInfo.zip ne 0}">${userInfo.zip }</c:if>
+                                        	<c:if test="${userInfo.zip eq 0}">정보 없음</c:if>
+                                        	</td>
+                                            <td colspan="3">
+                                            <c:if test="${empty userInfo.addr}">정보 없음</c:if>
+                                            <c:if test="${not empty userInfo.addr}">${userInfo.addr } ${userInfo.detaAddr }</c:if>
+                                            </td>
                                             <td>
                                             	<c:if test="${ not empty userInfo.creGrdCode }">
                                             		<a href="/admin/creatorSelect?id=${userInfo.id }">${userInfo.creGrdCode } (크리에이터 정보로 이동)</a>

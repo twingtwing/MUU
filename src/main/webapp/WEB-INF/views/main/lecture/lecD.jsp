@@ -195,7 +195,7 @@
                                                         	<i v-for="index in (length !=0 ?Math.round(avgStar/length):0)" class="fa fa-star text-warning"></i>
                                                         	<i v-for="index in 5-(length !=0 ?Math.round(avgStar/length):0)" class="fa fa-star-o text-warning"></i>
                                                         </p>
-                                                        <p class="ml-2 mb-0"> 후기 갯수 : {{reviewList != null ? length : 0}}개</p>
+                                                        <p class="ml-2 mb-0"> 후기 개수 : {{reviewList != null ? length : 0}}개</p>
                                                     </div>
                                                     <!-- 후기 이미 작성했으면 보이면 안됨 -->
                                                     <div v-if="myReview == null" class="row mx-3">

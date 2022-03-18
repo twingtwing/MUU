@@ -153,10 +153,10 @@
                             <form action="">
                                 <div class="mb-3">
                                 	<input hidden="hidden">
-                                    <input id="lecttl" type="text" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" value="${lecinfo.ttl }" title="강의 제목란">
+                                    <input id="lecttl" type="text" style="width:-webkit-fill-available" placeholder="강의 제목을 적어주세요" value="${lecinfo.ttl }" title="강의 제목란" spellcheck="false">
                                 </div>
                                 <div>
-                                    <textarea id="lecintro" rows="7" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의 소개란"></textarea>
+                                    <textarea id="lecintro" rows="7" style="width:-webkit-fill-available" placeholder="강의 소개글을 적어주세요" title="강의 소개란" spellcheck="false"></textarea>
                                 </div>
                             </form>
                         </div>
