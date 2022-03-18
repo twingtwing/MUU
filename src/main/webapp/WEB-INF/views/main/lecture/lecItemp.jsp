@@ -226,6 +226,14 @@
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr>
+                                        <td colspan="2" style="text-align: center;">
+                                        	<p class="photobutton">
+	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
+	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
+                                        	</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th rowspan="2" style="vertical-align: middle; border-right : 1px rgb(214, 214, 214) solid">
                                            	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow0"/>
                                         </th>
@@ -236,14 +244,6 @@
                                         <td>
                                            	<img src="/resources/img/lecturePreview.png" class="image-show" id="imgShow2"/>
                                         </td>
-                                    <tr>
-                                        <td colspan="2" style="text-align: center;">
-                                        	<p class="photobutton">
-	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
-	                                        	<input type="file" id="mainPhtUp" name="mainPhtUp" multiple="multiple" accept="image/*">
-                                        	</p>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -251,17 +251,17 @@
                         <div class="col-5" style="border-left:1px rgb(175, 175, 175) solid">
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
-                                    <tr rowspan="2">
-                                    	<td style="width:inherit; text-align: -webkit-center;">
-                                           	<img src="/resources/img/lecturePreview.png" class="thimage-show" id="thImgShow"/>
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td style="text-align:center;">
                                         	<p class="photobutton">
 	                                        	<label class="phtLb" for="thPhtUp">썸네일 사진 업로드</label>
 	                                        	<input type="file" id="thPhtUp" name="thPhtUp" accept="image/*">
                                         	</p>
+                                        </td>
+                                    </tr>
+                                    <tr rowspan="2">
+                                    	<td style="width:inherit; text-align: -webkit-center;">
+                                           	<img src="/resources/img/lecturePreview.png" class="thimage-show" id="thImgShow"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -297,7 +297,6 @@
                         <h3 class="font-weight-bold"><i class="fa fa-plus-square-o text-danger" aria-hidden="true"></i>
                             강의 등록
                         </h3>
-                        <button class="btn btn-outline-secondary" type="button" onclick="tempDelete(${tempinfo.ltNo})">임시저장 초기화</button>
                     </div>
 
                     <hr class="font-weight-bold">
@@ -374,7 +373,6 @@
                         <h3 class="font-weight-bold"><i class="fa fa-plus-square-o text-danger" aria-hidden="true"></i>
                             강의 등록
                         </h3>
-                        <button class="btn btn-outline-secondary" type="button" onclick="tempDelete(${tempinfo.ltNo})">임시저장 초기화</button>
                     </div>
 
                     <hr class="font-weight-bold">
@@ -454,7 +452,9 @@
                         <h3 class="font-weight-bold"><i class="fa fa-plus-square-o text-danger" aria-hidden="true"></i>
                             강의 등록
                         </h3>
-                        <button class="btn btn-outline-secondary" type="button" onclick="tempDelete(${tempinfo.ltNo})">임시저장 초기화</button>
+                        <div class="col-12 mt-3" style="text-align:right;">
+                            <button class="btn btn-outline-danger" style="border-radius:100px;" onclick="lectureResisterF()">등록</button>        
+                        </div>
                     </div>
 
                     <hr class="font-weight-bold">
@@ -481,7 +481,7 @@
                             	<h6 class="periodsub">*단위는 원</h6>
                             </div>
                             <div class="mt-5 mb-2">
-                                <input type="text" id="prc" style="width:-webkit-fill-available" value="1000" placeholder="강의 금액을 입력해주세요" title="강의금액란">
+                                <input type="text" id="prc" style="width:-webkit-fill-available" placeholder="강의 금액을 입력해주세요" title="강의금액란">
                             </div>
                             <div style="text-align:right;">
                             	<h6 class="periodsub">*단위는 원</h6>
@@ -522,9 +522,6 @@
                         </div>
                         <div class="col-2" style="text-align: right;">
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
-                        </div>
-                        <div class="col-12" style="text-align:right;">
-                            <button class="btn btn-outline-secondary" style="border-radius:100px;" onclick="lectureResisterF()">등록</button>        
                         </div>
                     </div>
                 </div>
@@ -880,8 +877,6 @@
     	if ($('#kitname').val() == null || $('#kitname').val() == ''){
     		this.value = this.value.replace(this.value,'');
     		alert('키트명을 먼저 입력해주세요');
-    	} else {
-    		$('#kitprc').val('1000');
     	}
 	});
     
@@ -1086,6 +1081,9 @@
         	kitintro = lineMaker(kitintro);
         	let kitprc = $('#kitprc').val();
         	let prc = $('#prc').val();
+        	if(prc == null || prc == ''){
+	        	prc = 0;
+        	}
         	let tag1 = null;
         	let tag2 = null;
         	let tag3 = null;

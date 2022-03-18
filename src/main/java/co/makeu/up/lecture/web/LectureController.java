@@ -46,9 +46,9 @@ public class LectureController {
 		//임시저장페이지에서 이용, 해당 아이디에 임시저장파일이 있으면 lecItemp로 이동
 		vo.setCreId(principal.getName());
 		LectureVO volist = lectureDao.lectureInsertTemp(vo);
-		model.addAttribute("tempinfo", volist);
-		
-		if(volist != null) {
+		LectureVO reallist = lectureDao.lectureTempSelect(vo);
+		if(reallist != null) {
+			model.addAttribute("tempinfo", volist);
 			return "main/lecture/lecItemp";
 		} else {
 			return "main/lecture/lecI";

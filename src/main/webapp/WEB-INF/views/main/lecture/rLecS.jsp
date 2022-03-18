@@ -204,9 +204,14 @@
                                         </tr>
                                         <tr>
                                             <th>강의가격</th>
-                                            <td>${rlists.prc }원</td>
+                                            <td class="prccomma">${rlists.prc }</td>
                                             <th>키트가격</th>
-                                            <td>${rlists.kitPrc }원</td>
+                                            <c:if test="${rlists.kitPrc == null}">
+                                            <td> - </td>
+                                            </c:if>
+                                            <c:if test="${rlists.kitPrc != null}">
+                                            <td class="prccomma">${rlists.kitPrc }</td>
+                                            </c:if>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -256,7 +261,7 @@
                             <div class="row col-12 justify-content-end mt-3">
                                 <div class="row align-self-end">
                                 	<c:if test="${rlists.kitPrc != null }">
-                                    <p class="font-weight-bold mb-0">키트 가격 : ${rlists.kitPrc }원</p>
+                                    <p class="font-weight-bold mb-0 kitprccomma">${rlists.kitPrc }</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -323,5 +328,20 @@ function lectureReResister(e){
 		}
 	})
 }
+//천단위 콤마
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+
+$(function(){
+	let prccomma = $('.prccomma').text();
+	prccomma = addComma(prccomma);
+	$('.prccomma').text(prccomma+"원");
+	
+	let kitprccomma = $('.kitprccomma').text();
+	kitprccomma = addComma(kitprccomma);
+	$('.kitprccomma').text("키트 가격 : "+kitprccomma+"원");
+})
 </script>
 </html>
