@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="row justify-content-between mt-2">
                                     <div>
-                                        <button type="button" class="btn btn-secondary" onclick="history.go(-1);">뒤로가기</button>
+                                        <a type="button" class="btn btn-secondary" href="/admin/adBadS?bNo=${board.getBNo()}">뒤로가기</a>
                                     </div>
                                     <div>
                                         <button type="button" id="boardBtn" class="btn btn-secondary" onclick="btn();" disabled>공지사항 수정</button>
@@ -177,7 +177,6 @@
 	                    data : form,
 	                 })
 	                 .done((result)=>{
-	                	 console.log(result)
 	               		 if(result == 1){
 	               			 alert("글이 성공적으로 수정되었습니다.")
 	               		  	location.href = "/admin/adBadS?bNo="+ bNo;

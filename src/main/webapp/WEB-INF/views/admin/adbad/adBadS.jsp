@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="card">
-                                        <div class="card-body" style="height: 50vh;">
+                                        <div class="card-body" style="height: 70vh;">
                                            ${board.content }
                                         </div>
                                     </div>
