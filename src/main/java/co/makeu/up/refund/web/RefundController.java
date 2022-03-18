@@ -47,6 +47,7 @@ public class RefundController {
 			Pagination pagination = new Pagination(listCnt,1);
 			model.addAttribute("pagination",pagination);
 		}
+		model.addAttribute("ltno", vo.getLtNo());
 		model.addAttribute("refundlists", rlist);
 		return "main/creator/creR";
 	}
