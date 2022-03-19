@@ -63,7 +63,6 @@ public class ReviewController {
 		myrv.setLtNo(vo.getLtNo());
 		myrv = reviewDao.selectMyReview(myrv);
 		if(myrv != null) {
-			logger.info("이미작성한리뷰가있어요");	
 			model.addAttribute("myReview",myrv);
 			logger.info(myrv.getContent());
 		}
@@ -73,8 +72,7 @@ public class ReviewController {
 		for(ReviewVO rv : list) {
 			avg = avg + rv.getStar();
 		}
-		avg = Math.round(avg/list.size());
-		model.addAttribute("starAvg",avg);
+		model.addAttribute("starAvg",String.format("%.1f", avg/list.size()));
 		model.addAttribute("reviews",list);
 		model.addAttribute("length",list.size());
 		model.addAttribute("ltNo",vo.getLtNo());

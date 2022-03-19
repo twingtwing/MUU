@@ -273,7 +273,7 @@
                       <div class="row product__page__title ml-1 mb-0">
                           <div class="product__page__filter">
                               <p class="text-dark font-weight-bold">신고 유형 :</p>
-                              <select class="ctgr border px-1 py-1">
+                              <select class="ctgr border px-5 py-1">
                                   <option value="RPT01">부적절한 콘텐츠</option>
                                   <option value="RPT02">피싱 또는 스팸</option>
                                   <option value="RPT03">기타</option>
@@ -346,10 +346,10 @@
   	// 리뷰 신고 클릭시 내용, 아이디 가져오기
     $('.report').click((e)=>{
       $('#revReport').modal('show');
-      let id = $(e.currentTarget).parent().parent().next().text();
-      let content = $(e.currentTarget).parent().parent().first().children().first().text();
-      $('.rpContent').text()
-      $('.reported').text()
+      let content = $(e.currentTarget).parent().parent().next().text().trim();
+      let id = $(e.currentTarget).parent().parent().first().children().first().text().trim();
+      $('.rpContent').text(content)
+      $('.reported').text(id)
       rvno = e.currentTarget.dataset.rvno;
     })
     

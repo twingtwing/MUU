@@ -41,13 +41,13 @@
     }
   </style>
 </head>
-<body class="bg-black;">
-<div id="box" class="d-flex bg-black p-5" style="background-color: black;">
-    <div style="width: 70vw;">
+<body class="bg-black">
+<div id="box" class="d-flex bg-black p-5" style="background-color: black; margin: 4rem 0;">
+    <div style="width: 70vw; height:60vh; ">
       <video controls width="100%" controlsList="nodownload" id="player">
         <source src="${firstLesson.lsnFile}" type="video/mp4" id="vd">
       </video>    
-      <h2 style="font-weight: bold; color:white;" id="title" data-serialno="${firstLesson.serialNo }">${firstLesson.ttl}</h2>
+      <h2 style="font-weight: bold; color:white; margin: 1rem;" id="title" data-serialno="${firstLesson.serialNo }">${firstLesson.ttl}</h2>
       <div>
         <div style="text-align: right;" id="regdate">${firstLesson.regDate}</div>    
       </div>
