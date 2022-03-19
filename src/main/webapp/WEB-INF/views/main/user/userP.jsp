@@ -140,7 +140,7 @@
                           <div class="card-body d-flex">
                                   <div class="col-lg-10">
 	                                  <div class="d-flex">
-        	                              <h5 class="mb-3 mt-1 mr-3">${del.ttl }<span class="mb-0 font-weight-bold mx-3">${del.kitName} ( <fmt:formatNumber> ${del.kitPrc } </fmt:formatNumber>원 )</span></h5>
+        	                              <h5 class="mb-3 mt-1 mr-3 payttl">${del.ttl }<span class="mb-0 font-weight-bold mx-3">${del.kitName} ( <fmt:formatNumber> ${del.kitPrc } </fmt:formatNumber>원 )</span></h5>
     	                              </div>
                                     <div class="row mx-1 justify-content-between mb-2">
                                         <p class="mb-0 kitIntro small" style="height:80px;">${del.kitIntro }</p> 
@@ -207,7 +207,7 @@
                           <th class="text-center align-middle">수강료<br><span class="small">(키트 가격은 지불액에 포함됨)</span></th>
                           <th class="text-center align-middle" style="width:120px">구매날짜</th>
                           <th class="text-center align-middle" style="width:120px">만료날짜</th>
-                          <th class="text-center align-middle">상태</th>
+                          <th class="text-center align-middle" style="width:100px">상태</th>
                         </tr>
                         </thead>
                         <tbody class="myPayList"> 
@@ -223,7 +223,7 @@
                                   <img src="${pay.thumb }" alt="" class="rounded" style="height: 150px; width: 200px;">
                               </div>
                             </td>
-                            <td class="text-center align-middle payttl">
+                            <td class="text-center align-middle">
                                 ${pay.ttl }
                             </td>
                             <td class="text-center align-middle">
@@ -241,6 +241,7 @@
 		                            </c:when>
 		                            <c:otherwise>
 		                            	${pay.shipStName }
+		                            	<c:if test="${empty pay.shipStName and empty pay.rfStCode}">키트없음<br>(정상)</c:if>
 		                            </c:otherwise>
 	                            </c:choose>
                             </td>

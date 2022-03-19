@@ -21,4 +21,11 @@ public class ErrorPageController {
 		model.addAttribute("msg","알 수 없는 문제가 발생했습니다.");
 		return "error/error";
 	}
+	
+	@GetMapping("/error400")
+	public String Error400(HttpServletResponse response, Model model) {
+		model.addAttribute("num","400");
+		model.addAttribute("msg","잘못된 요청입니다.");
+		return "error/error";
+	}
 }
