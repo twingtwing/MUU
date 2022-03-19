@@ -175,12 +175,12 @@
                                             <th style="width:90px;">조회수</th>
                                         </tr>
                                     </thead>
+                                    <c:if test="${empty notices }">
+                                      <tr>
+                                        <td colspan="4">검색 결과가 없습니다.</td>
+                                      </tr>
+                                    </c:if>
                                     <tbody class="noticeList">
-                                        <c:if test="${empty notices }">
-                                        <tr>
-                                        	<td colspan="4">검색 결과가 없습니다.</td>
-                                        </tr>
-                                        </c:if>
 										<c:forEach items="${notices }" var="n">
                                         <tr data-ntno="${n.ntNo }">
                                             <td>${n.ntNo}</td>
