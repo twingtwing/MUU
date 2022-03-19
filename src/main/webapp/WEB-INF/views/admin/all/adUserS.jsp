@@ -29,13 +29,13 @@
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <!-- 페이지명 작성 및 카테고리 작성 -->
-                        <h4 class="page-title">회원 관리</h4>
+                        <h4 class="page-title">유저 관리</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="/admin/adUserL">회원관리</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">회원관리 (상세)</li>
+                                    <li class="breadcrumb-item"><a href="/admin/adUserL">유저관리</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">유저관리 (상세)</li>
                                 </ol>
                             </nav>
                         </div>
