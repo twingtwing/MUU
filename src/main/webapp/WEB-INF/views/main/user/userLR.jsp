@@ -157,7 +157,16 @@
           <div class="card" style="position: relative;">
             <div class="card-body">
               <div class="row mt-4 col-12 justify-content-center mx-0">
-                <h5 class="font-weight-bold">수강 리뷰( <span class="fas fa-star"></span><span> ${starAvg}</span> / 5 )</h5>
+                <h5 class="font-weight-bold">수강 리뷰( <span class="fas fa-star"></span>
+                <c:choose>
+                <c:when test="${empty reviews }">
+                리뷰없음
+                </c:when>
+                <c:otherwise>
+                ${starAvg} / 5 
+                </c:otherwise>
+                </c:choose>
+                 )</h5>
               </div>            
               <div class="row col-12 justify-content-between mt-4 pr-4 mx-3">
              	<button class="btn btn-warning py-2 px-4 font-weight-bold text-white <c:if test="${not empty myReview }">d-none</c:if>" id="wr">작성</button>
