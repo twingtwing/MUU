@@ -151,7 +151,9 @@
 		        on d.id = s.id
 		        where lt_no = #{ltNo}
 		        and name LIKE '%'||#{nameSearchKey}||'%'
-		        
+		        <if test="shipStCodeSearchKey != null and shipStCodeSearchKey != ''">
+		        	AND ship_st_code LIKE '%'||#{shipStCodeSearchKey}||'%'
+		        </if>
 		        and tlsn_st_code in ('SU01', 'SU03')
 		        order by reg_date desc) e)
 		where rn between (#{page}-1)*10 and 10*(#{page})
