@@ -134,14 +134,16 @@
                                         </tr>
                                         
                                         <tr>
-                                            <td>${lecInfo.kitName}</td>
-                                            <td>
-                                            <c:if test="${empty lecInfo.kitIntro }">없음</c:if>
-                                            ${lecInfo.kitIntro}
-                                            </td>
-                                            <td>
-                                            <fmt:formatNumber>${lecInfo.kitPrc}</fmt:formatNumber>원
-                                            </td>
+                                        	<c:if test="${empty lecInfo.kitIntro }">
+                                        		<td colspan="3">키트 없음</td>
+                                        	</c:if>
+                                        	<c:if test="${not empty lecInfo.kitIntro }">
+	                                            <td>${lecInfo.kitName}</td>
+	                                            <td>${lecInfo.kitIntro}</td>
+	                                            <td>
+	                                            <fmt:formatNumber>${lecInfo.kitPrc}</fmt:formatNumber>원
+	                                            </td>
+                                        	</c:if>
                                         </tr>
                                     </table>
                                 </div>
