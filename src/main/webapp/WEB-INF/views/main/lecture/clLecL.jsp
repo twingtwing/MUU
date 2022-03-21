@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,7 +153,9 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }원</td>
+                                                        <td style="width:100px">
+                                                        <fmt:formatNumber>${list.prc }</fmt:formatNumber>원
+                                                        </td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>
@@ -205,7 +208,9 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td style="width:100px">${list.prc }원</td>
+                                                        <td style="width:100px">
+                                                        <fmt:formatNumber>${list.prc }</fmt:formatNumber>원
+                                                        </td>
                                                         <th scope="row" style="width:150px">평균 별점</th>
                                                         <td style="width:100px"><i class="fa fa-star-o text-warning" aria-hidden="true"></i>${list.avgStar }</td>
                                                     </tr>

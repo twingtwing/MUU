@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -151,7 +152,9 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td colspan="3">${list.prc }원</td>
+                                                        <td colspan="3">
+                                                        <fmt:formatNumber>${list.prc }</fmt:formatNumber>원
+                                                        </td>
                                                     
                                                     </tr>
                                                 </tbody>
@@ -213,7 +216,9 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">가격</th>
-                                                        <td colspan="3">${list.prc }원</td>
+                                                        <td colspan="3">
+                                                        <fmt:formatNumber>${list.prc }</fmt:formatNumber>원
+                                                        </td>
                                                     
                                                     </tr>
                                                 </tbody>

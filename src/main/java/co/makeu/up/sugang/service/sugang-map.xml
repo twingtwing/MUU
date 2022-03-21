@@ -143,7 +143,7 @@
 		            from
 		                (select a.*, b.prog
 		                from
-		                    (select id, avg(prog_pct) prog
+		                    (select id, round(avg(prog_pct),1) prog
 		                    from avgprog
 		                    group by id) b right outer join avgprog a
 		                on a.id = b.id) c left outer join users u
