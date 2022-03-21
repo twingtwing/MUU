@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,8 +100,12 @@
                             <div class="card-body mb-3 ml-1">
                                 <div class="row mb-3 ml-1">
                                     <div class="d-flex align-items-center">
-                                        
+                                    	<c:if test="${photo != null }">
+                                    	<img src="resources/img/profile.png" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                    	</c:if>
+                                        <c:if test="${photo != null }">
                                         <img src="${photo }" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                        </c:if>
                                         
                                     </div>
                                     <ul class="list-group list-group-flush ml-3">
