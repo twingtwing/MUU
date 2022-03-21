@@ -91,7 +91,7 @@
                                     <!--크리에이터 프로필-->
                                     <c:forEach begin="0" end="2" items="${home.creatorTop3 }" var="c">
                                     <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="${c.pht }" alt="user" width="50" height="50"
+                                        <div class="p-2"><img  src="${c.pht }<c:if test="${empty c.pht }">/resources/img/profile.png</c:if>" alt="user" width="50" height="50"
                                                 class="rounded-circle"></div>
                                         <div class="comment-text w-100">
                                             <h6 class="font-medium">${c.name } ( ${c.creId } )</h6>
