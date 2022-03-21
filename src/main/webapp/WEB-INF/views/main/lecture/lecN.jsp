@@ -426,7 +426,7 @@
                 	this.ctgrList = result.ctgrList[0];
                 	if(result.noticeList != null){
 	                	this.noticeList = result.noticeList.splice(0,5);
-	                	this.moreNotice = result.noticeList.splice(5);
+	                	this.moreNotice = result.noticeList;
                 	}
                 })
             }
