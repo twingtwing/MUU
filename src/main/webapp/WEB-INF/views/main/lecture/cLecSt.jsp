@@ -174,6 +174,7 @@
             <div class="row col-12 justify-content-end mt-3 mb-1">
               <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색..." title="수강생 이름 입력">
               <button type="button" class="border px-4 mr-2" id="stBtn" onclick="stSearch()">검색</button>
+              <!-- 
                 <select id="shipcode" class="border px-4" onchange="stSearch()">
                   <option value="" selected>전체</option>
                   <option value="D01">배송 예정</option>
@@ -182,6 +183,7 @@
                   <option value="D05">반송</option>
                   <option value="D06">반송 거부</option>
                 </select>
+               -->
             </div>
 
             <div class="row col-12">
@@ -191,8 +193,10 @@
                     <th>이름</th>
                     <th>수강기간</th>
                     <th>진도율</th>
+                    <!-- 
                     <th>반송사유</th>
                     <th>상태</th>
+                     -->
                   </tr>
                 </thead>
                 <tbody>
@@ -213,6 +217,7 @@
 	                    <td>${list.name }</td>
 	                    <td><span>${list.regDate }<span> ~ <span>${list.expDate }</span></td>
 	                    <td> ${list.prog }%</td>
+	                    <!-- 
 	                    <c:if test="${list.rtnContent != null }">
 	                    <td> ${list.rtnContent } </td>
 	                    </c:if>
@@ -247,6 +252,7 @@
 		                     	<span class="p-2 updateShip" style="cursor:default">반송 거부</span>
 		                     </c:if>
 	                    </td>
+		                      -->
 	                  </tr>
 	                  </c:forEach>
                   </c:if>
@@ -320,10 +326,12 @@
                   <span id="inputdetaaddr"></span>
                 </td>
               </tr>
+              <!-- 
               <tr>
                 <th>운송장 번호</th>
                 <td id="inputshipnum"></td>
               </tr>
+               -->
               <tr>
                 <th>결제일</th>
                 <td id="inputregdate"></td>
