@@ -155,8 +155,10 @@ public class SugangController {
 			} else if (grd.equals("나무")) {
 				uservo.setPoint((int) (vo.getPay()*0.1));
 			}
+			vo.setShipStCode("D03");
 			userDao.userPointAdd(uservo);
 		}
+		System.out.println(vo.getShipStCode());
 		sugangDao.updateSugangConfirm(vo);
 	}
 	
