@@ -399,9 +399,6 @@
             			$('#frm #shipStCode').val('D01');
             		}
             		$('#frm #num').val(this.lectureDetail.tlsnTerm);
-            		//나중에 삭제
-            		$('#frm').submit();
-            		/*
             		var IMP = window.IMP;
         			IMP.init('imp47910912');
         			 IMP.request_pay({
@@ -435,7 +432,7 @@
         					}
         			 
         			 });
-            		*/
+            		
             	},
             	valForm(){
             		const ary = $('#another input');
