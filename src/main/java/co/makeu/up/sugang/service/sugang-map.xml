@@ -137,7 +137,7 @@
 		from
 		    (select rownum rn, e.* 
 		    from
-		        (select s.*, d.name, round(d.prog,1), COUNT(*) OVER() AS COUNT
+		        (select s.*, d.name, d.prog, COUNT(*) OVER() AS COUNT
 		        from
 		            (select distinct u.name, c.id, c.prog
 		            from
