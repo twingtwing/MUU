@@ -293,7 +293,9 @@ select {
 	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
                         <div class="col-2" style="text-align: right;">
+			<!--
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+			-->
                             <a href="#" onclick="lecIpage1();">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -367,7 +369,9 @@ select {
 	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
                         <div class="col-2" style="text-align: right;">
+			<!--
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+			-->
                             <a href="#" onclick="lecIpage2()"> 
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -415,7 +419,9 @@ select {
 	                        <button class="btn btn-outline-danger lecIprog" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
                         <div class="col-2" style="text-align: right;">
+			<!--
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+			-->
                             <a href="#" onclick="lecIpage3()">
                                 <i class="arrow_right" type="button" style="vertical-align:middle; font-size: 30px;"></i>
                             </a>
@@ -528,7 +534,9 @@ select {
 	                        <button class="btn btn-outline-danger lecIprog active" style="border-radius:200px;" onclick="lecIpage3()">수업키트, 태그 / 비용 설정</button>
                         </div>
                         <div class="col-2" style="text-align: right;">
+			<!--
                             <button class="btn btn-outline-secondary tempsave" style="border-radius:100px;">임시저장</button>        
+			-->
                         </div>
                     </div>
                 </div>
