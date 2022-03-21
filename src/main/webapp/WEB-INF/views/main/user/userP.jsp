@@ -156,7 +156,9 @@
                                       rounded position-relative" role="progressbar" style="width: 60%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">
                                       ${del.shipStName }
                                       </div>
+                                      <c:if test="${del.shipStCode ne 'D05'}">
                                       <p class="mb-0 ml-3 font-weight-bold">운송장번호 : ${del.shipNum }</p>
+                                      </c:if>
                                     </div>
                                   </div>
                                   
@@ -305,8 +307,8 @@
     	})
     	.done(()=>{
     		window.alert(msg)
-    		if(data.shipStCode==='D03'){	
-		    	node.remove();    		
+    		if(data.shipStCode==='D03'){
+		    	location.reload()
 	    	} else if(data.shipStCode==='D05'){
 	    		$(node).addClass('bg-warning');
 	    		$(node).text('반송 신청됨');
@@ -317,7 +319,8 @@
     $('.confirmBtn').click((e)=>{
     	let num = e.currentTarget.dataset.tlsnno;
     	let data = {tlsnNo : num, shipStCode : 'D03'};
-    	let node = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    	let node = e.currentTarget.parentNode.parentNode.parentNode.parentNode;
+    	console.log(node)
     	shipStateUpdate(data,'구매확정이 완료되었습니다.',node);
     })
     $('.refundBtn').click((e)=>{
@@ -327,7 +330,7 @@
     	shipStateUpdate(data,'반송 신청이 접수되었습니다.', node);
     	e.currentTarget.previousElementSibling.remove();
     	e.currentTarget.remove();
-    	
+    	node.nextElementSibling.remove();
     })
     
     
