@@ -137,13 +137,13 @@
 		from
 		    (select rownum rn, e.* 
 		    from
-		        (select s.*, d.name, round(d.prog,1), COUNT(*) OVER() AS COUNT
+		        (select s.*, d.name, d.prog, COUNT(*) OVER() AS COUNT
 		        from
 		            (select distinct u.name, c.id, c.prog
 		            from
 		                (select a.*, b.prog
 		                from
-		                    (select id, avg(prog_pct) prog
+		                    (select id, round(avg(prog_pct),1) prog
 		                    from avgprog
 		                    group by id) b right outer join avgprog a
 		                on a.id = b.id) c left outer join users u
