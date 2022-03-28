@@ -312,14 +312,6 @@ const setSearchData = (pageNum)=>{
 	if($('.searchType').val()==='ttlContent'){
 		$('.selectSearch').attr('name','ttlContent');	
 	}
-	let future = new Date();
-	future = new Date(future.setDate(future.getDate()+1)).toISOString().slice(0,10);
-	if(!$('.startDate').val()){
-		 $('.startDate').val('2016-01-01');			
-	}
-	if(!$('.endDate').val()){
-		$('.endDate').val(future);				
-	}
 	$('#searchForm>input[name=page]').val(pageNum);
 }
 

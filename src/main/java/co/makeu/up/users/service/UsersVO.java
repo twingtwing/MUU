@@ -23,8 +23,8 @@ public class UsersVO {
 	private String pht;
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date joinDate;
-	private Date pastDate;
-	private Date recentDate;
+	private String pastDate;
+	private String recentDate;
 	private Integer cnt;
 	private int endrow;
 	private String orderColumn;
@@ -66,22 +66,22 @@ public class UsersVO {
 	public void setuGrdCodeList(String[] uGrdCodeList) {
 		this.uGrdCodeList = uGrdCodeList;
 	}
-	public Date getRecentDate() {
+	public String getRecentDate() {
 		return recentDate;
 	}
-	public void setRecentDate(Date recentDate) {
+	public void setRecentDate(String recentDate) {
 		this.recentDate = recentDate;
 	}
-	public Date getPastDate() {
+	public String getPastDate() {
 		return pastDate;
 	}
-	public void setPastDate(Date pastDate) {
+	public void setPastDate(String pastDate) {
 		this.pastDate = pastDate;
 	}
-	public Date getLastDate() {
+	public String getLastDate() {
 		return recentDate;
 	}
-	public void setLastDate(Date recentDate) {
+	public void setLastDate(String recentDate) {
 		this.recentDate = recentDate;
 	}
 	

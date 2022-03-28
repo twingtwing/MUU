@@ -87,8 +87,8 @@ public class LectureVO {
 		this.ltStCodeName = ltStCodeName;
 	}
 	// 검색 시 사용
-	private Date pastDate;
-	private Date recentDate;
+	private String pastDate;
+	private String recentDate;
 	private int count;
 	private String[] ltStCodeList;
 	private int cnt; // 수강인원
@@ -160,16 +160,16 @@ public class LectureVO {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public Date getPastDate() {
+	public String getPastDate() {
 		return pastDate;
 	}
-	public void setPastDate(Date pastDate) {
+	public void setPastDate(String pastDate) {
 		this.pastDate = pastDate;
 	}
-	public Date getRecentDate() {
+	public String getRecentDate() {
 		return recentDate;
 	}
-	public void setRecentDate(Date recentDate) {
+	public void setRecentDate(String recentDate) {
 		this.recentDate = recentDate;
 	}
 	public void setPageNum(int pageNum) {

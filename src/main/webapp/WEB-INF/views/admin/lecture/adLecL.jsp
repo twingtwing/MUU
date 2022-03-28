@@ -396,15 +396,8 @@ $('#resetAll').click(()=>{
 		} else {
 			$('.searchKey').attr('name','name');
 		}
-		if(!$('#firstJdate').val()){
-			$('#firstJdate').val('2016-01-01');
-		}
-		if(!$('#lastJdate').val()){
-			let today = new Date();
-			today.setDate(today.getDate()+1);
-			$('#lastJdate').val(new Date(today).toISOString().slice(0,10));
-		}
 	}
+	
 	
 	$('#excel').click(()=>{
 		searchSetting();
@@ -452,18 +445,6 @@ $('#resetAll').click(()=>{
 		let ltno = e.target.parentElement.dataset.ltno;
 		location.href='/admin/adLecI?ltNo='+ltno;
 	})
-	
-    //가입날짜 시작날짜/마지막날짜 disable
-    $('#firstJdate').change(function(){
-        let firstJdate = $('#firstJdate').val();
-        $('#lastJdate').attr('min', firstJdate);
-    })
-    
-    $('#lastJdate').change(function(){
-        let lastJdate = $('#lastJdate').val();
-        $('#firstJdate').attr('max', lastJdate);
-    })
-    
     
     
 

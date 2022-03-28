@@ -372,15 +372,6 @@ $('#usersSearch').click(()=>{
 			$('.selectBox').attr('name','name');
 			$('#searchForm input[name=name]').val($('.selectBox').val());
 		}
-		
-		let future = new Date();
-		future = new Date(future.setDate(future.getDate()+1)).toISOString().slice(0,10);
-		if(!$('.pastDate').val()){
-		 $('#searchForm .pastDate').val('2016-01-01');			
-		}
-		if(!$('.recentDate').val()){
-		 $('#searchForm .recentDate').val(future);				
-		}
 		$('#searchForm input[name=page]').val(pageNum);
 	}
 	
