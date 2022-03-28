@@ -246,10 +246,10 @@
 				AND TRUNC(AVGSTAR,0) = #{star}
 				</if>
 				<if test="pastDate != null and !pastDate.equals('')">
-			    AND TRUNC(#{pastDate}) <![CDATA[<]]> TRUNC(REQ_DATE)
+			    <![CDATA[AND TO_DATE(#{pastDate},'YYYY-MM-DD') < TRUNC(REQ_DATE)]]>
 			    </if>
 			    <if test="recentDate !=null and !recentDate.equals('')">
-			    AND TRUNC(REQ_DATE) <![CDATA[<]]> TRUNC(#{recentDate})
+			    <![CDATA[AND TRUNC(REQ_DATE) < TO_DATE(#{recentDate},'YYYY-MM-DD')]]>
 			    </if>
 				<if test="ltStCodeList != null and ltStCodeList.length != 0">
 				AND LT_ST_CODE IN

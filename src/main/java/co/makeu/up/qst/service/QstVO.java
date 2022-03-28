@@ -14,8 +14,8 @@ public class QstVO {
 	private Date aRegDate;
 	private String email;
 	private String qstStCode;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private int page;
 	private int length;
 	private int endrow;
@@ -112,16 +112,16 @@ public class QstVO {
 	public void setQstStCode(String qstStCode) {
 		this.qstStCode = qstStCode;
 	}
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	public int getPage() {
