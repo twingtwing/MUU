@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <style>
 .name:hover{
 	text-decoration : underline;
@@ -20,11 +21,13 @@
 </head>
 <body>
 	<section class="normal-breadcrumb set-bg"
+
 		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
+
 						<h2>고객센터</h2>
 						<p>공지사항</p>
 					</div>
@@ -40,6 +43,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
+
 						<a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home "></i> Home</a> 
 						<span>공지사항</span>
 					</div>
@@ -48,10 +52,12 @@
 		</div>
 	</div>
 	<!-- 카테고리 끝-->
+
 	<!-- body 의 body-->
 	<section id="title_search" class="blog spad">
 		<div class="container">
 			<div class="col-lg-12 ">
+
 				<div class="row ml-2">
 					<h3 class="font-weight-bold text-danger">
 						<i class="fa fa-chalkboard"></i> 공지사항
@@ -61,6 +67,7 @@
 					<div class="row">
 						<form onsubmit="return false">
 							<div class="row mr-2">
+
 								<input v-model="inputTitle" v-on:click="cursorSearch" class="border mb-0" style="height: 35px; width: 170px" type="text" placeholder="제목 검색..." spellcheck=false>
 								<a v-on:click="titleSearch" class="btn btn-outline-secondary" style="height: 35px;"> <i class="icon_search"></i></a>
 							</div>
@@ -72,11 +79,13 @@
 				<thead class="table-secondary">
 					<th class="text-center">번호</th>
 					<th class="text-center">제목</th>
+
 					<th class="text-center">작성일</th>
 					<th class="text-center">조회수</th>
 					<th class="text-center">첨부파일</th>
 				</thead>
 				<tbody>
+
 					<tr v-if="boards[0] == ''">
 						<td class="text-center font-weight-bold py-5" colspan="5">검색 결과가 없습니다.</td>
 					</tr>
@@ -97,6 +106,7 @@
 			</table>
 		</div>
 		<div class="product__pagination d-flex justify-content-center">
+
 			<a href="#" v-if="pageNum+1 > 1" v-on:click="pageMove(-1)"><i class="fa fa-angle-double-left"></i></a>
 			<a href="#" v-for="page in pages" v-on:click="pageMove(page-1)" v-bind:class="{'current-page':pageNum+1 == page}"/>{{page}}</a> 
 			<a href="#" v-if="pageNum+1 < pages" v-on:click="pageMove(-2)" ><i class="fa fa-angle-double-right"></i></a>
@@ -112,6 +122,7 @@
             data(){
                 return {
                     inputTitle: '',
+
                     originBoards : [],
                     boards: [],
                 	pages : 0,
@@ -129,6 +140,7 @@
                 //ex> 오름차순,내림차순
             },
             methods: {
+
             	cursorSearch(){
             		$(event.target).select();
             	},

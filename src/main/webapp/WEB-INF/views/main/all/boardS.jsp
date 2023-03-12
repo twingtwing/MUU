@@ -13,6 +13,7 @@
 #pre:hover {
 	background-color: #dee2e6;
 }
+
 .download_link:hover,.next_hover:hover{
 	text-decoration: underline;
 	cursor: pointer;
@@ -27,6 +28,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
+
 						<h2>고객센터</h2>
 						<p>공지사항</p>
 					</div>
@@ -37,6 +39,7 @@
 	<!-- 배너끝 -->
 
 	<!-- 카테고리 시작-->
+
 	<div id="board_search">
 		
 		<div class="breadcrumb-option">
@@ -52,6 +55,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- 카테고리 끝-->
 	
 		<!-- body 의 body-->
@@ -120,6 +124,7 @@
             data(){
                 return {
                     board: [],
+
                     board : {}
                 }
             },
@@ -164,10 +169,7 @@
         })
         //mount vue
         const mountedBoard = board.mount('#board_search');
-        
-   
-         
-        
+
     </script>
 
 </body>

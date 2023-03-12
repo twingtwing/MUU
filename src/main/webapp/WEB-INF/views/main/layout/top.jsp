@@ -136,6 +136,7 @@
 									<ul class="dropdown">
 										<li><a href="/boardL">공지사항</a></li>
 										<li><a href="/faq">자주묻는질문</a></li>
+
 										<li><a href="/user/qna">문의글</a></li>
 										<li><a href="/refundRule">환불정책</a></li>
 									</ul>

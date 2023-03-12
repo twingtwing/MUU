@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
@@ -33,6 +34,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
+
 						<h2>고객 센터</h2>
 						<p>자주 묻는 질문</p>
 					</div>
@@ -48,6 +50,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
+
 						<a href="/home" class="text-dark font-weight-bold"><i
 							class="fa fa-home"></i> Home</a> <span>자주묻는질문</span>
 					</div>
@@ -58,6 +61,7 @@
 	<!-- 카테고리 끝-->
 
 	<!-- body 의 body-->
+
 	<section class="blog spad" id="faqSelectList">
 		<div class="container">
 			<div class="col-lg-12">
@@ -86,6 +90,7 @@
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="infomation-tab"
 								data-toggle="tab" href="#infomation" role="tab"
+
 								aria-controls="infomation" aria-selected="false">회원정보/보안</a></li>
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="bug-tab" data-toggle="tab"
@@ -94,6 +99,7 @@
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="event-tab" data-toggle="tab"
 								href="#event" role="tab" aria-controls="event"
+
 								aria-selected="false">환불</a></li>
 						</ul>
 						<!-- Nav tabs 머리끝-->
@@ -102,6 +108,7 @@
 							<div class="tab-pane active" id="lecture" role="tabpanel"
 								aria-labelledby="lecture-tab">
 								<div class="accordion" id="accordionExample">
+
 									<div class="card border-0" v-for="(faq,index) in faqMore[0]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0 d-flex">
@@ -126,6 +133,7 @@
 							<div class="tab-pane" id="delivery" role="tabpanel"
 								aria-labelledby="delivery-tab">
 								<div class="accordion" id="accordionExample">
+
 									<div class="card border-0" v-for="(faq,index) in faqMore[1]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0 d-flex">
@@ -173,6 +181,7 @@
 							<div class="tab-pane" id="infomation" role="tabpanel"
 								aria-labelledby="infomation-tab">
 								<div class="accordion" id="accordionExample">
+
 									<div class="card border-0" v-for="(faq,index) in faqMore[3]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0 d-flex">
@@ -197,6 +206,7 @@
 							<div class="tab-pane" id="bug" role="tabpanel"
 								aria-labelledby="bug-tab">
 								<div class="accordion" id="accordionExample">
+
 									<div class="card border-0" v-for="(faq,index) in faqMore[4]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0 d-flex">
@@ -221,6 +231,7 @@
 							<div class="tab-pane" id="event" role="tabpanel"
 								aria-labelledby="event-tab">
 								<div class="accordion" id="accordionExample">
+
 									<div class="card border-0" v-for="(faq,index) in faqMore[5]">
 										<div class="card-header" id="headingOne">
 											<h2 class="mb-0 d-flex">
@@ -246,6 +257,7 @@
 						<!--Tab 내용 끝-->
 					</div>
 				</div>
+
 				<hr>
 				<div class="col-lg-12">
 					<div class="row mt-2">

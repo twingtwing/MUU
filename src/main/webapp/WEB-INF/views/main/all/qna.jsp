@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <!DOCTYPE html>
@@ -10,11 +11,13 @@
 </head>
 <body>
 	<section class="normal-breadcrumb set-bg"
+
 		data-setbg="/resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
+
 						<h2>고객센터</h2>
 						<p>문의글</p>
 					</div>
@@ -41,6 +44,7 @@
 	<!-- 카테고리 끝-->
 
 	<!-- body 의 body-->
+
 	<section id="inquiry_insert" class="blog spad">
 		<div class="container">
 			<div class="col-lg-12">
@@ -58,6 +62,7 @@
 					<div>- 문의 [제목]과 [내용]란에 개인정보가 포함되어 있거나, 중복 문의인 경우에는 삭제될 수
 						있습니다.</div>
 					<div>- 문의에 욕설, 인격침해, 성희롱 등 수치심을 유발하는 표현이 있다면 상담이 중단될 수 있습니다.</div>
+
 					<div>- 개인정보 제공에 동의하셔야 문의버튼이 활성화 됩니다.</div>
 				</div>
 				<div class="border alert mt-2" role="alert">
@@ -77,6 +82,7 @@
 					<h5 class="font-weight-bold mb-2">02 문의입력</h5>
 				</div>
 				<div class="mt-4">
+
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.username"
 							var="username" />
@@ -94,6 +100,7 @@
 					</div>
 					<div class="form-group mt-3">
 						<label for="content">문의 내용</label>
+
 						<textarea style="white-space: pre-line" v-model="inputContent"
 							class="form-control" spellcheck="false" name="content" id="content" cols="30"
 							rows="10"></textarea>
@@ -116,6 +123,7 @@
 				<div class="mt-5 d-flex justify-content-between">
 					<button type="button" class="btn btn-danger"
 						onclick="history.go(-1);">뒤로가기</button>
+
 					<button type="button" id="qstBtn" v-on:click="QstInsertClick"
 						class="btn btn-danger" disabled>문의하기</button>
 					<!-- onclick="location.href='./inquiryEnd.html'" -->
@@ -136,6 +144,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
+
 					[개인정보 수집 및 이용 동의]<br> <br> ㈜회사이름는 다음과 같이 개인정보를 수집하고 있습니다.<br>
 					<br> 수집 및 이용 목적: 문의 대응, 이용자 식별<br> <br> 항목: 아이디<br>
 					<br> 보유 및 이용기간: 수집일로부터 6개월(법령에 특별한 규정이 있을 경우 관련 법령에 따라 보관)<br>
@@ -152,6 +161,7 @@
 		</div>
 	</div>
 	<script>
+
 		let header = "${_csrf.headerName}";
 		let token = "${_csrf.token}";
 		
@@ -163,6 +173,7 @@
                     inputContent: '',
                     inputEmailID: '',
                     inputEmailType: '',
+
                     inputid : "${username}",
                     selected : ''
   
@@ -179,6 +190,7 @@
                 //ex> 오름차순,내림차순
             },
             methods: {
+
             	clickEvent(){
             		if(this.privacy){
             			$('#qstBtn').attr('disabled','disabled');

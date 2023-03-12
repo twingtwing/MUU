@@ -16,6 +16,7 @@ import co.makeu.up.faq.service.FaqVO;
 @Controller
 public class FaqController {
 	
+
 	@Autowired FaqServiceImpl faqDao;
 	
 	@GetMapping("/faq")
