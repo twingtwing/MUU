@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
      #cctgy>li {
          cursor: pointer;
      }
@@ -80,6 +81,7 @@
                             <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 
                              이때 상태에 따라서 열린강의인지 종료된강의인지 구별해야함
                             -->
+
                               <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
 			                      <a class="list-link" href="/creator/creS">크리에이터 정보</a>
 			                  </li>
@@ -126,6 +128,7 @@
                     <div class="row ml-2">
                         <h5 class="ml-1 mb-2 font-weight-bold">
                             <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
+
                             <c:if test="${lecinfo.ltStCode eq 'L01' }">
 			                열린 강의 정보
 			                </c:if>
@@ -140,11 +143,13 @@
                     <!-- 강의 하나에 대한 상세정보페이지-->
                     <div class="row col-12 mb-5 ml-3">
                         <!-- 제목 입력 / 제목 가져오기-->
+
                         <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
 
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
                                 <!-- 선택 : active -->
+
                                   <c:if test="${lecinfo.ltStCode eq 'L01' }">
 				                  <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
 					              </c:if>
@@ -160,6 +165,7 @@
 
                         <div class="row col-12 justify-content-end mt-3 mb-1">
                             <!--여기서 부터임-->
+
                              <div class="row mr-1">
                                  <div>
                                  	 <select id="qnayn" onchange="qnasearch()">
@@ -181,6 +187,7 @@
         
                         <div class="row col-12">
                             <table class="table">
+
                                 <thead style="text-align:center" >
                                     <tr class="table-secondary border-top-0">
                                         <!-- ...처리하기 -->
@@ -190,6 +197,7 @@
                                         <th style="width: 100px;">답변여부</th>
                                     </tr>
                                 </thead>
+
                                 <tbody id="mo" style="text-align:center">
                                 <c:if test="${qnalist == '[]'}">
                                 	<tr>
@@ -221,6 +229,7 @@
 
                         <div class="row col-12 justify-content-center mt-3">
                             <div class="product__pagination">
+
                             <c:if test="${pagination.currRange ne null}">
                                 <c:if test="${pagination.currRange ne 1}">
 									<a><i class="fa fa-angle-double-left"></i></a>
@@ -248,6 +257,7 @@
         <!-- Modal -->
         <!-- click이벤트를 통해서 질문 값을 가지고 와야함
         tr에 따라서 달랴아함 -->
+
         <div class="modal fade" id="qnamodal" tabindex="-1" role="dialog">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -261,12 +271,14 @@
                     <div class="col-lg-12">
                         <div class="row mb-4 justify-content-between">
                             <div class="col-lg-9 pr-0" style="min-height: 103px;">
+
                                 <div class="h-100 p-2 d-flex align-items-center" style="border: 1px solid black; width:280px;">
                                     <p class="mb-0" id="inputQ"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 d-flex justify-content-end align-items-end pl-0"> 
                                 <div>
+
                                     <p class="mb-0 text-left">작성자 : <strong id="inputWriter"></strong></p>
                                     <p class="mb-0 text-left" id="inputQregdate"></p>
                                     <input type="hidden" id="inputqnaNo" value="">
@@ -277,6 +289,7 @@
                             <div class="align-self-start" style="transform: rotate(180deg);">
                                 <i class="arrow_back" style="font-size: 70px;"></i>
                             </div>
+
                             <textarea name="aw" id="qnAnswer" cols="30" rows="4" maxlength="4000" spellcheck="false"></textarea> 
                             <button type="button" id="updateBtn" class="btn btn-outline-dark" onclick="aUpdate()">저장</button>
                         </div>
@@ -286,6 +299,7 @@
           </div>
         </div>
     </section>
+
 <form id="frm">
   	<input class="sendltno" type="hidden" name="ltNo" value="">
 </form>
@@ -500,7 +514,6 @@ $(function(){
 	tdval = brDel(tdval);
 	$('#qcontent').text(tdval);
 })
-
 
 
     </script>

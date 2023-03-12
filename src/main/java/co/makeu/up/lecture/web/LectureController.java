@@ -400,5 +400,42 @@ public class LectureController {
 		lectureDao.lectureDelete(vo);
 		return "redirect:/creator/creS";
 	}
+	
+	@PostMapping("/creator/lectureResister")
+	public String lectureResister(LectureVO vo, @RequestParam(value = "mainPhtUp", required = false) MultipartFile file, MultipartHttpServletRequest multi,
+			@RequestParam(value="lecFile", required = false) String[] lecList) {
+			// 데이터 넘어오는지 확인하고 지울것
+			System.out.println(lecList[0]);
+			System.out.println(lecList[1]);
+	
+			// 대표사진 등록
+			List<MultipartFile> fileList = multi.getFiles("mainPhtUp");
+					
+			for (int i = 0; i < fileList.size(); i++) {
+				String oriFileName = fileList.get(i).getOriginalFilename();
+				String safeFile = saveDir + UUID.randomUUID().toString() + oriFileName;
+				if(i == 0) {
+					vo.setPht1(safeFile);
+				}
+				if(i == 1) {
+					vo.setPht2(safeFile);
+				}
+				if(i == 2) {
+					vo.setPht3(safeFile);
+				}
+				try {
+					fileList.get(i).transferTo(new File(safeFile));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+						
+			}
+			
+			//썸네일 등록 
+		
+		return null;
+	}
 
 }

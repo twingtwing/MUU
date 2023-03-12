@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -7,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
 	th,td {
       padding: 0.5rem;
       text-align: center;
@@ -18,6 +20,7 @@
       display: none;
       z-index: 1;
     }
+
     .list-link {
         color: black;
     }
@@ -37,6 +40,7 @@
     #infomodal{
       margin-top: 10rem;
     }
+
     a{
     	cursor : pointer;
     }
@@ -75,6 +79,7 @@
                   <div class="breadcrumb__links">
                       <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                       <a href="#" class="text-dark font-weight-bold"> 내 강의 목록</a>
+
                       <span>${lecinfo.ttl }</span>
                   </div>
               </div>
@@ -92,6 +97,7 @@
             <ul class="list-group w-100" id="cctgr">
                 <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 
                                              이때 상태에 따라서 열린강의인지 종료된강의인지 구별해야함-->
+
 	                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
 	                   <a class="list-link" href="/creator/creS">크리에이터 정보</a>
 	               </li>
@@ -137,6 +143,7 @@
           <div class="row ml-2">
             <h5 class="ml-1 mb-2 font-weight-bold">
                 <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
+
                 <c:if test="${lecinfo.ltStCode eq 'L01' }">
                 열린 강의 정보
                 </c:if>
@@ -149,11 +156,13 @@
           <hr class="font-weight-bold">  
           <div class="row col-12 mb-5 ml-3">
             <!-- 제목 입력 / 제목 가져오기-->
+
             <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
   
             <div class="row col-12">
               <div class="row col-12 mt-3 mb-3 justify-content-around">
                 <!-- 선택 : active -->
+
                   <c:if test="${lecinfo.ltStCode eq 'L01' }">
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
 	              </c:if>
@@ -172,6 +181,7 @@
             </div>
   
             <div class="row col-12 justify-content-end mt-3 mb-1">
+
               <input type="text" class="border" id="stval" spellcheck="false" onfocus="this.select()" onkeypress="if(event.keyCode==13){stSearch();}" placeholder="이름 검색..." title="수강생 이름 입력">
               <button type="button" class="border px-4 mr-2" id="stBtn" onclick="stSearch()">검색</button>
               <c:if test="${not empty lecinfo.kitName}">
@@ -190,6 +200,7 @@
               <table class="w-100 list ml-2 mr-4">
                 <thead class="bg-light">
                   <tr>
+
                     <th>이름</th>
                     <th>수강기간</th>
                     <th>진도율</th>
@@ -201,6 +212,7 @@
                 </thead>
                 <tbody>
                   <!-- for문 돌리기 -->
+
                   <c:if test="${sglist == '[]' }">
                   	<tr>
                   		<td colspan="5">현재 수강중인 학생이 없습니다</td>
@@ -263,6 +275,7 @@
   
             <div class="row col-12 justify-content-center mt-3">
               <div class="product__pagination">
+
               <c:if test="${pagination.currRange ne null}">
                 <c:if test="${pagination.currRange ne 1}">
 					<a><i class="fa fa-angle-double-left"></i></a>
@@ -290,11 +303,13 @@
       </div>
     </div>
     <!-- 수강생 모달 -->
+
     <div class="modal fade p-3" id="stmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content p-3">
           <div class="modal-header">
+
             <h5 class="modal-title">수강생 결제내역</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -305,6 +320,7 @@
             <table class="border w-100" border="1">
               <tr>
                 <th>수강번호</th>
+
                 <td id="inputtlsnno"></td>
               </tr>
               <tr>
@@ -322,6 +338,7 @@
               <tr>
                 <th>주소</th>
                 <td>
+
                   <span id="inputaddr"></span>
                   <span id="inputdetaaddr"></span>
                 </td>
@@ -350,6 +367,7 @@
     </div>
     
   </section>
+
 <form id="frm">
   	<input class="sendltno" type="hidden" name="ltNo" value="">
 </form>

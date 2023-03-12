@@ -141,7 +141,6 @@
           <div class="row col-12 mb-5 ml-3">
                         <!-- 제목 입력 / 제목 가져오기-->
               <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
-
               <div class="row col-12">
                 <div class="row col-12 mt-3 mb-3 justify-content-around">
                   <!-- 선택 : active -->

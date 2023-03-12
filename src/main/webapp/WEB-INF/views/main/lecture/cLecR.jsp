@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -69,6 +70,7 @@
         <div class="col-lg-2">
           <div class="row" style="width:160px">
             <ul class="list-group w-100" id="cctgr">
+
                       <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 jstl if구문으로 해결해야함 -->
                <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
                    <a class="list-link" href="/creator/creS">크리에이터 정보</a>
@@ -115,6 +117,7 @@
           <div class="row ml-2">
             <h5 class="ml-1 mb-2 font-weight-bold">
                 <i class="fa fa-hand-paper-o text-danger" aria-hidden="true"></i>
+
                 <c:if test="${lecinfo.ltStCode eq 'L01' }">
                 열린 강의 정보
                 </c:if>
@@ -127,10 +130,10 @@
           <hr class="font-weight-bold">
           <div class="row col-12 mb-2 ml-3">
             <h5 class="mx-4 my-3 font-weight-bold">강의제목 : <strong class="text-danger">${lecinfo.ttl }</strong></h5>
-
             <div class="row col-12">
                 <div class="row col-12 mt-3 mb-3 justify-content-around">
                     <!-- 선택 : active -->
+
                   <c:if test="${lecinfo.ltStCode eq 'L01' }">
                   <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
 	              </c:if>
@@ -147,6 +150,7 @@
                 <hr class="font-weight-bold">
                 
                 <div class="row mt-4 col-12 justify-content-center">
+
                 <c:if test="${rvlist == '[]' }">
                   	<h5 class="font-weight-bold">수강 리뷰</h5>
                   </c:if>
@@ -157,6 +161,7 @@
                 
                 <div class="row col-12 justify-content-end mt-3 mb-1 pr-4">
                   <div>
+
                     <select class="border px-4" id="rvsearch">
                       <option value="내용">내용</option>
                       <option value="작성자ID">작성자ID</option>
@@ -168,6 +173,7 @@
 
                 <div class="row col-12 justify-content-center">
                   <!--  card 사실 유저페이지랑 거의 똑같음 -->
+
                   <c:if test="${rvlist == '[]' }">
                   	<span class="mt-3">등록된 리뷰가 없습니다</span>
                   </c:if>

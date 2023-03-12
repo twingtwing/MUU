@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
 <style>
     #cctgy>li {
         cursor: pointer;
@@ -152,6 +153,7 @@
                         <div class="row col-12">
                             <div class="row col-12 mt-3 mb-3 justify-content-around">
                                 <!-- 선택 : active -->
+
                                 <c:if test="${lecinfo.ltStCode eq 'L01' }">
 				                <button class="btn btn-outline-secondary lecbtn" style="width: 150px;" type="button" onclick="gooLecture(${lecinfo.ltNo })">강의정보</button>
 					            </c:if>
@@ -175,6 +177,7 @@
                                     <h5><strong>제목 : </strong></h5>
                                 </div>
                                 <div class="col-11 px-0">
+
                                     <input class="w-100" type="text" id="ttl" spellcheck="false" value="${noinfo.ttl }">
                                 </div>
                             </div>
@@ -211,6 +214,7 @@
                         <button onclick="history.back()" class="btn btn-outline-secondary">뒤로가기</button>
                         <div class="row mr-4">
                             <!-- 등록하면 list가 아니라 그 수정된 페이지로 이동해야함 -->
+
                             <button class="btn btn-outline-secondary mr-2" onclick="noticeUpdate()">수정</button>
                             <button onclick="history.back()" class="btn btn-outline-secondary mr-2">취소</button>
                         </div>
@@ -219,6 +223,7 @@
             </div>
         </div>
     </section>
+
     <form id="frm">
     	<input class="sendltno" type="hidden" name="ltNo" value="">
     </form>

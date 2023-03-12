@@ -63,6 +63,7 @@
      cursor:pointer;
  }
 
+
  .modal {
      text-align: center;
  }
@@ -210,6 +211,7 @@ select {
                                 </div>
                                 <select name="" id="ctgr" class="border w-100">
 									<option value="">전체(상위 카테고리)</option>
+
 									<option value="HC01">음악</option>
 									<option value="HC02">요리</option>
 									<option value="HC03">건강</option>
@@ -236,6 +238,7 @@ select {
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
                                     <tr>
+
                                         <td colspan="2" style="text-align: center;">
                                         	<p class="photobutton">
 	                                        	<label class="phtLb" for="mainPhtUp">대표 사진 업로드</label>
@@ -261,6 +264,7 @@ select {
                         <div class="col-5" style="border-left:1px rgb(175, 175, 175) solid">
                             <table class="table lec_ph" style="table-layout:fixed">
                                 <tbody>
+
                                     <tr>
                                         <td style="text-align:center;">
                                         	<p class="photobutton">
@@ -280,6 +284,7 @@ select {
                     </div>
                     
                     <div class="row col-12">
+
                         <div class="col-2">
                             <button class="btn btn-outline-secondary exit" style="border-radius:100px;">나가기</button>
                         </div>
@@ -556,6 +561,7 @@ select {
 	})
 	
     //카테고리
+
     const Tcategory = {
 		//'전체(상위 카테고리)' : ['없음'],
        	'음악' : [{'클래식':'LC01'},{'재즈/락':'LC02'},{'힙합/랩':'LC03'},{'기타/베이스':'LC04'},{'동양':'LC05'},{'보컬':'LC06'},{'작사/작곡':'LC07'}],
@@ -776,6 +782,7 @@ select {
             reader.readAsDataURL(f);
         });
     }
+
     
     //썸네일 이미지 미리보기
     $(document).ready(function() {
@@ -783,12 +790,14 @@ select {
     });
  
     function handleThImgFileSelect(e) {
+
     	$('.thimage-show').removeAttr('src');
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
         filesArr.forEach(function(f,i) {
             if (!f.type.match(reg)) {
+
                 alert("확장자는 이미지 확장자만 가능합니다");
                 return;
             }
@@ -802,6 +811,7 @@ select {
         });
     }
     
+
     //4페이지 유효성 검사(키트 null 가능)
     //키트금액 체크
      $('#kitprc').on('keyup', function(obj) {
@@ -929,6 +939,7 @@ select {
         form.append("mainPhtUp", $("#mainPhtUp")[0].files[2]);
         
         //사진이외 값 
+
         form.append("upCtgr", upctgr);
         form.append("downCtgr", downctgr);
         form.append("ttl", ttl);
@@ -1018,7 +1029,6 @@ select {
 			return false;
 		}
 		
-        
         $.ajax({
             url : "/creator/lectureResister",
           	method : "post",
@@ -1029,6 +1039,7 @@ select {
                 xhr.setRequestHeader(header, token);
              },
             data : form,
+
             success:function() {
               alert("강의 등록 신청되었습니다");
               location.href = "/creator/rLecL";
@@ -1037,6 +1048,7 @@ select {
 	           alert(jqXHR.responseText); 
 	         }
         });
+
     }
         
         //임시저장
@@ -1147,7 +1159,6 @@ const brDel = (e)=>{
 	inputVal = inputVal.replace(/<br\/>/ig,'\n');
 	return inputVal
 }
-
 
 
 </script>
