@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class LessonVO {
+	private int serialNo;
 	private int lsnNo;
 	private String ttl;
 	private String lsnFile;
@@ -13,4 +14,8 @@ public class LessonVO {
 	private Date regDate;
 	private Date modDate;
 	private String lsnTime;
+	
+	// for join with progress
+	private int progPct;
+	private String id;
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.creator.service.CreatorMapper">
+	<select id="creatorSelect" parameterType="co.makeu.up.creator.service.CreatorVO" resultType="co.makeu.up.creator.service.CreatorVO">
+		select id, name, pht, nvl(cre_intro,'소개가 없습니다.') as cre_intro, cre_grd_code
+		from users
+		where id=#{id}
+	</select>
+	
+	<update id="creatorUpdate" parameterType="co.makeu.up.creator.service.CreatorVO">
+		update users 
+		set cre_intro = #{creIntro}
+		where id = #{id}
+	</update>
+	
+	<select id="creSaYear" parameterType="String" resultType="co.makeu.up.sales.service.SalesVO">
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'YYYY') REG_DATE,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03'
+         AND L.CRE_ID = #{id})
+		SELECT L.YEAR, ROUND(SUM(Y.PAY)/10000,0) PAY ,COUNT(Y.PAY) CNT 
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT TO_CHAR(SYSDATE,'YYYY') - LEVEL +1 AS YEAR
+		                           FROM DUAL
+		                           CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY') - LEVEL - 2008) L
+		ON Y.REG_DATE = L.YEAR
+		GROUP BY ROLLUP(L.YEAR)
+		ORDER BY L.YEAR	
+	</select>
+	
+	<select id="creSalesMonth" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
+        WITH MON_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'MM') MON,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}
+		 AND S.TLSN_ST_CODE != 'SU03'
+         AND L.CRE_ID = #{id})   
+		SELECT L.MONTH, ROUND(SUM(Y.PAY)/10000,0) PAY ,COUNT(Y.PAY) CNT 
+		FROM MON_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                            CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		ON Y.MON = L.MONTH
+		GROUP BY ROLLUP(L.MONTH)
+		ORDER BY L.MONTH	
+	</select>
+	
+	<select id="creSaleLec" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
+	    WITH LEC_TOTAL AS
+        (SELECT L.TTL,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03'
+		 <if test="start != null and start != ''">
+		 	AND TRUNC(s.reg_date) <![CDATA[>=]]> TRUNC(TO_DATE(#{start}, 'YYYY-MM-DD'))
+		 </if>
+		 <if test="end != null and end != ''">
+		 	AND TRUNC(s.reg_date) <![CDATA[<=]]> TRUNC(TO_DATE(#{end}, 'YYYY-MM-DD'))
+		 </if>
+         AND L.CRE_ID =  #{id})
+         SELECT TTL,ROUND(SUM(PAY)/10000,0) PAY, COUNT(TTL) CNT FROM LEC_TOTAL
+         GROUP BY ROLLUP(TTL)
+	</select>
+</mapper>

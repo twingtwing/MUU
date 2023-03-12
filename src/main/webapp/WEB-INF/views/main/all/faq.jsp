@@ -2,18 +2,41 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+.card-body {
+	border: none;
+}
+.more_link {
+	color: black;
+}
+
+.more_link:hover {
+	text-decoration: underline;
+	color: red;
+	cursor: pointer;
+}
+
+#searchTest:hover p{
+	color:white;
+	font-weight: bold;
+}
+</style>
 </head>
+
 <body>
 	<section class="normal-breadcrumb set-bg"
-		data-setbg="resources/img/hero/hero-1.jpg">
+		data-setbg="resources/img/normal-breadcrumb.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="normal__breadcrumb__text">
-						<h2>페이지명</h2>
-						<p>상세페이지명</p>
+
+						<h2>고객 센터</h2>
+						<p>자주 묻는 질문</p>
 					</div>
 				</div>
 			</div>
@@ -27,9 +50,9 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="#" class="text-dark font-weight-bold"><i
-							class="fa fa-home "></i> Home</a> <a href="#"
-							class="text-dark font-weight-bold">Contact</a> <span>자주묻는질문</span>
+
+						<a href="/home" class="text-dark font-weight-bold"><i
+							class="fa fa-home"></i> Home</a> <span>자주묻는질문</span>
 					</div>
 				</div>
 			</div>
@@ -38,14 +61,18 @@
 	<!-- 카테고리 끝-->
 
 	<!-- body 의 body-->
-	<section class="blog spad">
+
+	<section class="blog spad" id="faqSelectList">
 		<div class="container">
 			<div class="col-lg-12">
 				<div class="row ml-2">
-					<h3 class="font-weight-bold text-dark">F A Q</h3>
+					<h3 class="font-weight-bold text-danger">
+						<i class="fa fa-question"></i> F A Q
+					</h3>
 				</div>
 				<div class="row py-5">
 					<div class="col-lg-12">
+					<div>※ 클릭 시 자주묻는질문의 내용을 확인할 수 있습니다.</div>
 						<!-- Nav tabs 머리시작-->
 						<ul class="nav nav-tabs nav-fill" role="tablist">
 							<li class="nav-item" role="presentation" id="head"><a
@@ -63,7 +90,8 @@
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="infomation-tab"
 								data-toggle="tab" href="#infomation" role="tab"
-								aria-controls="infomation" aria-selected="false">아이디정보/보안</a></li>
+
+								aria-controls="infomation" aria-selected="false">회원정보/보안</a></li>
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="bug-tab" data-toggle="tab"
 								href="#bug" role="tab" aria-controls="bug" aria-selected="false">오류</a>
@@ -71,7 +99,8 @@
 							<li class="nav-item" role="presentation" id="head"><a
 								class="nav-link text-danger" id="event-tab" data-toggle="tab"
 								href="#event" role="tab" aria-controls="event"
-								aria-selected="false">이벤트</a></li>
+
+								aria-selected="false">환불</a></li>
 						</ul>
 						<!-- Nav tabs 머리끝-->
 						<!-- Tab 내용 -->
@@ -79,204 +108,354 @@
 							<div class="tab-pane active" id="lecture" role="tabpanel"
 								aria-labelledby="lecture-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
-													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="false"
-													aria-controls="collapseOne">Q1.강의는 어떻게 수강하나요</button>
-											</h2>
-										</div>
-										<div id="collapseOne" class="collapse"
-											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">
-												A1.만물은 바로 그들을 두기 같으며, 약동하다. 그러므로 청춘이 가슴에 무한한 풀이 보는 힘차게 만물은
-												너의 보라. 그들의 없으면, 그들은 무엇을 그것은 있는 놀이 때문이다. 현저하게 부패를 품으며, 만물은
-												유소년에게서 보이는 대중을 위하여서, 것이다. 있는 더운지라 온갖 열락의 청춘이 없으면, 곧 있는 그들의
-												것이다. 뛰노는 불러 때에, 뭇 방지하는 없으면 방황하여도, 부패뿐이다. 소리다.이것은 보배를 밥을 것이
-												꾸며 이것이다. 따뜻한 이상의 인생에 끝에 두기 것이다. 가슴에 작고 청춘 간에 노래하며 가지에 내는
-												힘있다. 따뜻한 행복스럽고 영원히 이상을 듣기만 새가 바이며, 피다. 기관과 할지라도 되려니와, 그것은
-												유소년에게서 우리 방황하였으며, 아름다우냐? 무엇을 피어나기 설산에서 피가 미인을 것은 대중을 가치를 가진
-												이것이다. 같지 이상의 인간의 군영과 피어나는 싸인 방황하여도, 불어 보라. 꽃 길지 것은 찬미를 내려온
-												사랑의 이것이다. 이상을 피에 생생하며, 것이다. 그들은 방황하였으며, 간에 구하지 인생의 청춘 이것이다.
-												이상 너의 군영과 발휘하기 장식하는 봄바람이다. 장식하는 들어 얼마나 남는 인간의 눈에 위하여서, 꽃이
-												있는가? 얼마나 이상을 곧 위하여서.
 
-												<div>더보기를 페이징처리해야하고 ajax가 아닌 form으로 보내야함 pasing vo객체</div>
-											</div>
-										</div>
-									</div>
-									<div class="card">
-										<div class="card-header" id="headingTwo">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+									<div class="card border-0" v-for="(faq,index) in faqMore[0]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseTwo" aria-expanded="false"
-													aria-controls="collapseTwo">Q2.재료는 어떻게 수강하나요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseTwo" class="collapse"
-											aria-labelledby="headingTwo" data-parent="#accordionExample">
-											<div class="card-body" style="padding: 2rem;">A1.만물은 바로
-												그들을 두기 같으며, 약동하다. 그러므로 청춘이 가슴에 무한한 풀이 보는 힘차게 만물은 너의 보라. 그들의
-												없으면, 그들은 무엇을 그것은 있는 놀이 때문이다. 현저하게 부패를 품으며, 만물은 유소년에게서 보이는
-												대중을 위하여서, 것이다. 있는 더운지라 온갖 열락의 청춘이 없으면, 곧 있는 그들의 것이다. 뛰노는 불러
-												때에, 뭇 방지하는 없으면 방황하여도, 부패뿐이다. 소리다.이것은 보배를 밥을 것이 꾸며 이것이다. 따뜻한
-												이상의 인생에 끝에 두기 것이다. 가슴에 작고 청춘 간에 노래하며 가지에 내는 힘있다. 따뜻한 행복스럽고
-												영원히 이상을 듣기만 새가 바이며, 피다. 기관과 할지라도 되려니와, 그것은 유소년에게서 우리 방황하였으며,
-												아름다우냐? 무엇을 피어나기 설산에서 피가 미인을 것은 대중을 가치를 가진 이것이다. 같지 이상의 인간의
-												군영과 피어나는 싸인 방황하여도, 불어 보라. 꽃 길지 것은 찬미를 내려온 사랑의 이것이다. 이상을 피에
-												생생하며, 것이다. 그들은 방황하였으며, 간에 구하지 인생의 청춘 이것이다. 이상 너의 군영과 발휘하기
-												장식하는 봄바람이다. 장식하는 들어 얼마나 남는 인간의 눈에 위하여서, 꽃이 있는가? 얼마나 이상을 곧
-												위하여서.</div>
+										<div :id="faq.target" class="collapse"
+											aria-labelledby="headingOne" data-parent="#accordionExample">
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[0] != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[0].length != 0"
+										v-on:click="more(0)">더보기</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="delivery" role="tabpanel"
 								aria-labelledby="delivery-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header text-danger" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+
+									<div class="card border-0" v-for="(faq,index) in faqMore[1]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="false"
-													aria-controls="collapseOne">배송은 어떻게 해요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseOne" class="collapse"
+										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">배송은 크리에이터에게 문의하세요</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[1]" class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[1].length != 0"
+										v-on:click="more(1)">더보기</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="payment" role="tabpanel"
 								aria-labelledby="payment-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header text-danger" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+									<div class="card border-0" v-for="(faq,index) in faqMore[2]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="false"
-													aria-controls="collapseOne">결제는 어떻게 해요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target"></>Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseOne" class="collapse "
+										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">결제시스템 고장으로 지원을 하지 않습니다.</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[2] != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[2].length != 0"
+										v-on:click="more(2)">더보기</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="infomation" role="tabpanel"
 								aria-labelledby="infomation-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header text-danger" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+
+									<div class="card border-0" v-for="(faq,index) in faqMore[3]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="false"
-													aria-controls="collapseOne">정보는 어떻게 해요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseOne" class="collapse "
+										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">정보는 나도 몰라</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[3] != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[3].length != 0"
+										v-on:click="more(3)">더보기</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="bug" role="tabpanel"
 								aria-labelledby="bug-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header text-danger" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+
+									<div class="card border-0" v-for="(faq,index) in faqMore[4]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="false"
-													aria-controls="collapseOne">오류는 어떻게 해요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseOne" class="collapse "
+										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">오류이니까 열심히 해봐</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[4] != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[4].length != 0"
+										v-on:click="more(4)">더보기</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="event" role="tabpanel"
 								aria-labelledby="event-tab">
 								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-header text-danger" id="headingOne">
-											<h2 class="mb-0">
-												<button class="btn btn-link btn-block text-left text-danger"
+
+									<div class="card border-0" v-for="(faq,index) in faqMore[5]">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0 d-flex">
+												<button class="btn btn-link btn-block d-flex text-left text-danger"
 													type="button" data-toggle="collapse"
-													data-target="#collapseOne" aria-expanded="true"
-													aria-controls="collapseOne">이벤트는 어떻게 해요</button>
+													:data-target="faq.target2" aria-expanded="false"
+													:aria-controls="faq.target">Q{{index+1}}.<p class="text-danger" v-html="faq.qcontent"></p></button>
 											</h2>
 										</div>
-										<div id="collapseOne" class="collapse "
+										<div :id="faq.target" class="collapse"
 											aria-labelledby="headingOne" data-parent="#accordionExample">
-											<div class="card-body">이벤트는 없어</div>
+											<div class="card-body d-flex">A{{index+1}}.<p class="font-weight-bold" v-html="faq.acontent"></p></div>
 										</div>
 									</div>
+								</div>
+								<div v-if="faqs[5] != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="faqs[5].length != 0"
+										v-on:click="more(5)">더보기</div>
 								</div>
 							</div>
 						</div>
 						<!--Tab 내용 끝-->
 					</div>
 				</div>
-				<!-- Example split danger button -->
-				<div class="d-flex justify-content-center">
-					<button type="submit" class="site-btn" onclick="history.go(-1);">뒤로가기</button>
+
+				<hr>
+				<div class="col-lg-12">
+					<div class="row mt-2">
+						<h3 class="font-weight-bold">
+							<i class="fa fa-search"></i> 검 색
+						</h3>
+					</div>
+					<div class="row justify-content-center">
+						<div class="mt-3 ml-3 mb-3">
+							<div class="blog__details__form pt-0 d-flex justify-content-end m-2">
+								<div class="row">
+								<form onsubmit="return false">
+									<div class="row mr-2">
+										<input id="acontentSearch" v-on:click="cursorSearch" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this)" name="acontent" class="border mb-0" type="text" placeholder="제목 검색..." spellcheck="false" style="height: 50px; width: 1000px;">
+											<a id="searchTest" v-on:click="search()" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="height: 50px; width:70px;">
+												<p class="mb-0">검색</p>
+											</a>
+										</div>
+								</form>
+								</div>
+							</div>
+							<div id="nosearch" class="d-none">
+								<p class="mb-0 text-danger text-right">검색어를 입력해주세요.</p>
+							</div>
+						</div>
+						<div v-if="searchFaqMore[0] == '검색없음'">
+							<h2>찾으시는 검색어는 존재하지 않습니다.</h2>
+						</div>
+						<div v-if="searchFaqMore[0] != '검색없음'" class="col-lg-12" id="search">
+							<div class="accordion" id="accordionExampl">
+								<div class="card border-0" v-for="(faq,index) in searchFaqMore">
+									<div class="card-header text-secondary bg-light" id="headingOne">
+										<h2 class="mb-0 d-flex">
+											<button class="btn btn-link btn-block d-flex text-left text-secondary"
+												type="button" data-toggle="collapse"
+												:data-target="'#collapse_search_'+faq.fno"
+												aria-expanded="false"
+												:aria-controls="'collapse_search_'+faq.fno">Q. [ {{faq.ctgrName}} ] <p v-html="faq.qcontent"></p></button>
+										</h2>
+									</div>
+									<div :id="'collapse_search_'+faq.fno" class="collapse"
+										aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body d-flex">A .<p v-html="faq.acontent"></p></div>
+									</div>
+								</div>
+								<div v-if="searchFaq != null"
+									class="row justify-content-center mt-3">
+									<div class="more_link" v-if="searchFaq.length != 0"
+										v-on:click="searchMore">더보기</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+				<!-- Example split danger button -->
 			</div>
 		</div>
 	</section>
+	<script>
+      let header = "${_csrf.headerName}";
+      let token = "${_csrf.token}";
 
-	<script type="text/javascript">
-		/*     $('#head').on('click',function () {
-		 if(!$(this).hasClass('.active')){
-		 $('#collapseOne').remove('collapse show');
-		 $('#collapseOne').add('collapsing');
-		 if($(this).index() === 1){
-		 $('.collapse').collapse('hide');
-		 }
-		 }
-		 }); */
-		$('#lecture-tab').on('click', function() {
-			console.log("강의1번")
-			if ($("#collapseOne").hasClass("collapse show")) {
-				$("#collapseOne").removeClass("collapse show")
-				$("#collapseOne").addClass("collapse")
-				console.log("강의2번")
-			}
-		});
-		$('#delivery-tab').on('click', function() {
-			console.log("배송1번")
-			if ($("#collapseOne").hasClass("collapse show")) {
-				$("#collapseOne").removeClass("collapse show")
-				$("#collapseOne").addClass("collapse")
-				console.log("배송2번")
-			}
-		});
+      const faq = Vue.createApp({
+         data() {
+            return {
+               faqs: [],
+               faqMore : [],
+               searchFaq:[],
+               searchFaqMore:[]
+            }
+         },
+         computed: {
 
-		// $('#head').on('click',function(){
-		//     console.log("1번")
-		//     for(i=0; i<10; i++){
-		//         if($("#collapseOne").hasClass("collapse show")){
-		//         $("#collapseOne").toggleClass("collapsing")
-		//         console.log("2번")
-		//         }
-		//     }
-		// });
-	</script>
+         },
+         methods: {
+        	cursorSearch(){
+         		$(event.target).select();
+         	},
+        	search(){
+        	  let search = $('#acontentSearch').val()
+          	  console.log(search);
+        	  
+        	  var text = $("#acontentSearch").val();
+              // 미입력 또는 공백 입력 방지
+              if (text.replace(/\s|　/gi, "").length == 0) {
+				$('#nosearch').removeClass('d-none');
+                $("#acontentSearch").focus();
+                return;
+              }else{
+            	  $('#nosearch').addClass('d-none');
+              }
+      	      $.ajax({
+      	          url: 'faqSelectListSearch',
+      	          type: 'post',
+      	          datatype: 'json',
+       	          data : {"acontent" : search},
+      	          beforeSend: function (xhr) {
+      	             xhr.setRequestHeader(header, token);
+      	          }
+      	      })
+      	      .done(res =>{
+      	    	  for(var faq of res){
+      	    		faq.qcontent = this.brChg(faq.qcontent);
+                    faq.acontent = this.brChg(faq.acontent);
+      	    	  }
+      	    	  if(res !==null){
+      	    		this.searchFaqMore = [];
+      	    		this.searchFaq = [];
+      	    		  if(res.length < 6){
+      	    			  this.searchFaqMore = res;
+      	    			  if(this.searchFaqMore[0] == null){
+      	    				let test = ['검색없음']
+      	    				this.searchFaqMore = test
+      	    			  }
+      	    		  }else{
+      	    			  for(var j = 0; j < 5; j++){
+      	    				this.searchFaqMore.push(res[j]);
+      	    			  }
+      	    			  this.searchFaq = res.splice(5);
+      	    		  }
+      	    	  }else{
+      	    		  this.searchFaqMore = '없음';
+      	    	  }
+             })
+        	},
+            more(num) {
+            	this.faqMore[num] = this.faqMore[num].concat(this.faqs[num][0]);
+            	this.faqs[num].splice(0,1);
+            },
+            searchMore() {
+            	if(this.searchFaq.length > 5){
+            		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq.splice(0,5));
+            	}else{
+            		this.searchFaqMore = this.searchFaqMore.concat(this.searchFaq);
+            		this.searchFaq = null;
+            	}
+            },
+            brChg(val){
+        		let resultVal = val;
+        		resultVal = resultVal.replace(/\r\n/ig,'<br>');
+        		resultVal = resultVal.replace(/\\n/ig,'<br>');
+        		resultVal = resultVal.replace(/\n/ig,'<br>');
+        		return resultVal;
+        	}
+         },
+         beforeCreate: function () {
+            $.ajax({
+                  url: 'faqSelectList',
+                  type: 'post',
+                  datatype: 'json',
+                  beforeSend: function (xhr) {
+                     xhr.setRequestHeader(header, token);
+                  }
+
+               })
+               .done(result => {
+            	  for(var i =0; i< 6; i++){
+            		  this.faqs[i] = [];
+            	  }
+                  for (var faq of result) {
+                     faq.target = 'collapse_' + Math.trunc((Math.random() * 1000));
+                     faq.target2 = '#' + faq.target;
+                     faq.qcontent = this.brChg(faq.qcontent);
+                     faq.acontent = this.brChg(faq.acontent);
+                     for (var i = 1; i <= 6; i++) {
+						 if(faq.ctgr.indexOf(i) !== -1){
+							this.faqs[i-1].push(faq);
+						 }	                 
+					 }
+                  }
+                  for(var i = 0; i < this.faqs.length; i++){
+                	  let count = 0 ;
+                	  const arys = this.faqs[i];
+                	  this.faqs[i] = [];
+                	  this.faqs[i][count] = [];
+                	  for(var j = 0; j < arys.length; j++){
+                		  this.faqs[i][count].push(arys[j]);
+                		  if((j+1)%5 === 0 && j !==1){
+                			  count ++ ;
+                			  this.faqs[i][count] = [];
+                		  }
+                	  }
+                	  this.faqMore[i] = this.faqs[i][0];
+                	  this.faqs[i].splice(0,1);
+                  }
+               });
+
+         }
+      })
+      //mount vue
+      const mountedFaq = faq.mount('#faqSelectList');
+      
+      $(document).click(function (e) {
+         if (!$(e.target).is('.card-body')) {
+            $('.collapse').collapse('hide');
+         }
+      });
+   </script>
 </body>
+
 </html>
