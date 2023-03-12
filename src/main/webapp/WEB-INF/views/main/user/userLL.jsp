@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,15 +70,7 @@
     /*여기서부터는 페이지마다 다른 부분*/
     .thumbnail>img,
     .thumbnail>h5 {
-      /*width: 272px;*/
       width: 100%;
-      /*
-        width 100%를 주면 화면이 쪼그라들어도 이미지 배치가 유지되는데,
-        캐러셀에서 다음 슬라이드로 넘어갈 때 크기조정이 안됨.
-
-        반면 width 고정값을 주면 다음 슬라이드로 넘어가도 크기가 유지되지면
-        화면이 쪼그라들면 잘려서 선택하기가 힘들어짐.
-      */
       cursor: pointer;
       margin-bottom: 1rem;
     }
@@ -115,6 +109,22 @@
     </div>
   </section>
   <!-- 배너끝 -->
+   <!-- 카테고리 시작-->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i>Home</a>
+            <a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a>
+            <span>내 강의리스트</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 카테고리 끝-->
+  
   
   <section class="blog spad">
     <div class="container">
@@ -122,18 +132,17 @@
         <div class="col-lg-2">
           <div class="row mr-2" style="width:160px">
             <ul class="list-group w-100">
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="#">내 정보</a>
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
+                <a class="list-link" href="/user/userSelect">내 정보</a>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-                <a class="list-link active" href="#">내 강의리스트</a>
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
+                <a class="list-link active" href="/user/userLectureList">내 강의리스트</a>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">위시 리스트</a>
+              <li class="list-group-item border-bottom-0" style="height: 55px;">
+                <a class="list-link" href="/user/userWishList">위시 리스트</a>
               </li>
-              <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_유저결제내역.html">결제내역</a>
+              <li class="list-group-item" style="height: 55px;">
+                <a class="list-link" href="/user/userPay">결제내역</a>
               </li>
             </ul>
           </div>
@@ -150,51 +159,60 @@
                 <div class="card-body">
                   <!-- 수강 중인 강의 -->
                   <div class="row col-lg-12 mt-3 ml-1">
-                    <h5 class="font-weight-bold "><i class="fa fa-hashtag text-danger"></i> 수강 중인 강의</h5>
+                    <h5 class="font-weight-bold "><i class="fa fa-hashtag text-danger"></i> 수강 중인 강의 ( ${listCnt } 건 )</h5>
                   </div>
 
-                  <div class="row col-lg-12">
+                  <div class="row col-lg-12 m-0">
                     <!-- carousel start-->
-                    <div class="mb-3 classlist carousel slide" id="slide" data-ride="carousel">
+                    <div class="mb-3 classlist carousel slide w-100" id="slide" data-ride="carousel">
+                    
+                    
+                    <!--  outer start -->
                       <div class="carousel-inner">
+                      <!-- active start -->
                         <div class="carousel-item active">
-                          <div class="d-flex">
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/hero/hero-1.jpg" alt="" onclick="selectLecture(1)">
-                              <h5 class="px-3 font-weight-bold font-weight-bold" onclick="selectLecture(1)">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                              <div class="bg-secondary w-100 small position-relative">☺
-                                <div class="w-75 bg-danger position-absolute text-white pl-1" style="top:0px;">75%</div>
+                          <div class="d-flex w-100 col-lg-12">
+                          <c:if test="${empty sugangList }">
+                          	<div class="my-5 text-center w-100">수강 중인 강의가 없습니다.</div>
+                          </c:if>
+                          <c:forEach items="${sugangList}" var="sugang" begin="0" end="2">
+                            <div class="thumbnail col-lg-4">
+                              <img src="${sugang.thumb }" alt="" onclick="selectLecture(${sugang.ltNo}, ${sugang.tlsnNo })">
+                              <h5 class="px-3 m-0 font-weight-bold" onclick="selectLecture(${sugang.ltNo} , ${sugang.tlsnNo })" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugang.ttl}</h5>
+                              <div class="small text-secondary text-right m-0">진도율 ( ${sugang.progPct}% )</div>
+                              <div class="bg-secondary w-100 small position-relative">　
+                                <div class="bg-danger position-absolute text-secondary pl-1" style="top:0px; width:${sugang.progPct}%">.</div>
                               </div>
                             </div>
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/sidebar/tv-4.jpg" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                              <div class="bg-secondary w-100 small position-relative">☺
-                                <div class="w-25 bg-danger position-absolute text-white pl-1" style="top:0px;">25%</div>
-                              </div>
-                            </div>
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/sidebar/tv-3.jpg" alt="">
-                              <h5 class="px-3 font-weight-bold">소드 아트 온라인 클래스</h5>
-                              <div class="bg-secondary w-100 small position-relative">☺
-                                <div class="w-25 bg-danger position-absolute text-white pl-1" style="top:0px;">25%</div>
-                              </div>
-                            </div>
+                          </c:forEach>
                           </div> <!-- thumbnails first list end -->
                         </div> <!-- carousel item active end-->
-          
-                        <div class="carousel-item">
-                          <div class="d-flex">
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/profile.png" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                              <div class="bg-secondary w-100 small position-relative">☺
-                                <div class="w-75 bg-danger position-absolute text-white pl-1" style="top:0px;">75%</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> <!-- carousel item -->
+ 						<!-- active end -->
+ 						
+ 						
+ 						<!--inactive -->
+ 						<c:forEach items="${sugangList}" var="sugang" begin="3" varStatus="st" step="3">
+	 						<div class="carousel-item">
+		                    <div class="d-flex w-100 col-lg-12">
+ 							<c:forEach items="${sugangList}" var="innersugang" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
+		                         <div class="thumbnail col-lg-4">
+		                          <img src="${innersugang.thumb}" alt="" onclick="selectLecture(${innersugang.ltNo}, ${innersugang.tlsnNo })"/>
+		                          <h5 class="px-3  m-0 font-weight-bold" onclick="selectLecture(${innersugang.ltNo}, ${innersugang.tlsnNo })" style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugang.ttl}</h5>
+		                          <div class="small text-secondary text-right m-0">진도율 ( ${innersugang.progPct}% )</div>
+		                          <div class="bg-secondary text-secondary w-100 small position-relative">.
+		                           <div class="bg-danger position-absolute text-white pl-1" style="top:0px; width:${innersugang.progPct}%">　</div>
+		                          </div>
+		                          </div>
+	 						</c:forEach>
+		                   </div>
+	                       </div>
+						</c:forEach>                 
+                        <!-- inactive end -->                       
                       </div> <!-- carousel inner end-->
+                      <!--  outer end 드디어 햇다 !!! -->
+                      
+                      
+                      
                       <a href="#slide" class="carousel-control-prev " role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
@@ -211,35 +229,47 @@
                     <h5 class="font-weight-bold "><i class="fa fa-hashtag text-danger"></i> 수강 만료 강의</h5>
                   </div>
 
+
+
+
+
                   <!-- 수강 만료 강의-->
-                  <div class="row col-lg-12">
-                    <div class="my-3 mb-5 classlist endclass carousel slide" id="slide2" data-ride="carousel">
+                  <div class="row col-lg-12 m-0">
+                    <div class="my-3 classlist endclass carousel slide w-100" id="slide2" data-ride="carousel">
                       <div class="carousel-inner">
+                      <!--  active start -->
                         <div class="carousel-item active">
-                          <div class="d-flex">
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/recent/recent-3.jpg" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
+                          <div class="d-flex w-100 col-lg-12">    
+                          <c:if test="${empty sugangEndList }">
+                          	<div class="my-5 text-center w-100">만료된 강의가 없습니다.</div>
+                          </c:if>       
+                          <c:forEach items="${sugangEndList}" var="sugangend" begin="0" end="2">
+                            <div class="thumbnail col-lg-4">
+                              <img src="${sugangend.thumb }" alt="">
+                              <h5 class="px-3 font-weight-bold font-weight-bold"style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${sugangend.ttl}</h5>
                             </div>
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/sidebar/tv-4.jpg" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                            </div>
-                            <div class="thumbnail mx-3">
-                              <img src="/resources/img/sidebar/tv-3.jpg" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                            </div>
+                          </c:forEach>
                           </div> <!-- thumbnails first list end -->
                         </div> <!-- carousel item active end-->
-          
-                        <div class="carousel-item">
-                          <div class="d-flex">
-                            <div class="thumbnail mx-3">
-                              <img src="img/profile.png" alt="">
-                              <h5 class="px-3 font-weight-bold">제로부터 시작하는 피아노 클래스 넘버원</h5>
-                            </div>
-                          </div>
-                        </div> <!-- carousel item -->
+          				
+          				<!-- inactive start -->
+          				
+          				
+          				<c:forEach items="${sugangEndList}" var="sugangend" begin="3" varStatus="st" step="3">
+	 						<div class="carousel-item">
+		                    <div class="d-flex w-100 col-lg-12">
+ 							<c:forEach items="${sugangEndList}" var="innersugangend" varStatus="sti" begin="${st.index}" end="${st.index +2 }">
+		                         <div class="thumbnail col-lg-4">
+		                          <img src="${innersugangend.thumb}" alt="">
+		                          <h5 class="px-3 font-weight-bold"style="white-space: nowrap;overflow:hidden;text-overflow:ellipsis">${innersugangend.ttl}</h5>
+		                          </div>
+	 						</c:forEach>
+		                   </div>
+	                       </div>
+						</c:forEach>    
+                         <!-- inactive end -->
+                         
+                         
                       </div> <!-- carousel inner end-->
                       <a href="#slide2" class="carousel-control-prev" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -262,20 +292,31 @@
     </div><!--container end-->
   </section>
   
+  <security:authorize access="isAuthenticated()">
+<security:authentication property="principal.username" var="username"/>
+</security:authorize>
+  <form action="/user/userLectureSelect" id="lectureSelectForm">
+  	<input type="hidden" name="id" value="${username}">
+  	<input type="hidden" id="lectureNo" name="ltNo">
+  	<input type="hidden" id="tlsnNo" name="tlsnNo">
+  </form>
+  
   <script>
-    const selectLecture = (number) => {
+    const selectLecture = (number, tlsnNo) => {
       console.log(number);
-      location.href = "./강의상세페이지.html";
+      $('#lectureNo').val(number);
+      $('#tlsnNo').val(tlsnNo);
+      $('#lectureSelectForm').submit();
     }
 
       //mouseover 이벤트 : 사이드바 css변경
-    $('.list-group .list-group-item').on('mouseover',function(){
+    $('.list-group .list-group-item:not(.mylist)').on('mouseover',function(){
       $(this).css('background-color','#e53637');
       $(this).find('.list-link').css('color','#ffffff');
     })
 
       //mouseover 이벤트 : 사이드바 css변경
-    $('.list-group .list-group-item').on('mouseout',function(){
+    $('.list-group .list-group-item:not(.mylist)').on('mouseout',function(){
       $(this).css('background-color','#ffffff');
       $(this).find('.list-link').css('color','#000000');
       $(this).find('.list-link.active').css('color','#e53637');

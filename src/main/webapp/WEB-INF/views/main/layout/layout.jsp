@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"  prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <!-- Css Styles -->
 	<script src="https://kit.fontawesome.com/8d99e6c8fb.js" crossorigin="anonymous"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-	<script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
@@ -24,8 +23,18 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
+
 <!-- Vue.js cdn -->
 	<script src="https://unpkg.com/vue@next"></script>
+
+	<script src="/resources/js/jquery-3.3.1.min.js"></script>
+	<!-- datepicker -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+	    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js">
+	  </script>
+	  <link rel="stylesheet"
+	    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 </head>
 <body>
 
@@ -34,7 +43,6 @@
 <tiles:insertAttribute name="body"/>
 </div>
 <tiles:insertAttribute name="bottom"/>
-
 
 <!-- Js Plugins -->
 <script src="/resources/js/jquery.nice-select.min.js"></script>

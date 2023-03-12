@@ -81,35 +81,20 @@
 								<input type="password" placeholder="비밀번호" class="border p-3 px-5 m-1" name="pw" spellcheck="false">
 								<i class="icon_lock"></i>
 							</div>
+							<!-- 너 값 없는 놈이야-->
+							<div style="text-align: center; font-weight: bold;" class="text-danger d-flex justify-content-center"><c:out value="${error}"/></div>
 							<div class="d-flex flex-column">
-								<button type="submit" class="site-btn px-5">Login</button>
+								<button type="submit" class="site-btn px-5">로그인</button>
 								<a href="/forget" style="color: black; text-align: center; margin-top:3px; font-weight: bold;">아이디/비밀번호 찾기</a>
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</form>
-						<div style="text-align: center; font-weight: bold;" class="text-danger d-flex justify-content-center"><c:out value="${error}" /></div>
-					</div>
-					<div class="login__social pt-0">
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="login__social__links">
-									<ul>
-										<li><a href="#" class="kakao"><i
-												class="fa fa-facebook"></i>카카오톡으로 시작하기</a></li>
-										<li><a href="#" class="naver"><i
-												class="fa fa-twitter"></i>네이버로 시작하기</a>
-										<li><a href="#" class="google"><i
-												class="fa fa-google"></i>구글로 시작하기</a></li>
-
-									</ul>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<hr>
-				<div class="row d-flex justify-content-center">
+				<div class="d-flex justify-content-center mt-5">
 					<div class="login__register">
+						<span class="small mt-3">계정이 없으신가요?</span>
 						<h3 style="color: black;">회원가입 👇</h3>
 						<a href="/signupForm" class="primary-btn">회원가입</a>
 					</div>

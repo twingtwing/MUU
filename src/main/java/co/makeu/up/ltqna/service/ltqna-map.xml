@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.ltqna.service.LtQnaMapper">
+	<select id="selectQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
+		select * from
+            (select rownum rn, b.* from
+                (select rownum ltqnaNo, a.* from
+                    (select r.*,  COUNT(*) OVER() AS COUNT
+                    from lt_qna r
+                    where lt_no = #{ltNo}
+                    AND (q_content LIKE '%'||#{contentSearchKey}||'%'
+                    AND writer LIKE '%'||#{writerSearchKey}||'%'
+                    AND qna_st_code LIKE '%'||#{qnaStCodeSearchKey}||'%')
+                    order by qna_no) a
+                order by ltqnaNo desc) b
+            WHERE ROWNUM <![CDATA[<=]]> 10*(#{page}))
+		WHERE RN <![CDATA[>]]> (#{page}-1)*10
+	</select>
+	<select id="selectMyQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
+		SELECT * FROM LT_QNA
+		WHERE LT_NO = #{ltNo}
+		AND WRITER = #{writer} 
+		ORDER BY Q_REG_DATE DESC
+	</select>
+	
+	<select id="qnaListCnt" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM LT_QNA
+		WHERE LT_NO = #{ltNo}
+	</select>
+	
+	<select id="selectQna" resultType="co.makeu.up.ltqna.service.LtQnaVO" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		SELECT * FROM LT_QNA WHERE QNA_NO = #{qnaNo}
+	</select>
+	
+	<insert id="insertQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		INSERT INTO LT_QNA VALUES(
+		NVL((SELECT MAX(QNA_NO) FROM LT_QNA)+1,1),NULL,#{qContent},#{ltNo},NULL,TRUNC(SYSDATE),'Q01',#{writer}
+		)
+	</insert>
+	
+	<update id="updateMyQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		UPDATE LT_QNA
+		SET Q_CONTENT = #{qContent}
+		WHERE QNA_NO = #{qnaNo}
+	</update>
+	
+	<delete id="deleteMyQna" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		DELETE FROM LT_QNA
+		WHERE QNA_NO = #{qnaNo}
+	</delete>
+
+	<select id="adminQnaList" parameterType="co.makeu.up.ltqna.service.LtQnaVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
+		SELECT * FROM (SELECT ROWNUM RN,QNA_NO,WRITER,A_CONTENT,Q_CONTENT,LT_NO,FINDLTCODE(QNA_ST_CODE) QNA_ST_CODE ,COUNT(*) OVER() CNT
+		FROM LT_QNA
+		WHERE LT_NO = #{ltNo}
+		<if test="writer != null and !writer.equals('')">
+		AND WRITER LIKE '%'||#{writer}||'%'
+		</if>
+		<if test="qContent != null and !qContent.equals('')">
+		AND Q_CONTENT LIKE '%'||#{qContent}||'%'
+		</if>
+		<if test="qnaStCode != null and !qnaStCode.equals('')">
+		AND QNA_ST_CODE = #{qnaStCode}
+		</if>
+		ORDER BY QNA_NO DESC)
+		<![CDATA[ 
+			WHERE RN > (#{page}-1) * 10
+			AND RN <= #{page} * 10
+		]]>
+	</select>
+	
+	<update id="updateQnaAnswer" parameterType="co.makeu.up.ltqna.service.LtQnaVO">
+		UPDATE LT_QNA
+		SET A_CONTENT = #{aContent}, A_REG_DATE = SYSDATE, QNA_ST_CODE = 'Q02'
+		WHERE QNA_NO = #{qnaNo} 
+	</update>
+	
+
+</mapper>

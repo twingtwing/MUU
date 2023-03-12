@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
 </head>
 <body>
 <!-- 배너 시작-->
-  <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+  <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -49,9 +50,9 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb__links">
-            <a href="#"><i class="fa fa-home"></i> 홈</a>
-            <a href="#">마이페이지</a>
-            <a href="#">내 강의리스트</a>
+            <a href="/home" class="text-secondary"><i class="fa fa-home"></i>Home</a>
+            <a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a>
+            <a href="/user/userLectureList" class="text-dark font-weight-bold">내 강의리스트</a>
             <span>공지사항</span>
           </div>
         </div>
@@ -66,33 +67,35 @@
         <div class="col-lg-2">
           <div class="row mr-2" style="width:160px">
             <ul class="list-group w-100" id="cctgr">
-              <li class="list-group-item border-bottom-0 align-items-center d-flex justify-content-center" style="height: 75px;">
-                <a class="list-link" href="#">
+              <li class="list-group-item border-bottom-0 align-items-center d-flex justify-content-center" style="height: 75px;"onclick="location.href='/user/userLectureList'">
+                <div class="list-link">
                   <div class="row">
                     <div class="col-lg-4 justify-content-center align-items-center d-flex">
-                      <imo style="font-size:25px;">🚀</imo>
+                      <span style="font-size:25px;">🚀</span>
                     </div>
                     <div class="col-lg-8 pr-0 pl-0 align-items-center d-flex">
                       <p class="font-weight-bold mb-0">&nbsp;&nbsp;&nbsp;&nbsp;GO TO<br>강의 리스트</p>
                     </div>
                   </div>
-                </a>
+                </div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-                <a class="list-link" href="#">수업 목록</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/lecD" style="height: 55px;">
+                <div class="list-link">강의 상세정보</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link active" href="./박정욱_위시리스트.html">공지사항</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex  listmenu" data-url="/user/userLectureSelect" style="height: 55px;">
+                <div class="list-link">수업 목록</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">질문 & 답변</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLNL" style="height: 55px;">
+                <div class="list-link active">공지사항</div>
               </li>
-              <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_위시리스트.html">리뷰 & 별점</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLQ" style="height: 55px;">
+                <div class="list-link" data-url="/user/userLQ">질문 & 답변</div>
               </li>
-              <li class="list-group-item align-items-center d-flex" style="height: 55px;">
-                <a class="list-link" href="./박정욱_유저결제내역.html">환불</a>
+              <li class="list-group-item border-bottom-0 align-items-center d-flex listmenu" data-url="/user/userLR"style="height: 55px;">
+                <div class="list-link" >리뷰 & 별점</div>
+              </li>
+              <li class="list-group-item align-items-center d-flex listmenu"  data-url="/user/userRefund" style="height: 55px;">
+                <div class="list-link">환불</div>
               </li>
             </ul>
           </div>
@@ -103,34 +106,62 @@
             <h3 class="font-weight-bold"><i class="fa fa-table text-danger" aria-hidden="true"></i>&nbsp;수강 중 - 공지사항</h3>
           </div>
           <hr class="font-weight-bold">
-          <div class="row col-lg-12 py-3">
-            <div class="row col-12 mr-5 mt-3">
-              <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:1px solid black;">
-                  <h5><strong>제목 : </strong>제목!!!!!</h5>
+          <div class="col-lg-12 px-0 mb-3">
+            <div class="card w-100">
+              <div class="card-body">
+                 <div class="row">
+                  <div class="col-3">
+                    <img class="rounded" src="${sugang.thumb }" alt="" style="object-fit: cover; width: 100%; height: 150px;">
+                  </div>
+                  <div class="col-9 d-flex align-items-center">
+                    <div class="w-100">
+                      <h3 class="font-weight-bold pb-3">${sugang.ttl }</h3>
+                      <div class="progress mt-3">
+                         <div class="progress-bar bg-danger text-left" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:${sugang.progPct}%">
+							　${sugang.progPct}%
+                        </div>
+                      </div>
+                     <div class="text-right font-weight-bold mt-2 text-secondary">수강기간:　${sugang.regDate }　-　${sugang.expDate }　</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="row col-12 justify-content-between bg-light py-2"  style="border-bottom: 2px solid black;">
-                  <p class="mb-0">글번호 : 1213</p>
-                  <div class="row">
-                      <p class="mb-0">조회수 : 8</p>
-                      <p class="mb-0 ml-2">작성날짜 : 2022-05-05</p>
+            </div>
+          </div>
+          <div class="row col-lg-12 p-0 m-0">
+            <div class="col-12 p-0">
+              <div class="col-12 bg-light px-3 py-2" style="border-top: 2px solid lightgray;">
+                  <h5><strong> &nbsp;${notice.ttl}</strong></h5>
+              </div>
+              <div class="row col-12 bg-light px-3 py-0 m-0 justify-content-between"  style="border-bottom: 2px solid lightgray;">
+                  <p class="mb-0">글번호 : ${notice.ntNo }</p>
+                  <div>
+                      <span class="mb-0">조회수 : ${notice.hits }</span>
+                      <span class="mb-0 ml-2">작성날짜 : ${notice.wrDate}</span>
                       <!-- 수정안했으면 안해도됨 -->
-                      <p class="mb-0 ml-2 mr-2">수정날짜 : 2022-05-09</p>
+                      <c:if test="${not empty notice.modDate}">
+                      <span class="mb-0 ml-2 mr-2">수정날짜 : ${notice.modDate}</span>
+                      </c:if>
                   </div>
               </div>
-              <div class="row col-12 my-3" style="height: 45vh;">
-                  <p> ㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅁㄹㄴㅇㅁㄻ</p>
+              <div class="col-12 my-3">
+                  <p class="px-2">${notice.content}</p>
               </div>
-              <div class="row col-12 bg-light py-2" style="border-top: 2px solid black; border-bottom:2px solid black;">
-                  <div class="d-flex align-items-center">
-                      <i class="fa fa-download mr-2"></i>
+              <!-- 다중파일 -->
+              <div class="row col-12 bg-light px-3 py-0 m-0 bg-light py-2" style="border-top: 2px solid lightgray; border-bottom:2px solid lightgray;">
+                  <div class="d-flex align-items-center"><span class="text-light">'</span>
+                  <c:if test="${notice.fileNo ne 0}">
+                  <c:forEach items="${noticeFiles }" var="f">
+	                      <i class="fa fa-download mx-3"></i>
+		                  <a href="/download?phyPath=${f.phyPath}" class="text-muted file_download">${f.filePath }</a>
+                  </c:forEach>
+                  </c:if>
                   </div>
-                  <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
-                  <p class="mb-0 mr-2"><a href="" class="text-muted file_download">pdf.pdf</a></p>
               </div>
             </div>
           </div>
       
-          <div class="row col-12 mr-5 justify-content-end">
+          <div class="col-12 mt-3 justify-content-end">
               <button class="mr-5 btn btn-outline-secondary" id="back">뒤로가기</button>
           </div>
         </div>
@@ -138,9 +169,20 @@
 
     </div>
   </section>
+  
+    <form action="" id="move" method="get">
+  	<input type="hidden" name="ltNo" value="${sugang.ltNo}">
+  	<input type="hidden" name="tlsnNo" value="${sugang.tlsnNo }">
+  </form>
   <script>
+  $('.listmenu').click((e)=>{
+	  let url = e.currentTarget.dataset.url;
+	  $('#move').attr('action',url);
+	  $('#move').submit();
+  })
+  
     $('#back').click(()=>{
-      location.href = history.back();
+      location.href = '/user/userLNL?ltNo=${notice.ltNo}';
     })
 
     

@@ -2,16 +2,126 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.makeu.up.board.service.BoardMapper">
 	<select id="selectBoardList" resultType="co.makeu.up.board.service.BoardVO">
-		SELECT * FROM board
-		WHERE b_st_code = 'B01'
-		ORDER BY wr_date DESC
+		SELECT B_NO,TTL,CONTENT,B_ST_CODE,WR_DATE,HITS, NVL(FILE_NO,-1) FILE_NO
+		FROM BOARD
+		ORDER BY b_no DESC
 	</select>
 	
-	<select id="selectTtlList" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
-		SELECT * FROM board
-		WHERE ttl LIKE '%' || #{ttl} || '%'
-		AND b_st_code = 'B01'
-		ORDER BY wr_date DESC
+	
+	<select id="selectBoard" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+	SELECT  *
+	FROM (SELECT  b_no, ttl, content, wr_date, hits ,NVL(file_no,-1) file_no,
+	        LAG(b_no,1,-1) OVER(ORDER BY b_no) AS PREBNO,LAG(ttl,1,null) OVER(ORDER BY b_no) AS PREBTTL,
+	        LEAD(b_no,1,-1) OVER(ORDER BY b_no) AS NEXTBNO, LEAD(ttl,1,null) OVER(ORDER BY b_no) AS NEXTBTTl
+	        FROM BOARD )
+	WHERE b_no = #{bNo}
 	</select>
+	
+	
+	<update id="upboard" parameterType="co.makeu.up.board.service.BoardVO">
+	UPDATE BOARD SET HITS = NVL(HITS,0) +1 
+	WHERE B_NO= #{bNo}
+	</update>
+	
+	<select id="selectadbad" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+		SELECT * FROM (    
+            SELECT ROWNUM RN, W.*
+            FROM (
+            SELECT B_NO, TTL, CONTENT, WR_DATE, HITS ,NVL(FILE_NO,-1) FILE_NO, B_ST_CODE  ,COUNT(*) OVER() AS LENGTH
+            FROM BOARD
+            WHERE 1=1
+            <if test="mix !=null and mix != ''">
+            AND	( TTL LIKE '%' || #{mix}  || '%' OR CONTENT LIKE '%' || #{mix}  || '%')
+            </if>
+            <if test="ttl !=null and ttl != ''">
+            AND	TTL LIKE '%' || #{ttl}  || '%'
+            </if>
+            <if test= "content != null and content !=''">
+            AND CONTENT LIKE '%' || #{content}  || '%'
+            </if>
+            <if test="start != null and start != ''">
+             <![CDATA[
+             AND TO_DATE(#{start}, 'YYYY-MM-DD') <= trunc (WR_DATE)
+             ]]>
+            </if>
+            <if test="end != null and end != ''">
+            <![CDATA[
+             AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (WR_DATE)
+             ]]>
+            </if>
+			<if test="orderColumn !=null and !orderColumn.equals('')">
+		    	ORDER BY ${orderColumn} ${orderBy}
+		    </if>
+		    <if test="orderColumn == null or orderColumn.equals('')">
+		    	ORDER BY B_NO DESC
+		    </if>            
+            ) W
+        )
+        <![CDATA[
+	    WHERE RN > (#{pageNum}-1) * #{amount} 
+	    AND RN <= #{pageNum} * #{amount}
+	      ]]>
+	</select>
+	
+	<select id="excelList" parameterType="co.makeu.up.board.service.BoardVO" resultType="co.makeu.up.board.service.BoardVO">
+		SELECT B_NO, TTL, CONTENT, WR_DATE, HITS ,NVL(FILE_NO,-1) FILE_NO, B_ST_CODE
+        FROM BOARD
+        WHERE 1=1
+        <if test="mix !=null and mix != ''">
+            AND	( TTL LIKE '%' || #{mix}  || '%' OR CONTENT LIKE '%' || #{mix}  || '%')
+            </if>
+            <if test="ttl !=null and ttl != ''">
+            AND	TTL LIKE '%' || #{ttl}  || '%'
+            </if>
+            <if test= "content != null and content !=''">
+            AND CONTENT LIKE '%' || #{content}  || '%'
+            </if>
+            <if test="start != null and start != ''">
+             <![CDATA[
+             AND TO_DATE(#{start}, 'YYYY-MM-DD') <= trunc (WR_DATE)
+             ]]>
+            </if>
+            <if test="end != null and end != ''">
+            <![CDATA[
+             AND TO_DATE(#{end}, 'YYYY-MM-DD')  >= trunc (WR_DATE)
+             ]]>
+            </if>
+			<if test="orderColumn !=null and !orderColumn.equals('')">
+		    	ORDER BY ${orderColumn} ${orderBy}
+		    </if>
+		    <if test="orderColumn == null or orderColumn.equals('')">
+		    	ORDER BY B_NO ${orderBy}
+		    </if>
+	</select>
+	
+	<insert id="insertBoard" parameterType="co.makeu.up.board.service.BoardVO">
+		<selectKey keyProperty="bNo" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(B_NO),0)+1 FROM BOARD
+		</selectKey>
+		insert into board (b_no,ttl,content,wr_date,B_ST_CODE,file_no)
+		values(#{bNo},#{ttl},#{content},SYSDATE,'B01',
+		<if test="fileNo != 0">#{fileNo}</if>
+		<if test="fileNo == 0">NULL</if> )
+	</insert>
+	
+	<select id="selectadbads" resultType="co.makeu.up.board.service.BoardVO" parameterType="co.makeu.up.board.service.BoardVO">
+		SELECT *
+		FROM BOARD
+		WHERE B_NO = #{bNo}
+	</select>
+	
+	<delete id="deladbad" parameterType="co.makeu.up.board.service.BoardVO">
+		DELETE FROM BOARD
+		WHERE b_no = #{bNo}
+	</delete>
+	
+	<update id="upadbad" parameterType="co.makeu.up.board.service.BoardVO">
+	    UPDATE BOARD
+	    SET TTL = #{ttl} , CONTENT = #{content}
+	    <if test="fileNo != 0">
+	    , FILE_NO = #{fileNo}
+	    </if>
+	    WHERE B_NO = #{bNo}
+	</update>
 	
 </mapper>

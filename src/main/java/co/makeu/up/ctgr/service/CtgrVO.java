@@ -7,4 +7,5 @@ public class CtgrVO {
 	private String ctgrId;
 	private String upCtgr;
 	private String name;
+	private String upName;
 }

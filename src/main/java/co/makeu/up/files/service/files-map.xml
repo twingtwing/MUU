@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.files.service.FileMapper">
+	<insert id="insertFile" parameterType="co.makeu.up.board.service.BoardVO">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(FILE_NO),0) + 1
+			FROM FILES
+		</selectKey>
+		INSERT INTO FILES(FILE_NO,WR_DATE,USE_YN)
+		VALUES(${fileNo},SYSDATE,'y')
+	</insert>
+	
+	<update id="delFile" parameterType="int">
+		UPDATE FILES
+		SET USE_YN = 'n'
+		WHERE FILE_NO = #{fileNo}
+	</update>
+</mapper>

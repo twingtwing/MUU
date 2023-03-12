@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +22,6 @@
     </style>
 </head>
 <body>
-<security:authorize access="isAuthenticated()">
-<security:authentication property="principal.username" var="username"/>
-</security:authorize>
 	<!-- 배너 시작-->
     <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
         <div class="container">
@@ -45,7 +43,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="#" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
+                        <a href="/Home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> Home</a>
                         <span>크리에이터 정보</span>
                     </div>
                 </div>
@@ -102,13 +100,19 @@
                             <div class="card-body mb-3 ml-1">
                                 <div class="row mb-3 ml-1">
                                     <div class="d-flex align-items-center">
-                                        <img src="/resources/img/dog/boxer.jpeg" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                    	<c:if test="${photo == null }">
+                                    	<img src="/resources/img/profile.png" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                    	</c:if>
+                                        <c:if test="${photo != null }">
+                                        <img src="${photo }" class="img-thumbnail rounded-circle" style="width: 12rem; height: 12rem;">
+                                        </c:if>
+                                        
                                     </div>
                                     <ul class="list-group list-group-flush ml-3">
                                         <li class="list-group-item font-weight-bold">이름 : ${name }</li>
                                         <li class="list-group-item font-weight-bold">
-                                            자기 소개 칸 : ${creIntro }
-                                        </li> 
+                                            ${creIntro }
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="row justify-content-center">
@@ -121,22 +125,22 @@
             </div>
         </div>
     </section>
-    <script>
-	    //mouseover 이벤트 : 사이드바 css변경
-	    $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
-	        $(this).css('background-color','#e53637');
-	        $(this).find('.list-link').css('color','#ffffff');
-	    })
-	
-	    //mouseover 이벤트 : 사이드바 css변경
-	    $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
-	        $(this).css('background-color','#ffffff');
-	        $(this).find('.list-link').css('color','#000000');
-	        $(this).find('.list-link.active').css('color','#e53637');
-	    })
-	    
-	
-	</script>
+<script>
+ //mouseover 이벤트 : 사이드바 css변경
+ $('#cctgr > .list-group-item:not(.mylist)').on('mouseover',function(){
+     $(this).css('background-color','#e53637');
+     $(this).find('.list-link').css('color','#ffffff');
+ })
+
+ //mouseover 이벤트 : 사이드바 css변경
+ $('#cctgr > .list-group-item:not(.mylist)').on('mouseout',function(){
+     $(this).css('background-color','#ffffff');
+     $(this).find('.list-link').css('color','#000000');
+     $(this).find('.list-link.active').css('color','#e53637');
+ })
+ 
+
+</script>
 	
 </body>
 

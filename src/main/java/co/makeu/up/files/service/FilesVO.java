@@ -9,4 +9,6 @@ public class FilesVO {
 	private int fileNo;
 	private Date wrDate;
 	private String useYn;
+	private String filePath;
+	private String phyPath;
 }

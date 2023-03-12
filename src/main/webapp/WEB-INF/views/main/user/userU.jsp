@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,66 +56,65 @@ td, th {
 	}
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
-	<!-- 배너 시작-->
-	<section class="normal-breadcrumb set-bg"
-		data-setbg="/resources/img/normal-breadcrumb.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="normal__breadcrumb__text">
-						<h2>마이페이지</h2>
-						<p>내 정보</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- 배너끝 -->
+<!-- 배너 시작-->
+    <section class="normal-breadcrumb set-bg" data-setbg="/resources/img/normal-breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>마이페이지</h2>
+                        <p>내 정보 수정</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 배너끝 -->
 
-	<!-- 카테고리 시작-->
-	<div class="breadcrumb-option">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="breadcrumb__links">
-						<a href="#"><i class="fa fa-home"></i> HOME</a> <a href="#">마이페이지</a>
-						<span>내 정보</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 카테고리 끝-->
+ <!-- 카테고리 시작-->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/home" class="text-dark font-weight-bold"><i class="fa fa-home"></i> 홈</a>
+            <a href="/user/userSelect" class="text-dark font-weight-bold">마이페이지</a>
+            <span>내 정보 수정</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 카테고리 끝-->
+    
 
-	<section class="blog spad">
-		<div class="container">
-			<div class="row">
-				<!-- 사이드 시작 -->
-				<div class="col-lg-2">
-					<div class="row mr-2" style="width: 160px">
-						<ul class="list-group w-100">
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;">
-								<!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
-								<a class="list-link active" href="#">내 정보</a>
-							</li>
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;"><a class="list-link" href="#">내
-									강의리스트</a></li>
-							<li
-								class="list-group-item border-bottom-0 align-items-center d-flex"
-								style="height: 55px;"><a class="list-link"
-								href="./박정욱_위시리스트.html">위시 리스트</a></li>
-							<li class="list-group-item align-items-center d-flex"
-								style="height: 55px;"><a class="list-link"
-								href="./박정욱_유저결제내역.html">결제내역</a></li>
-						</ul>
-					</div>
-				</div>
+    <!-- body 의 body-->
+    <section class="blog spad" >
+        <div class="container">
+            <div class="row">
+                <!-- 사이드 시작 -->
+                <div class="col-lg-2">
+                    <div class="row mr-2" style="width:160px">
+                      <ul class="list-group w-100">
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                            <!-- 해당 상위카테고리 일때, active가 보여야함 => 자바스크립트 혹은 c:if구문으로 해결해야함 -->
+                          <a class="list-link active" href="/user/userSelect">내 정보</a>
+                        </li>
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="/user/userLectureList">내 강의리스트</a>
+                        </li>
+                        <li class="list-group-item border-bottom-0 align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="./userWishList">위시 리스트</a>
+                        </li>
+                        <li class="list-group-item align-items-center d-flex" style="height: 55px;">
+                          <a class="list-link" href="/user/userPay">결제내역</a>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
 				<!-- 사이드 끝 -->
 				<div class="col-lg-10">
 					<div class="row ml-2">
@@ -128,64 +129,75 @@ td, th {
 							<div class="card" style="height: 80vh; position: relative;">
 								<div class="card-body d-flex flex-column align-items-center">
 									<div
-										class="d-flex justify-content-center align-items-center justify-content-around my-5">
-										<img src="/resources/img/profile.png" alt="유저의 프로필 사진입니다."
-											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid; cursor: pointer;"
-											class="mr-4" onclick="file.click();"> <input
-											type="file" id="file" style="display: none;">
+										class="d-flex justify-content-center align-items-center justify-content-around my-5 position-relative">
+										<img src="
+										<c:if test="${empty user.pht }">/resources/img/profile.png</c:if>
+										${user.pht}
+										" alt="유저의 프로필 사진입니다."
+											style="width: 150px; height:150px; border-radius: 100%; border: lightgray 1px solid;"
+											class="mr-4">
 										<div>
 											<table class="ml-4">
 												<tr>
 													<th>아이디</th>
-													<td>steel@naver.com</td>
-												</tr>
-												<tr>
-													<th>SNS 연동</th>
-													<td><img src="/resources/img/kakao.svg" alt="">
-														<img src="/resources/img/naver.png" alt=""> <img
-														src="/resources/img/google.png" alt=""></td>
+													<td>${user.id}</td>
 												</tr>
 												<tr>
 													<th>내 권한/등급</th>
-													<td>사용자 ( 새싹 회원 ) 🌱 🌹 🌳</td>
+													<td>
+													<c:if test="${user.authCode eq 'A02' }">
+														유저 ( ${user.uGrdCode }회원 ) 🌱 🌹 🌳													
+													</c:if>
+													<c:if test="${user.authCode eq 'A03' }">
+														크리에이터 ( ${user.creGrdCode } )
+													</c:if>
+													</td>
 												</tr>
 												<tr>
 													<th>적립금<br></th>
-													<td>500원</td>
+													<td><fmt:formatNumber>${user.point }</fmt:formatNumber>원</td>
 												</tr>
 											</table>
 											<span class="text-danger ml-4" style="font-size: 0.8rem;">※
 												적립금은 구매 후 7일 뒤, 혹은 구매 확정 시 적립됩니다.</span>
 										</div>
 									</div>
-									<form
-										class="d-flex flex-column justify-content-center border info w-75 pt-3">
+									<form action="/user/userInfoUpdate" method="post"
+										class="d-flex flex-column justify-content-center border info w-75 pt-3 infoForm">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 										<table class="p-5">
 											<tr>
 												<th>이름</th>
-												<td>우오오</td>
+												<td>${user.name }</td>
 											</tr>
 											<tr>
 												<th>나이<br> / 성별
 												</th>
-												<td>17세 (여성)</td>
+												<td>${user.age }세 ( 
+													<c:if test="${user.gender eq 'M'}">
+													남성
+													</c:if>
+													<c:if test="${user.gender eq 'W' }">
+													여성
+													</c:if> )
+												</td>
 											</tr>
 											<tr>
 												<th>전화번호</th>
-												<td><input type="text" value="01012345678"
-													class="border w-100" placeholder="'-' 없이 입력해주세요" id="tel"></td>
+												<td><input type="text" value="${user.tel }"
+													class="border w-100" placeholder="'-' 없이 입력해주세요" id="tel" name="tel"></td>
 											</tr>
 											<tr>
 												<th>주소</th>
-												<td><input type="text" value="12345"
+												<td><input type="text" value="${user.zip }"
 													class="border w-50" readonly id="sample4_postcode"
-													onclick="sample4_execDaumPostcode()" name="zip">
+													onclick="sample4_execDaumPostcode()" name="zip" readonly>
 													<button type="button"
 														class="border bg-danger round text-white p-2 px-5"
 														onclick="sample4_execDaumPostcode()">우편번호 찾기</button> <input
-													type="text" value="대구광역시 중구 중앙대로 403" class="border w-100"
+													type="text" value="${user.addr }" class="border w-100"
 													readonly id="sample4_roadAddress" name="addr"><br>
-													<input type="text" value="태왕아너스타워 5층 예담직업전문학교"
+													<input type="text" value="${user.detaAddr }"
 													class="border w-100" placeholder="상세주소 입력" id="detaAddr"
 													name="detaAddr"></td>
 											</tr>
@@ -193,7 +205,7 @@ td, th {
 										<div class="alert"></div>
 										<div class="d-flex justify-content-center mb-3">
 											<button class="border px-4 py-2 rounded mx-3" type="button"
-												id="sbmt">완료</button>
+												id="compl">완료</button>
 											<button class="border px-4 py-2 rounded mx-3"
 												onclick="location.href=history.back()">취소</button>
 										</div>
@@ -248,43 +260,49 @@ td, th {
             }).open();
         }
  
-      $('#tel').keyup((e)=>{
-        const telreg = /^[0-9]{11}$/;
-        if(!telreg.test(e.target.value)){
+      const checkTel = ()=>{
+  		const telreg = /^010\d{8}$/;
+        if($('#tel').val()&&!telreg.test($('#tel').val())){
           $('.alert').text('전화번호 양식을 지켜주세요.')
-          return;
         } else {
           $('.alert').text('');
-        }
-      })
-      $('#sbmt').click((e)=>{
-        if($('.alert').text()){
-          return;
-        }
-        if(!$('#detaAddr').val()){
+        }    	  
+      }
+      
+      $('#tel').keyup(checkTel);
+      
+   
+      
+      // user info update
+      $('#compl').click((e)=>{
+    	 e.preventDefault();
+        if($('#sample4_roadAddress').val() && !$('#detaAddr').val()){
           $('.alert').text('상세 주소를 입력해주세요.');
           return;
         } else{
           $('.alert').text('');
         }
+        if(!$('.alert').text()){
+        	$('.infoForm').submit();
+        }
       })
 
+      
+      
+      
+      
         //mouseover 이벤트 : 사이드바 css변경
-        $('.list-group .list-group-item').on('mouseover',function(){
+        $('.list-group .list-group-item:not(.mylist)').on('mouseover',function(){
             $(this).css('background-color','#e53637');
             $(this).find('.list-link').css('color','#ffffff');
         })
 
         //mouseover 이벤트 : 사이드바 css변경
-        $('.list-group .list-group-item').on('mouseout',function(){
+        $('.list-group .list-group-item:not(.mylist)').on('mouseout',function(){
             $(this).css('background-color','#ffffff');
             $(this).find('.list-link').css('color','#000000');
             $(this).find('.list-link.active').css('color','#e53637');
-        })
-        
-        
-        // 유저정보 업데이트 (사진이랑 같이해야될듯.)
-        
+        })      
     </script>
 </body>
 </html>

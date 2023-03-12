@@ -22,7 +22,7 @@ td {
 }
 
 #alert, .pwAlert, .idAlert {
-	color: var(- -danger);
+	color: var(--danger);
 	font-weight: bold;
 	transition: all 0.3s;
 }
@@ -42,6 +42,7 @@ td {
 table {
 	text-align: center;
 }
+
 </style>
 </head>
 
@@ -73,15 +74,15 @@ table {
 						필수 입력 값입니다. )
 					</span>
 					<form action="/signup" class="d-flex justify-content-center"
-						method="post">
+						method="post" id="signupForm">
 						<table style="width: 37vw;">
 							<tbody>
 								<tr>
 									<td class="pilsu"><input type="text"
-										class="border px-10 py-2" placeholder="이메일" required name="id"
+										class="border px-10 py-2" placeholder="아이디" required name="id"
 										id="id" spellcheck="false"> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
-									<td><select class="custom-select emailAddr">
+									<td><select class="custom-select emailAddr p-0 px-2">
 											<option value="" disabled selected>주소 선택</option>
 											<option value="@naver.com">@naver.com</option>
 											<option value="@google.com">@google.com</option>
@@ -98,7 +99,7 @@ table {
 										placeholder="비밀번호" required name="pw" id="pw"
 										spellcheck="false"> <i class="fa fa-check-circle"
 										aria-hidden="true"></i> <span class="d-flex"> ※ 영문자와
-											숫자를 포함한 8~16자로 입력해주세요.</span></td>
+											숫자를 포함한 8~20자로 입력해주세요.</span></td>
 								</tr>
 								<tr>
 									<td colspan="2" class="pilsu"><input
@@ -118,11 +119,11 @@ table {
 								</tr>
 								<tr>
 									<td class="pilsu"><input class="border px-10 py-2"
-										spellcheck="false" type="text" placeholder="출생년도"
+										spellcheck="false" type="text" placeholder="출생년도 4자리 ( 예시 : 1988 )"
 										name="birthDate" id="birthDate" required> <i
 										class="fa fa-check-circle" aria-hidden="true"></i></td>
 									<td class="pilsu"><select
-										class="custom-select px-10 py-2 gender" name="gender">
+										class="custom-select px-10 py-0 gender" name="gender">
 											<option value="" selected disabled>성별</option>
 											<option value="W">여성</option>
 											<option value="M">남성</option>
@@ -133,7 +134,7 @@ table {
 								</tr>
 								<tr>
 									<td colspan="2"><input class="border px-10 py-2"
-										spellcheck="false" type="number"
+										spellcheck="false" type="text"
 										placeholder="전화번호 ('-'없이 입력해주세요.)" name="tel" id="tel"></td>
 								</tr>
 								<tr>
@@ -154,13 +155,13 @@ table {
 								<tr>
 									<td colspan="2"><input class="border px-10 py-2"
 										spellcheck="false" type="text" placeholder="상세주소"
-										id="sample4_detailAddress" name="deta_addr"> <span
+										id="sample4_detailAddress" name="detaAddr"> <span
 										id="guide" style="color: #999; display: none"></span> <span
 										class="d-flex"> ※ 배송 정보로 사용됩니다.</span></td>
 								</tr>
 								<tr>
 									<td colspan="2"><br>
-										<div class="border p-5 text-muted">㈜재준과
+										<div class="border p-5 text-muted small">㈜재준과
 											아이들(http://localhost/ 이하 "회사"이라 함)은 귀하의 개인정보를 중요시하며, 『정보통신망
 											이용촉진 및 정보보호 등에 관한 법률』, 『개인정보 보호법』, 『통신비밀보호법』, 『전기통신사업법』 등
 											정보통신 서비스 제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하고 있습니다. 회사는 본
@@ -198,85 +199,80 @@ table {
 
 	<!-- js -->
 	<script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		let chkState = false;
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
-		let chkState = false;
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
+		let pwState = false;
 		let timer;	
+		const idreg = /^[A-za-z0-9]{6,20}$/;
+		$('#id').keyup(()=>{
+			if(!idreg.test($('#id').val())){
+				$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
+				return;
+			} else {
+				$('.idAlert').text('');
+			}
+		})
 		$('#id, .emailAddr').change((e)=>{
+			let currid = $('#id').val() + $('.emailAddr option:selected').val();
+			if(!currid.endsWith('.com') || !$('#id').val()){
+				return;
+			}
+			if(!idreg.test($('#id').val())){
+				$('.idAlert').text('영문자를 조합해 6~20자로 맞춰주세요.');
+				return;
+			}
 			if(timer){
 				clearTimeout(timer);
 			}
-			timer = setTimeout((e)=>{
-				// ajax
-				let currid = $('#id').val() + $('.emailAddr option:selected').val();
-				if(!currid.endsWith('.com') || !$('#id').val()){
-					return;
-				}
-					$.ajax({
-					url : 'idchk',
-					data : {
-						id : currid 
-					},
-					success : (result)=>{
-						if(result){
-							$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
-<<<<<<< HEAD
-<<<<<<< HEAD
-						} else{
-							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
-						}
-					},
-					
-				})
-			},800)
-=======
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
-							chkState = true;
-						} else{
-							$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
-							chkState = flase;
-						}
-					},	
-				})
-			},500)
-<<<<<<< HEAD
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
+			timer = setTimeout((e)=>{idajaxChk()},800)
 		})
+		
+		const idajaxChk = ()=>{		
+			let currid = $('#id').val() + $('.emailAddr option:selected').val();
+			$.ajax({
+			url : 'idchk',
+			data : {
+				id : currid 
+			},
+			success : (result)=>{
+				if(result){
+					$('.idAlert').text('✔ 사용할 수 있는 아이디입니다.').addClass('text-success')
+					chkState = true;
+				} else{
+					$('.idAlert').text('⛔ 사용할 수 없는 아이디입니다.').removeClass('text-success')
+					chkState = flase;
+				}
+			},	
+		})
+		} 
+		
 	
 		$('.site-btn').click((e) => {
 			e.preventDefault();
 		})
 		
-		$('#pw').keyup((e) => {
-			const pwreg = /^[a-zA-z0-9+]{8,16}$/;
+		$('#pw, #pw2').keyup((e) => {
+			const pwreg = /^(?=.*[A-Za-z$`~!@$!%*#^?&\\(\\)\-_=+])(?=.*\d)[A-Za-z\d$`~!@$!%*#^?&\\(\\)\-_=+]{8,20}$/;
 			if(!pwreg.test($('#pw').val())){
 				$('.pwAlert').text('비밀번호 양식을 지켜주시기 바랍니다.')
-			} else {
-				$('.pwAlert').text('')	
-			}					
-		})
-		
-		$('#pw2').keyup((e) => {
+			}				
 			if ($('#pw').val() != $('#pw2').val()) {
-				$('.pwAlert').text('비밀번호가 맞지 않습니다.')
+				$('.pwAlert').text('비밀번호 확인이 맞지 않습니다.')
 			}
-			if ($('#pw').val() === $('#pw2').val()) {
+			if ($('#pw').val() === $('#pw2').val() && pwreg.test($('#pw').val())) {
 				$('.pwAlert').text('')
+				pwState=true;
 			}
 		})
 		
+		
+		const telreg = /^010\d{8}$/;
+		const birthreg = /^\d{4}$/;
+		$('#tel').keyup(()=>{
+			if($('#tel').val()){
+				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
+			}
+		})
 		$('#sbmt').click((e) => {
-			const telreg = /^[0-9]{11}$/;
-			const idreg = /^[a-zA-Z0-9]{5,12}$/;
-			const birthreg = /^[0-9]{4}$/;
 			e.preventDefault();
 			if (!document.getElementById('rule').checked) {
 				$('#alert').text('개인정보 처리방침에 동의해주세요.');
@@ -291,34 +287,31 @@ table {
 				$('#alert').text('');
 			}
 			if($('#tel').val()){
-				!telreg.test($('#tel').val()) ? $('#alert').text('양식에 맞게 작성해주세요.') : $('#alert').text('')
+				!telreg.test($('#tel').val()) ? $('#alert').text('전화번호 양식이 바르지 않습니다.') : $('#alert').text('')
 			}
-			if(!idreg.test($('#id').val()) || !birthreg.test($('#birthDate').val())){
-				$('#alert').text('양식에 맞게 작성해주세요.');	
+			if(!birthreg.test($('#birthDate').val())){
+				$('#alert').text('출생년도 양식에 맞게 작성해주세요.');	
 				return;
 			} else {
 				$('#alert').text('');
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-			$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
-			$('#sample4_postcode').val(+$('#sample4_postcode').val());
-			$('form').submit();
-			
-			// 정규표현식 좀더 다듬고, id 체크여부, 전화번호는 입력이 된경우에만 정규표현식 거치도록.
-			// 그리고 양식에맞게 작성해라고하니깐 뭐가틀렸는지 사용자가 모른다... 어떻게 알려줘야 짧은 코드로 정확히 알려줄수있을지고민
-=======
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
-			if(chkState && $('#alert').text()==''){
+			if($('#sample4_postcode').val() && !$('#sample4_detailAddress').val()){
+				$('#alert').text('상세주소를 작성해주세요.');
+				return;
+			} else {
+				$('#alert').text('');	
+			}
+			if($('#tel').val() && !telreg.test($('#tel').val())){
+				 $('#alert').text('전화번호 양식이 바르지 않습니다.')
+				 return;
+			} else {				
+				 $('#alert').text('')
+			}
+			if(chkState && !$('#alert').text() && pwState){
 				$('#id').val($('#id').val() + $('.emailAddr option:selected').val());
 				$('#sample4_postcode').val(+$('#sample4_postcode').val());
-				$('form').submit();
+				$('#signupForm').submit();
 			}
-<<<<<<< HEAD
->>>>>>> 1922133eb878c2588ff9db09d85fdcaf4b42f3f5
-=======
->>>>>>> 409c118ceb42620a00e58770e8f146ac630dd5f9
 		})
 	</script>
 
