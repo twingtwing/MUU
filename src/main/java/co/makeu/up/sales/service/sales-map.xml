@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.sales.service.SalesMapper">
+	<select id="salesByYear" resultType="co.makeu.up.sales.service.SalesVO">
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'YYYY') REG_DATE,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03')
+		SELECT L.YEAR, ROUND(SUM(Y.PAY)/10000,0) PAY ,COUNT(Y.PAY) CNT 
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT TO_CHAR(SYSDATE,'YYYY') - LEVEL +1 AS YEAR
+		                           FROM DUAL
+		                           CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY') - LEVEL - 2008) L
+		ON Y.REG_DATE = L.YEAR
+		GROUP BY ROLLUP(L.YEAR)
+		ORDER BY L.YEAR
+	</select>
+	
+	<select id="salesByMonth" parameterType="String" resultType="co.makeu.up.sales.service.SalesVO">
+		WITH MON_SAL AS
+		(SELECT TO_CHAR(S.REG_DATE,'MM') MON,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}
+		 AND S.TLSN_ST_CODE != 'SU03')   
+		SELECT L.MONTH, ROUND(SUM(Y.PAY)/10000,0) PAY ,COUNT(Y.PAY) CNT 
+		FROM MON_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                            CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		ON Y.MON = L.MONTH
+		GROUP BY ROLLUP(L.MONTH)
+		ORDER BY L.MONTH
+	</select>
+	
+	<select id="salesByCtgrYear" resultType="co.makeu.up.sales.service.SalesVO">
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(REG_DATE,'YYYY') REG_DATE, L.UP_CTGR,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03'),
+		YEAR_END AS
+		(SELECT CASE GROUPING(L.YEAR) WHEN 1 THEN 3000 ELSE L.YEAR END AS YEAR, 
+		        CASE GROUPING(Y.UP_CTGR) WHEN 1 THEN 'PAY' ELSE Y.UP_CTGR END AS CTGR, 
+		        ROUND(SUM(Y.PAY)/10000,0) PAY
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT TO_CHAR(SYSDATE,'YYYY') - LEVEL +1 AS YEAR
+		                           FROM DUAL
+		                           CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY') - LEVEL - 2008) L
+		ON Y.REG_DATE = L.YEAR
+		GROUP BY CUBE(L.YEAR,Y.UP_CTGR))
+		SELECT * FROM YEAR_END
+		PIVOT ( SUM(PAY) FOR CTGR IN ('HC01' "HC01",'HC02' "HC02",'HC03' "HC03",'HC04' "HC04",'HC05' "HC05",'HC06' "HC06",'HC07' "HC07",'PAY' "PAY"))
+		order by 1 
+	</select>
+
+	<select id="salesByCtgrMonth" resultType="co.makeu.up.sales.service.SalesVO" parameterType="String">
+		WITH YEAR_SAL AS
+		(SELECT TO_CHAR(REG_DATE,'MM') REG_DATE, L.UP_CTGR,
+		 CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                     WHEN 'C02' THEN S.PAY * 0.1
+		                     ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS U 
+		 ON L.CRE_ID = U.ID
+		 WHERE S.TLSN_ST_CODE != 'SU03'
+         AND TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}),
+		YEAR_END AS
+		(SELECT CASE GROUPING(L.MONTH) WHEN 1 THEN '13' ELSE L.MONTH END AS MONTH, 
+		        CASE GROUPING(Y.UP_CTGR) WHEN 1 THEN 'PAY' ELSE Y.UP_CTGR END AS CTGR, 
+		        ROUND(SUM(Y.PAY)/10000,0) PAY
+		FROM YEAR_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                            CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		ON Y.REG_DATE = L.MONTH
+		GROUP BY CUBE(L.MONTH,Y.UP_CTGR))
+		SELECT * FROM YEAR_END
+		PIVOT ( SUM(PAY) FOR CTGR IN ('HC01' "HC01",'HC02' "HC02",'HC03' "HC03",'HC04' "HC04",'HC05' "HC05",'HC06' "HC06",'HC07' "HC07",'PAY' "PAY"))
+		order by 1 
+	</select>
+	
+	<select id="salesCreator" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
+		SELECT * FROM (    
+			SELECT ROWNUM RN, R.* FROM (
+            SELECT W.*
+            FROM (
+			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
+			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
+			                        FROM LECTURE 
+			                        <if test="selectYear != null and selectYear != ''">
+			                        	WHERE TO_CHAR(START_DATE,'YYYY') = #{selectYear}
+			                        </if>
+			                        <if test="selectYear == null or selectYear == ''">
+			                        	WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			                        </if>
+			                        GROUP BY CRE_ID) L
+			ON U.ID = L.CRE_ID
+			LEFT JOIN (SELECT CRE_ID, COUNT(CRE_ID) CNT, SUM(PAY) PAY
+			           FROM(SELECT L.CRE_ID,CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+			                                                    WHEN 'C02' THEN S.PAY * 0.1
+			                                                    ELSE S.PAY * 0.05 END PAY
+			                FROM SUGANG S JOIN LECTURE L
+			                ON S.LT_NO = L.LT_NO
+			                JOIN USERS U 
+			                ON L.CRE_ID = U.ID
+			                WHERE S.TLSN_ST_CODE != 'SU03'
+			                <if test="selectYear != null and selectYear != ''">
+			                	AND TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear} )
+			                </if>
+			                <if test="selectYear == null or selectYear == ''">
+			               		AND TO_CHAR(S.REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY') )
+			                </if>
+			           GROUP BY CRE_ID
+			           ORDER BY PAY DESC) S
+			ON U.ID = S.CRE_ID
+			WHERE U.AUTH_CODE = 'A03'
+			<if test="yearId != null and yearId != ''">
+				AND U.ID LIKE '%' || #{yearId}  || '%'
+			</if>
+			<if test="yearName != null and yearName != ''">
+				AND U.NAME LIKE '%' || #{yearName}  || '%'
+			</if>
+			) W
+			<if test="orderYearColumn !=null and !orderYearColumn.equals('')">
+	    		ORDER BY ${orderYearColumn} ${orderYearBy}
+			</if>
+		    <if test="orderYearColumn == null or orderYearColumn.equals('')">
+				ORDER BY W.RANK
+			</if>
+        )R
+	    <![CDATA[
+	    WHERE ROWNUM <=  #{pageYearNum} * #{amountYear}
+	      ]]>
+        )
+        <![CDATA[
+	    WHERE RN > (#{pageYearNum}-1) * #{amountYear}
+	      ]]>	
+	</select>
+	
+	<select id="creYearExcel" resultType="co.makeu.up.sales.service.SalesVO" parameterType="co.makeu.up.sales.service.SalesVO">
+		SELECT * FROM
+		(SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH
+		FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
+		                        FROM LECTURE 
+			                    <if test="selectYear != null and selectYear != ''">
+			                       	WHERE TO_CHAR(START_DATE,'YYYY') = #{selectYear}
+			                    </if>
+			                    <if test="selectYear == null or selectYear == ''">
+			                       	WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			                    </if>
+			                    GROUP BY CRE_ID) L
+		ON U.ID = L.CRE_ID
+		LEFT JOIN (SELECT CRE_ID, COUNT(CRE_ID) CNT, SUM(PAY) PAY
+		           FROM(SELECT L.CRE_ID,CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+			                                                WHEN 'C02' THEN S.PAY * 0.1
+			                                                ELSE S.PAY * 0.05 END PAY
+			            FROM SUGANG S JOIN LECTURE L
+			            ON S.LT_NO = L.LT_NO
+			            JOIN USERS U 
+			            ON L.CRE_ID = U.ID
+		                WHERE S.TLSN_ST_CODE != 'SU03'
+			            <if test="selectYear != null and selectYear != ''">
+			               	AND TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear} )
+			            </if>
+			            <if test="selectYear == null or selectYear == ''">
+			           		AND TO_CHAR(S.REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY') )
+			            </if>
+			       GROUP BY CRE_ID
+			       ORDER BY PAY DESC) S
+		ON U.ID = S.CRE_ID
+		WHERE U.AUTH_CODE = 'A03'
+		<if test="yearId != null and yearId != ''">
+			AND U.ID LIKE '%' || #{yearId}  || '%'
+		</if>
+		<if test="yearName != null and yearName != ''">
+			AND U.NAME LIKE '%' || #{yearName}  || '%'
+		</if>)
+		<if test="orderYearColumn !=null and !orderYearColumn.equals('')">
+	   		ORDER BY ${orderYearColumn} ${orderYearBy}
+		</if>
+	    <if test="orderYearColumn == null or orderYearColumn.equals('')">
+			ORDER BY RANK
+		</if>
+	</select>	
+	
+	<select id="salesCreMonth" parameterType="co.makeu.up.sales.service.SalesVO" resultType="co.makeu.up.sales.service.SalesVO">
+		SELECT * FROM (    
+			SELECT ROWNUM RN, R.* FROM (  
+            SELECT  W.* FROM (
+			SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
+			FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
+			                        FROM LECTURE 
+			                        WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			                        <if test="month != null and month != ''">
+                                    	AND TO_CHAR(START_DATE,'MM') = #{month}
+			                        </if>
+			                        <if test="month == null or month == ''">
+			                        	AND TO_CHAR(START_DATE,'MM') = TO_CHAR(SYSDATE,'MM')
+			                        </if>
+			                        GROUP BY CRE_ID) L
+			ON U.ID = L.CRE_ID
+			LEFT JOIN (SELECT CRE_ID, COUNT(CRE_ID) CNT, SUM(PAY) PAY
+			           FROM(SELECT L.CRE_ID,CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+			                                                    WHEN 'C02' THEN S.PAY * 0.1
+			                                                    ELSE S.PAY * 0.05 END PAY
+			                FROM SUGANG S JOIN LECTURE L
+			                ON S.LT_NO = L.LT_NO
+			                JOIN USERS U 
+			                ON L.CRE_ID = U.ID
+			                WHERE S.TLSN_ST_CODE != 'SU03'
+			                AND TO_CHAR(S.REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			                <if test="month != null and month != ''">
+			                	AND TO_CHAR(S.REG_DATE,'MM') = #{month} )
+			                </if>
+			                <if test="month == null or month == ''">
+			               		AND TO_CHAR(S.REG_DATE,'MM') = TO_CHAR(SYSDATE,'MM') )
+			                </if>
+			           GROUP BY CRE_ID
+			           ORDER BY PAY DESC) S
+			ON U.ID = S.CRE_ID
+			WHERE U.AUTH_CODE = 'A03'
+			<if test="monthId != null and monthId != ''">
+				AND U.ID LIKE '%' || #{monthId}  || '%'
+			</if>
+			<if test="monthName != null and monthName != ''">
+				AND U.NAME LIKE '%' || #{monthName}  || '%'
+			</if>
+			) W
+			<if test="orderMonthColumn !=null and !orderMonthColumn.equals('')">
+		   		ORDER BY ${orderMonthColumn} ${orderMonthBy}
+			</if>
+		    <if test="orderMonthColumn == null or orderMonthColumn.equals('')">
+				ORDER BY W.RANK
+			</if>
+        )R
+        <![CDATA[
+	    WHERE ROWNUM <=  #{pageMonthNum} * #{amountMonth}
+	      ]]>
+        )
+        <![CDATA[
+	    WHERE RN > (#{pageMonthNum}-1) * #{amountMonth}
+	      ]]>	
+	</select>
+
+	<select id="creMonthExcel" parameterType="co.makeu.up.sales.service.SalesVO" resultType="co.makeu.up.sales.service.SalesVO">
+		SELECT RANK() OVER(ORDER BY NVL(S.PAY,0) DESC) RANK ,U.ID,U.NAME,NVL(L.CRE_CNT,0) CRE_CNT,NVL(S.CNT,0) CNT, ROUND(NVL(S.PAY,0)/10000,0) PAY, COUNT(*) OVER() LENGTH 
+		FROM USERS U LEFT JOIN (SELECT CRE_ID,COUNT(CRE_ID) CRE_CNT 
+		                        FROM LECTURE 
+			                    WHERE TO_CHAR(START_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+			                    <if test="month != null and month != ''">
+                                   	AND TO_CHAR(START_DATE,'MM') = #{month}
+			                    </if>
+			                    <if test="month == null or month == ''">
+			                       	AND TO_CHAR(START_DATE,'MM') = TO_CHAR(SYSDATE,'MM')
+			                    </if>
+		                        GROUP BY CRE_ID) L
+		ON U.ID = L.CRE_ID
+		LEFT JOIN (SELECT CRE_ID, COUNT(CRE_ID) CNT, SUM(PAY) PAY
+		           FROM(SELECT L.CRE_ID,CASE U.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+			                                                WHEN 'C02' THEN S.PAY * 0.1
+			                                                ELSE S.PAY * 0.05 END PAY
+			            FROM SUGANG S JOIN LECTURE L
+			            ON S.LT_NO = L.LT_NO
+			            JOIN USERS U 
+			            ON L.CRE_ID = U.ID
+		                WHERE S.TLSN_ST_CODE != 'SU03'
+		                AND TO_CHAR(S.REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+		                <if test="month != null and month != ''">
+			                AND TO_CHAR(S.REG_DATE,'MM') = #{month} )
+			            </if>
+			            <if test="month == null or month == ''">
+			               	AND TO_CHAR(S.REG_DATE,'MM') = TO_CHAR(SYSDATE,'MM') )
+			            </if>
+			        GROUP BY CRE_ID
+			        ORDER BY PAY DESC) S
+		ON U.ID = S.CRE_ID
+		WHERE U.AUTH_CODE = 'A03'
+		<if test="monthId != null and monthId != ''">
+			AND U.ID LIKE '%' || #{monthId}  || '%'
+		</if>
+		<if test="monthName != null and monthName != ''">
+			AND U.NAME LIKE '%' || #{monthName}  || '%'
+		</if>
+		<if test="orderMonthColumn !=null and !orderMonthColumn.equals('')">
+	   		ORDER BY ${orderMonthColumn} ${orderMonthBy}
+		</if>
+	    <if test="orderMonthColumn == null or orderMonthColumn.equals('')">
+			ORDER BY RANK
+		</if>
+	</select>
+	
+	<select id="salesGender" resultType="co.makeu.up.sales.service.SalesVO" parameterType="String">
+		WITH YEAR_SAL AS
+		(SELECT U.GENDER, TO_CHAR(S.REG_DATE,'MM') REG_DATE,
+		        CASE C.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                            WHEN 'C02' THEN S.PAY * 0.1
+		                            ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS C 
+		 ON L.CRE_ID = C.ID
+		 JOIN USERS U
+		 ON S.ID = U.ID
+		 WHERE TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}
+		 AND S.TLSN_ST_CODE != 'SU03' ),
+		YEAR_END AS
+		(SELECT CASE GROUPING(L.MONTH) WHEN 1 THEN '13' ELSE L.MONTH END AS MONTH, 
+				CASE GROUPING(Y.GENDER) WHEN 1 THEN 'PAY' ELSE Y.GENDER END AS GENDER, 
+		        ROUND(SUM(Y.PAY)/10000,0) PAY
+		 FROM YEAR_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                             CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		 ON Y.REG_DATE = L.MONTH
+		 GROUP BY CUBE(L.MONTH,Y.GENDER))
+		SELECT * FROM YEAR_END
+		PIVOT ( SUM(PAY) FOR GENDER IN ('W' "WOMAN",'M' "MAN",'PAY' "PAY"))
+		order by 1 	
+	</select>
+	
+	<select id="salesAge" resultType="co.makeu.up.sales.service.SalesVO" parameterType="String">
+		WITH YEAR_SAL AS
+		(SELECT CASE 
+		        WHEN TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(U.BIRTH_DATE,'YYYY')+1,-1)  = 0 THEN 10
+		        WHEN TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(U.BIRTH_DATE,'YYYY')+1,-1)  > 60 THEN 60
+		        ELSE TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(U.BIRTH_DATE,'YYYY')+1,-1)  END BIRTH_DATE, 
+		        TO_CHAR(S.REG_DATE,'MM') REG_DATE,
+		        CASE C.CRE_GRD_CODE WHEN 'C01' THEN S.PAY * 0.15
+		                            WHEN 'C02' THEN S.PAY * 0.1
+		                            ELSE S.PAY * 0.05 END PAY
+		 FROM SUGANG S JOIN LECTURE L
+		 ON S.LT_NO = L.LT_NO
+		 JOIN USERS C 
+		 ON L.CRE_ID = C.ID
+		 JOIN USERS U
+		 ON S.ID = U.ID
+		 WHERE TO_CHAR(S.REG_DATE,'YYYY') = #{selectYear}
+		 AND S.TLSN_ST_CODE != 'SU03' ),
+		YEAR_END AS
+		(SELECT CASE GROUPING(L.MONTH) WHEN 1 THEN '13' ELSE L.MONTH END AS MONTH, 
+				CASE GROUPING(TO_CHAR(Y.BIRTH_DATE)) WHEN 1 THEN 'PAY' ELSE TO_CHAR(Y.BIRTH_DATE) END AS BIRTH_DATE, 
+		        ROUND(SUM(Y.PAY)/10000,0) PAY
+		 FROM YEAR_SAL Y RIGHT JOIN (SELECT LPAD(LEVEL,2,0) MONTH FROM DUAL
+		                             CONNECT BY LEVEL <![CDATA[<=]]> 12) L
+		 ON Y.REG_DATE = L.MONTH
+		 GROUP BY CUBE(L.MONTH,TO_CHAR(Y.BIRTH_DATE)))
+		SELECT * FROM YEAR_END
+		PIVOT ( SUM(PAY) FOR BIRTH_DATE IN ('10' "AGE10",'20' "AGE20",'30' "AGE30",'40' "AGE40",'50' "AGE50",'60' "AGE60",'PAY' "PAY"))
+		order by 1 	
+  </select>
+
+	<select id="lectureTop3" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT L.TTL,GETUSERNAME(L.CRE_ID) NAME,L.THUMB, COUNT(*) CNT 
+		FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO = L.LT_NO
+		GROUP BY L.TTL, CRE_ID, L.THUMB
+		ORDER BY CNT DESC
+	</select>
+	
+	<select id="creatorTop3" resultType="co.makeu.up.sugang.service.SugangVO">
+		SELECT U.PHT,L.* FROM (SELECT GETUSERNAME(L.CRE_ID) NAME,L.CRE_ID ,SUM(S.PAY) PAY FROM SUGANG S JOIN LECTURE L
+		ON S.LT_NO= L.LT_NO
+		WHERE TRUNC(REG_DATE) <![CDATA[>]]> TRUNC(ADD_MONTHS(SYSDATE,-12))
+		AND S.TLSN_ST_CODE != 'SU03'
+		GROUP BY L.CRE_ID
+		ORDER BY PAY DESC) L
+		JOIN USERS U
+		ON L.CRE_ID = U.ID
+	</select>
+	
+	<select id="countList" resultType="co.makeu.up.sales.service.SalesVO">
+		SELECT '총 회원 수' TABLE_NAME,COUNT(ID) CNT FROM USERS 
+		UNION 
+		SELECT '총 수강 횟수',COUNT(TLSN_NO)FROM SUGANG
+		WHERE TLSN_ST_CODE != 'SU03'
+		UNION
+		SELECT '총 강의 개수',COUNT(LT_NO) FROM LECTURE
+		UNION
+		<![CDATA[
+		SELECT '최근 한 달<br>수강 횟수',COUNT(TLSN_NO) FROM SUGANG
+		WHERE REG_DATE > ADD_MONTHS(SYSDATE,-1)
+		AND TLSN_ST_CODE != 'SU03'
+		UNION
+		SELECT '최근 한 달<br>가입한 회원 수',COUNT(ID) FROM USERS
+		WHERE JOIN_DATE > ADD_MONTHS(SYSDATE,-1)
+		UNION
+	    ]]>
+		SELECT '총 크리에이터 수',COUNT(ID) FROM USERS
+		WHERE AUTH_CODE = 'A03'
+		ORDER BY 1
+	</select>
+	
+	<select id="recent7days" resultType="co.makeu.up.sales.service.SalesVO">
+		SELECT  L.DAY ,ROUND(SUM(S.PAY)/10000,0) PAY,COUNT(S.TLSN_NO) CNT
+		FROM SUGANG S RIGHT JOIN (SELECT TO_CHAR((SYSDATE-LEVEL),'MM/DD') DAY FROM DUAL
+                                  CONNECT BY LEVEL <![CDATA[<=]]> 7  ) L
+		 ON TO_CHAR(S.REG_DATE,'MM/DD') = L.DAY
+		AND S.TLSN_ST_CODE != 'SU03'
+		GROUP BY L.DAY
+		ORDER BY DAY
+	</select>
+	
+	<select id="thisYearSales" resultType="co.makeu.up.sales.service.SalesVO">
+		SELECT TO_NUMBER(M.MONTH) MON,NVL(P.PAY,0) PAY ,NVL(P.CNT,0) CNT 
+			FROM (SELECT TO_CHAR(REG_DATE,'MM') MON ,SUM(PAY) PAY,(COUNT(TLSN_NO)) CNT
+				FROM SUGANG WHERE TO_CHAR(REG_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+				GROUP BY TO_CHAR(REG_DATE,'MM')
+				ORDER BY MON) P 
+		RIGHT OUTER JOIN (SELECT LPAD(LEVEL,2,0) MONTH 
+							FROM DUAL CONNECT BY LEVEL <![CDATA[<=]]>12) M
+		ON P.MON = M.MONTH
+		ORDER BY M.MONTH
+	</select>
+	
+	<select id="genderList" resultType="co.makeu.up.sales.service.SalesVO">
+        SELECT * FROM
+        (SELECT U.GENDER, L.AGE10
+         FROM (SELECT GENDER,CASE 
+                        WHEN TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH_DATE,'YYYY')+1,-1)  = 0 THEN 10
+                        WHEN TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH_DATE,'YYYY')+1,-1)  > 60 THEN 60
+                        ELSE TRUNC(TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH_DATE,'YYYY')+1,-1)  END BIRTH_DATE 
+              FROM USERS) U 
+        RIGHT JOIN (SELECT 10 * LEVEL AGE10 FROM DUAL
+                               CONNECT BY LEVEL <![CDATA[<]]> 7) L
+        ON U.BIRTH_DATE = L.AGE10)
+        PIVOT (COUNT(*) FOR GENDER IN('W' "WOMAN" ,'M' "MAN"))
+        ORDER BY 1	
+	</select>
+</mapper>

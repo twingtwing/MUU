@@ -16,10 +16,15 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	
+	<!-- excel, pdf resolver -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
 	<!-- tiles settings -->
 	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="viewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
-		<beans:property name="order" value="1" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 	<beans:bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -35,7 +40,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2" />
+		<beans:property name="order" value="3" />
 	</beans:bean>
 	
 	

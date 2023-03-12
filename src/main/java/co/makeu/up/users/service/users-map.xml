@@ -11,4 +11,114 @@
 	<select id="ajaxChkId" parameterType="co.makeu.up.users.service.UsersVO" resultType="String">
 		SELECT ID FROM USERS WHERE ID = #{id}
 	</select>
+	<select id="selectUsers" parameterType="co.makeu.up.users.service.UsersVO" resultType="co.makeu.up.users.service.UsersVO">
+		SELECT * FROM USERS_V WHERE ID = #{id}
+	</select>
+	<update id="changePw" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS SET PW = #{pw} WHERE ID = #{id}
+	</update>
+	<update id="updateUserInfo" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS SET TEL = #{tel}, ZIP = #{zip}, ADDR = #{addr}, DETA_ADDR=#{detaAddr} WHERE ID = #{id}
+	</update>
+	<update id="updateUserProfileImg" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS SET PHT = #{pht} WHERE ID = #{id}
+	</update>
+	<select id="chkCreFarewell" parameterType="String" resultType="Date">
+		SELECT EXP_DATE
+		FROM LECTURE 
+		WHERE CRE_ID = #{id} AND EXP_DATE>SYSDATE
+		ORDER BY 1 DESC
+	</select>
+	<update id="deleteUsers" parameterType="String">
+		UPDATE USERS 
+		SET PW = NULL,
+		NAME = ' ',
+		BIRTH_DATE = NULL,
+		TEL = NULL,
+		GENDER =NULL,
+		ZIP = NULL,
+		ADDR=NULL,
+		DETA_ADDR=NULL,
+		PHT=NULL,
+		POINT=NULL,
+		CRE_INTRO=NULL,
+		U_ST_CODE = 0
+		WHERE ID = #{id}
+	</update>
+	<select id="usersList" resultType="co.makeu.up.users.service.UsersVO" parameterType="co.makeu.up.users.service.UsersVO">
+		SELECT * FROM (SELECT ROWNUM RN, W.* FROM (
+		    SELECT U.ID,U.NAME,U.AUTH_CODE,U.U_GRD_CODE ,U.CRE_GRD_CODE,U.TEL,U.GENDER,U.ZIP,U.ADDR,U.DETA_ADDR,U.PHT,TO_CHAR(U.JOIN_DATE,'YYYY-MM-DD') JOIN_DATE ,U.U_ST_CODE,U.POINT, COUNT(*) OVER() CNT 
+		    FROM USERS_V U
+		    WHERE AUTH_CODE != 'A01'
+		    AND (ID LIKE '%'||#{id}||'%'
+			    AND NAME LIKE '%'||#{name}||'%'
+			    <if test="authCode != null and authCode.equals('A03')">
+			    AND AUTH_CODE = 'A03'
+			    </if>
+			    <if test="tel != null and !tel.equals('')" >
+			    AND TEL like '%'||#{tel}||'%'
+			    </if>
+			    <if test="gender != null and !gender.equals('')" >
+			    AND GENDER = #{gender}
+			    </if>
+			    <if test="pastDate != null and !pastDate.equals('')">
+			    AND TRUNC(TO_DATE(#{pastDate},'YYYY-MM-DD')) <![CDATA[<]]> TRUNC(JOIN_DATE)
+			    </if>
+			    <if test="recentDate !=null and !recentDate.equals('')">
+			    AND TRUNC(JOIN_DATE) <![CDATA[<]]> TRUNC(TO_DATE(#{recentDate},'YYYY-MM-DD'))
+			    </if>
+			    <if test="uStCode != null and !uStCode.equals('')">
+			    AND U_ST_CODE = #{uStCode}
+			    </if>
+			    <if test="uGrdCodeList != null and uGrdCodeList.length!=0">
+			    	AND U_GRD_CODE IN 
+			    	<foreach collection="uGrdCodeList" item="uGrdCodeList" open="(" close=")" separator=",">
+			    		#{uGrdCodeList}
+			    	</foreach>
+			    </if>
+			    <if test="creGrdCodeList != null and creGrdCodeList.length!=0">
+			    	AND CRE_GRD_CODE IN 
+			    	<foreach collection="creGrdCodeList" item="creGrdCodeList" open="(" close=")" separator=",">
+			    		#{creGrdCodeList}
+			    	</foreach>
+			    </if>
+				)			    
+			    <if test="orderColumn !=null and !orderColumn.equals('')">
+			    	ORDER BY ${orderColumn} ${orderBy}
+			    </if>
+			    <if test="orderColumn == null or orderColumn.equals('')">
+			    	ORDER BY JOIN_DATE DESC
+			    </if>
+			) W )
+		<if test="page > 0">
+		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
+		AND RN <![CDATA[<=]]> #{page} * 10
+		</if>
+		<if test="page == 0">
+		WHERE RN BETWEEN 1 AND #{endrow}
+		</if>
+	</select>
+	
+	<update id="userPointUpdate" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS 
+		SET POINT = POINT - #{point}
+		WHERE ID = #{id}
+	</update>
+	<update id="userToCreator" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS
+		SET CRE_GRD_CODE = 'C01',
+		AUTH_CODE = 'A03',
+		TEL = #{tel},
+		CRE_INTRO = #{creIntro}
+		WHERE ID = #{id}
+	</update>
+	<select id="userPwChck" parameterType="String" resultType="String">
+		SELECT PW FROM USERS
+		WHERE ID = #{id}
+	</select>
+	<update id="userPointAdd" parameterType="co.makeu.up.users.service.UsersVO">
+		UPDATE USERS
+		SET POINT = POINT + #{point}
+		WHERE ID = #{id}
+	</update>
 </mapper>

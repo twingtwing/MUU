@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.extendedLecture.service.ExtendedLetureMapper">
+	
+	<select id="lectureList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, L.w_count
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
+		ON J.LT_NO = R.LT_NO
+		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
+		ON J.LT_NO = W.LT_NO
+		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
+		ON J.LT_NO = L.LT_NO
+		WHERE J.LT_ST_CODE = 'L01'
+		AND TRUNC(EXP_DATE) &gt;= TRUNC(SYSDATE)
+		<if test="upCtgr != '' and upCtgr != null">AND J.UP_CTGR = #{upCtgr}</if>
+		<if test="downCtgr != '' and downCtgr != null">AND J.DOWN_CTGR = #{downCtgr}</if>
+		ORDER BY J.LT_NO DESC
+	</select>
+	
+	<select id="ctgrList" resultType="co.makeu.up.ctgr.service.CtgrVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
+		SELECT C.* , U.NAME UP_NAME 
+		FROM CTGR C JOIN CTGR U
+		ON C.UP_CTGR = U.CTGR_ID
+		WHERE C.UP_CTGR = #{upCtgr} 
+		ORDER BY C.CTGR_ID
+	</select>
+	
+	<select id="ctgrDetail" resultType="co.makeu.up.ctgr.service.CtgrVO">
+		SELECT C.* , U.NAME UP_NAME 
+		FROM CTGR C JOIN CTGR U
+		ON C.UP_CTGR = U.CTGR_ID
+		WHERE C.CTGR_ID = #{downCtgr}
+	</select>
+	
+	<select id="lectureDetail" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		WITH
+		LECT_DETA AS(
+		SELECT L.* ,U.name,U.cre_intro,U.PHT,NVL2(W.ID,'Y','N') WASH, C.w_count
+		FROM LECTURE L JOIN USERS U
+		ON L.CRE_ID = U.ID
+		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
+		ON L.LT_NO = W.LT_NO
+		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) C
+		ON L.LT_NO = C.LT_NO
+		WHERE L.LT_NO = #{ltNo})
+		SELECT L.*,NVL2(S.TLSN_NO,'Y','N') MY_SUGANG 
+		FROM LECT_DETA L LEFT JOIN (SELECT * FROM SUGANG 
+									WHERE ID = #{id} AND TLSN_ST_CODE = 'SU01'
+									AND TRUNC(EXP_DATE) <![CDATA[>=]]> TRUNC(SYSDATE)) S
+		ON L.LT_NO = S.LT_NO
+	</select>
+	
+	<select id="lessonList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lesson.service.LessonVO">
+		SELECT * FROM LESSON
+		WHERE LT_NO = #{ltNo}	
+		ORDER BY LSN_NO	
+	</select>
+	
+	<select id="reviewList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.review.service.ReviewVO">
+		SELECT R.*,U.NAME,U.PHT
+		,CASE R.WRITER WHEN #{id} THEN 'Y'
+		 ELSE 'N' END MY_REVIEW
+		FROM REVIEW R JOIN USERS U
+		ON R.WRITER = U.ID
+		WHERE R.LT_NO = #{ltNo}
+		ORDER BY R.RV_NO DESC
+	</select>
+	
+	<select id="ltQnaList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.ltqna.service.LtQnaVO">
+		SELECT Q.*, U.NAME
+		,CASE Q.WRITER WHEN #{id} THEN 'Y'
+		 ELSE 'N' END MY_QNA
+		FROM LT_QNA Q JOIN USERS U
+        ON Q.WRITER = U.ID
+		WHERE Q.LT_NO = #{ltNo}
+		ORDER BY Q.QNA_NO DESC
+	</select>
+	
+	<resultMap id="noticeFile" type="co.makeu.up.notice.service.NoticeVO">
+		<id property="ntNo" column="NT_NO"/>
+		<result property="wrDate" column="WR_DATE"/>
+		<result property="ttl" column="TTL"/>
+		<result property="content" column="CONTENT"/>
+		<result property="hits" column="HITS"/>
+		<result property="ltNo" column="LT_NO"/>
+		<result property="fileNo" column="FILE_NO"/>
+		<result property="modDate" column="MOD_DATE"/>
+		<result property="ntStCode" column="NT_ST_CODE"/>
+		<collection property="fileList" resultMap="fileList"/>
+	</resultMap>
+	
+	<resultMap type="co.makeu.up.detafile.service.DetafileVO" id="fileList">
+		<result property="detaNo" column="DETA_NO"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="phyPath" column="PHY_PATH"/>
+		<result property="fileNo" column="FILE_NO"/>
+	</resultMap>
+	
+	<select id="noticeList" resultMap="noticeFile" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.notice.service.NoticeVO">
+		SELECT N.* ,D.FILE_PATH ,D.PHY_PATH ,D.DETA_NO
+		FROM NOTICE N LEFT JOIN DETA_FILE D
+		ON N.FILE_NO = D.FILE_NO
+		WHERE LT_NO = #{ltNo}
+	</select>
+	
+	<select id="creatorDetail" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
+		SELECT * 
+		FROM ( SELECT U.ID CRE_ID, U.NAME, U.CRE_INTRO, L.LT_ST_CODE, #{id} id
+			   FROM USERS U JOIN LECTURE L
+			   ON U.ID = L.CRE_ID
+			   WHERE U.ID = #{creId})
+		PIVOT ( COUNT(*) FOR LT_ST_CODE IN('L01' OPEN_COUNT,'L03' CLOSE_COUNT,'L04' REPORT_COUNT) )
+	</select>
+	
+	<select id="lecList" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+        WITH 
+        LEC_DETA AS(
+        SELECT J.*,R.STAR,R.R_COUNT,NVL2(W.ID,'Y','N') WASH, l.w_count
+		FROM LECTURE J LEFT JOIN (SELECT LT_NO ,ROUND(AVG(STAR)) STAR, COUNT(*) R_COUNT FROM REVIEW GROUP BY LT_NO) R
+		ON J.LT_NO = R.LT_NO
+		LEFT JOIN (SELECT * FROM WISHLIST WHERE ID = #{id}) W
+		ON J.LT_NO = W.LT_NO
+		LEFT JOIN (SELECT lt_no, count(lt_no) w_count from WISHLIST group by lt_no) L
+		ON J.LT_NO = L.LT_NO
+		WHERE J.LT_ST_CODE = 'L01'
+		AND TRUNC(J.EXP_DATE) &gt;= TRUNC(SYSDATE)
+        AND J.CRE_ID = #{creId}
+		ORDER BY J.LT_NO)
+        SELECT L.LT_NO,L.TTL,L.THUMB,L.PRC,L.KIT_PRC,L.STAR,L.R_COUNT,L.WASH,L.w_count,C.NAME DOWN_CTGR, C.UP_NAME UP_CTGR
+        FROM LEC_DETA L JOIN (SELECT C.* , U.NAME UP_NAME 
+                                FROM CTGR C JOIN CTGR U
+                                ON C.UP_CTGR = U.CTGR_ID) C
+        ON L.DOWN_CTGR = C.CTGR_ID
+	</select>
+	
+	<select id="lecPay" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE
+		WHERE LT_NO = #{ltNo}
+	</select>
+	
+	<select id="userAddr" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.users.service.UsersVO">
+		SELECT * FROM USERS
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="thisWeekLecture" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+	    SELECT * FROM(
+	        SELECT  ROW_NUMBER() OVER(ORDER BY S.COUNT DESC) RANK ,S.LT_NO ,L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR,R.R_COUNT,R.STAR
+	        FROM (SELECT LT_NO , COUNT(LT_NO) COUNT
+	              FROM SUGANG 
+	              WHERE REG_DATE BETWEEN SYSDATE-7 AND SYSDATE -1
+	              GROUP BY LT_NO) S JOIN LECTURE L
+	        ON S.LT_NO = L.LT_NO      
+	        JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
+	              FROM CTGR C JOIN CTGR U
+	              ON C.UP_CTGR = U.CTGR_ID) C
+	        ON L.DOWN_CTGR =  C.CTGR_ID
+	        LEFT JOIN (SELECT LT_NO, COUNT(LT_NO) R_COUNT, ROUND(AVG(STAR)) STAR
+	                   FROM REVIEW
+	                   GROUP BY LT_NO) R
+	        ON R.LT_NO = L.LT_NO
+			WHERE L.LT_ST_CODE = 'L01'
+			AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)) 
+	    WHERE RANK <![CDATA[<]]> 7	
+	</select>
+	
+	<select id="bestCtgr" parameterType="String" resultType="String">
+	    SELECT UP_CTGR FROM (
+	    SELECT RANK()OVER(ORDER BY COUNT(L.UP_CTGR) DESC) RANK,L.UP_CTGR
+	    FROM SUGANG S JOIN LECTURE L
+	    ON S.LT_NO = L.LT_NO
+	    <if test="time == 'week'">
+		    WHERE TO_CHAR(S.REG_DATE, 'YYYYMMDD') BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+	    </if>
+	    <if test="time =='month'">
+		    WHERE TO_CHAR(S.REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
+	    </if>
+	    GROUP BY L.UP_CTGR) 
+	    WHERE RANK = 1	
+	</select>
+	
+	<select id="bestCtgrLecture" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT  L.lt_no ,L.TTL, L.THUMB,L.UP_CTGR CTGR_ID,C.UP_CTGR,C.DOWN_CTGR,R.R_COUNT,R.STAR
+        FROM LECTURE L JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
+                             FROM CTGR C JOIN CTGR U
+                             ON C.UP_CTGR = U.CTGR_ID) C
+        ON L.DOWN_CTGR =  C.CTGR_ID
+        LEFT JOIN (SELECT LT_NO, COUNT(LT_NO) R_COUNT, ROUND(AVG(STAR)) STAR
+                   FROM REVIEW
+                   GROUP BY LT_NO) R
+        ON R.LT_NO = L.LT_NO
+        WHERE L.UP_CTGR = #{upCtgr}
+        AND L.LT_ST_CODE = 'L01'
+        AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)
+	</select>
+	
+	<select id="newLecture" resultType="co.makeu.up.lecture.service.LectureVO" parameterType="co.makeu.up.extendedLecture.service.ExtendedLectureVO">
+	    SELECT lt_no , TTL, THUMB ,UP_CTGR,DOWN_CTGR,R_COUNT,STAR
+	    FROM (SELECT  ROWNUM ,L.lt_no ,L.TTL, L.THUMB ,C.UP_CTGR,C.DOWN_CTGR,R.R_COUNT,R.STAR 
+	          FROM LECTURE L JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
+	                               FROM CTGR C JOIN CTGR U
+	                               ON C.UP_CTGR = U.CTGR_ID) C
+	          ON L.DOWN_CTGR =  C.CTGR_ID
+	          LEFT JOIN (SELECT LT_NO, COUNT(LT_NO) R_COUNT, ROUND(AVG(STAR)) STAR
+	                     FROM REVIEW
+	                     GROUP BY LT_NO) R
+	          ON R.LT_NO = L.LT_NO
+	          WHERE L.LT_ST_CODE = 'L01'
+	          AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE)
+	          ORDER BY L.START_DATE DESC)
+	    WHERE ROWNUM <![CDATA[<]]> 7	
+	</select>
+	
+	<select id="popularLecture" resultType="co.makeu.up.lecture.service.LectureVO" parameterType="String">
+      SELECT * FROM(
+        SELECT  ROW_NUMBER() OVER(ORDER BY S.COUNT DESC) RANK ,S.LT_NO ,L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR,R.R_COUNT,R.STAR 
+        FROM (SELECT LT_NO , COUNT(LT_NO) COUNT
+              FROM SUGANG 
+              <if test="time == 'day'">
+	          	WHERE TO_CHAR(REG_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE -1,'YYYY-MM-DD')
+              </if>
+              <if test="time == 'week'">
+              	WHERE to_char(reg_date, 'YYYYMMDD') BETWEEN TO_CHAR(TRUNC(SYSDATE, 'iw') - 7, 'YYYYMMDD') AND TO_CHAR(TRUNC(SYSDATE, 'iw') - 1, 'YYYYMMDD')
+              </if>
+              <if test="time == 'month'">
+              	WHERE TO_CHAR(REG_DATE,'YYYY/MM') = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY/MM')
+              </if>
+              GROUP BY LT_NO) S JOIN LECTURE L
+        ON S.LT_NO = L.LT_NO      
+        JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
+              FROM CTGR C JOIN CTGR U
+              ON C.UP_CTGR = U.CTGR_ID) C
+        ON L.DOWN_CTGR =  C.CTGR_ID
+        LEFT JOIN (SELECT LT_NO, COUNT(LT_NO) R_COUNT, ROUND(AVG(STAR)) STAR
+                   FROM REVIEW
+                   GROUP BY LT_NO) R
+        ON R.LT_NO = L.LT_NO
+        WHERE L.LT_ST_CODE = 'L01'
+        AND TRUNC(L.EXP_DATE) &gt;= TRUNC(SYSDATE) ) 
+    	WHERE RANK <![CDATA[<]]> 3	
+	</select>
+	
+	<select id="randomLecture" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * 
+	    FROM(SELECT L.TTL, L.THUMB,C.UP_CTGR,C.DOWN_CTGR,L.LT_NO
+	         FROM LECTURE  L JOIN (SELECT C.CTGR_ID,C.NAME DOWN_CTGR, U.NAME UP_CTGR
+	                               FROM CTGR C JOIN CTGR U
+	                               ON C.UP_CTGR = U.CTGR_ID) C
+	         ON L.DOWN_CTGR =  C.CTGR_ID
+	         WHERE L.LT_ST_CODE = 'L01'
+	         AND TRUNC(L.EXP_DATE) <![CDATA[>=]]> TRUNC(SYSDATE)
+	         ORDER BY SYS.dbms_random.VALUE)
+	    WHERE ROWNUM <![CDATA[<]]> 4
+	</select>
+</mapper>

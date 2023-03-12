@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="page-wrapper m-0">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
@@ -18,20 +16,14 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+            
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Sales Cards  -->
@@ -58,51 +50,28 @@
                                         <div class="flot-chart">
                                             <canvas id="recent7days" width="10" height="5"></canvas>
                                         </div>
+                                        <div>
+                                        	<p class="text-muted text-right font-weight-bold">( 판매량 단위 : 만 원 )</p>
+                                        </div>
                                     </div>
                                     <div class="col-lg-5">
                                         <div class="row">
-                                            <div class="col-6 my-2">
-                                                <div class="bg-dark p-10 text-white text-center h-100">
-                                                    <i class="fa fa-user m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">2540</h5>
-                                                    <small class="font-light">총 회원 수</small>
+                                        <c:forEach items="${home.countList }" var="c" varStatus="var">
+                                            <div class="col-6 mb-2" style="height: 110px;">
+                                                <div class="bg-dark p-10 text-white h-100 d-flex align-items-center justify-content-center">
+                                                    <div class="text-center">
+                                                    	<c:if test="${var.index eq 0 }"><i class="fa fa-cart-plus m-0 font-16"></i></c:if>
+                                                    	<c:if test="${var.index eq 1 }"><i class="fa fa-plus m-0 m-b-5 font-16"></i></c:if>
+                                                    	<c:if test="${var.index eq 2 }"><i class="fa fa-globe m-0 m-b-5 font-16"></i></c:if>
+                                                    	<c:if test="${var.index eq 3 }"><i class="fa fa-user m-0 m-b-5 font-16"></i></c:if>
+                                                    	<c:if test="${var.index eq 4 }"><i class="fa fa-table m-0 m-b-5 font-16"></i></c:if>
+			                                            <c:if test="${var.index eq 5 }"><i class="fa fa-tag m-0 font-16"></i></c:if>
+                                                        <h5 class="mb-0 ">${c.cnt }</h5>
+                                                        <small class="font-light">${c.tableName }</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 my-2">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-plus m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">120</h5>
-                                                    <small class="font-light">총 수강횟수</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-cart-plus m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">656</h5>
-                                                    <small class="font-light">크리에이터<br>총 강의 개수</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-tag m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">9540</h5>
-                                                    <small class="font-light">최근 한 달<br>수강횟수</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-table m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">100</h5>
-                                                    <small class="font-light">최근 가입한<br>회원 수</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 my-2 m-t-15">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-globe m-b-5 font-16"></i>
-                                                    <h5 class="m-b-0 m-t-5">8540</h5>
-                                                    <small class="font-light">최근 등록된<br>크리에이터 수</small>
-                                                </div>
-                                            </div>
+                                        </c:forEach>
                                         </div>
                                     </div>
                                     <!-- column -->
@@ -111,14 +80,56 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- Sales chart -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Recent comment and chats -->
-                <!-- ============================================================== -->
+
                 <div class="row">
-                    <!-- 왼쪽 -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chat-box scrollable">
+                                    <h4 class="card-title">크리에이터 매출 TOP3</h4>
+                                    <h5 class="card-subtitle">최근 1년 기준</h5>
+                                    <!--크리에이터 프로필-->
+                                    <c:forEach begin="0" end="2" items="${home.creatorTop3 }" var="c">
+                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
+                                        <div class="p-2"><img  src="${c.pht }<c:if test="${empty c.pht }">/resources/img/profile.png</c:if>" alt="user" width="50" height="50"
+                                                class="rounded-circle"></div>
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-medium">${c.name } ( ${c.creId } )</h6>
+                                            <div>매출액: <fmt:formatNumber>${c.pay }</fmt:formatNumber>원 ( 수수료 제외 ) 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">역대 인기 강의 TOP 3</h4>
+                                <h5 class="card-subtitle">가장 사랑받았던 강의들</h5>
+                                <div class="chat-box scrollable">
+                                    <!--강의-->
+                                    <c:forEach begin="0" end="2" items="${home.lectureTop3 }" var="l">
+                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
+                                        <div class="p-2"><img src="${l.thumb }" alt="강의썸네일" width="70"
+                                                height="50" class="rounded c"></div>
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-medium m-0">${l.ttl }</h6>
+                                            <span>크리에이터 : <strong>${l.name }</strong></span>
+                                        </div>
+                                    </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- column -->
                     <div class="col-lg-6">
                         <!-- Card -->
                         <div class="card">
@@ -127,59 +138,11 @@
                                 <canvas id="thisyear" width="10" height="5"></canvas>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="chat-box scrollable">
-                                    <h4 class="card-title">크리에이터 매출 TOP3</h4>
-                                    <h5 class="card-subtitle">최근 1년 기준</h5>
-                                    <!--크리에이터 프로필-->
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
-                                                class="rounded-circle"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
-                                                class="rounded-circle"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/assets/images/users/1.jpg" alt="user" width="50"
-                                                class="rounded-circle"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium">서강중</h6>
-                                            <div>개설 강의:
-                                                <span>&lt; 리눅스, 알면 쉽다 &gt;</span> <span>&lt; PL/SQL &gt;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- card -->
-                        <div class="card flex-row">
-                            <div class="card-body col-lg-6">
-                                <h4 class="card-title">카테고리 점유율</h4>
-                                <canvas id="ctgr"></canvas>
-                            </div>
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h4 class="card-title">카테고리별 연령대 분포</h4>
-                                <canvas id="ctgrByOld"></canvas>
-                            </div>
-                        </div>
+                        
+                        
                     </div>
+                    <!-- column -->
 
-					<!-- 오른쪽 -->
                     <div class="col-lg-6">
                         <!-- card -->
                         <div class="card">
@@ -188,183 +151,141 @@
                                 <canvas id="gender"></canvas>
                             </div>
                         </div>
-                        <!-- Card -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">역대 인기 강의 TOP 3</h4>
-                                <h5 class="card-subtitle">가장 사랑받았던 강의들</h5>
-                                <div class="chat-box scrollable">
-                                    <!--강의-->
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
-                                                height="50" class="rounded c"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
-                                                height="50" class="rounded c"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row comment-row m-t-0 align-items-center">
-                                        <div class="p-2"><img src="/resources/img/anime/review-3.jpg" alt="user" width="70"
-                                                height="50" class="rounded c"></div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium m-0">개도 하는 뜨개질</h6>
-                                            <span>크리에이터 : <strong>김뜨개</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">카테고리별 성별 분포</h4>
-                                <canvas id="ctgrByGender" class="h-100"></canvas>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <!-- ============================================================== -->
+            <!-- Recent comment and chats -->
+            <!-- ============================================================== -->
+            </div>            
+              
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+	    let cnt7 = []; 
+	    let pay7 = [];
+	    let day7= [];
+	    $.ajax({
+	    	url : '/admin/recent7Chart',
+	    	dataType : 'json',
+	    	async : false,
+	    })
+	    .done((r)=>{
+		    r.forEach((v)=>{
+		    	day7.push(v.day)
+		    	cnt7.push(v.cnt)
+		    	pay7.push(v.pay)
+		    })
+	    })    		
         // 최근 일주일
         const recent7daysId = document.getElementById('recent7days').getContext('2d');
         const recent7days = new Chart(recent7daysId, {
             type: 'bar',
             data: {
-                labels: [17, 18, 19, 20, 21, 22, `${23} (오늘)`],
+                labels: day7,
                 datasets: [{
                     type: 'line',
-                    label: '남성',
-                    backgroundColor: 'powderblue',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
+                    label: '판매량',
+                    backgroundColor: 'seagreen',
+                    borderColor : 'seagreen',
+                    data: cnt7,
                 }, {
                     type: 'bar',
-                    label: '여성',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ],
-                    backgroundColor: 'seagreen'
+                    label: '매출액',
+                    data: pay7,
+                    backgroundColor: 'gray',
                 }, ]
             },
             options: {
                 scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stacked: true
-                    }
+                	y: {
+                        beginAtZero: true
+                      }
                 },
             }
         });
-
+		
+        
         // 최근 1년
+        let yearcnt = []; 
+	    let yearpay = [];
+        $.ajax({
+        	url: '/admin/salesThisyear',
+        	async:false,
+        	dataType : 'json'
+        })
+        .done((r)=>{
+        	r.forEach((v)=>{
+        		yearcnt.push(v.cnt);
+        		yearpay.push(v.pay);
+        	})
+        })
         const thisyearId = document.getElementById('thisyear').getContext('2d');
         const thisyear = new Chart(thisyearId, {
             type: 'bar',
             data: {
                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                datasets: [{
-                    type: 'line',
-                    label: '매출액',
-                    backgroundColor: 'black',
-                    borderColor: 'darkred',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
-                }, {
+                datasets: [
+                	{
+                        type: 'line',
+                        label: '판매량',
+                        data: yearcnt,
+                        backgroundColor: 'black',
+                        borderColor : 'darkgreen',
+                        yAxisID : 'leftY'
+                    },{
                     type: 'bar',
-                    label: '판매량',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ],
-                    backgroundColor: 'gray'
-                }, ]
+                    label: '매출액',
+                    backgroundColor: 'green',
+                    data: yearpay,
+                    yAxisID : 'rightY'
+                },]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                	yAxes: [{
+                        id : 'leftY',
+                        type : 'linear',
+                        position : 'left'
+                    }, {
+                        id:'rightY',
+                        type : 'bar',
+                        position : 'right'
+                    }],
                 },
             }
         });
 
+     	// 성별 유저 통계
+        let woman = []; 
+	    let man = [];
+        $.ajax({
+        	url: '/admin/genderList',
+        	async:false,
+        	dataType : 'json'
+        })
+        .done((r)=>{
+        	r.forEach((v)=>{
+        		woman.push(v.woman);
+        		man.push(v.man);
+        	})
+        })
+        
         // 성별, 연령별
         const genderId = document.getElementById('gender').getContext('2d');
         const gender = new Chart(genderId, {
             type: 'bar',
             data: {
-                labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
+                labels: ['10대 이하', '20대', '30대', '40대', '50대', '60대 이상'],
                 datasets: [{
                     type: 'bar',
                     label: '남성',
-                    backgroundColor: 'powderblue',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
+                    backgroundColor: 'lavender',
+                    data: man
                 }, {
                     type: 'bar',
                     label: '여성',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 8,
-                    ],
-                    backgroundColor: 'pink'
+                    data: woman,
+                    backgroundColor: 'teal'
                 }, ]
             },
             options: {
@@ -380,193 +301,6 @@
             }
         });
 
-        // 카테고리별
-        const ctgrId = document.getElementById('ctgr').getContext('2d');
-        const ctgr = new Chart(ctgrId, {
-            type: 'doughnut',
-            data: {
-                labels: ['음악','요리','건강', '아트', 'IT/컴퓨터','외국어','자기계발'],
-                datasets: [{
-                    backgroundColor: ['Darkseagreen', 'powderblue', 'seagreen', 'beige','lightgray','aqua','pink'],
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
-                }]
-            },
-
-        });
-
-        // 카테고리별 성별
-        const ctgrByGenderId = document.getElementById('ctgrByGender').getContext('2d');
-        const ctgrByGender = new Chart(ctgrByGenderId, {
-            type: 'bar',
-            data: {
-                labels: ['음악','요리','건강', '아트', 'IT/컴퓨터','외국어','자기계발'],
-                datasets: [{
-                    type: 'bar',
-                    label: '남성',
-                    backgroundColor: 'powderblue',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                    ]
-                }, {
-                    type: 'bar',
-                    label: '여성',
-                    data: [
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 15,
-                        Math.random() * 8,
-                    ],
-                    backgroundColor: 'pink'
-                }, ]
-            },
-            options: {
-                indexAxis: 'y',
-                elements: {
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            beginAtZero: true,
-                            stacked: true
-                        }
-                    },
-                }
-            }
-        });
-
-        // 카테고리별 연령대
-        const ctgrByOldId = document.getElementById('ctgrByOld').getContext('2d');
-        const ctgrByOld = new Chart(ctgrByOldId, {
-            type: 'bar',
-            data: {
-                labels: ['음악','요리','건강','아트','IT/컴퓨터','외국어','자기계발'],
-                datasets: [{
-                        type: 'bar',
-                        label: '10대',
-                        backgroundColor: 'powderblue',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ]
-                    }, {
-                        type: 'bar',
-                        label: '20대',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ],
-                        backgroundColor: 'pink'
-                    },
-                    {
-                        type: 'bar',
-                        label: '30대',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ],
-                        backgroundColor: 'teal'
-                    },
-                    {
-                        type: 'bar',
-                        label: '40대',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ],
-                        backgroundColor: 'lavender'
-                    },
-                    {
-                        type: 'bar',
-                        label: '50대',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ],
-                        backgroundColor: 'lightgray'
-                    },
-                    {
-                        type: 'bar',
-                        label: '60대 이상',
-                        data: [
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                            Math.random() * 15,
-                        ],
-                        backgroundColor: 'tomato'
-                    }
-                ]
-            },
-            options: {
-                indexAxis: 'y',
-                elements: {
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            beginAtZero: true,
-                            stacked: true
-                        }
-                    },
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stacked: true
-                    }
-                },
-            }
-        });
     </script>
 </body>
 </html>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.makeu.up.lecture.service.LectureMapper">
+	<insert id="lectureInsert" parameterType="co.makeu.up.lecture.service.LectureVO">
+		INSERT INTO LECTURE(LT_NO, CRE_ID, TTL, INTRO, UP_CTGR, DOWN_CTGR, THUMB, PHT_1, PHT_2, PHT_3,
+							OPEN_TERM, TLSN_TERM, PRC, KIT_NAME, KIT_INTRO, KIT_PRC, TAG_1, TAG_2, TAG_3,
+							REQ_DATE, LT_ST_CODE, EXP_DATE, START_DATE)
+		VALUES((SELECT NVL(MAX(LT_NO), 0)+1 FROM LECTURE), #{creId}, #{ttl}, #{intro}, 
+			   #{upCtgr}, #{downCtgr}, #{thumb}, #{pht1}, #{pht2}, #{pht3}, 
+			   #{openTerm}, #{tlsnTerm}, #{prc},
+			   #{kitName}, #{kitIntro}, #{kitPrc}, #{tag1}, #{tag2}, #{tag3}, 
+			   SYSDATE, #{ltStCode}, (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), SYSDATE)
+	</insert>
+	<select id="lectureSelect" parameterType="Integer" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM CNAMELECTURE WHERE LT_NO = #{ltNo}
+	</select>
+	<select id="requestLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * 
+		FROM CNAMELECTURE 
+		WHERE CRE_ID = #{creId} AND LT_ST_CODE IN ('L02','L07') 
+		ORDER BY LT_NO DESC
+	</select>
+	<select id="openLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
+		FROM CNAMELECTURE l
+		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L01'
+		ORDER BY l.LT_NO DESC
+	</select>
+	<select id="closeLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
+		FROM CNAMELECTURE l
+		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE = 'L03'
+		ORDER BY l.LT_NO DESC
+	</select>
+	<select id="reportLecture" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT l.*, (select round(avg(star),1) from review r where (l.lt_no = r.lt_no) and rv_code ='RE01') as avgStar,
+		(select count(*) from sugang s where l.lt_no = s.lt_no and s.tlsn_st_code in ('SU01', 'SU03')) as studentCount
+		FROM CNAMELECTURE l
+		WHERE l.CRE_ID = #{creId} AND l.LT_ST_CODE IN ('L04','L06')
+		ORDER BY l.LT_NO DESC
+	</select>
+	<select id="reportLesson" parameterType="co.makeu.up.report.service.ReportVO" resultType="co.makeu.up.report.service.ReportVO">
+		SELECT R.*
+		FROM CNAMELECTURE C JOIN REPORT R
+		ON C.LT_NO = R.LT_NO
+		WHERE RP_ST_CODE = 'RPS02'
+		AND R.CTGR = 'RP02'
+		AND R.LT_NO = #{ltNo}
+	</select>
+	<update id="lectureUpdate" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE SET
+		UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr},
+		<if test = "pht1 != null">
+			PHT_1 = #{pht1}, 
+		</if>
+		<if test = "pht2 != null">
+			PHT_2 = #{pht2}, 
+		</if>
+		<if test = "pht3 != null"> 
+			PHT_3 = #{pht3},
+		</if>
+		<if test = "thumb != null">
+			THUMB = #{thumb},
+		</if>
+		TTL = #{ttl}, INTRO = #{intro}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}
+		WHERE LT_NO = #{ltNo}
+	</update>
+	<select id="lectureTempSelect" parameterType="co.makeu.up.lecture.service.LectureVO" resultType ="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM LECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L05'
+	</select>
+	<select id="lectureInsertTemp" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM CNAMELECTURE WHERE CRE_ID = #{creId} AND LT_ST_CODE = 'L05'
+	</select>
+	<update id="lectureUpdateTemp" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE
+		SET
+			CRE_ID = #{creId}, TTL = #{ttl}, INTRO = #{intro}, 
+		    UP_CTGR = #{upCtgr}, DOWN_CTGR = #{downCtgr}, THUMB = #{thumb}, PHT_1 = #{pht1}, PHT_2 = #{pht2}, PHT_3 = #{pht3}, 
+		    OPEN_TERM = #{openTerm}, TLSN_TERM = #{tlsnTerm}, PRC = #{prc},
+		    KIT_NAME = #{kitName}, KIT_INTRO = #{kitIntro}, KIT_PRC = #{kitPrc}, TAG_1 = #{tag1}, TAG_2 = #{tag2}, TAG_3 = #{tag3}, 
+		    REQ_DATE = SYSDATE, LT_ST_CODE = #{ltStCode}, EXP_DATE = (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), START_DATE = SYSDATE
+	    WHERE LT_NO = #{ltNo}
+	</update>
+
+	<select id="creLectureList" parameterType="String" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT L.*,NVL(P.SALES,0) SALES,NVL(P.CNT,0) CNT
+		FROM (SELECT LT_NO,SUM(PAY) SALES,COUNT(*) CNT 
+		      FROM SUGANG 
+		      GROUP BY LT_NO) P 
+		RIGHT OUTER JOIN LECTURE L 
+		ON P.LT_NO = L.LT_NO
+		WHERE L.CRE_ID = #{ID}
+	</select>
+	<update id="lectureReResister" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L02'
+		WHERE LT_NO = #{ltNo}
+	</update>
+	
+	<update id="lectureReportCheck" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE LECTURE 
+		SET LT_ST_CODE = 'L06'
+		WHERE LT_NO = #{ltNo} 
+	</update>
+	<update id="lectureReInsert" parameterType="co.makeu.up.lecture.service.LectureVO">
+		update lecture set
+		open_term = #{openTerm}, req_date = sysdate, lt_st_code = 'L02', 
+		exp_date = (SELECT ADD_MONTHS(SYSDATE, #{openTerm}) FROM DUAL), start_date = sysdate
+		where lt_no = #{ltNo}
+		
+	</update>
+
+	<select id="adminLectureList" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM(
+        SELECT ROWNUM RN, W.*
+        FROM (SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+		FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                                from ctgr c join ctgr c2
+                                on c2.ctgr_id = c.up_ctgr) C
+        ON L.DOWN_CTGR = C.CTGR_ID 
+        JOIN USERS U
+		ON L.CRE_ID =  U.ID 
+		WHERE 1 =1 
+		<if test="ltStCode == null or ltStCode ==''">
+			AND L.LT_ST_CODE IN ('L02','L07')
+		</if>
+		<if test="ltStCode != null and ltStCode !=''">
+			AND L.LT_ST_CODE = #{ltStCode}
+		</if>
+		<if test="name != null and name != ''">
+			and u.name like '%' || #{name}  || '%'
+		</if>
+		<if test="creId != null and creId != ''">
+			and L.CRE_ID like '%'||#{creId}||'%'
+		</if>
+		<if test="ttl != null and ttl != ''">
+			and l.ttl like '%'||#{ttl}||'%'
+		</if>
+		<if test="upCtgr != null and upCtgr !=''">
+			AND c.up_name = #{upCtgr}
+		</if>
+		<if test="downCtgr != null and downCtgr !=''">
+			AND c.name = #{downCtgr}
+		</if>
+		<if test="start != null and start !=''">
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') <=  TRUNC(l.req_Date) ]]>
+        </if>
+        <if test="end != null and end !=''" >
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  >=  TRUNC(l.req_Date) ]]>
+        </if>
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+			ORDER BY ${orderColumn} ${orderBy}
+		</if>
+		<if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY LT_NO DESC
+		</if>)W)
+		<![CDATA[
+	    where rn > (#{pageNum}-1) * #{amount} 
+	    and rn <= #{pageNum} * #{amount}
+	    ]]>
+  </select>
+  
+  	<select id="adminLectureListPlus" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+        SELECT  L.LT_NO,L.CRE_ID,C.name down_ctgr, C.up_name up_ctgr,U.NAME,L.TTL,L.REQ_DATE,L.LT_ST_CODE,COUNT(*) OVER() length
+		FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                                from ctgr c join ctgr c2
+                                on c2.ctgr_id = c.up_ctgr) C
+        ON L.DOWN_CTGR = C.CTGR_ID 
+        JOIN USERS U
+		ON L.CRE_ID =  U.ID 
+		WHERE 1 =1 
+		<if test="ltStCode == null or ltStCode ==''">
+			AND L.LT_ST_CODE IN ('L02','L07')
+		</if>
+		<if test="ltStCode != null and ltStCode !=''">
+			AND L.LT_ST_CODE = #{ltStCode}
+		</if>
+		<if test="name != null and name != ''">
+			and u.name like '%' || #{name}  || '%'
+		</if>
+		<if test="creId != null and creId != ''">
+			and L.CRE_ID like '%'||#{creId}||'%'
+		</if>
+		<if test="ttl != null and ttl != ''">
+			and l.ttl like '%'||#{ttl}||'%'
+		</if>
+		<if test="upCtgr != null and upCtgr !=''">
+			AND c.up_name  like '%'||#{upCtgr}||'%'
+		</if>
+		<if test="downCtgr != null and downCtgr !=''">
+			AND c.name like '%'||#{downCtgr}||'%'
+		</if>
+		<if test="start != null and start !=''">
+        	<![CDATA[ and TO_DATE(#{start}, 'YYYY-MM-DD') <= TRUNC(l.req_Date) ]]>
+        </if>
+        <if test="end != null and end !=''" >
+            <![CDATA[ and TO_DATE(#{end}, 'YYYY-MM-DD')  >= TRUNC(l.req_Date) ]]>
+        </if>
+        <if test="orderColumn !=null and !orderColumn.equals('')">
+			ORDER BY ${orderColumn} ${orderBy}
+		</if>
+		<if test="orderColumn == null or orderColumn.equals('')">
+			ORDER BY LT_NO DESC
+		</if>
+  </select>
+  
+  <select id="AdminlectureSelect" resultType="co.makeu.up.lecture.service.LectureVO">
+  	SELECT L.*, C.name low_ctgr, C.up_name high_ctgr
+	FROM LECTURE L JOIN (select c.* ,c2.name up_name
+                        from ctgr c join ctgr c2
+                        on c2.ctgr_id = c.up_ctgr) C
+	ON L.DOWN_CTGR = C.CTGR_ID 
+	WHERE l.lt_no = #{ltNo}
+  </select>
+  
+	<select id="adminLectureTable" parameterType="co.makeu.up.lecture.service.LectureVO" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT * FROM (
+        SELECT ROWNUM RN, W.*
+        FROM ( SELECT L.LT_NO,L.CRE_ID,U.NAME,  c.code_name lt_st_Code,L.TTL,(L.PRC + L.KIT_PRC) PRC,L.REQ_DATE, R.AVGSTAR ,C.DOWN_CTGR, C.UP_CTGR,COUNT(*) OVER() COUNT 
+                FROM LECTURE L JOIN (SELECT C.CTGR_ID , C.NAME DOWN_CTGR, U.NAME UP_CTGR
+                                                FROM CTGR C JOIN CTGR U
+                                                ON C.UP_CTGR = U.CTGR_ID) C
+                ON L.DOWN_CTGR = C.CTGR_ID 
+                LEFT JOIN (SELECT LT_NO, TRUNC(AVG(STAR),1) AVGSTAR  FROM REVIEW WHERE RV_CODE != 'RE03' GROUP BY LT_NO) R
+                ON L.LT_NO = R.LT_NO
+                JOIN USERS U
+                ON L.CRE_ID = U.ID
+                JOIN COMM_CODE C
+                ON LT_ST_CODE = C.CODE_ID
+                WHERE L.TTL LIKE '%'||#{ttl}||'%'
+                <if test="creId != null and !creId.equals('')">
+				AND L.CRE_ID LIKE '%'||#{creId}||'%'
+				</if>
+				<if test="name != null and !name.equals('')">
+				AND NAME LIKE '%'||#{name}||'%'
+				</if>
+				<if test="upCtgr != null and !upCtgr.equals('')">
+				AND L.UP_CTGR = #{upCtgr}
+				</if>
+				<if test="downCtgr != null and !downCtgr.equals('')">
+				AND C.DOWN_CTGR = #{downCtgr}
+				</if>
+				<if test="star != 0">
+				AND TRUNC(AVGSTAR,0) = #{star}
+				</if>
+				<if test="pastDate != null and !pastDate.equals('')">
+			    <![CDATA[AND TO_DATE(#{pastDate},'YYYY-MM-DD') < TRUNC(REQ_DATE)]]>
+			    </if>
+			    <if test="recentDate !=null and !recentDate.equals('')">
+			    <![CDATA[AND TRUNC(REQ_DATE) < TO_DATE(#{recentDate},'YYYY-MM-DD')]]>
+			    </if>
+				<if test="ltStCodeList != null and ltStCodeList.length != 0">
+				AND LT_ST_CODE IN
+				<foreach collection="ltStCodeList" item="ltStCodeList" open="(" close=")" separator=",">
+			    	#{ltStCodeList}
+			    </foreach>
+				</if>
+				<if test="orderColumn != null and !orderColumn.equals('')">
+                ORDER BY ${orderColumn} ${orderBy}
+				</if>
+				<if test="orderColumn == null or orderColumn.equals('')">
+                ORDER BY LT_NO DESC
+				</if>
+                ) W
+        )
+        <if test="page > 0">
+		WHERE RN <![CDATA[>]]> (#{page}-1) * 10
+		AND RN <![CDATA[<=]]> #{page} * 10
+		</if>
+		<if test="page == 0">
+		WHERE RN BETWEEN 1 AND #{endrow}
+		</if>
+	</select>
+	
+	<update id="AdminlectureUpdateOK" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE lecture set LT_ST_CODE = 'L01'
+		where LT_NO = #{ltNo}
+	</update>
+	
+	<update id="AdminlectureUpdateReject" parameterType="co.makeu.up.lecture.service.LectureVO">
+		UPDATE lecture set LT_ST_CODE = 'L07'
+		where LT_NO = #{ltNo}
+	</update>
+
+	<select id="adminLectureInfo" parameterType="Integer" resultType="co.makeu.up.lecture.service.LectureVO">
+		SELECT L.LT_NO,L.CRE_ID,FINDLTCODE(L.LT_ST_CODE) LT_ST_CODE_NAME,L.LT_ST_CODE,L.TTL,L.INTRO,RV.AVGSTAR,R.CNT,L.KIT_NAME,L.KIT_INTRO,L.KIT_PRC,
+				C.NAME DOWN_CTGR, CU.NAME UP_CTGR,L.THUMB,L.OPEN_TERM,L.KIT_NAME,L.REQ_DATE,L.START_DATE,L.EXP_DATE,ADD_MONTHS(L.EXP_DATE,L.TLSN_TERM) END_DATE
+		FROM LECTURE L 
+		LEFT OUTER JOIN (SELECT LT_NO,COUNT(*) CNT 
+		                            FROM REPORT WHERE CTGR = 'RP02' 
+		                            AND RP_ST_CODE = 'RPS02'
+		                            GROUP BY LT_NO) R
+		ON L.LT_NO = R.LT_NO
+		LEFT OUTER JOIN (
+		    SELECT LT_NO,TRUNC(AVG(STAR),1) AVGSTAR FROM REVIEW
+		    GROUP BY LT_NO) RV
+		ON L.LT_NO = RV.LT_NO
+		JOIN CTGR C
+		ON L.DOWN_CTGR = C.CTGR_ID
+		JOIN CTGR CU
+		ON L.UP_CTGR = CU.CTGR_ID
+		WHERE L.LT_NO = #{ltNo}
+	</select>
+	<delete id="lectureDelete" parameterType="co.makeu.up.lecture.service.LectureVO">
+		delete from lecture
+		where lt_no = #{ltNo}
+	</delete>
+</mapper>
