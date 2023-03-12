@@ -306,8 +306,8 @@
     	})
     	
     	const homeMounted = home.mount('#homeVue');
-
     
     </script>
+
 </body>
 </html>

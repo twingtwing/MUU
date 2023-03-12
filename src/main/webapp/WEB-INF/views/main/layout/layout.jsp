@@ -13,7 +13,9 @@
     rel="stylesheet">
 	<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <!-- Css Styles -->
+
 	<script src="https://kit.fontawesome.com/8d99e6c8fb.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
@@ -52,6 +54,7 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+
 <script type="text/javascript">
 //mouseover 이벤트 : 사이드바 css변경
 $('#cctgy > .list-group-item:not(.mylist)').on('mouseover',function(){
@@ -66,5 +69,6 @@ $('#cctgy > .list-group-item:not(.mylist)').on('mouseout',function(){
   $(this).find('.list-link.active').css('color','#e53637');
 })
 </script>
+
 </body>
 </html>
