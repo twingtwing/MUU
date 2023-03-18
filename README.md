@@ -24,14 +24,15 @@
   - Bootstrap 4
 
 </br>
-<!--
+
 ## 3. ERD 설계
+![ERD](https://user-images.githubusercontent.com/86578586/226083522-336ba364-70da-421e-83e1-9613a3109928.png)
 
 ## 4. 핵심 기능
 이 서비스의 핵심 기능은 컨텐츠 등록 기능입니다.  
 사용자는 단지 컨텐츠의 카테고리를 선택하고, URL만 입력하면 끝입니다.  
 이 단순한 기능의 흐름을 보면, 서비스가 어떻게 동작하는지 알 수 있습니다.  
-
+<!--
 <details>
 <summary><b>핵심 기능 설명 펼치기</b></summary>
 <div markdown="1">
