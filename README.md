@@ -29,32 +29,26 @@
 ![ERD](https://user-images.githubusercontent.com/86578586/226083753-7ca454fc-3b9f-4041-a443-dfdc442cd633.png)
 
 ## 4. 핵심 기능
-기능 3개로 
-- 회원
-- 크리에이터
-- 관리자 
+이 서비스의 핵심 기능은 강의 결제 기능입니다.  
+사용자가 원하는 강의를 선택해서 결제 버튼만 클릭하면 끝입니다.
+아래 기능의 흐름을 보면, 서비스가 어떻게 동작하는지 알 수 있습니다.
 
-이 서비스의 핵심 기능은 컨텐츠 등록 기능입니다.  
-사용자는 단지 컨텐츠의 카테고리를 선택하고, URL만 입력하면 끝입니다.  
-이 단순한 기능의 흐름을 보면, 서비스가 어떻게 동작하는지 알 수 있습니다.  
-<!--
 <details>
 <summary><b>핵심 기능 설명 펼치기</b></summary>
 <div markdown="1">
 
 ### 4.1. 전체 흐름
-![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow1.png)
+![전체흐름도](https://user-images.githubusercontent.com/86578586/226525871-60bb2735-1bfe-4311-965e-771a943b87bd.png)
 
-### 4.2. 사용자 요청
-![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_vue.png)
+### 4.2. 사용자 요청 :pushpin: [코드 확인](https://github.com/twingtwing/MUU/blob/master/src/main/webapp/WEB-INF/views/main/lecture/lecP.jsp)
+![정규식 체크](https://user-images.githubusercontent.com/86578586/226526814-76f2613f-d370-4ca5-b22b-efb55d481656.png)
 
-- **URL 정규식 체크** :pushpin: [코드 확인](https://github.com/Integerous/goQuality/blob/b587bbff4dce02e3bec4f4787151a9b6fa326319/frontend/src/components/PostInput.vue#L67)
-  - Vue.js로 렌더링된 화면단에서, 사용자가 등록을 시도한 URL의 모양새를 정규식으로 확인합니다.
-  - URL의 모양새가 아닌 경우, 에러 메세지를 띄웁니다.
-
-- **Axios 비동기 요청** :pushpin: [코드 확인]()
-  - URL의 모양새인 경우, 컨텐츠를 등록하는 POST 요청을 비동기로 날립니다.
-
+  - 정규식 체크 : Vue.js로 렌더링된 화면단에서, 사용자가 등록한 정보를 정규식으로 환영합니다.
+    
+![비동기 요청](https://user-images.githubusercontent.com/86578586/226526935-0eb740a6-c42c-46e3-b9ff-d40bc9a161ed.png)
+  
+  - Ajax 비동기 요청 : 강의를 결제하는 POST요청을 비동기로 보냅니다.
+  
 ### 4.3. Controller
 
 ![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_controller.png)
@@ -95,7 +89,7 @@
   - 저장된 컨텐츠는 다시 Repository - Service - Controller를 거쳐 화면단에 송출됩니다.
 
 </div>
-</details> -->
+</details>
 
-성과와 수치 중심의 결과 요약
+## 5.성과와 수치 중심의 결과 요약
 후기 작성
