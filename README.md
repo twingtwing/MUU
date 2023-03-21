@@ -1,26 +1,26 @@
-# Make U up
+# 💡 Make U up
 > 온라인 강의 플랫폼 서비스  
 
 </br>
 
 ## 1. 제작 기간 & 참여 인원
 - 2022년 2월 08일 ~ 3월 22일
-- 팀 프로젝트
+- 팀 프로젝트 (5명)
 
 </br>
 
 ## 2. 사용 기술
 #### `Back-end`
   - Java 11
-  - Spring ??
+  - Spring 
   - Maven
   - My Batis
-  - Oracle DB ??
+  - Oracle DB
   - Spring Security
 #### `Front-end`
   - Javascript
   - jQuery
-  - Vue.js ?
+  - Vue.js 3
   - Bootstrap 4
 
 </br>
@@ -64,6 +64,3 @@
 
 </div>
 </details>
-
-## 5.성과와 수치 중심의 결과 요약
-후기 작성
