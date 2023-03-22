@@ -44,7 +44,7 @@
 ### 4.2. 사용자 요청 :pushpin: [코드 확인](https://github.com/twingtwing/MUU/blob/master/src/main/webapp/WEB-INF/views/main/lecture/lecP.jsp)
 ![정규식 체](https://user-images.githubusercontent.com/86578586/226534330-1259ba35-4832-4161-946b-0645fd72cebb.png)
 
-  - **정규식 체크** : Vue.js로 렌더링된 화면단에서, 사용자가 등록한 정보를 정규식으로 환영합니다.
+  - **정규식 체크** : Vue.js로 렌더링된 화면단에서, 사용자가 등록한 정보를 정규식으로 확인합니다.
     
 ![결제 요](https://user-images.githubusercontent.com/86578586/226534405-6bb718e7-e7e7-4d44-94ef-d94c67a08399.png)
   
