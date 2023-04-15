@@ -18,10 +18,12 @@
   - My Batis
   - Oracle DB
   - Spring Security
+  - AWS(EC2,RDS)
 #### `Front-end`
+  - Vue.js 3
   - Javascript
   - jQuery
-  - Vue.js 3
+  - JSP
   - Bootstrap 4
 
 </br>
